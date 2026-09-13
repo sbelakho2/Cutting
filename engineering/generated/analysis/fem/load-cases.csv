@@ -1,0 +1,145 @@
+part,load_case,Fx_N,Fy_N,Fz_N,note
+holder,0,-750,-2500,-375,apex force plus actual mesh gravity
+holder,1,-750,-2500,375,apex force plus actual mesh gravity
+holder,2,-750,2500,-375,apex force plus actual mesh gravity
+holder,3,-750,2500,375,apex force plus actual mesh gravity
+holder,4,750,-2500,-375,apex force plus actual mesh gravity
+holder,5,750,-2500,375,apex force plus actual mesh gravity
+holder,6,750,2500,-375,apex force plus actual mesh gravity
+holder,7,750,2500,375,apex force plus actual mesh gravity
+holder,8,-1500,-5000,-750,apex force plus actual mesh gravity
+holder,9,-1500,-5000,750,apex force plus actual mesh gravity
+holder,10,-1500,5000,-750,apex force plus actual mesh gravity
+holder,11,-1500,5000,750,apex force plus actual mesh gravity
+holder,12,1500,-5000,-750,apex force plus actual mesh gravity
+holder,13,1500,-5000,750,apex force plus actual mesh gravity
+holder,14,1500,5000,-750,apex force plus actual mesh gravity
+holder,15,1500,5000,750,apex force plus actual mesh gravity
+datum_front,0,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,0,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,1,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,1,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,2,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,2,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,3,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,3,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,4,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,4,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,5,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,5,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,6,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,6,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,7,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,7,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,8,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,8,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,9,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,9,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,10,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,10,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,11,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,11,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,12,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,12,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,13,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,13,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,14,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,14,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,15,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,15,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,16,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,16,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,17,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,17,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,18,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,18,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,19,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,19,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,20,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,20,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,21,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,21,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,22,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,22,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,23,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,23,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,24,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,24,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,25,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,25,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,26,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,26,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,27,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,27,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,28,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,28,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,29,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,29,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,30,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,30,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,31,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,31,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,32,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,32,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,33,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,33,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,34,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,34,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,35,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,35,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,36,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,36,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,37,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,37,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,38,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,38,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,39,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,39,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,40,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,40,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,41,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,41,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,42,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,42,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,43,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,43,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,44,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,44,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,45,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,45,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,46,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,46,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,47,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,47,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,48,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,48,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,49,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,49,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,50,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,50,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,51,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,51,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,52,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,52,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,53,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,53,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,54,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,54,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,55,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,55,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,56,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,56,-750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,57,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,57,750,-2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,58,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,58,-750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,59,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,59,750,2500,-375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,60,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,60,-750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,61,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,61,750,-2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,62,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,62,-750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_front,63,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity
+datum_rear,63,750,2500,375,plus300N mounted mass envelope per half and actual datum gravity

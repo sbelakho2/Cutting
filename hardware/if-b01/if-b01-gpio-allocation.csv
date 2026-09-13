@@ -1,0 +1,30 @@
+allocation_id,category,pin_symbol,gpio,connector,pin,net,firmware_signal,receiver_ref,receiver_input_pin,receiver_output_pin,cabinet_relay,asserted_state,safety_boundary
+DRV-BF-PUL,motion_pulse,blade_front_pul,0,J4,1,BF_PUL_NEG,GP0,,,,,HIGH sinks common-anode PUL negative,not_a_safety_function
+DRV-BF-DIR,motion_direction,blade_front_dir,1,J4,2,BF_DIR_NEG,GP1,,,,,HIGH drives direction input,not_a_safety_function
+DRV-BF-ENA,drive_enable,out_drv_enable,17,J4,3,DRV_ENA_NEG,GP17,,,,,HIGH enables shared low-side output; reset/power loss is low,not_a_safety_function
+DRV-BR-PUL,motion_pulse,blade_rear_pul,2,J5,1,BR_PUL_NEG,GP2,,,,,HIGH sinks common-anode PUL negative,not_a_safety_function
+DRV-BR-DIR,motion_direction,blade_rear_dir,3,J5,2,BR_DIR_NEG,GP3,,,,,HIGH drives direction input,not_a_safety_function
+DRV-BR-ENA,drive_enable,out_drv_enable,17,J5,3,DRV_ENA_NEG,GP17,,,,,HIGH enables shared low-side output; reset/power loss is low,not_a_safety_function
+DRV-FL-PUL,motion_pulse,feed_left_pul,4,J6,1,FL_PUL_NEG,GP4,,,,,HIGH sinks common-anode PUL negative,not_a_safety_function
+DRV-FL-DIR,motion_direction,feed_left_dir,5,J6,2,FL_DIR_NEG,GP5,,,,,HIGH drives direction input,not_a_safety_function
+DRV-FL-ENA,drive_enable,out_drv_enable,17,J6,3,DRV_ENA_NEG,GP17,,,,,HIGH enables shared low-side output; reset/power loss is low,not_a_safety_function
+DRV-FR-PUL,motion_pulse,feed_right_pul,6,J7,1,FR_PUL_NEG,GP6,,,,,HIGH sinks common-anode PUL negative,not_a_safety_function
+DRV-FR-DIR,motion_direction,feed_right_dir,7,J7,2,FR_DIR_NEG,GP7,,,,,HIGH drives direction input,not_a_safety_function
+DRV-FR-ENA,drive_enable,out_drv_enable,17,J7,3,DRV_ENA_NEG,GP17,,,,,HIGH enables shared low-side output; reset/power loss is low,not_a_safety_function
+ENC-L-A,encoder_a,enc_left_a,8,J8,3,L_ENC_A_P,GP8,U1,2,3,,Non-inverted RS-422 receiver A output,not_a_safety_function
+ENC-L-B,encoder_b,enc_left_b,9,J8,5,L_ENC_B_P,GP9,U1,6,5,,Non-inverted RS-422 receiver B output,not_a_safety_function
+ENC-R-A,encoder_a,enc_right_a,10,J9,3,R_ENC_A_P,GP10,U1,10,11,,Non-inverted RS-422 receiver A output,not_a_safety_function
+ENC-R-B,encoder_b,enc_right_b,11,J9,5,R_ENC_B_P,GP11,U1,14,13,,Non-inverted RS-422 receiver B output,not_a_safety_function
+IN-START,field_input,in_start,12,J10,1,IN_START,GP12,,,,KA1,LOW while START relay contact is closed,not_a_safety_function
+IN-STOP-OK,field_input,in_stop_ok,13,J10,3,IN_STOP_OK,GP13,,,,KA2,LOW while STOP loop is healthy,not_a_safety_function
+IN-RESET,field_input,in_reset,14,J10,5,IN_RESET,GP14,,,,KA3,LOW while RESET relay contact is closed,not_a_safety_function
+IN-SAFETY-OK,field_input,in_safety_ok,15,J10,7,IN_SAFETY_OK,GP15,,,,KA4,LOW while XPS diagnostic relay contact is closed; diagnostic only,diagnostic_only_not_safety_function
+IN-HOME-REAR,field_input,in_home_rear,16,J10,9,IN_HOME_REAR,GP16,,,,KA5,LOW at rear open position,not_a_safety_function
+IN-HOME-FRONT,field_input,in_home_front,27,J10,11,IN_HOME_FRONT,GP27,,,,KA6,LOW at front open position,not_a_safety_function
+IN-ALM-BF,alarm_input,in_alm_blade_front,18,J11,1,IN_ALM_BF,GP18,,,,KA7,LOW on blade-front driver alarm,not_a_safety_function
+IN-ALM-BR,alarm_input,in_alm_blade_rear,19,J11,3,IN_ALM_BR,GP19,,,,KA8,LOW on blade-rear driver alarm,not_a_safety_function
+IN-ALM-FL,alarm_input,in_alm_feed_left,20,J11,5,IN_ALM_FL,GP20,,,,KA9,LOW on feed-left driver alarm,not_a_safety_function
+IN-ALM-FR,alarm_input,in_alm_feed_right,21,J11,7,IN_ALM_FR,GP21,,,,KA10,LOW on feed-right driver alarm,not_a_safety_function
+OUT-GREEN,indicator_output,out_led_green,22,J12,1,GREEN_NEG,GP22,,,,,HIGH sinks PB01 green LED cathode,not_a_safety_function
+OUT-RED,indicator_output,out_led_red,26,J12,2,RED_NEG,GP26,,,,,HIGH sinks PB02 red LED cathode,not_a_safety_function
+OUT-BUZZER,indicator_output,out_buzzer,28,J12,3,BUZZER_NEG,GP28,,,,,HIGH sinks BZ01 negative terminal,not_a_safety_function

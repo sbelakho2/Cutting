@@ -1,0 +1,2 @@
+id,quantity,description,material,nominal_stock,manufacturing_record,release_state
+M201,2,encoder_face_mount_plate46x46x6,EN_AW_6082-T6,50x50x8,docs/13-measuring-interfaces-and-calibration.md,geometry_drawn_support_and_final_torque_open

@@ -1,0 +1,4 @@
+condition,diameter_over_mm,diameter_through_mm,load_ratio_over,load_ratio_through,shaft_tolerance,total_radial_runout,total_axial_runout,Ra_um,source
+rotating_inner_ring_light,0,17,0,0.05,js5,IT4_divided_by2,IT4,0.4,SKF_seat_tolerances_table1
+rotating_inner_ring_normal_heavy,10,17,0.05,0.1,j5,IT4_divided_by2,IT4,0.4,SKF_seat_tolerances_table1
+stationary_inner_ring_no_axial_displacement,,,,,h6,IT5_divided_by2,IT5,1.6,SKF_seat_tolerances_table1

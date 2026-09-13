@@ -1,0 +1,25 @@
+id,quantity,manufacturer,exact_order,source_url,observed_unit_usd,price_basis,interface
+TR-M01,2,STEPPERONLINE,24HS40-5004D-E1000,https://www.omc-stepperonline.com/s-series-nema-24-closed-loop-stepper-motor-4-0-nm-566-56oz-in-encoder-1000ppr-4000cpr-24hs40-5004d-e1000,36.87,merchandise_only_no_freight,50x50 mounting;10mm shaft21mm;original STEP archived
+TR-D01,2,STEPPERONLINE,CL57T-V41,https://www.omc-stepperonline.com/closed-loop-stepper-driver-v4-1-0-8-0a-24-48vdc-for-nema-17-23-24-stepper-motor-cl57t-v41,,not_observed,36V;S1=4;2000 pulses;24V logic;SW8 OFF
+TR-P01,1,STEPPERONLINE,LE-350-36,https://www.omc-stepperonline.com/350w-36v-9-7a-115-230v-switching-power-supply-stepper-motor-cnc-router-kits-le-350-36,,not_observed,36V9.7A;separate star-wired protected feed-drive branches
+TR-R01,8,MISUMI,UMCL40-10-20-MC,https://uk.misumi-ec.com/vona2/detail/110300423260/?HissuCode=UMCL40-10-20-MC,22.6044,EUR19.50_converted_ECB_2026-09-11_1.1592_NOT_USD_quote,40OD;incomingbore10.000–10.030;20width;18OD5052equivcollar;secondarykeywayF110;MCurethaneaccessdiameter4
+TR-TP01,4,MISUMI,HTPA20S5M250-A-N14,https://uk.misumi-ec.com/vona2/detail/110300406030/?HissuCode=HTPA20S5M250-A-N14,46.217304,EUR39.87_converted_ECB_2026-09-11_1.1592_NOT_USD_quote,20teeth;S5M;25belt;32overallwidth;14H7bore;5JS9keyway;twoM5x4set screws included
+TR-TB01,2,MISUMI,HTBN225S5M-250,https://uk.misumi-ec.com/vona2/detail/110302566230/?HissuCode=HTBN225S5M-250,29.258208,EUR25.24_converted_ECB_2026-09-11_1.1592_NOT_USD_quote,225pitchlength;45teeth;25width;rubber_fibreglass;62.5nominalshaftcentres
+TR-CP01,2,R+W,MK2/100/50/10/12,https://www.rw-america.com/wp-content/uploads/2023/03/RW-DS-PK-miniature-bellows-coupling-MK2-eng-221208.pdf,,not_observed,10Nm;40OD;50free_length;16hub;10motor_Dflat_and12shaft;4.5Nmclamp_screws
+TR-B01,8,SKF,6001-2Z/C3,https://www.simplybearings.co.uk/products/6001-2z-c3-skf,8.54,GBP6.32_observed_2026-09-13_converted_ECB_2026-09-11_1.3508_GBPUSD_NOT_USD_quote,12x28x8;C5400N;C0_2360N;rear_nonlocating_bearing
+TR-B02,8,SKF,6002-2Z/C3,https://www.simplybearings.co.uk/products/6002-2z-c3-skf,9.33,GBP6.91_observed_2026-09-13_converted_ECB_2026-09-11_1.3508_GBPUSD_NOT_USD_quote,15x32x9;C5850N;C0_2850N;front_locating_bearing
+TR-N01,8,SKF,KM 2,https://www.simplybearings.co.uk/products/km2-skf,10.67,GBP7.90_observed_2026-09-13_converted_ECB_2026-09-11_1.3508_GBPUSD_NOT_USD_quote,M15x1;25OD;5width;HN2-3spanner;use_new_MB2_each_installation
+TR-W01,8,SKF,MB 2,https://www.simplybearings.co.uk/products/mb2-skf,2.90,GBP2.15_observed_2026-09-13_converted_ECB_2026-09-11_1.3508_GBPUSD_NOT_USD_quote,15bore;28OD;1thick;4inner_tang;13.5inside_dimension
+TR-RR01,8,SEEGER-ORBIS,A12 spring steel DIN471,https://www.seeger-orbis.com/fileadmin/assets/zertifikate/SEEGER-KATALOGUE-light-2022_11.pdf,,not_observed,shaft12;ring1minus0.06;groove11.5minus0.11;groovewidth_min1.10;ZGA-1pliers
+TR-K01,4,standard,C45 DIN6885-A 5x5x28,,,not_observed,round_end_pulley_key;secondary_C0.20plusminus0.02_shaft-facing_perimeter_chamfer;preserve_width_height;no_friction-only_torque_credit
+TR-FB01,8,standard,ISO4762 M5x16 class10.9,,,not_observed,roller_endplate_screw;preload_record_pending
+TR-FB02,16,standard,ISO4762 M4x20 class10.9,,,not_observed,removable_F112_front_module;9mm_nominal_thread_engagement
+TR-FW02,16,standard,ISO7092 M4 200HV 4.3x8x0.5,,,not_observed,front_module_reduced_ODwasher
+TR-FD02,16,standard,ISO8734 3m6x20 hardened_steel,,,not_observed,match_locating_dowels;through_punch_access;remove_before_axial_service
+TR-FB03,32,standard,ISO4762 M3x8 class8.8,,,not_observed,F103_cover_to_F112
+ME-W01,2,Kuebler,8.0000.3123.0006,https://www.kuebler.com/,,not_observed,100plusminus0.1mm_free_circumference;9.5tread;14.5overall;6H7bore;60ShoreA;No123M4x6ISO4029
+ME-E01,2,Autonics,E40S6-1024-6-L-5,https://www.autonics.com/us/model/E40S6-1024-6-L-5,,not_observed,5V_differential1024PPR;shaft5.985to5.990;tip20fromface;3M3PCD30;supplied6mm_coupling
+ME-B01,4,SKF,626-2Z,https://www.simplybearings.co.uk/products/626-2z-skf,6.07,GBP4.49_observed_2026-09-13_converted_ECB_2026-09-11_1.3508_GBPUSD_NOT_USD_quote,6x19x6;CN;two bearings per measuring-wheel shaft
+ME-FB01,6,standard,ISO4762 M3x10 class8.8,,,not_observed,M201_encoder_plate;3.5nominal_engagement;encoder_thread_torque_limit_pending
+ME-FW01,6,standard,ISO7092 M3 200HV 3.2x6x0.5,,,not_observed,M201_encoder_plate_reduced_ODwasher
+TH-C01,1,Rittal,SK3303.500,https://www.rittal.com/uk-en/products/PG20231215KLI101/PG20231215KLI103/PRO136367?variantId=3303500,,not_observed,230V50Hz;280W L35/L50;original mounting template archived

@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "IFB01")(type "KiCad")(uri "${KIPRJMOD}/if-b01.kicad_sym")(options "")(descr "IF-B01 local draft symbols"))
+)

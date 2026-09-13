@@ -1,0 +1,7 @@
+station,wire_od_mm,force_n,gauge_id,gauge_u_n
+RIGHT_NIP,1.2,,,
+RIGHT_NIP,4.5,,,
+LEFT_NIP,1.2,,,
+LEFT_NIP,4.5,,,
+WHEEL,1.2,,,
+WHEEL,4.5,,,

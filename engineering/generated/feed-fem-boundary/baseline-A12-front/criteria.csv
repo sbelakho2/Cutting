@@ -1,0 +1,9 @@
+check,value,limit,result
+working_peak_Pa,61789925.5359,216666666.667,PASS_SCOPED
+fault_peak_Pa,143461240.598,433333333.333,PASS_SCOPED
+working_displacement_mm,0.020520809442,0.05,PASS_SCOPED
+Brep_volume_relative,0.00141864318303,0.005,PASS_SCOPED
+no_exterior_same_surface_centroids,130,0,REFINE_OR_FAIL
+all_reported_peak_centroids_in_CAD,10,0,REFINE_OR_FAIL
+at_least_three_meshes,1,3,REFINE_OR_FAIL
+focused_study_requires_background_and_all_root_verification,0,1,REFINE_OR_FAIL

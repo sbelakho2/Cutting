@@ -1,0 +1,23 @@
+{
+  "revision": "S1-B-KK86-R6-2026-09-12",
+  "scope": "selected cutting head only",
+  "run_complete": true,
+  "occurrences": 55,
+  "checked_endpoint_closures_mm": [0,4.2],
+  "step_and_stl_readback": true,
+  "cutting_motor_models": "original supplier STEP, including cables and connectors; supplied parallel key removed for keyless coupling",
+  "other_purchased_models": "catalogue interface geometry",
+  "adapter_mounting_fasteners": "M5x16 with9ODx1 washers;8.5mm recess;M5x25 motor screws included",
+  "intentional_thread_intersections": "motor screw major diameter inside exact M5 adapter tapping zones only",
+  "axial_coupling_tolerance_corners": 256,
+  "full_hub_tolerance_check": true,
+  "fit_basis": "supplier motor/coupling tolerances plus explicit incoming inspection limits and 1.00mm shoulder setting",
+  "full_machine_integrated": false,
+  "all_swept_collisions_checked": false,
+  "selected_head_independent_jaw_sweep": true,
+  "jaw_range_mm": [0,4.2],
+  "sweep_method": "relative-translation interval distance bound; unresolved intervals fail",
+  "fabrication_released": false,
+  "tooling_qualified": false,
+  "production_ready": false
+}

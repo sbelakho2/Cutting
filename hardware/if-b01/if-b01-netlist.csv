@@ -1,0 +1,57 @@
+connector,pin,net,external_connection,firmware_signal,notes
+J3,1,+24V_PELV,TB24-01 fused 24 V PELV,,F1 feeds U2/U3 COM only
+J3,2,0V_PELV,TB24-02 0 V PELV,,common logic reference
+J3,3,+5V_LOGIC,TB24-03 fused 5 V,,F2/F3 feed encoder supplies
+J3,4,0V_PELV,TB24-02 0 V PELV,,duplicate return terminal
+J4,1,BF_PUL_NEG,CL86T-V41 BF PUL−,GP0,common-anode positive is externally fused +24 V
+J4,2,BF_DIR_NEG,CL86T-V41 BF DIR−,GP1,common-anode positive is externally fused +24 V
+J4,3,DRV_ENA_NEG,CL86T-V41 BF ENA−,GP17,shared with J5-J7 pin 3
+J4,4,0V_PELV,TB24-02 0 V PELV,,reference/test only
+J5,1,BR_PUL_NEG,CL86T-V41 BR PUL−,GP2,common-anode positive is externally fused +24 V
+J5,2,BR_DIR_NEG,CL86T-V41 BR DIR−,GP3,common-anode positive is externally fused +24 V
+J5,3,DRV_ENA_NEG,CL86T-V41 BR ENA−,GP17,shared enable sink
+J5,4,0V_PELV,TB24-02 0 V PELV,,reference/test only
+J6,1,FL_PUL_NEG,CL57T-V41 FL PUL−,GP4,common-anode positive is externally fused +24 V
+J6,2,FL_DIR_NEG,CL57T-V41 FL DIR−,GP5,common-anode positive is externally fused +24 V
+J6,3,DRV_ENA_NEG,CL57T-V41 FL ENA−,GP17,shared enable sink
+J6,4,0V_PELV,TB24-02 0 V PELV,,reference/test only
+J7,1,FR_PUL_NEG,CL57T-V41 FR PUL−,GP6,common-anode positive is externally fused +24 V
+J7,2,FR_DIR_NEG,CL57T-V41 FR DIR−,GP7,common-anode positive is externally fused +24 V
+J7,3,DRV_ENA_NEG,CL57T-V41 FR ENA−,GP17,shared enable sink
+J7,4,0V_PELV,TB24-02 0 V PELV,,reference/test only
+J8,1,+5V_ENC_L,left E40S pin 3 brown +5 V,,through F2
+J8,2,0V_PELV,left E40S pin 4 blue 0 V,,do not bond cable screen here
+J8,3,L_ENC_A_P,left E40S pin 1 black A,,terminated to J8-4 by R1
+J8,4,L_ENC_A_N,left E40S pin 2 red A-bar,,terminated to J8-3 by R1
+J8,5,L_ENC_B_P,left E40S pin 5 white B,,terminated to J8-6 by R2
+J8,6,L_ENC_B_N,left E40S pin 6 gray B-bar,,terminated to J8-5 by R2
+J9,1,+5V_ENC_R,right E40S pin 3 brown +5 V,,through F3
+J9,2,0V_PELV,right E40S pin 4 blue 0 V,,do not bond cable screen here
+J9,3,R_ENC_A_P,right E40S pin 1 black A,,terminated to J9-4 by R3
+J9,4,R_ENC_A_N,right E40S pin 2 red A-bar,,terminated to J9-3 by R3
+J9,5,R_ENC_B_P,right E40S pin 5 white B,,terminated to J9-6 by R4
+J9,6,R_ENC_B_N,right E40S pin 6 gray B-bar,,terminated to J9-5 by R4
+J10,1,IN_START,KA1 NO contact to 0V_PELV,GP12,low while START pressed
+J10,2,0V_PELV,KA1 contact common,,paired with J10-1
+J10,3,IN_STOP_OK,KA2 NO contact to 0V_PELV,GP13,low while STOP NC loop is healthy
+J10,4,0V_PELV,KA2 contact common,,paired with J10-3
+J10,5,IN_RESET,KA3 NO contact to 0V_PELV,GP14,low while RESET/ACK pressed
+J10,6,0V_PELV,KA3 contact common,,paired with J10-5
+J10,7,IN_SAFETY_OK,KA4 NO contact to 0V_PELV,GP15,low while XPS enabling output is energized
+J10,8,0V_PELV,KA4 contact common,,paired with J10-7
+J10,9,IN_HOME_REAR,KA5 NO contact to 0V_PELV,GP16,low at rear open position
+J10,10,0V_PELV,KA5 contact common,,paired with J10-9
+J10,11,IN_HOME_FRONT,KA6 NO contact to 0V_PELV,GP27,low at front open position
+J10,12,0V_PELV,KA6 contact common,,paired with J10-11
+J11,1,IN_ALM_BF,KA7 NO contact to 0V_PELV,GP18,low on blade-front driver alarm
+J11,2,0V_PELV,KA7 contact common,,paired with J11-1
+J11,3,IN_ALM_BR,KA8 NO contact to 0V_PELV,GP19,low on blade-rear driver alarm
+J11,4,0V_PELV,KA8 contact common,,paired with J11-3
+J11,5,IN_ALM_FL,KA9 NO contact to 0V_PELV,GP20,low on feed-left driver alarm
+J11,6,0V_PELV,KA9 contact common,,paired with J11-5
+J11,7,IN_ALM_FR,KA10 NO contact to 0V_PELV,GP21,low on feed-right driver alarm
+J11,8,0V_PELV,KA10 contact common,,paired with J11-7
+J12,1,GREEN_NEG,PB01 green LED cathode,GP22,PB01 anode connects to fused +24 V PELV
+J12,2,RED_NEG,PB02 red LED cathode,GP26,PB02 anode connects to fused +24 V PELV
+J12,3,BUZZER_NEG,BZ01 negative terminal,GP28,BZ01 positive terminal connects to fused +24 V PELV
+J12,4,0V_PELV,TB24-02 0 V PELV,,reference/test only

@@ -1,0 +1,71 @@
+description,quantity,purchased
+"6082-T6 counter-roller column;base36x48x10;column16x20x90",1,0
+"6082-T6 counter-roller fork18x19x28;slot6.4;4mm vertical adjustment",1,0
+"6082-T6 encoder mounting plate46x46x6;shaft axisY",1,0
+"6082-T6 lower cassette base;stepped block;post split clamps",2,0
+"6082-T6 measuring bearing housing46x46x59.5;626 seats K6;coupling window",1,0
+"6082-T6 measuring bracket;base71x112x12;slotted column40x70;adjuster lug",1,0
+"6082-T6 pivot arm100x40x12;hub30;626 seats K6",1,0
+"6082-T6 upper pressure carrier plate10;carries both upper cartridges",2,0
+"6082-T6 wire guide holder9x24x83;replaceable insert",2,0
+"8.0000.3123.0006 measuring wheel catalogue envelope",1,1
+"Bernstein ACF-1 60x40x52.6 catalogue envelope;static fit only",1,1
+"Bernstein SLC-F-024-20/20-R4 30x192x44 catalogue envelope;static fit only",1,1
+"C45 arm spring cap14x5;spigot5.8x6;recess7x1.5",1,0
+"C45 bridge flat40x12;split post clamps;M8 adjuster thread",2,0
+"C45 measuring shaft6h6 L57.75;collar7.5x2.25;bearing seats6j5",1,0
+"C45 spring cap24x6;spigot10x10;recess9x2",2,0
+"CuZn39Pb3 guide insert8h6x9;bore5.00 for wire4.50;60deg entry cones",2,0
+"DIN913 M4x8 45H insert set screw",2,1
+"DIN913 M6x25 45H flat-point contact-force adjuster",1,1
+"DIN913 M8x40 45H flat-point adjuster",2,1
+"DIN929 M10 hexagon weld nut;envelope",8,1
+"E40S6-1024-6-L-5 catalogue face/shaft envelope;not original OEM CAD",1,1
+"EN AW-6082 T651 tooling plate bed640x1120x25;tapped H001/F201/M206/M207 patterns",1,0
+"ISO4032 M6 class8 lock nut;hex envelope",1,1
+"ISO4032 M8 class8 lock nut;hex envelope",2,1
+"ISO4762 M10x35 class8.8 bed-to-frame screw",8,1
+"ISO4762 M3x10 class8.8;nominal3.5mm encoder engagement",3,1
+"ISO4762 M4x10 class8.8 bushing flange screw",16,1
+"ISO4762 M4x16 class8.8 encoder plate screw",4,1
+"ISO4762 M5x16 class8.8 arm-to-housing screw",4,1
+"ISO4762 M5x20 class8.8 guide holder screw",4,1
+"ISO4762 M5x20 class8.8 lower housing screw",16,1
+"ISO4762 M5x20 class8.8 upper housing screw",16,1
+"ISO4762 M5x25 class8.8 fork clamp screw;vertical slot",2,1
+"ISO4762 M5x35 class8.8 bridge clamp screw",4,1
+"ISO4762 M6x20 class8.8 roller column screw",4,1
+"ISO4762 M6x25 class8.8 post clamp screw",4,1
+"ISO4762 M8x25 class8.8 bracket-to-bed screw",4,1
+"ISO4762 M8x55 class8.8 base-to-bed screw",8,1
+"ISO7092 M3 200HV washer3.2x6x0.5",3,1
+"ISO7092 M5 washer5.3x9x1 200HV",32,1
+"ISO8734 dowel10m6x24 spring locator",2,1
+"ISO8734 dowel6m6x20 arm spring locator",1,1
+"ISO8734 dowel6m6x22 counter-roller pin",1,1
+"ISO8734 dowel6m6x70 pivot pin",1,1
+"LHFRW12 flanged double linear bushing;steel;D21 L57 flange42",4,1
+"PSFJ12-240 linear shaft12g6 L240;EN1.3505 58HRC hard chrome",4,1
+"R2 selected 5mm polycarbonate closed front door;actuator aperture only;no kinematic or safety validation",1,0
+"R2 selected C45 20h6 payoff spindle L660;M20x1.5 ends not modeled;bearing pockets in P004/P005",1,0
+"R2 selected DC01 2mm powder-coated fixed rear guard panel",1,0
+"R2 selected DC01 2mm powder-coated guard roof",1,0
+"R2 selected DC01 2mm powder-coated left guard panel;30mm wire pass-through;not a safety-gap design",1,0
+"R2 selected DC01 2mm powder-coated right guard panel;30mm wire pass-through;not a safety-gap design",1,0
+"R2 selected S235JR 18mm left payoff post;47H7 6204 pocket and 20.5 spindle bore;weld and load path not validated",1,0
+"R2 selected S235JR 18mm right payoff post;47H7 6204 pocket and 20.5 spindle bore;weld and load path not validated",1,0
+"R2 selected S235JR 5mm guard-lock mounting plate;body pocket only;SLC drilling pattern requires manufacturer drawing",1,0
+"R2 selected S235JR brake disc 180x6;20H7 bore;keyway and setscrew are fabrication details;friction brake not safety brake",1,0
+"R2 selected S235JR payoff base 430x560x8;4x13 anchor holes;selected not load-qualified",1,0
+"R2 selected brake caliper bracket envelope;pads and SWU-class adjuster spring not modeled;tension brake not safety brake",1,0
+"R2 selected welded payoff spool OD400x160;3mm S235JR flanges with 20.5 bores;60x2.5 ERW hub;not load-qualified",1,0
+"S235JR foot plate100x100x8;4x13 anchor holes",4,0
+"S235JR square tube60x60x3 L1080 long rail;M10 weld nuts under top wall",2,0
+"S235JR square tube60x60x3 L440 cross rail",2,0
+"S235JR square tube60x60x3 L760 leg",4,0
+"SKF 626-2Z counter roller;outer ring is the running surface",1,1
+"SKF 626-2Z external interface",2,1
+"SKF 626-2Z pivot bearing external interface",2,1
+"SWU10.5-35 flat-wire compression spring D10.5 d6 L35 3.27N/mm;installed envelope",1,1
+"SWU17-60 flat-wire compression spring D17 d10.5 L60 4.09N/mm;installed envelope",2,1
+"Supplied6/6 flexible coupling15x22 interference envelope",1,1

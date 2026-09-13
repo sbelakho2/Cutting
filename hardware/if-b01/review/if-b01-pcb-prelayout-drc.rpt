@@ -1,0 +1,214 @@
+** Drc report for if-b01.kicad_pcb **
+** Created on 2026-09-13T12:13:07 **
+** Report includes: Errors, Warnings, Exclusions **
+
+** Found 0 DRC violations **
+
+** Found 0 unconnected pads **
+
+** Found 94 Footprint errors **
+[missing_footprint]: Missing footprint C1 (100nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C2 (100nF 50V)
+    Local override; warning
+[missing_footprint]: Missing footprint C3 (100nF 50V)
+    Local override; warning
+[missing_footprint]: Missing footprint C4 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C5 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C6 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C7 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C8 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C9 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C10 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C11 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C12 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint C13 (10nF 16V)
+    Local override; warning
+[missing_footprint]: Missing footprint D1 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint D2 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint D3 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint D4 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint D5 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint D6 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint D7 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint D8 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint D9 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint D10 (BZX384-C3V6)
+    Local override; warning
+[missing_footprint]: Missing footprint F1 (MF-R050)
+    Local override; warning
+[missing_footprint]: Missing footprint F2 (MF-R050)
+    Local override; warning
+[missing_footprint]: Missing footprint F3 (MF-R050)
+    Local override; warning
+[missing_footprint]: Missing footprint J1 (Pico 2 SC1631 left socket)
+    Local override; warning
+[missing_footprint]: Missing footprint J2 (Pico 2 SC1631 right socket)
+    Local override; warning
+[missing_footprint]: Missing footprint J3 (1759033)
+    Local override; warning
+[missing_footprint]: Missing footprint J4 (1759033)
+    Local override; warning
+[missing_footprint]: Missing footprint J5 (1759033)
+    Local override; warning
+[missing_footprint]: Missing footprint J6 (1759033)
+    Local override; warning
+[missing_footprint]: Missing footprint J7 (1759033)
+    Local override; warning
+[missing_footprint]: Missing footprint J8 (1759059)
+    Local override; warning
+[missing_footprint]: Missing footprint J9 (1759059)
+    Local override; warning
+[missing_footprint]: Missing footprint J10 (1759114)
+    Local override; warning
+[missing_footprint]: Missing footprint J11 (1759091)
+    Local override; warning
+[missing_footprint]: Missing footprint J12 (1759033)
+    Local override; warning
+[footprint_symbol_mismatch]: MountingHole_3_2mm_M3 doesn't match footprint given by symbol (IFB01:MountingHole_3_2mm_M3)
+    Local override; warning
+    @(4.0000 mm, 4.0000 mm): Footprint MH1
+[footprint_symbol_field_mismatch]: Missing symbol field 'Manufacturer' in footprint
+    Local override; warning
+    @(4.0000 mm, 4.0000 mm): Footprint MH1
+[footprint_symbol_mismatch]: MountingHole_3_2mm_M3 doesn't match footprint given by symbol (IFB01:MountingHole_3_2mm_M3)
+    Local override; warning
+    @(86.0000 mm, 4.0000 mm): Footprint MH2
+[footprint_symbol_field_mismatch]: Missing symbol field 'Manufacturer' in footprint
+    Local override; warning
+    @(86.0000 mm, 4.0000 mm): Footprint MH2
+[footprint_symbol_mismatch]: MountingHole_3_2mm_M3 doesn't match footprint given by symbol (IFB01:MountingHole_3_2mm_M3)
+    Local override; warning
+    @(4.0000 mm, 66.0000 mm): Footprint MH3
+[footprint_symbol_field_mismatch]: Missing symbol field 'Manufacturer' in footprint
+    Local override; warning
+    @(4.0000 mm, 66.0000 mm): Footprint MH3
+[footprint_symbol_mismatch]: MountingHole_3_2mm_M3 doesn't match footprint given by symbol (IFB01:MountingHole_3_2mm_M3)
+    Local override; warning
+    @(86.0000 mm, 66.0000 mm): Footprint MH4
+[footprint_symbol_field_mismatch]: Missing symbol field 'Manufacturer' in footprint
+    Local override; warning
+    @(86.0000 mm, 66.0000 mm): Footprint MH4
+[missing_footprint]: Missing footprint R1 (120R)
+    Local override; warning
+[missing_footprint]: Missing footprint R2 (120R)
+    Local override; warning
+[missing_footprint]: Missing footprint R3 (120R)
+    Local override; warning
+[missing_footprint]: Missing footprint R4 (120R)
+    Local override; warning
+[missing_footprint]: Missing footprint R5 (100k)
+    Local override; warning
+[missing_footprint]: Missing footprint R6 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R7 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R8 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R9 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R10 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R11 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R12 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R13 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R14 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R15 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R16 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R17 (1k)
+    Local override; warning
+[missing_footprint]: Missing footprint R18 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R19 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R20 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R21 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R22 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R23 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R24 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R25 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R26 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R27 (10k)
+    Local override; warning
+[missing_footprint]: Missing footprint R28 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint R29 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint R30 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint R31 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint R32 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint R33 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint R34 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint R35 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint R36 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint R37 (47k)
+    Local override; warning
+[missing_footprint]: Missing footprint TP1 (TP +24V_PELV)
+    Local override; warning
+[missing_footprint]: Missing footprint TP2 (TP +5V_LOGIC)
+    Local override; warning
+[missing_footprint]: Missing footprint TP3 (TP 3V3_MCU)
+    Local override; warning
+[missing_footprint]: Missing footprint TP4 (TP 0V_PELV)
+    Local override; warning
+[missing_footprint]: Missing footprint TP5 (TP DRV_ENA_NEG)
+    Local override; warning
+[missing_footprint]: Missing footprint TP6 (TP GP0)
+    Local override; warning
+[missing_footprint]: Missing footprint TP7 (TP GP8)
+    Local override; warning
+[missing_footprint]: Missing footprint TP8 (TP GP10)
+    Local override; warning
+[missing_footprint]: Missing footprint U1 (AM26LV32EIDR)
+    Local override; warning
+[missing_footprint]: Missing footprint U2 (TPL7407LDR)
+    Local override; warning
+[missing_footprint]: Missing footprint U3 (TPL7407LDR)
+    Local override; warning
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Footprint component type doesn't match footprint pads
+
+** End of Report **

@@ -1,0 +1,6 @@
+check,value,limit,unit,result,basis
+encoder_speed_factory_min_circumference,300.3003003,5000,rpm,PASS_SCOPED,"99.9mm factory circumference;500mm/s;not loaded circumference"
+encoder_A_B_frequency,5125.12512513,300000,Hz,PASS_SCOPED,"1024A/B_cycles_per_revolution;do_not_compare_x4_edges_as_A/B_pulses"
+nominal_count_spacing,0.0244140625,0.025,mm,PASS_SCOPED,"Resolution_only_not_accuracy"
+factory_scale_error_1m,1,0.7,mm,FAIL,"Manufacturer100plusminus0.1mm;factory_scale_alone_exceeds_entire1m_target"
+CN_10K_ring_clearance_before_fit,0.5,1,um,FAIL,"SourceCNminimum2um;steel12um/m/K;no_interference_loss_yet;thermal_and_fits_unresolved"

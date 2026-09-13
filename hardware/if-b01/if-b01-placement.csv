@@ -1,0 +1,91 @@
+reference,footprint,x_mm,y_mm,rotation_deg,side,layout_region,status
+C1,C_0603_1608,183,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C2,C_0603_1608,189,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C3,C_0603_1608,195,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C4,C_0603_1608,201,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C5,C_0603_1608,207,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C6,C_0603_1608,213,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C7,C_0603_1608,219,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C8,C_0603_1608,225,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C9,C_0603_1608,231,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C10,C_0603_1608,237,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C11,C_0603_1608,243,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C12,C_0603_1608,249,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+C13,C_0603_1608,255,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D1,SOD_323,261,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D2,SOD_323,267,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D3,SOD_323,273,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D4,SOD_323,279,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D5,SOD_323,285,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D6,SOD_323,291,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D7,SOD_323,297,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D8,SOD_323,303,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D9,SOD_323,309,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+D10,SOD_323,315,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+F1,PTC_1812,323,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+F2,PTC_1812,333,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+F3,PTC_1812,343,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+J1,PICO_SOCKET_1X20,100,28,0,top,Pico 2 carrier envelope,DRAFT — human layout and fabricator review required
+J2,PICO_SOCKET_1X20,117.78,28,0,top,Pico 2 carrier envelope,DRAFT — human layout and fabricator review required
+J3,MSTB_2_5_4_G_5_08,12,20,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+J4,MSTB_2_5_4_G_5_08,12,46,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+J5,MSTB_2_5_4_G_5_08,12,70,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+J6,MSTB_2_5_4_G_5_08,12,94,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+J7,MSTB_2_5_4_G_5_08,12,118,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+J8,MSTB_2_5_6_G_5_08,738,24,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+J9,MSTB_2_5_6_G_5_08,738,60,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+J10,MSTB_2_5_12_G_5_08,12,235,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+J11,MSTB_2_5_8_G_5_08,12,180,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+J12,MSTB_2_5_4_G_5_08,12,146,0,top,field-connector edge,DRAFT — human layout and fabricator review required
+MH1,MountingHole_3_2mm_M3,5,5,0,none,M3 panel mounting,DRAFT — human layout and fabricator review required
+MH2,MountingHole_3_2mm_M3,745,5,0,none,M3 panel mounting,DRAFT — human layout and fabricator review required
+MH3,MountingHole_3_2mm_M3,5,395,0,none,M3 panel mounting,DRAFT — human layout and fabricator review required
+MH4,MountingHole_3_2mm_M3,745,395,0,none,M3 panel mounting,DRAFT — human layout and fabricator review required
+R1,R_1206_3216,351.5,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R2,R_1206_3216,358.5,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R3,R_1206_3216,365.5,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R4,R_1206_3216,372.5,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R5,R_0603_1608,378.5,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R6,R_0603_1608,383.5,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R7,R_0603_1608,388.5,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R8,R_0603_1608,393.5,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R9,R_0603_1608,398.5,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R10,R_0603_1608,403.5,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R11,R_0603_1608,408.5,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R12,R_0603_1608,413.5,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R13,R_0603_1608,418.5,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R14,R_0603_1608,423.5,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R15,R_0603_1608,428.5,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R16,R_0603_1608,433.5,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R17,R_0603_1608,438.5,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R18,R_0603_1608,443.5,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R19,R_0603_1608,448.5,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R20,R_0603_1608,453.5,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R21,R_0603_1608,458.5,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R22,R_0603_1608,463.5,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R23,R_0603_1608,468.5,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R24,R_0603_1608,473.5,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R25,R_0603_1608,478.5,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R26,R_0603_1608,483.5,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R27,R_0603_1608,488.5,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R28,R_0603_1608,493.5,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R29,R_0603_1608,498.5,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R30,R_0603_1608,503.5,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R31,R_0603_1608,508.5,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R32,R_0603_1608,513.5,164,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R33,R_0603_1608,518.5,188,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R34,R_0603_1608,523.5,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R35,R_0603_1608,528.5,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R36,R_0603_1608,533.5,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+R37,R_0603_1608,538.5,140,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+TP1,TestPoint_1_0mm,543,264,0,top,fixture access row,DRAFT — human layout and fabricator review required
+TP2,TestPoint_1_0mm,547,264,0,top,fixture access row,DRAFT — human layout and fabricator review required
+TP3,TestPoint_1_0mm,551,264,0,top,fixture access row,DRAFT — human layout and fabricator review required
+TP4,TestPoint_1_0mm,555,264,0,top,fixture access row,DRAFT — human layout and fabricator review required
+TP5,TestPoint_1_0mm,559,264,0,top,fixture access row,DRAFT — human layout and fabricator review required
+TP6,TestPoint_1_0mm,563,264,0,top,fixture access row,DRAFT — human layout and fabricator review required
+TP7,TestPoint_1_0mm,567,264,0,top,fixture access row,DRAFT — human layout and fabricator review required
+TP8,TestPoint_1_0mm,571,264,0,top,fixture access row,DRAFT — human layout and fabricator review required
+U1,SOIC_16_3_9x9_9_P1_27,585,212,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+U2,SOIC_16_3_9x9_9_P1_27,609,92,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required
+U3,SOIC_16_3_9x9_9_P1_27,633,116,0,top,isolated routing-cell component yard,DRAFT — human layout and fabricator review required

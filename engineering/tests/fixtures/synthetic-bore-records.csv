@@ -1,0 +1,3 @@
+part_serial,part,lower_mm,upper_mm,gauge_id,gauge_u_um
+SYN-F102-1,F102,28.008,28.018,SYN-BORE-GAUGE,2.0
+SYN-F112-1,F112,32.008,32.019,SYN-BORE-GAUGE,2.0

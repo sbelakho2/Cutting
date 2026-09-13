@@ -1,0 +1,12 @@
+(footprint "R_1206_3216"
+	(version 20241229)
+	(generator "pcbnew")
+	(layer "F.Cu")
+	(attr smd)
+	(fp_text reference "REF**" (at 0 -2 0) (layer "F.SilkS") (effects (font (size 1 1) (thickness 0.15))))
+	(fp_text value "R_1206_3216" (at 0 2 0) (layer "F.Fab") (effects (font (size 1 1) (thickness 0.15))))
+	(fp_rect (start -2.375 -1.225) (end 2.375 1.225) (stroke (width 0.12) (type default)) (fill none) (layer "F.SilkS"))
+	(fp_rect (start -2.675 -1.525) (end 2.675 1.525) (stroke (width 0.05) (type default)) (fill none) (layer "F.CrtYd"))
+	(pad "1" smd roundrect (at -1.462 0) (size 1.125 1.75) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25))
+	(pad "2" smd roundrect (at 1.462 0) (size 1.125 1.75) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25))
+)

@@ -1,0 +1,16 @@
+{
+  "head_revision":"S1-B-KK86-R6-2026-09-12",
+  "feed_revision":"S1-B-FEED-R6-2026-09-12",
+  "run_complete":true,
+  "scope":"selected head and eight-roller placements;support frame,pressure/tensioning slides,measuring modules and guards absent",
+  "occurrences":287,
+  "wire_od_mm":4.5,
+  "left_cassette_transform":"proper180degreeZrotation,not reflection of purchased parts",
+  "cross_subsystem_static_intersections_checked":true,
+  "minimum_moving_head_to_feed_X_gap_mm":17.5,
+  "independent_jaw_feed_sweep_certificate":"strictXseparation for allYtranslations;head-internal sweep verified separately",
+  "step_readback":true,
+  "frame_integrated":false,
+  "full_machine_integrated":false,
+  "fabrication_released":false
+}

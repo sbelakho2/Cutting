@@ -1,0 +1,33 @@
+id,description,kind,xmin_mm,ymin_mm,zmin_mm,xmax_mm,ymax_mm,zmax_mm
+F101,"42CrMo4+QT rotor;matched j5 bearing seats;nominal-major cosmetic threads",custom_or_secondary_operation,-9.5,0,-9.5,9.5,113,9.5
+F102,"6082-T6 rear bearing/base;front module removable for assembly",custom_or_secondary_operation,-23,19,-34,23,92,19
+F112,"6082-T6 removable locating-bearing module;32.008–32.019 bore;matched to F102",custom_or_secondary_operation,-23,72.98,-18.5000001,23,92.0000001,19.0000001
+F103,"Front bearing rear cover;M3 clearance holes",custom_or_secondary_operation,-23,70.98,-18.25,23,72.98,19
+F104,"16ODx12.1IDx2.7 rear inner-ring abutment with positive end float",custom_or_secondary_operation,-8,19.8,-8,8,22.5,8
+F105,"16ODx12.1IDx1 rear-bearing abutment;shaft-shoulder side C0.30",custom_or_secondary_operation,-8,30.5,-8,8,31.5,8
+F106,"19.5ODx15.1IDx1 front inner-ring abutment",custom_or_secondary_operation,-9.75,72,-9.75,9.75,73,9.75
+F107,"17.5ODx10.1IDx1.5 roller spacer;shaft-shoulder side C0.30",custom_or_secondary_operation,-8.75,92,-8.75,8.75,93.5,8.75
+F108,"17.5ODx5.5IDx3 positive roller end plate",custom_or_secondary_operation,-8.75,113.5,-8.75,8.75,116.5,8.75
+F109,"C45 roller key3x4x18;inside perimeter C0.20",custom_or_secondary_operation,-1.5,94.5,-7.2,1.5,112.5,-3.2
+F110,"Secondary-keyed UMCL40-10-20-MC;18mm collar;MC4mm urethane-access holes",custom_or_secondary_operation,-20.0000001,93.4999999,-20.0000001,20.0000001268,113.5000001,20.0000001
+RB01,"SKF6001-2Z/C3 external interface",purchased_interface,-14,22.5,-14,14,30.5,14
+RB02,"SKF6002-2Z/C3 interface;minimum R0.3 inner shoulder corner",purchased_interface,-16,73,-16,16,82,16
+RR01,"SEEGER A12 installed envelope;centred between rounded groove roots",purchased_interface,-9.1,18.56,-9.1,9.1,19.56,9.1
+RN01,"SKF KM2 M15x1 nut",purchased_interface,-12.3389626793,66,-12.3389626793,12.3389626793,71,12.3389626793
+RW01,"SKF MB2;actual4mm inward tang in open shaft slot",purchased_interface,-14,71,-14,14,72,14
+FB01,"ISO4762 M5x16 class10.9 roller retention;socket omitted",purchased_interface,-4.25,100.5,-4.25,4.25,121.5,4.25
+FMB1,"ISO4762 M4x20 class10.9 front-module screw",purchased_interface,-19.5,80.5,-33.5,-12.5,87.5,-9.5
+FMW1,"ISO7092 M4 washer4.3x8x0.5 200HV",purchased_interface,-20,80,-29.5,-12,88,-29
+FDP1,"ISO8734 dowel3m6x20;recessed1.5mm from underside",purchased_interface,-11.5,87.5,-32.5,-8.5,90.5,-12.5
+FMB2,"ISO4762 M4x20 class10.9 front-module screw",purchased_interface,12.5,80.5,-33.5,19.5,87.5,-9.5
+FMW2,"ISO7092 M4 washer4.3x8x0.5 200HV",purchased_interface,12,80,-29.5,20,88,-29
+FDP2,"ISO8734 dowel3m6x20;recessed1.5mm from underside",purchased_interface,8.5,87.5,-32.5,11.5,90.5,-12.5
+FCB1,"ISO4762 M3x8 class8.8 locating-bearing cover screw",purchased_interface,-21.75,67.98,-15.25,-16.25,78.98,-9.75
+FCB2,"ISO4762 M3x8 class8.8 locating-bearing cover screw",purchased_interface,-21.75,67.98,9.75,-16.25,78.98,15.25
+FCB3,"ISO4762 M3x8 class8.8 locating-bearing cover screw",purchased_interface,16.25,67.98,-15.25,21.75,78.98,-9.75
+FCB4,"ISO4762 M3x8 class8.8 locating-bearing cover screw",purchased_interface,16.25,67.98,9.75,21.75,78.98,15.25
+TP01,"HTPA20S5M250-A-N14 purchased external interface",purchased_interface,-18,31.5,-18,18,63.5,18
+TK01,"DIN6885-A5x5x28 C45 key;inside perimeter C0.20 finishing operation",purchased_interface,-2.5,33.5,4,2.5,61.5,9
+CP02,"MK2/100/50/10/12 catalogue interference envelope",purchased_interface,-20,-33,-20,20,17,20
+FM01,"Original24HS40-5004D-E1000 STEP;D-flat retained",purchased_interface,-30.5000001001,-160.2,-30.5000001001,30.5000001001,36.1,133.5000001
+F111,"80x80x10 feed-motor plate;50mm mounting grid",custom_or_secondary_operation,-40,-35.2,-40,40,-25.2,40

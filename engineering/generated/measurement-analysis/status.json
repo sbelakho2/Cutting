@@ -1,0 +1,13 @@
+{
+  "revision":"S1-B-MEAS-R1-2026-09-12",
+  "run_complete":true,
+  "input_data_kind":"synthetic_benchmark",
+  "source_checks":5,
+  "unresolved_source_checks":2,
+  "validation_observations":392,
+  "validation_residual_failures":0,
+  "physical_calibration_qualified":false,
+  "hardware_capture_integrated":false,
+  "measurement_module_integrated":false,
+  "fabrication_released":false
+}

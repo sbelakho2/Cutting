@@ -1,0 +1,7 @@
+station,wire_od_mm,force_n,gauge_id,gauge_u_n
+RIGHT_NIP,1.2,57.0,SYN-FG-1,0.5
+RIGHT_NIP,4.5,60.5,SYN-FG-1,0.5
+LEFT_NIP,1.2,56.0,SYN-FG-1,0.5
+LEFT_NIP,4.5,61.0,SYN-FG-1,0.5
+WHEEL,1.2,8.0,SYN-FG-1,0.5
+WHEEL,4.5,10.2,SYN-FG-1,0.5

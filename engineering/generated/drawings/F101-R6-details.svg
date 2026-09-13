@@ -1,0 +1,58 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='420mm' height='297mm' viewBox='0 0 420 297'>
+<defs><marker id='arrow' markerWidth='5' markerHeight='5' refX='2.5' refY='2.5' orient='auto-start-reverse'><path d='M5 0 L0 2.5 L5 5' fill='none' stroke='#111' stroke-width='.5'/></marker></defs>
+<style>text{font-family:DejaVu Sans,Arial,sans-serif;fill:#111}.edge{fill:none;stroke:#111;stroke-width:.35}.dim{fill:none;stroke:#444;stroke-width:.18}.centre{fill:none;stroke:#888;stroke-width:.16;stroke-dasharray:4 1 1 1}</style>
+<rect width='420' height='297' fill='white'/><rect class='edge' x='8' y='8' width='404' height='281'/>
+<text x='14' y='20' font-size='7'>STARZ ELECTRONICS</text>
+<text x='14' y='28' font-size='4.5'>F101 — SLOT / END MACHINING DETAILS · R6 · SHEET2/2</text>
+<text x='250' y='18' font-size='4'>ENGINEERING DRAWING — RELEASE HOLD</text>
+<text x='250' y='25' font-size='3'>Units mm · A3 · Do not scale dimensions</text>
+<path class='edge' d='M32.5 69.5 L46.16820334 69.5 A2.5 2.5 0 0 0 47.44002398 69.15231788 A12.6 12.6 0 0 1 53.85 67.4 L169.15 67.4 A12.6 12.6 0 0 1 175.559976 69.15231788 A2.5 2.5 0 0 0 176.8317967 69.5 L236.5 69.5 A2.5 2.5 0 0 1 239 72 L239 88 A2.5 2.5 0 0 1 236.5 90.5 L176.8317967 90.5 A2.5 2.5 0 0 0 175.559976 90.84768212 A12.6 12.6 0 0 1 169.15 92.6 L53.85 92.6 A12.6 12.6 0 0 1 47.44002398 90.84768212 A2.5 2.5 0 0 0 46.16820334 90.5 L32.5 90.5 A2.5 2.5 0 0 1 30 88 L30 72 A2.5 2.5 0 0 1 32.5 69.5 Z'/>
+<line class='centre' x1='26.5' y1='80' x2='244' y2='80'/>
+<line class='dim' x1='30' y1='102' x2='30' y2='116'/>
+<line class='dim' x1='41.25' y1='102' x2='41.25' y2='116'/>
+<line class='dim' x1='181.75' y1='102' x2='181.75' y2='116'/>
+<line class='dim' x1='239' y1='102' x2='239' y2='116'/>
+<text x='21' y='124' font-size='2.8'>S31.20</text>
+<text x='38.25' y='115' font-size='2.8'>S33.45</text>
+<text x='172.75' y='115' font-size='2.8'>S61.55</text>
+<text x='230' y='124' font-size='2.8'>S73.00</text>
+<text x='24' y='47' font-size='3.1'>POCKET TOOL SECTION Z6.20 / 5:1 · S increases right</text>
+<text x='24' y='137' font-size='2.7'>Near/far intersection coordinates are REF;nominal key circles R2.52,centres S35.97/59.03.</text>
+<text x='268' y='48' font-size='3.1'>MB2 slot: W4.20±0.05</text>
+<text x='268' y='56' font-size='3.1'>Start S31.20±0.02;end S73.00±0.02</text>
+<text x='268' y='64' font-size='3.1'>Four plan corners R0.50±0.02</text>
+<text x='268' y='72' font-size='3.1'>Four vertical key intersections R0.50±0.02</text>
+<text x='268' y='80' font-size='3.1'>All slot floor/lip blends R0.15±0.02</text>
+<text x='268' y='88' font-size='3.1'>Floor Z5.50±0.05;key floor Z4.00±0.02</text>
+<text x='268' y='100' font-size='3.1'>Do not round the key's straight load flanks</text>
+<text x='268' y='108' font-size='3.1'>End0.00–0.04 before actual Ø15 seat start</text>
+<text x='268' y='116' font-size='3.1'>Fit MB2 before the pulley key</text>
+<text x='268' y='124' font-size='3.1'>Rear entry is interrupted by the Ø12 land</text>
+<line class='edge' x1='8' y1='145' x2='412' y2='145'/>
+<path class='edge' d='M53 163 V190.5 A1.5 1.5 0 0 0 54.5 192 H93.5 A1.5 1.5 0 0 0 95 190.5 V163'/>
+<line class='centre' x1='36' y1='192' x2='113' y2='192'/>
+<line class='dim' x1='53' y1='163' x2='53' y2='158'/>
+<line class='dim' x1='95' y1='163' x2='95' y2='158'/>
+<path class='dim' marker-start='url(#arrow)' marker-end='url(#arrow)' d='M53 156 H95'/>
+<text x='62' y='154.6' font-size='3.1'>4.20 ±0.05</text>
+<text x='28' y='203' font-size='3'>S70 LOCAL FLOOR SECTION / 10:1</text>
+<text x='28' y='211' font-size='3'>Z5.50±0.05 · R0.15±0.02 both roots</text>
+<text x='144' y='156' font-size='3.4'>END / THREAD / FINISH REQUIREMENTS</text>
+<text x='144' y='166' font-size='3.1'>S0 and S113 external edges: 0.20±0.02×45°.</text>
+<text x='144' y='175' font-size='3.1'>M15 lead at S64.50: 0.50±0.02×45°;full profile S65.10–71.30.</text>
+<text x='144' y='184' font-size='3.1'>M5 entry: C0.20±0.02,independent of the external end chamfer.</text>
+<text x='144' y='193' font-size='3.1'>Final slot/key machining precedes matched journal finishing.</text>
+<text x='144' y='202' font-size='3.1'>Remove raised lips;edge break0.05–0.10 on remaining slot openings.</text>
+<text x='144' y='211' font-size='3.1'>Do not touch bearing-seat lands or dimensional key load flanks.</text>
+<line class='edge' x1='8' y1='220' x2='412' y2='220'/>
+<text x='14' y='231' font-size='2.8'>INSPECT: optical profile/replica of slot roots and intersections;slot start/end/width/depth;end chamfers;thread GO/NO-GO and full depth.</text>
+<text x='14' y='239' font-size='2.8'>SECTION AUDIT:191 nominal B-rep sections compared against the reduced beam I;this does not resolve local peak stress or fatigue.</text>
+<text x='14' y='247' font-size='2.8'>Angular C:pulley-key radial midplane,+Z toward opening. Roller key180°±0.10°;MB2 slot median offset≤0.025 to C.</text>
+<text x='14' y='255' font-size='2.8'>RELEASE HOLD: local stress/contact,joint preload and operating thermal field. No machining or physical inspection result is prefilled.</text>
+<line class='edge' x1='8' y1='264' x2='412' y2='264'/>
+<line class='edge' x1='235' y1='264' x2='235' y2='289'/>
+<text x='14' y='274' font-size='4'>PART F101 · FEED ROTOR · DETAIL SHEET</text>
+<text x='14' y='282' font-size='3.2'>S1-B-FEED-R6-2026-09-12</text>
+<text x='241' y='274' font-size='3'>SCALES5:1 /10:1 · SHEET2 OF2</text>
+<text x='241' y='282' font-size='3'>All unspecified axial coordinates ±0.02 · do not scale</text>
+</svg>

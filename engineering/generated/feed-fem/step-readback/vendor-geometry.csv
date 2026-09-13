@@ -1,0 +1,3 @@
+file,solids,valid,xmin,ymin,zmin,xmax,ymax,zmax,centroid_x,centroid_y,centroid_z,solid_volume_mm3
+F101-R6-analysis.step,1,true,-9.5,0,-9.5,9.5,113,9.5,-8.9358986131e-11,55.1007414037,-0.162485351965,14390.4167475
+F101-R6-analysis.step#0,1,true,-9.5,0,-9.5,9.5,113,9.5,-8.9358986131e-11,55.1007414037,-0.162485351965,14390.4167475

@@ -1,0 +1,38 @@
+reference,quantity,manufacturer,exact_order,package_or_footprint,value_or_description,assembly_note
+U1,1,Texas Instruments,AM26LV32EIDR,SOIC-16_3.9x9.9mm_P1.27mm,"3.3 V quad RS-422 differential receiver",pin-1 marker toward J8/J9
+U2,1,Texas Instruments,TPL7407LDR,SOIC-16_3.9x9.9mm_P1.27mm,"40 V seven-channel low-side NMOS driver; PUL/DIR channels",pin-1 marker toward J4
+U3,1,Texas Instruments,TPL7407LDR,SOIC-16_3.9x9.9mm_P1.27mm,"40 V seven-channel low-side NMOS driver; ENA/indicator/buzzer channels",pin-1 marker toward J12
+J1,1,Samtec,SSQ-120-23-G-S,Socket_1x20_P2.54mm_Vertical,"Pico 2 left socket row",fit vertical
+J2,1,Samtec,SSQ-120-23-G-S,Socket_1x20_P2.54mm_Vertical,"Pico 2 right socket row",fit vertical
+J3,1,Phoenix Contact,1759033,MSTB_2_5_4_G_5_08,"4-position 5.08 mm PCB plug header",fit header
+P3,1,Phoenix Contact,1757233,MSTB_2_5_4_ST_5_08,"matching 4-position 5.08 mm screw plug for J3",ship with board
+J4,1,Phoenix Contact,1759033,MSTB_2_5_4_G_5_08,"blade-front drive 4-position PCB plug header",fit header
+P4,1,Phoenix Contact,1757233,MSTB_2_5_4_ST_5_08,"matching 4-position 5.08 mm screw plug for J4",ship with board
+J5,1,Phoenix Contact,1759033,MSTB_2_5_4_G_5_08,"blade-rear drive 4-position PCB plug header",fit header
+P5,1,Phoenix Contact,1757233,MSTB_2_5_4_ST_5_08,"matching 4-position 5.08 mm screw plug for J5",ship with board
+J6,1,Phoenix Contact,1759033,MSTB_2_5_4_G_5_08,"feed-left drive 4-position PCB plug header",fit header
+P6,1,Phoenix Contact,1757233,MSTB_2_5_4_ST_5_08,"matching 4-position 5.08 mm screw plug for J6",ship with board
+J7,1,Phoenix Contact,1759033,MSTB_2_5_4_G_5_08,"feed-right drive 4-position PCB plug header",fit header
+P7,1,Phoenix Contact,1757233,MSTB_2_5_4_ST_5_08,"matching 4-position 5.08 mm screw plug for J7",ship with board
+J8,1,Phoenix Contact,1759059,MSTB_2_5_6_G_5_08,"left encoder 6-position PCB plug header",fit header
+P8,1,Phoenix Contact,1757259,MSTB_2_5_6_ST_5_08,"matching 6-position 5.08 mm screw plug for J8",ship with board
+J9,1,Phoenix Contact,1759059,MSTB_2_5_6_G_5_08,"right encoder 6-position PCB plug header",fit header
+P9,1,Phoenix Contact,1757259,MSTB_2_5_6_ST_5_08,"matching 6-position 5.08 mm screw plug for J9",ship with board
+J10,1,Phoenix Contact,1759114,MSTB_2_5_12_G_5_08,"field-contact 12-position PCB plug header",fit header
+P10,1,Phoenix Contact,1757314,MSTB_2_5_12_ST_5_08,"matching 12-position 5.08 mm screw plug for J10",ship with board
+J11,1,Phoenix Contact,1759091,MSTB_2_5_8_G_5_08,"drive-alarm 8-position PCB plug header",fit header
+P11,1,Phoenix Contact,1757291,MSTB_2_5_8_ST_5_08,"matching 8-position 5.08 mm screw plug for J11",ship with board
+J12,1,Phoenix Contact,1759033,MSTB_2_5_4_G_5_08,"indicator and buzzer 4-position PCB plug header",fit header
+P12,1,Phoenix Contact,1757233,MSTB_2_5_4_ST_5_08,"matching 4-position 5.08 mm screw plug for J12",ship with board
+F1-F3,3,Bourns,MF-R050,PTC-1812,"0.50 A hold resettable fuse",F1 plus24 TPL COM; F2 left encoder; F3 right encoder
+R1-R4,4,Yageo,RC1206FR-07120RL,R_1206_3216Metric,"120 ohm 1 percent RS-422 termination",fit directly beside U1 input pairs
+R5,1,Yageo,RC0603FR-07100KL,R_0603_1608Metric,"100 kiloohm 1 percent GP17 pull-down",fit directly at U3 enable input
+R6-R17,12,Yageo,RC0603FR-071KL,R_0603_1608Metric,"1 kiloohm GPIO output series resistors",GP0-7 GP17 GP22 GP26 GP28
+R18-R27,10,Yageo,RC0603FR-0710KL,R_0603_1608Metric,"10 kiloohm input series resistors",one per J10/J11 dry-contact input
+R28-R37,10,Yageo,RC0603FR-0747KL,R_0603_1608Metric,"47 kiloohm input pull-up resistors",one per J10/J11 dry-contact input
+C1,1,Murata,GRM188R71C104KA01D,C_0603_1608Metric,"100 nF 16 V X7R ceramic decoupler",U1 3V3_MCU to 0V_PELV only
+C2-C3,2,Murata,GRM188R71H104KA93D,C_0603_1608Metric,"100 nF 50 V X7R ceramic bypass capacitor",one from +24V_TPL_COM to 0V_PELV at U2 and U3
+C4-C13,10,Murata,GRM188R71C103KA01D,C_0603_1608Metric,"10 nF 16 V X7R input filter",one per J10/J11 dry-contact input
+D1-D10,10,Nexperia,BZX384-C3V6,SC-76,"3.6 V input clamp diode",one per J10/J11 dry-contact input
+TP1-TP8,8,Keystone,5000,TestPoint_1.0mm,"loop test point",TP1 plus24 TP2 plus5 TP3 plus3V3 TP4 0V TP5 ENA TP6 GP0 TP7 left-A TP8 right-A
+MH1-MH4,4,Keystone,9903,MountingHole_3.2mm_M3,"M3 nylon board mounting hardware set",one spacer screw and nut per hole

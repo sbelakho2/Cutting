@@ -1,0 +1,15 @@
+{
+  "revision":"S1-B-MEAS-R1-2026-09-12",
+  "run_complete":true,
+  "source_scope":"catalogue interfaces,not original supplier CAD or purchased-part manufacturing definitions",
+  "interface_solids":5,
+  "encoder_mount_occurrences":8,
+  "encoder_mount_intersections_checked":true,
+  "step_readbacks":true,
+  "wheel_radial_thread_note":"M4x6 callout;four openings depicted;quantity not separately stated",
+  "encoder_cable_route_modelled":false,
+  "coupling_internal_clearance_verified":false,
+  "measurement_module_integrated":false,
+  "complete_support_tooling_and_torques_released":false,
+  "fabrication_released":false
+}

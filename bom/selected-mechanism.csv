@@ -1,0 +1,6 @@
+id,quantity,manufacturer,exact_order,source_url,observed_unit_eur,price_basis,checked_date,interface,geometry_ids
+MC-B01,4,MISUMI,LHFRW12,https://uk.misumi-ec.com/vona2/result/?Keyword=LHFRW12,14.58,merchandise_ex_vat_no_freight,2026-09-13,dr12;D21(0/-0.016);L57;flange42x6;4xd4.5 cbore7.5x4.1 PCD32;C657N;C0 1200N,LB01/LB02 per carrier
+MC-S01,4,MISUMI,PSFJ12-240,https://uk.misumi-ec.com/vona2/detail/110302634310/,11.70,merchandise_ex_vat_no_freight,2026-09-13,d12 g6;L240;EN1.3505 58HRC hard chrome;perpendicularity0.2,PC01/PC02 per carrier
+MC-P01,2,MISUMI,SWU17-60,https://uk.misumi-ec.com/vona2/detail/110200141760/,3.53,merchandise_ex_vat_no_freight,2026-09-13,D17;d10.5;L60;4.09N/mm;147.1N;deflection36,SP01 per carrier
+MC-P02,1,MISUMI,SWU10.5-35,https://uk.misumi-ec.com/vona2/detail/110200141760/,1.80,merchandise_ex_vat_no_freight,2026-09-13,D10.5;d6.0;L35;3.27N/mm;68.6N;deflection21,SP02 measuring arm
+MC-B03,2,SKF,6204-2Z/C3,https://www.simplybearings.co.uk/products/6204-2z-c3-skf,10.11,GBP8.68_observed_2026-09-13_converted_ECB_2026-09-11_0.85815_GBPEUR_NOT_EUR_quote,2026-09-13,20x47x14;C12800N;C0_6550N;payoff_spindle_bearings_selected_not_fabricated,P004/P005 bearing pockets

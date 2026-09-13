@@ -1,0 +1,114 @@
+{
+  "metadata": {
+    "date": "2026-09-13T13:28:27",
+    "generator": "KiCad 10.0.6",
+    "project": "if-b01",
+    "board_name": "if-b01"
+  },
+  "board": {
+    "has_outline": true,
+    "width": "750.0000 mm",
+    "height": "400.0000 mm",
+    "area": "299763.607 mm²",
+    "front_component_density": "1.46",
+    "back_component_density": "0.24",
+    "front_copper_area": "1911.314 mm²",
+    "back_copper_area": "10231.937 mm²",
+    "min_track_clearance": "0.3000 mm",
+    "min_track_width": "0.2500 mm",
+    "min_drill_diameter": "0.3500 mm",
+    "board_thickness": "1.6000 mm",
+    "front_footprint_area": "4364.721 mm²",
+    "back_footprint_area": "708.51 mm²",
+    "front_footprint_density": "1.46",
+    "back_footprint_density": "0.24"
+  },
+  "pads": {
+    "through_hole": 104,
+    "smd": 174,
+    "connector": 0,
+    "npth": 4,
+    "castellated": 0,
+    "press_fit": 0
+  },
+  "vias": {
+    "through": 544,
+    "blind": 0,
+    "buried": 0,
+    "micro": 0
+  },
+  "components": {
+    "tht": {
+      "front": 24,
+      "back": 0,
+      "total": 24
+    },
+    "smd": {
+      "front": 66,
+      "back": 0,
+      "total": 66
+    },
+    "unspecified": {
+      "front": 0,
+      "back": 0,
+      "total": 0
+    },
+    "total": {
+      "front": 90,
+      "back": 0,
+      "total": 90
+    }
+  },
+  "drill_holes": [
+    {
+      "count": 394,
+      "shape": "Round",
+      "x_size": "0.3500 mm",
+      "y_size": "0.3500 mm",
+      "plated": true,
+      "source": "Via",
+      "start_layer": "F.Cu",
+      "stop_layer": "B.Cu"
+    },
+    {
+      "count": 150,
+      "shape": "Round",
+      "x_size": "0.6000 mm",
+      "y_size": "0.6000 mm",
+      "plated": true,
+      "source": "Via",
+      "start_layer": "F.Cu",
+      "stop_layer": "B.Cu"
+    },
+    {
+      "count": 56,
+      "shape": "Round",
+      "x_size": "1.4000 mm",
+      "y_size": "1.4000 mm",
+      "plated": true,
+      "source": "Pad",
+      "start_layer": "F.Cu",
+      "stop_layer": "B.Cu"
+    },
+    {
+      "count": 48,
+      "shape": "Round",
+      "x_size": "1.0000 mm",
+      "y_size": "1.0000 mm",
+      "plated": true,
+      "source": "Pad",
+      "start_layer": "F.Cu",
+      "stop_layer": "B.Cu"
+    },
+    {
+      "count": 4,
+      "shape": "Round",
+      "x_size": "3.2000 mm",
+      "y_size": "3.2000 mm",
+      "plated": false,
+      "source": "Pad",
+      "start_layer": "F.Cu",
+      "stop_layer": "B.Cu"
+    }
+  ]
+}

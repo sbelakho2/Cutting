@@ -1,0 +1,46 @@
+; STARZ x4 quadrature transition capture, one state machine per encoder.
+;
+; GPIO pin base is A and base+1 is B. The program reports each stable changed
+; AB state to its RX FIFO. `in pins, 2` with left input shift puts the packed
+; AB value in bits 1:0; board.cpp converts the Gray-code transition:
+;     00 -> 01 -> 11 -> 10 -> 00 = positive count.
+; Any illegal two-bit jump is faulted in board.cpp. `push block` intentionally
+; stalls on an RX FIFO overflow; board.cpp checks the sticky PIO RXSTALL flag
+; and latches `fault::encoder_overflow`, rather than silently dropping edges.
+;
+; The initial AB sample is supplied as a low two-bit TX word by
+; quadrature_program_init(). Thereafter the machine has no TX traffic.
+
+.program quadrature
+.wrap_target
+    pull block              ; initial state from CPU, packed in bits 1:0
+    out x, 2                ; x = last AB state
+sample:
+    mov isr, null
+    in pins, 2              ; current packed AB -> ISR[1:0]
+    mov y, isr
+    jmp x != y, changed
+    jmp sample
+changed:
+    mov x, y
+    push block              ; ordered changed AB state
+    jmp sample
+.wrap
+
+% c-sdk {
+#include "hardware/pio.h"
+static inline void quadrature_program_init(PIO pio, uint sm, uint offset, uint pin_a) {
+    pio_gpio_init(pio, pin_a);
+    pio_gpio_init(pio, pin_a + 1u);
+    pio_sm_set_consecutive_pindirs(pio, sm, pin_a, 2, false);
+    pio_sm_config c = quadrature_program_get_default_config(offset);
+    sm_config_set_in_pins(&c, pin_a);
+    sm_config_set_in_shift(&c, false, false, 32);  // AB occupies ISR bits 1:0
+    sm_config_set_out_shift(&c, true, false, 32);  // initial AB comes from OSR bits 1:0
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX); // 8 ordered state transitions
+    pio_sm_init(pio, sm, offset, &c);
+    const uint32_t initial = (gpio_get(pin_a) ? 1u : 0u) | (gpio_get(pin_a + 1u) ? 2u : 0u);
+    pio_sm_put_blocking(pio, sm, initial);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

@@ -1,0 +1,13 @@
+id,quantity,description,material,stock_or_source,governing_record,manufacturing_status
+F101,8,R6 stepped rotor shaft with end chamfers and blended key washer slot,42CrMo4+QT minimum650MPa yield,20diameterx120rough_blank,docs/12-feed-cartridge-fabrication.md,local_stress_preload_and_thermal_field_not_released
+F102,8,Rear bearing and removable-front-module base,6082-T6,46x73x53_finished_current_drawing,docs/12-feed-cartridge-fabrication.md,housing_stress_and_support_integration_pending
+F103,8,Locating bearing cover,S355,46x37.25x2_finished,docs/12-feed-cartridge-fabrication.md,dimensioned_engineering_definition_not_released
+F104,8,Rear inner-ring spacer,C45,16OD12.1ID2.70thick,docs/12-feed-cartridge-fabrication.md,dimensioned_engineering_definition_not_released
+F105,8,Rear bearing shoulder spacer with C0.30 on shoulder-side bore,C45,16OD12.1ID1.00thick,docs/12-feed-cartridge-fabrication.md,dimensioned_engineering_definition_not_released
+F106,8,Front inner-ring spacer,C45,19.5OD15.1ID1.00thick,docs/12-feed-cartridge-fabrication.md,dimensioned_engineering_definition_not_released
+F107,8,Roller rear spacer with C0.30 on shoulder-side bore,C45,17.5OD10.1ID1.50thick,docs/12-feed-cartridge-fabrication.md,dimensioned_engineering_definition_not_released
+F108,8,Roller retaining plate,C45,17.5OD5.5ID3.00thick,docs/12-feed-cartridge-fabrication.md,dimensioned_engineering_definition_not_released
+F109,8,Positive roller key with C0.20 shaft-facing perimeter,C45+N minimum300MPa yield,3x4x18_round_ends,docs/12-feed-cartridge-fabrication.md,custom_key_not_DIN6885_square_key
+F110,8,Roller secondary keyway operation,existing_aluminium_collar,MISUMI_UMCL40-10-20-MC_in_TR-R01,docs/12-feed-cartridge-fabrication.md,do_not_count_as_second_purchased_roller
+F111,2,Feed motor plate,6082-T6,80x80x10_finished,docs/12-feed-cartridge-fabrication.md,motor_support_attachment_integration_pending
+F112,8,Removable front locating-bearing block,6082-T6,46x19.02x37.5_match_machined_with_F102,docs/12-feed-cartridge-fabrication.md,module_joint_and_housing_stress_pending

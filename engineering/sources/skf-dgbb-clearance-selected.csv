@@ -1,0 +1,4 @@
+bore_over_mm,bore_through_mm,C2_min_um,C2_max_um,CN_min_um,CN_max_um,C3_min_um,C3_max_um,C4_min_um,C4_max_um,source,basis
+2.5,6,0,7,2,13,8,23,,,SKF_general_bearing_specifications_metric_table4,ISO5753-1_unmounted_zero_measuring_load
+6,10,0,7,2,13,8,23,14,29,SKF_general_bearing_specifications_metric_table4,ISO5753-1_unmounted_zero_measuring_load
+10,18,0,9,3,18,11,25,18,33,SKF_general_bearing_specifications_metric_table4,ISO5753-1_unmounted_zero_measuring_load

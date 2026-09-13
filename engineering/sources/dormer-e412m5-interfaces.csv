@@ -1,0 +1,32 @@
+parameter,value,unit,scope,source
+manufacturer,Dormer Pramet,,selected manufacturer,https://dormerpramet.com/p/7441118
+ordering_code,E412M5,,selected tap,https://dormerpramet.com/p/7441118
+material_id,7441118,,manufacturer identifier,https://dormerpramet.com/p/7441118
+sap_id,86033653,,manufacturer product detail,https://dormerpramet.com/p/7441118
+ean,7320760778883,,manufacturer product detail,https://dormerpramet.com/p/7441118
+thread_diameter,5,mm,ISO metric coarse,https://dormerpramet.com/p/7441118
+thread_pitch,0.8,mm,ISO metric coarse,https://dormerpramet.com/p/7441118
+thread_fit,6H,,finished internal thread,https://dormerpramet.com/p/7441118
+standard,DIN371,,tool dimensions,https://dormerpramet.com/p/7441118
+chamfer_form,C,,2-3 pitch cutting lead; not a male-centre dimension,https://dormerpramet.com/p/7441118
+lead_min,2,pitches,manufacturer description,https://dormerpramet.com/p/7441118
+lead_max,3,pitches,manufacturer description,https://dormerpramet.com/p/7441118
+blind_depth_ratio,3,D,manufacturer application limit,https://dormerpramet.com/p/7441118
+shank_diameter,6,mm,DCON MS,https://dormerpramet.com/p/7441118
+square_width,4.9,mm,WSC,https://dormerpramet.com/p/7441118
+square_length,8,mm,LSC,https://dormerpramet.com/p/7441118
+overall_length,70,mm,OAL,https://dormerpramet.com/p/7441118
+usable_length,25,mm,LU to reinforced-shank transition,https://dormerpramet.com/p/7441118
+threaded_cutting_length,8,mm,THL; not the maximum blind-thread depth,https://dormerpramet.com/p/7441118
+recommended_pre_drill,4.2,mm,PHD,https://dormerpramet.com/p/7441118
+flutes,3,,manufacturer product detail,https://dormerpramet.com/p/7441118
+helix_angle,48,deg,manufacturer description,https://dormerpramet.com/p/7441118
+tool_material,HSS-E-PM,,powder metallurgical cobalt high-speed steel,https://dormerpramet.com/p/7441118
+coating,TiAlN-Top,,manufacturer description,https://dormerpramet.com/p/7441118
+net_mass,13.8,g,manufacturer product detail,https://dormerpramet.com/p/7441118
+alloy_steel_group_P3_1,24,m/min,manufacturer starting vc for hardness below180HB,https://dormerpramet.com/p/7441118
+alloy_steel_group_P3_2,19,m/min,manufacturer starting vc for hardness180-260HB,https://dormerpramet.com/p/7441118
+alloy_steel_group_P3_3,16,m/min,manufacturer starting vc for hardness260-360HB,https://dormerpramet.com/p/7441118
+male_centre_projection,NOT_TABULATED,,family image shows a male centre; no dimension inferred,dormer-e412-family-dim.png
+retailer_sku,6081909,,commercial identifier only,https://www.mrosupply.com/cutting-tools/6081909_e412m5_dormer-pramet/
+observed_unit_price,40.55,USD,merchandise only checked2026-09-12,https://www.mrosupply.com/cutting-tools/6081909_e412m5_dormer-pramet/

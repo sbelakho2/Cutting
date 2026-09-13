@@ -1,0 +1,6 @@
+add_executable(test_machine test_machine.cpp)
+target_link_libraries(test_machine PRIVATE starz_machine_core)
+target_include_directories(test_machine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+foreach(t profile validate homing cycle correction slip stop safety board jog storage journal protocol)
+  add_test(NAME machine.${t} COMMAND test_machine ${t})
+endforeach()

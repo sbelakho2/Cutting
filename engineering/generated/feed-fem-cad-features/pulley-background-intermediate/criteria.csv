@@ -1,0 +1,7 @@
+check,value,limit,result
+working_peak_Pa,77713893.0759,216666666.667,PASS_SCOPED
+fault_peak_Pa,163519146.122,433333333.333,PASS_SCOPED
+working_displacement_mm,0.0205886630992,0.05,PASS_SCOPED
+Brep_volume_relative,0.00141724158788,0.005,PASS_SCOPED
+at_least_three_meshes,1,3,REFINE_OR_FAIL
+focused_study_requires_background_and_all_root_verification,0,1,REFINE_OR_FAIL

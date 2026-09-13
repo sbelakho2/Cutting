@@ -1,0 +1,8 @@
+execute_process(COMMAND "${ANALYSIS_EXE}" --report "${OUTPUT_DIR}" --require-design-pass RESULT_VARIABLE result)
+if(NOT result EQUAL 2)
+  message(FATAL_ERROR "Unqualified design must be rejected with code2; observed ${result}")
+endif()
+file(READ "${OUTPUT_DIR}/status.json" report)
+if(NOT report MATCHES "\"production_ready\": false")
+  message(FATAL_ERROR "Design gate lost its non-production marker")
+endif()

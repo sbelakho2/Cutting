@@ -1,0 +1,2 @@
+CAD_face,type,xmin,Smin,zmin,xmax,Smax,zmax,analytic_axis_defined,origin_x,origin_S,origin_z,axis_x,axis_S,axis_z,major_radius_mm,minor_radius_mm
+79,torus,-5.765001,19.579999,-5.765001,5.765001,19.6200011,5.765001,1,0,19.58,0,-0,-1,-0,5.765,0.04

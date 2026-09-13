@@ -1,0 +1,56 @@
+; STARZ step generator, one state machine per axis (RP2350, PIO clock 1 MHz).
+;
+; TX FIFO word: bits 31..16 = count - 1, bits 15..0 = half_period - 1 (>= 0).
+; Every pulse takes exactly
+;     period = 2 * half_period + 9 ticks
+; whether it is the first pulse of a run (fetch path: pull, out, out, mov) or a
+; continuation (jmp, nop, nop, nop, jmp) -- both paths are five instructions.
+; software/machine/core/profile.hpp must define pio_period_overhead_ticks = 9.
+;   high level : half_period + 2 ticks (>= 3 us)
+;   low level  : half_period + 7 ticks (>= 8 us)
+; CL57T-V41 / CL86T-V41 require >= 1 us high and >= 1 us low.
+;
+; DIR is an ordinary GPIO written by software at least ctrl::axis::dir_setup_us
+; before the first word of a move is pushed. Aborting a move = disable the state
+; machine, drain its FIFO, force PUL low, restart at the wrap target
+; (board.cpp abort_steps). A stalled `pull block` (empty FIFO) simply leaves PUL
+; low; no pulse is ever cut short because the FIFO word is consumed whole.
+
+.program step_gen
+.wrap_target
+fetch:
+    pull block              ; wait for the next run word
+    out y, 16               ; y = half_period - 1
+    out x, 16               ; x = count - 1
+    mov isr, y              ; isr keeps half_period - 1 for reloads
+pulse:
+    set pins, 1             ; PUL high
+high:
+    jmp y-- high            ; executes half_period times
+    mov y, isr
+    set pins, 0             ; PUL low
+low:
+    jmp y-- low             ; executes half_period times
+    mov y, isr
+    jmp x-- cont            ; more pulses in this run?
+.wrap                       ; no: fall through to fetch (5 instructions to next set)
+cont:
+    nop
+    nop
+    nop
+    jmp pulse               ; yes: same 5-instruction spacing as the fetch path
+
+% c-sdk {
+#include "hardware/clocks.h"
+static inline void step_gen_program_init(PIO pio, uint sm, uint offset, uint pul_pin, uint32_t pio_clock_hz) {
+    pio_gpio_init(pio, pul_pin);
+    pio_sm_set_consecutive_pindirs(pio, sm, pul_pin, 1, true);
+    pio_sm_config c = step_gen_program_get_default_config(offset);
+    sm_config_set_set_pins(&c, pul_pin, 1);
+    sm_config_set_out_shift(&c, true, false, 32);      // shift right, no autopull
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);     // 8-entry TX FIFO
+    sm_config_set_clkdiv(&c, (float)clock_get_hz(clk_sys) / (float)pio_clock_hz);
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

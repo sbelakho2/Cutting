@@ -1,0 +1,7 @@
+check,value_mm,basis
+minimum_motor_tip_beyond_hub,0.53,256 bounded tolerance corners
+minimum_stage_tip_beyond_hub,0.55,256 bounded tolerance corners
+maximum_motor_tip_beyond_hub,4.47,bellows internal clearance inspection required
+maximum_stage_tip_beyond_hub,1.45,bellows internal clearance inspection required
+minimum_shaft_end_gap,12.58,independent worst case
+minimum_locknut_clearance,0.95,measured feeler setting

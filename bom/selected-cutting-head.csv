@@ -1,0 +1,13 @@
+id,quantity,manufacturer,exact_order,source,status,observed_unit_usd,price_basis,interface
+AX-01,2,HIWIN,KK8610P340A1F0 / article10.00026,HIWIN manufacturer / authorised distributor,catalogue_selected,,not_observed,440mm total;10mm lead;86mm rail;8h7 shaft18mm exposed
+DR-01,2,STEPPERONLINE,1-CL86T-P85-V41,STEPPERONLINE direct,catalogue_selected,130.77,merchandise_only_no_freight,34E1K-85+CL86T-V41+CM2M-18+CE2M+CABLE-PC-1;134.1mm rear motor envelope
+CP-01,2,R+W,MK2/100/50/8/14,R+W manufacturer / authorised distributor,configured_catalogue_selected,,not_observed,10Nm;40OD;50L;16mm hubs;8H7/14H7
+PS-01,2,STEPPERONLINE,LE-350-60,STEPPERONLINE direct,catalogue_selected_electrical_release_pending,17.88,merchandise_only_no_freight,60V5.8A;one per axis;no paralleling;bus protection separate
+H001,1,STARZ,H001 S1-B ground datum,Local certified steel stock and qualified machining,custom_design_not_released,,not_quoted,180x1040x20;see STEP and drawing requirements
+H002,2,STARZ,H002 S1-B riser,Local certified steel stock and qualified machining,custom_design_not_released,,not_quoted,110x355x20;actual six-hole stage grid
+H003,2,STARZ,H003 R6 motor adapter,42CrMo4+QT certified650MPa minimum yield and qualified machining,custom_design_not_released,,not_quoted,100x100x15;F0_PCD70_M5_with9.5x8.5counterbores;motor69.58mm_grid_M5;73.10pilot;A3drawing_generated
+HF0-B,8,standard,ISO4762 M5x16 class10.9,Traceable industrial fastener supplier,geometry_selected_joint_preload_pending,,not_quoted,F0_stage_mounting;ISO7092_M5washer;8.5nominal_thread_engagement
+HM-B,8,standard,ISO4762 M5x25 class10.9,Traceable industrial fastener supplier,geometry_selected_joint_preload_pending,,not_quoted,Original9mm_motor_flange;1mmwasher;15mm_adapter_thread_engagement_nominal
+HM-W,16,standard,ISO7092 M5 200HV 5.3x9x1,Traceable industrial fastener supplier,geometry_selected_joint_preload_pending,,not_quoted,Reduced_OD9mm_fits9.5mm_counterbore;not_ISO7089_OD10washer
+H004,2,STARZ,H004 S1-B monolithic holder,42CrMo4+QT with certified650MPa minimum yield,custom_design_not_released,,not_quoted,Actual STEP load path;ground blade seat;no printed structural parts
+T001,1,Tooling supplier,PURCHASE_TO_DRAWING matched90deg V pair,Specialist tool grinding and heat treatment,not_catalogue_selected_not_qualified,,not_quoted,49x38x3 envelope;edge grind and loaded clearance qualification required

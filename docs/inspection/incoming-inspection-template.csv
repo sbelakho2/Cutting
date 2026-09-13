@@ -1,0 +1,2 @@
+receipt_id,build_id,bom_item_id,manufacturer,exact_order,quantity_received,lot_or_serial,certificate_or_cofc,inspection_method,acceptance_criterion,actual_result,inspector,date_utc,disposition,nonconformance_id
+,,,,,,,,,,,,,,

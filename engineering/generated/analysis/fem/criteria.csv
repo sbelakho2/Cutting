@@ -1,0 +1,13 @@
+check,value,limit,result
+holder_displacement_refinement,0.000962756,0.03,PASS
+holder_frequency_refinement,0.00418197,0.03,PASS
+holder_peak_stress_refinement,0.00437299,0.05,PASS
+holder_peak_stress_Pa,2.89957e+07,2.16667e+08,PASS
+holder_proof_stress_Pa,5.79871e+07,4.33333e+08,PASS_SCOPED
+isolated_rigid_blade_gap_bound_mm,0.00454023,0,PASS_SCOPED
+adapter_displacement_refinement,0.0728873,0.03,REFINE
+adapter_peak_stress_refinement,0.118218,0.05,REFINE
+adapter_peak_stress_Pa,8.63399e+06,2.16667e+08,PASS_SCOPED
+datum_displacement_refinement,0.0683664,0.03,REFINE
+datum_peak_stress_refinement,0.369656,0.05,REFINE
+datum_peak_stress_Pa,9.43722e+07,2.16667e+08,PASS_SCOPED

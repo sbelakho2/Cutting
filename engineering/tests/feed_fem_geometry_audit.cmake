@@ -1,0 +1,52 @@
+if(NOT DEFINED AUDIT_EXE OR NOT DEFINED OUTPUT_DIR)
+  message(FATAL_ERROR "Missing CAD peak-audit test paths")
+endif()
+file(MAKE_DIRECTORY "${OUTPUT_DIR}")
+set(header "bulk_mm,root_mm,nodes,tets,load_class,region,sampled_vm_MPa,continuous_phase_upper_MPa,peak_x_mm,peak_S_mm,peak_z_mm,phase_deg,sign_index,torque_vertex")
+# A manufactured audit row with an exact point on the nominal A12 torus;
+# it is a parser/geometry regression, not a new calculated stress field.
+# Interior45-degree point on the fillet. A tangency-edge point belongs to both
+# the torus and adjacent cylinder and cannot uniquely test nearest-face type.
+set(row "1,0.02,100,400,working,A12_groove,10,11,5.736715728752538,18.511715728752538,0,90,5,0")
+file(WRITE "${OUTPUT_DIR}/synthetic.csv" "${header}\n${row}\n")
+execute_process(COMMAND "${AUDIT_EXE}" "${OUTPUT_DIR}/valid" "${OUTPUT_DIR}/synthetic.csv"
+  RESULT_VARIABLE result OUTPUT_VARIABLE output ERROR_VARIABLE errors TIMEOUT 60)
+if(NOT result STREQUAL "0")
+  message(FATAL_ERROR "Valid peak audit failed: ${output}\n${errors}")
+endif()
+file(READ "${OUTPUT_DIR}/valid/status.json" record)
+string(JSON complete GET "${record}" run_complete)
+string(JSON released GET "${record}" fabrication_released)
+string(JSON converged GET "${record}" stress_convergence_verified)
+string(JSON count GET "${record}" peak_rows)
+if(NOT complete OR released OR converged OR NOT count EQUAL 1)
+  message(FATAL_ERROR "Audit state incorrect: ${record}")
+endif()
+file(READ "${OUTPUT_DIR}/valid/peak-geometry.csv" peaks)
+if(NOT peaks MATCHES ",on,[0-9]+,torus,")
+  message(FATAL_ERROR "Exact A12 point not classified on a torus: ${peaks}")
+endif()
+foreach(invalid IN ITEMS "${header}\n" "wrong_header\n${row}\n" "${header}\n1,0.02,100,400,working,A12_groove,10,11,nan,18.54,0,90,5,0\n"
+    "${header}\n1,0.02,100,400,working,A12_groove,10,11,5.725,18.54,0,90,8,0\n"
+    "${header}\n${row},\n")
+  file(WRITE "${OUTPUT_DIR}/invalid.csv" "${invalid}")
+  execute_process(COMMAND "${AUDIT_EXE}" "${OUTPUT_DIR}/invalid" "${OUTPUT_DIR}/invalid.csv"
+    RESULT_VARIABLE result OUTPUT_QUIET ERROR_QUIET TIMEOUT 60)
+  if(NOT result STREQUAL "1")
+    message(FATAL_ERROR "Invalid peak audit input not rejected: ${result}")
+  endif()
+  file(READ "${OUTPUT_DIR}/invalid/status.json" record)
+  string(JSON complete GET "${record}" run_complete)
+  if(complete)
+    message(FATAL_ERROR "Failed peak audit remained complete")
+  endif()
+endforeach()
+file(MAKE_DIRECTORY "${OUTPUT_DIR}/alias")
+file(WRITE "${OUTPUT_DIR}/alias/peak-geometry.csv" "${header}\n${row}\n")
+file(SHA256 "${OUTPUT_DIR}/alias/peak-geometry.csv" before)
+execute_process(COMMAND "${AUDIT_EXE}" "${OUTPUT_DIR}/alias" "${OUTPUT_DIR}/alias/peak-geometry.csv"
+  RESULT_VARIABLE result OUTPUT_QUIET ERROR_QUIET TIMEOUT 60)
+file(SHA256 "${OUTPUT_DIR}/alias/peak-geometry.csv" after)
+if(NOT result STREQUAL "1" OR NOT before STREQUAL after)
+  message(FATAL_ERROR "Aliased input was not rejected before modification")
+endif()

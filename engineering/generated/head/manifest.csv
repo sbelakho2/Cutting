@@ -1,0 +1,56 @@
+id,description,status,xmin_mm,ymin_mm,zmin_mm,xmax_mm,ymax_mm,zmax_mm,envelope_volume_mm3
+H001,"Ground head datum / S1-B",custom_design,-90,-520,0,90,520,20,3634082.30258
+H002_F,"Stage riser /20mm clearance for true NEMA34 body",custom_design,-55,-375,20,55,-20,40,776894.56672
+AX01-R_F,"HIWIN KK86 rail external envelope",purchased_envelope,-43,-368,40,43,-28,59,549470.273968
+AX01-F_F,"HIWIN fixed end / Ø46 coupling clearance",purchased_envelope,-42.5,-455,40,42.5,-368,103,320067.926155
+AX01-D_F,"HIWIN distal13mm end envelope",purchased_envelope,-43,-28,40,43,-15,72,35776
+AX01-S_F,"HIWIN actual Ø8 x18 exposed input shaft",purchased_envelope,-4,-419,68,4,-401,76,904.778684234
+AX01-C_F,"HIWIN carriage external envelope / M6 46mm grid",purchased_envelope,-30,-160,59,30,-44,86,186977.522204
+H003_F,"15mm motor adapter / full hub tolerance stack / M5 motor fixings",custom_design,-50,-470,22,50,-453,122,121018.801961
+DR01-M_F,"34E1K-85 / original supplier STEP; removable shaft key removed",purchased_envelope,-42.9250001001,-604.1,29.0749998999,42.9250001001,-419.55,215.925,935960.368437
+HF0-B1_F,"ISO4762 M5x16 class10.9;nominal-major cosmetic thread",purchased_envelope,-28.9987373415,-467.5,43.0012626585,-20.4987373415,-446.5,51.5012626585,597.884351886
+HF0-W1_F,"ISO7092 M5 200HV reduced-OD washer9x5.3x1",purchased_envelope,-29.2487373415,-462.5,42.7512626585,-20.2487373415,-461.5,51.7512626585,41.5554168254
+HF0-B2_F,"ISO4762 M5x16 class10.9;nominal-major cosmetic thread",purchased_envelope,-28.9987373415,-467.5,92.4987373415,-20.4987373415,-446.5,100.998737342,597.884351886
+HF0-W2_F,"ISO7092 M5 200HV reduced-OD washer9x5.3x1",purchased_envelope,-29.2487373415,-462.5,92.2487373415,-20.2487373415,-461.5,101.248737342,41.5554168254
+HF0-B3_F,"ISO4762 M5x16 class10.9;nominal-major cosmetic thread",purchased_envelope,20.4987373415,-467.5,43.0012626585,28.9987373415,-446.5,51.5012626585,597.884351886
+HF0-W3_F,"ISO7092 M5 200HV reduced-OD washer9x5.3x1",purchased_envelope,20.2487373415,-462.5,42.7512626585,29.2487373415,-461.5,51.7512626585,41.5554168254
+HF0-B4_F,"ISO4762 M5x16 class10.9;nominal-major cosmetic thread",purchased_envelope,20.4987373415,-467.5,92.4987373415,28.9987373415,-446.5,100.998737342,597.884351886
+HF0-W4_F,"ISO7092 M5 200HV reduced-OD washer9x5.3x1",purchased_envelope,20.2487373415,-462.5,92.2487373415,29.2487373415,-461.5,101.248737342,41.5554168254
+HM-B1_F,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",purchased_envelope,-39.04,-485,32.96,-30.54,-455,41.46,774.598938651
+HM-W1_F,"ISO7092 M5 200HV motor washer9x5.3x1",purchased_envelope,-39.29,-480,32.71,-30.29,-479,41.71,41.5554168254
+HM-B2_F,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",purchased_envelope,-39.04,-485,102.54,-30.54,-455,111.04,774.598938651
+HM-W2_F,"ISO7092 M5 200HV motor washer9x5.3x1",purchased_envelope,-39.29,-480,102.29,-30.29,-479,111.29,41.5554168254
+HM-B3_F,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",purchased_envelope,30.54,-485,32.96,39.04,-455,41.46,774.598938651
+HM-W3_F,"ISO7092 M5 200HV motor washer9x5.3x1",purchased_envelope,30.29,-480,32.71,39.29,-479,41.71,41.5554168254
+HM-B4_F,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",purchased_envelope,30.54,-485,102.54,39.04,-455,111.04,774.598938651
+HM-W4_F,"ISO7092 M5 200HV motor washer9x5.3x1",purchased_envelope,30.29,-480,102.29,39.29,-479,111.29,41.5554168254
+CP01_F,"R+W MK2/100/50/8/14 interference envelope",purchased_envelope,-20,-452,52,20,-402,92,48481.0578302
+H004_F,"42CrMo4+QT single-piece blade holder",custom_design,-35,-139.5,86,35,-17,134,324672.603577
+T001_F,"Ground V tooling purchase-to-drawing / qualification hold",purchased_envelope,-3.01,-34,93,-0.01,15,131,4360.45023334
+H002_R,"Stage riser /20mm clearance for true NEMA34 body",custom_design,-55,20,20,55,375,40,776894.56672
+AX01-R_R,"HIWIN KK86 rail external envelope",purchased_envelope,-43,28,40,43,368,59,549470.273968
+AX01-F_R,"HIWIN fixed end / Ø46 coupling clearance",purchased_envelope,-42.5,368,40,42.5,455,103,320067.926155
+AX01-D_R,"HIWIN distal13mm end envelope",purchased_envelope,-43,15,40,43,28,72,35776
+AX01-S_R,"HIWIN actual Ø8 x18 exposed input shaft",purchased_envelope,-4,401,68,4,419,76,904.778684234
+AX01-C_R,"HIWIN carriage external envelope / M6 46mm grid",purchased_envelope,-30,44,59,30,160,86,186977.522204
+H003_R,"15mm motor adapter / full hub tolerance stack / M5 motor fixings",custom_design,-50,453,22,50,470,122,121018.801961
+DR01-M_R,"34E1K-85 / original supplier STEP; removable shaft key removed",purchased_envelope,-42.9250001001,419.55,29.0749998999,42.9250001001,604.1000001,215.925,935960.368437
+HF0-B1_R,"ISO4762 M5x16 class10.9;nominal-major cosmetic thread",purchased_envelope,20.4987373415,446.5,43.0012626585,28.9987373415,467.5,51.5012626585,597.884351886
+HF0-W1_R,"ISO7092 M5 200HV reduced-OD washer9x5.3x1",purchased_envelope,20.2487373415,461.5,42.7512626585,29.2487373415,462.5,51.7512626585,41.5554168254
+HF0-B2_R,"ISO4762 M5x16 class10.9;nominal-major cosmetic thread",purchased_envelope,20.4987373415,446.5,92.4987373415,28.9987373415,467.5,100.998737342,597.884351886
+HF0-W2_R,"ISO7092 M5 200HV reduced-OD washer9x5.3x1",purchased_envelope,20.2487373415,461.5,92.2487373415,29.2487373415,462.5,101.248737342,41.5554168254
+HF0-B3_R,"ISO4762 M5x16 class10.9;nominal-major cosmetic thread",purchased_envelope,-28.9987373415,446.5,43.0012626585,-20.4987373415,467.5,51.5012626585,597.884351886
+HF0-W3_R,"ISO7092 M5 200HV reduced-OD washer9x5.3x1",purchased_envelope,-29.2487373415,461.5,42.7512626585,-20.2487373415,462.5,51.7512626585,41.5554168254
+HF0-B4_R,"ISO4762 M5x16 class10.9;nominal-major cosmetic thread",purchased_envelope,-28.9987373415,446.5,92.4987373415,-20.4987373415,467.5,100.998737342,597.884351886
+HF0-W4_R,"ISO7092 M5 200HV reduced-OD washer9x5.3x1",purchased_envelope,-29.2487373415,461.5,92.2487373415,-20.2487373415,462.5,101.248737342,41.5554168254
+HM-B1_R,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",purchased_envelope,30.54,455,32.96,39.04,485,41.46,774.598938651
+HM-W1_R,"ISO7092 M5 200HV motor washer9x5.3x1",purchased_envelope,30.29,479,32.71,39.29,480,41.71,41.5554168254
+HM-B2_R,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",purchased_envelope,30.54,455,102.54,39.04,485,111.04,774.598938651
+HM-W2_R,"ISO7092 M5 200HV motor washer9x5.3x1",purchased_envelope,30.29,479,102.29,39.29,480,111.29,41.5554168254
+HM-B3_R,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",purchased_envelope,-39.04,455,32.96,-30.54,485,41.46,774.598938651
+HM-W3_R,"ISO7092 M5 200HV motor washer9x5.3x1",purchased_envelope,-39.29,479,32.71,-30.29,480,41.71,41.5554168254
+HM-B4_R,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",purchased_envelope,-39.04,455,102.54,-30.54,485,111.04,774.598938651
+HM-W4_R,"ISO7092 M5 200HV motor washer9x5.3x1",purchased_envelope,-39.29,479,102.29,-30.29,480,111.29,41.5554168254
+CP01_R,"R+W MK2/100/50/8/14 interference envelope",purchased_envelope,-20,402,52,20,452,92,48481.0578302
+H004_R,"42CrMo4+QT single-piece blade holder",custom_design,-35,17,86,35,139.5,134,324672.603577
+T001_R,"Ground V tooling purchase-to-drawing / qualification hold",purchased_envelope,0.01,-15,93,3.01,34,131,4360.45023334

@@ -1,0 +1,17 @@
+id,quantity,manufacturer,exact_order,source_record,release_status,function_or_hold
+CB-PS24,1,Siemens,LOGO!POWER 6EP3332-6SB00-0AY0,bom/selected-controls.csv,selected_load_calculation_open,24 V PELV control source; distribution and branch protection require review
+CB-PS05,1,Siemens,LOGO!POWER 6EP3310-6SB00-0AY0,bom/selected-controls.csv,selected_load_calculation_open,5 V logic source to TB24-03 and IF-B01 J3-3; distribution and branch protection require review
+CB-XPS,1,Schneider Electric,Harmony XPSUAF13AP,bom/selected-controls.csv,selected_system_unqualified,Hardwired two-channel safety relay; component capability is not a completed machine safety function
+CB-K1-K3,3,Schneider Electric,TeSys Deca LC1D12BD,bom/selected-controls.csv,selected_DC_duty_unqualified,Proposed K1/K2/K3 power-isolation contactors; exact DC utilisation duty and series-pole application require proof
+CB-KA1-KA10,10,Phoenix Contact,PLC-RSC-24DC/21 2966171,bom/selected-controls.csv,selected_load_and_interface_review_open,Isolated field/alarm contact relays for J10/J11 pairs
+CB-KSR1,1,Phoenix Contact,PLC-RSC-24DC/21 2966171,bom/selected-controls.csv,proposed_reset_interposing_relay,Separate reset/EDM relay; safety-function suitability is not established
+CB-XPS-FUSE,1,Schneider Electric,DF2CN10,bom/selected-controls.csv,identified_XPS_output_fuse_link,10 x 38 mm 10 A gG fuse link; compatible holder and coordination remain unselected
+CB-TB24-01,1,UNSELECTED,24 V PELV distribution terminal,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Feeds IF-B01 J3-1; terminal type rating and branch protection are open
+CB-TB24-02,1,UNSELECTED,0 V PELV distribution terminal,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Feeds IF-B01 return pins and isolated contact commons; return-current capacity is open
+CB-TB24-03,1,UNSELECTED,5 V logic distribution terminal,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Feeds IF-B01 J3-3; terminal type rating and branch protection are open
+CB-TB-DL,1,UNSELECTED,24 V drive-logic fused distribution,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Feeds external common-anode drive inputs only; fuse loading and terminal type are open
+CB-TB-S,1,UNSELECTED,Safety loop field terminal set,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,E-stop and guard channel wiring; no terminal product or point-to-point schematic is released
+CB-TB-M1-M3,3,UNSELECTED,DC drive branch terminal set,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,K1/K2/K3 supply/driver branch terminations; DC fault fusing and discharge design are open
+CB-PE-BAR,1,UNSELECTED,Protective-earth bar and bonding set,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Chassis and encoder-screen bonds; enclosure and PE continuity design are open
+CB-ENC-ENTRY,2,UNSELECTED,Screened encoder cable entry and screen clamp,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Screen bonds at PE entry only; gland/clamp selection and EMC review are open
+CB-WIRE-FERRULES,1,UNSELECTED,Wire and ferrule system,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Conductor sizes colours crimp tooling and torque records depend on final protection and enclosure design

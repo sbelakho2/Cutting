@@ -1,0 +1,9100 @@
+(export
+	(version "E")
+	(design
+		(source "/Users/sabelakhoua/IdeaProjects/Machines/Cutting/hardware/if-b01/if-b01.kicad_sch")
+		(date "2026-09-13T13:28:14")
+		(tool "Eeschema 10.0.6")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title "IF-B01 PELV interface board — native logical capture")
+				(company "STARZ S1-B")
+				(rev "S1-B-IF-B01-NATIVE-DRAFT-R2-2026-09-13")
+				(date "2026-09-13")
+				(source "if-b01.kicad_sch")
+				(comment
+					(number "1")
+					(value "DRAFT — NOT FOR FABRICATION, ASSEMBLY, ENERGISATION OR SAFETY USE")
+				)
+				(comment
+					(number "2")
+					(value "Placed/routed draft PCB source; review and release gates remain open")
+				)
+				(comment
+					(number "3")
+					(value "C2/C3: 50 V minimum because TPL COM is connected to +24V_TPL_COM")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "C1")
+			(value "100nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "100 nF 16 V X7R ceramic decoupler")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C104KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R ceramic decoupler")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C104KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "1f4132e0-c71f-5359-a79b-75fa4655fbaf")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C2")
+			(value "100nF 50V")
+			(footprint "IFB01:C_0603_1608")
+			(description "100 nF 50 V X7R ceramic bypass capacitor")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71H104KA93D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 50 V X7R ceramic bypass capacitor")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71H104KA93D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b2ff809a-8585-5de3-8bf4-09ebcca725f0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C3")
+			(value "100nF 50V")
+			(footprint "IFB01:C_0603_1608")
+			(description "100 nF 50 V X7R ceramic bypass capacitor")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71H104KA93D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 50 V X7R ceramic bypass capacitor")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71H104KA93D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ae559386-2911-54b9-856f-ea94d624ea09")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C4")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "04e17683-c653-5ca3-97f4-447f921fbc95")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C5")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "8d94759e-f8b8-5272-97dd-74823ce5ca40")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C6")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "fb50d816-6693-5f28-bc56-d81923e9c8d9")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C7")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c16b489d-a9f3-5694-9721-30470279b101")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C8")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "0bfa6751-12bc-5158-9a15-2e8bb44703f0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C9")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e78fd40b-d024-56f2-9d56-173e8c522ae6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C10")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6aadf693-e82d-56fd-8932-68219f3a8d47")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C11")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c859c703-25e3-5186-b37b-fd3772ccb702")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C12")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "5770c5ce-f006-5072-a07f-f839594de2d5")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C13")
+			(value "10nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "10 nF 16 V X7R input filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C103KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 nF 16 V X7R input filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C103KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "342d6390-87f1-51b4-a38e-4299056067d4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D1")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "cda5980b-dd4a-5f97-b0cf-d6d7bf4acf5f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D2")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "1ee64546-be2f-5e60-a1b4-c95ff7dec0cc")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D3")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "f8c482a0-26fb-5831-96a7-583c124e8ea3")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D4")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "77f4aabf-b331-5554-b5d1-af56182358f9")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D5")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "07423f8f-c213-5a16-b4f0-354797960871")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D6")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "2186f2c3-08e5-5e0f-aca8-0be29e274d50")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D7")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "4670c85b-3674-57b5-8b59-87b1080a0701")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D8")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "07617828-27f4-5341-a048-3067a70f70f8")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D9")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b156f679-16cd-5cf4-8148-2cbc099f80a6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D10")
+			(value "BZX384-C3V6")
+			(footprint "IFB01:SOD_323")
+			(description "3.6 V input clamp diode")
+			(fields
+				(field
+					(name "Manufacturer") "Nexperia")
+				(field
+					(name "MPN") "BZX384-C3V6")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOD_323")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.6 V input clamp diode")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ZENER")
+				(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Nexperia")
+			)
+			(property
+				(name "MPN")
+				(value "BZX384-C3V6")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d1daf645-91e5-5132-9049-b22ce3ba3d7d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "F1")
+			(value "MF-R050")
+			(footprint "IFB01:PTC_1812")
+			(description "0.50 A hold resettable fuse")
+			(fields
+				(field
+					(name "Manufacturer") "Bourns")
+				(field
+					(name "MPN") "MF-R050")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:PTC_1812")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "0.50 A hold resettable fuse")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "FUSE")
+				(description "Two-terminal resettable fuse")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Bourns")
+			)
+			(property
+				(name "MPN")
+				(value "MF-R050")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "8687c6ef-6575-548c-83d1-22cd5ba212a4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "F2")
+			(value "MF-R050")
+			(footprint "IFB01:PTC_1812")
+			(description "0.50 A hold resettable fuse")
+			(fields
+				(field
+					(name "Manufacturer") "Bourns")
+				(field
+					(name "MPN") "MF-R050")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:PTC_1812")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "0.50 A hold resettable fuse")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "FUSE")
+				(description "Two-terminal resettable fuse")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Bourns")
+			)
+			(property
+				(name "MPN")
+				(value "MF-R050")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ba502d64-0ffc-5b9a-8121-8ddefd5207fe")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "F3")
+			(value "MF-R050")
+			(footprint "IFB01:PTC_1812")
+			(description "0.50 A hold resettable fuse")
+			(fields
+				(field
+					(name "Manufacturer") "Bourns")
+				(field
+					(name "MPN") "MF-R050")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:PTC_1812")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "0.50 A hold resettable fuse")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "FUSE")
+				(description "Two-terminal resettable fuse")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Bourns")
+			)
+			(property
+				(name "MPN")
+				(value "MF-R050")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "7e09686f-2f15-547d-b18a-688ef032fb0a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J1")
+			(value "Pico 2 SC1631 left socket")
+			(footprint "IFB01:PICO_SOCKET_1X20")
+			(description "Pico 2 left socket row")
+			(fields
+				(field
+					(name "Manufacturer") "Samtec")
+				(field
+					(name "MPN") "SSQ-120-23-G-S")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:PICO_SOCKET_1X20")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Pico 2 left socket row")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "PICO2_LEFT_SOCKET")
+				(description "Pico 2 SC1631 physical pins 1-20 socket row")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samtec")
+			)
+			(property
+				(name "MPN")
+				(value "SSQ-120-23-G-S")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "1fad4862-a6c6-5e3f-9165-dd919f5f4756")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "20")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J2")
+			(value "Pico 2 SC1631 right socket")
+			(footprint "IFB01:PICO_SOCKET_1X20")
+			(description "Pico 2 right socket row")
+			(fields
+				(field
+					(name "Manufacturer") "Samtec")
+				(field
+					(name "MPN") "SSQ-120-23-G-S")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:PICO_SOCKET_1X20")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Pico 2 right socket row")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "PICO2_RIGHT_SOCKET")
+				(description "Pico 2 SC1631 physical pins 21-40 socket row")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Samtec")
+			)
+			(property
+				(name "MPN")
+				(value "SSQ-120-23-G-S")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "8ea98db6-990b-527f-a996-03ff296307b3")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "20")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J3")
+			(value "1759033")
+			(footprint "IFB01:MSTB_2_5_4_G_5_08")
+			(description "4-position 5.08 mm PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759033")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_4_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "4-position 5.08 mm PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "HDR4_PELV")
+				(description "Four-position PELV supply header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759033")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "09a7630c-c9b1-52be-8b7b-7800afab3391")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J4")
+			(value "1759033")
+			(footprint "IFB01:MSTB_2_5_4_G_5_08")
+			(description "blade-front drive 4-position PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759033")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_4_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "blade-front drive 4-position PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "HDR4_IO")
+				(description "Four-position external I/O header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759033")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "08bec3d1-2216-59ca-a291-68f324e5b477")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J5")
+			(value "1759033")
+			(footprint "IFB01:MSTB_2_5_4_G_5_08")
+			(description "blade-rear drive 4-position PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759033")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_4_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "blade-rear drive 4-position PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "HDR4_IO")
+				(description "Four-position external I/O header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759033")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c9e9f762-90c5-520d-b886-bac8b33e5c81")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J6")
+			(value "1759033")
+			(footprint "IFB01:MSTB_2_5_4_G_5_08")
+			(description "feed-left drive 4-position PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759033")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_4_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "feed-left drive 4-position PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "HDR4_IO")
+				(description "Four-position external I/O header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759033")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "7a7c8820-d8eb-55b6-990a-00ca7de6e59d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J7")
+			(value "1759033")
+			(footprint "IFB01:MSTB_2_5_4_G_5_08")
+			(description "feed-right drive 4-position PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759033")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_4_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "feed-right drive 4-position PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "HDR4_IO")
+				(description "Four-position external I/O header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759033")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "89c8dd81-e262-5522-8211-3528a45823cd")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J8")
+			(value "1759059")
+			(footprint "IFB01:MSTB_2_5_6_G_5_08")
+			(description "left encoder 6-position PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759059")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_6_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "left encoder 6-position PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ENC_HDR6")
+				(description "Six-position encoder header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759059")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6aa7d1d8-d63f-5896-9eff-9c7dcb18b20d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J9")
+			(value "1759059")
+			(footprint "IFB01:MSTB_2_5_6_G_5_08")
+			(description "right encoder 6-position PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759059")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_6_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "right encoder 6-position PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "ENC_HDR6")
+				(description "Six-position encoder header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759059")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "871281e9-8754-5908-8933-c90aca82f871")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J10")
+			(value "1759114")
+			(footprint "IFB01:MSTB_2_5_12_G_5_08")
+			(description "field-contact 12-position PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759114")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_12_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "field-contact 12-position PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "CONTACT_HDR12")
+				(description "Twelve-position isolated dry-contact header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759114")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "7b9085ce-1d2f-57f8-b391-fe53f688379e")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "12")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J11")
+			(value "1759091")
+			(footprint "IFB01:MSTB_2_5_8_G_5_08")
+			(description "drive-alarm 8-position PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759091")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_8_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "drive-alarm 8-position PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "CONTACT_HDR8")
+				(description "Eight-position isolated dry-contact header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759091")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "24079d1b-b869-5d91-88af-f363f57de789")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J12")
+			(value "1759033")
+			(footprint "IFB01:MSTB_2_5_4_G_5_08")
+			(description "indicator and buzzer 4-position PCB plug header")
+			(fields
+				(field
+					(name "Manufacturer") "Phoenix Contact")
+				(field
+					(name "MPN") "1759033")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MSTB_2_5_4_G_5_08")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "indicator and buzzer 4-position PCB plug header")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "HDR4_IO")
+				(description "Four-position external I/O header")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Phoenix Contact")
+			)
+			(property
+				(name "MPN")
+				(value "1759033")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b08adfc7-d4bb-5363-aaf7-c54f6158d8cc")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "MH1")
+			(value "M3 3.2mm")
+			(footprint "IFB01:MountingHole_3_2mm_M3")
+			(description "M3 nylon board mounting hardware set")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "9903")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MountingHole_3_2mm_M3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "M3 nylon board mounting hardware set")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "MH")
+				(description "Non-electrical M3 mounting hole")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "9903")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "cc5a4b44-cafa-5450-8f5d-8ee424d11fe9")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "MH2")
+			(value "M3 3.2mm")
+			(footprint "IFB01:MountingHole_3_2mm_M3")
+			(description "M3 nylon board mounting hardware set")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "9903")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MountingHole_3_2mm_M3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "M3 nylon board mounting hardware set")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "MH")
+				(description "Non-electrical M3 mounting hole")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "9903")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "82f8d2b6-1c6b-5d57-b801-b29211c2cb51")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "MH3")
+			(value "M3 3.2mm")
+			(footprint "IFB01:MountingHole_3_2mm_M3")
+			(description "M3 nylon board mounting hardware set")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "9903")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MountingHole_3_2mm_M3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "M3 nylon board mounting hardware set")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "MH")
+				(description "Non-electrical M3 mounting hole")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "9903")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "1ab62c42-214e-56ac-8ec2-5929b37d76f2")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "MH4")
+			(value "M3 3.2mm")
+			(footprint "IFB01:MountingHole_3_2mm_M3")
+			(description "M3 nylon board mounting hardware set")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "9903")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:MountingHole_3_2mm_M3")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "M3 nylon board mounting hardware set")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "MH")
+				(description "Non-electrical M3 mounting hole")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "9903")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "0d46e407-71c8-5ea9-8d0d-13ddd5fdcd21")
+			(units
+				(unit
+					(name "A")
+					(pins)
+				)
+			)
+		)
+		(comp
+			(ref "R1")
+			(value "120R")
+			(footprint "IFB01:R_1206_3216")
+			(description "120 ohm 1 percent RS-422 termination")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC1206FR-07120RL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_1206_3216")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "120 ohm 1 percent RS-422 termination")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC1206FR-07120RL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b5f578dc-07e1-5732-b580-a316da34490b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R2")
+			(value "120R")
+			(footprint "IFB01:R_1206_3216")
+			(description "120 ohm 1 percent RS-422 termination")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC1206FR-07120RL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_1206_3216")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "120 ohm 1 percent RS-422 termination")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC1206FR-07120RL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "65c51b96-1ba9-5a86-a168-9d15c82370b9")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R3")
+			(value "120R")
+			(footprint "IFB01:R_1206_3216")
+			(description "120 ohm 1 percent RS-422 termination")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC1206FR-07120RL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_1206_3216")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "120 ohm 1 percent RS-422 termination")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC1206FR-07120RL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e258fd69-61e9-5b4b-b068-f01169200290")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R4")
+			(value "120R")
+			(footprint "IFB01:R_1206_3216")
+			(description "120 ohm 1 percent RS-422 termination")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC1206FR-07120RL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_1206_3216")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "120 ohm 1 percent RS-422 termination")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC1206FR-07120RL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "3311b687-c728-514c-a46b-a24e4a32b716")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R5")
+			(value "100k")
+			(footprint "IFB01:R_0603_1608")
+			(description "100 kiloohm 1 percent GP17 pull-down")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-07100KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 kiloohm 1 percent GP17 pull-down")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-07100KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c37bf2e1-8d57-5efc-89db-86c0ff978d77")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R6")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "eea49fed-2540-54ce-8211-8c3d9395eb04")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R7")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "317e345a-c9dc-5335-a50b-dce9d6339d82")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R8")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "4b9cd9a4-5110-5c4a-be92-20cbfbccff4d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R9")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "7ce4a36b-a85c-5ebd-85ef-1b20545babb7")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R10")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "08b3e80e-90af-564c-88e3-fa018dea484e")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R11")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "9d560168-71e2-5ad9-b534-41959068e350")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R12")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "64d6559e-1da3-5c4e-aa4a-74837e592916")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R13")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b9dc7940-ca6a-5d69-a2c0-69860c0d6247")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R14")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "4c473c4f-0224-5b6a-b5eb-4d8c9435c148")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R15")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "678dabc6-4d8a-5f7b-a494-dc1c71477d77")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R16")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "1ed51d99-ae3d-5f31-ac89-6cb47735e1af")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R17")
+			(value "1k")
+			(footprint "IFB01:R_0603_1608")
+			(description "1 kiloohm GPIO output series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-071KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "1 kiloohm GPIO output series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-071KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "8f7bcb48-b76f-5c5e-a015-ef1a9c7e6b5c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R18")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "74535acd-8b97-5b95-b776-c83ba2886d2f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R19")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "061a822a-297d-5829-b9a0-692f34e02f0d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R20")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c9ca0e10-2888-56a4-900f-c8afb3e3d4ec")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R21")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d91731d1-3902-5b01-a1dc-c381635822bc")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R22")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "633f6c3b-cea8-5325-9891-444a9185545c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R23")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "844d0147-5141-52db-99f5-adb642ffc9b6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R24")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "0ce88988-43e8-56ee-ae30-90c4cd3cbd2c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R25")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d632dfe2-6fd9-5990-b2ab-90ee55bcc6e1")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R26")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "77604f8a-3510-543e-bbb2-50d0e3d3d58a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R27")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm input series resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm input series resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "97918b08-8bf8-5404-9f4d-7a7a546baa6d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R28")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "65f66b18-5c19-5768-92e4-8ce718120b84")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R29")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "cd8cd067-ba81-525e-a637-4b85aa10af59")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R30")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "a9a733e3-5baa-5b36-9fdd-97b90601f810")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R31")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "9213fdcf-bc8a-5429-a511-01d774f1b303")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R32")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "5a100922-767b-5428-ade8-c31936ef0036")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R33")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d9b9af4a-ca4a-52bd-9b8a-04e746d6f023")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R34")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b16fb758-664e-5f27-8d87-dd5822f4741f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R35")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "fbd32653-99d8-59c4-8831-ef44e51d819b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R36")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "41f75866-c6b7-584b-b539-9b893d74bf17")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R37")
+			(value "47k")
+			(footprint "IFB01:R_0603_1608")
+			(description "47 kiloohm input pull-up resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0747KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "47 kiloohm input pull-up resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0747KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ed0fe5d9-40a4-5fba-a300-a9f466770368")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP1")
+			(value "TP +24V_PELV")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c94c57f4-7e76-527c-adf7-0f99e87cec00")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP2")
+			(value "TP +5V_LOGIC")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "a51141ac-0ce7-58fd-87f8-347ed1862261")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP3")
+			(value "TP 3V3_MCU")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "5229f0b2-e2bd-55f2-b252-aee78435bd3f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP4")
+			(value "TP 0V_PELV")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "406702c5-21ed-5285-8657-dfa3b5f11908")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP5")
+			(value "TP DRV_ENA_NEG")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c33c7150-103f-5fd1-bdd4-b0de7ac4b95b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP6")
+			(value "TP GP0")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "46f3d5ac-9cd0-57f9-a822-d82e3e0a0630")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP7")
+			(value "TP GP8")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ad29c763-7049-5061-aabd-d2b6598bdecf")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP8")
+			(value "TP GP10")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ebb9fd17-a64f-521f-892d-95235466d992")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U1")
+			(value "AM26LV32EIDR")
+			(footprint "IFB01:SOIC_16_3_9x9_9_P1_27")
+			(description "3.3 V quad RS-422 differential receiver")
+			(fields
+				(field
+					(name "Manufacturer") "Texas Instruments")
+				(field
+					(name "MPN") "AM26LV32EIDR")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOIC_16_3_9x9_9_P1_27")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.3 V quad RS-422 differential receiver")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "AM26LV32EIDR")
+				(description "3.3 V quad RS-422 differential receiver")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Texas Instruments")
+			)
+			(property
+				(name "MPN")
+				(value "AM26LV32EIDR")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "96ec5d0d-0ee2-531a-8461-99dd9538fa27")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "13")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U2")
+			(value "TPL7407LDR")
+			(footprint "IFB01:SOIC_16_3_9x9_9_P1_27")
+			(description "40 V seven-channel low-side NMOS driver; PUL/DIR channels")
+			(fields
+				(field
+					(name "Manufacturer") "Texas Instruments")
+				(field
+					(name "MPN") "TPL7407LDR")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOIC_16_3_9x9_9_P1_27")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "40 V seven-channel low-side NMOS driver; PUL/DIR channels")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TPL7407LDR")
+				(description "40 V seven-channel low-side NMOS driver")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Texas Instruments")
+			)
+			(property
+				(name "MPN")
+				(value "TPL7407LDR")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "892a2b4c-49b0-5220-8c08-2088c8b36f6d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "10")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U3")
+			(value "TPL7407LDR")
+			(footprint "IFB01:SOIC_16_3_9x9_9_P1_27")
+			(description "40 V seven-channel low-side NMOS driver; ENA/indicator/buzzer channels")
+			(fields
+				(field
+					(name "Manufacturer") "Texas Instruments")
+				(field
+					(name "MPN") "TPL7407LDR")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:SOIC_16_3_9x9_9_P1_27")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "40 V seven-channel low-side NMOS driver; ENA/indicator/buzzer channels")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TPL7407LDR")
+				(description "40 V seven-channel low-side NMOS driver")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Texas Instruments")
+			)
+			(property
+				(name "MPN")
+				(value "TPL7407LDR")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b122ff56-fc7a-586b-bb0d-af5203837cfd")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "10")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "IFB01")
+			(part "AM26LV32EIDR")
+			(description "3.3 V quad RS-422 differential receiver")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "AM26LV32EIDR")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3.3 V quad RS-422 differential receiver")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1B")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "1A")
+					(type "input")
+				)
+				(pin
+					(num "3")
+					(name "1Y")
+					(type "output")
+				)
+				(pin
+					(num "4")
+					(name "G")
+					(type "input")
+				)
+				(pin
+					(num "5")
+					(name "2Y")
+					(type "output")
+				)
+				(pin
+					(num "6")
+					(name "2A")
+					(type "input")
+				)
+				(pin
+					(num "7")
+					(name "2B")
+					(type "input")
+				)
+				(pin
+					(num "8")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "9")
+					(name "3B")
+					(type "input")
+				)
+				(pin
+					(num "10")
+					(name "3A")
+					(type "input")
+				)
+				(pin
+					(num "11")
+					(name "3Y")
+					(type "output")
+				)
+				(pin
+					(num "12")
+					(name "~G")
+					(type "input")
+				)
+				(pin
+					(num "13")
+					(name "4Y")
+					(type "output")
+				)
+				(pin
+					(num "14")
+					(name "4A")
+					(type "input")
+				)
+				(pin
+					(num "15")
+					(name "4B")
+					(type "input")
+				)
+				(pin
+					(num "16")
+					(name "VDD")
+					(type "power_in")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "C")
+			(description "Two-terminal capacitor")
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "C")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Two-terminal capacitor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "CONTACT_HDR12")
+			(description "Twelve-position isolated dry-contact header")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "MSTB 2.5 12")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Twelve-position isolated dry-contact header")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "3")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "4")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "5")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "6")
+					(type "passive")
+				)
+				(pin
+					(num "7")
+					(name "7")
+					(type "passive")
+				)
+				(pin
+					(num "8")
+					(name "8")
+					(type "passive")
+				)
+				(pin
+					(num "9")
+					(name "9")
+					(type "passive")
+				)
+				(pin
+					(num "10")
+					(name "10")
+					(type "passive")
+				)
+				(pin
+					(num "11")
+					(name "11")
+					(type "passive")
+				)
+				(pin
+					(num "12")
+					(name "12")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "CONTACT_HDR8")
+			(description "Eight-position isolated dry-contact header")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "MSTB 2.5 8")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Eight-position isolated dry-contact header")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "3")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "4")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "5")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "6")
+					(type "passive")
+				)
+				(pin
+					(num "7")
+					(name "7")
+					(type "passive")
+				)
+				(pin
+					(num "8")
+					(name "8")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "ENC_HDR6")
+			(description "Six-position encoder header")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "MSTB 2.5 6")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Six-position encoder header")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1_+5V")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2_0V")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "3_A+")
+					(type "output")
+				)
+				(pin
+					(num "4")
+					(name "4_A-")
+					(type "output")
+				)
+				(pin
+					(num "5")
+					(name "5_B+")
+					(type "output")
+				)
+				(pin
+					(num "6")
+					(name "6_B-")
+					(type "output")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "FUSE")
+			(description "Two-terminal resettable fuse")
+			(fields
+				(field
+					(name "Reference") "F")
+				(field
+					(name "Value") "FUSE")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Two-terminal resettable fuse")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "HDR4_IO")
+			(description "Four-position external I/O header")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "MSTB 2.5 4")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Four-position external I/O header")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "3")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "4")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "HDR4_PELV")
+			(description "Four-position PELV supply header")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "MSTB 2.5 4")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Four-position PELV supply header")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1_+24V")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2_0V")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "3_+5V")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "4_0V")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "MATING_PLUG")
+			(description "Supplied off-board mating connector")
+			(fields
+				(field
+					(name "Reference") "P")
+				(field
+					(name "Value") "Mating plug")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Supplied off-board mating connector")
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "MH")
+			(description "Non-electrical M3 mounting hole")
+			(fields
+				(field
+					(name "Reference") "MH")
+				(field
+					(name "Value") "MountingHole_3.2mm_M3")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Non-electrical M3 mounting hole")
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "PICO2_LEFT_SOCKET")
+			(description "Pico 2 SC1631 physical pins 1-20 socket row")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Pico 2 left socket")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Pico 2 SC1631 physical pins 1-20 socket row")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "01_GP0")
+					(type "output")
+				)
+				(pin
+					(num "2")
+					(name "02_GP1")
+					(type "output")
+				)
+				(pin
+					(num "3")
+					(name "03_GND")
+					(type "power_in")
+				)
+				(pin
+					(num "4")
+					(name "04_GP2")
+					(type "output")
+				)
+				(pin
+					(num "5")
+					(name "05_GP3")
+					(type "output")
+				)
+				(pin
+					(num "6")
+					(name "06_GP4")
+					(type "output")
+				)
+				(pin
+					(num "7")
+					(name "07_GP5")
+					(type "output")
+				)
+				(pin
+					(num "8")
+					(name "08_GND")
+					(type "power_in")
+				)
+				(pin
+					(num "9")
+					(name "09_GP6")
+					(type "output")
+				)
+				(pin
+					(num "10")
+					(name "10_GP7")
+					(type "output")
+				)
+				(pin
+					(num "11")
+					(name "11_GP8")
+					(type "bidirectional")
+				)
+				(pin
+					(num "12")
+					(name "12_GP9")
+					(type "bidirectional")
+				)
+				(pin
+					(num "13")
+					(name "13_GND")
+					(type "power_in")
+				)
+				(pin
+					(num "14")
+					(name "14_GP10")
+					(type "bidirectional")
+				)
+				(pin
+					(num "15")
+					(name "15_GP11")
+					(type "bidirectional")
+				)
+				(pin
+					(num "16")
+					(name "16_GP12")
+					(type "bidirectional")
+				)
+				(pin
+					(num "17")
+					(name "17_GP13")
+					(type "bidirectional")
+				)
+				(pin
+					(num "18")
+					(name "18_GND")
+					(type "power_in")
+				)
+				(pin
+					(num "19")
+					(name "19_GP14")
+					(type "bidirectional")
+				)
+				(pin
+					(num "20")
+					(name "20_GP15")
+					(type "bidirectional")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "PICO2_RIGHT_SOCKET")
+			(description "Pico 2 SC1631 physical pins 21-40 socket row")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Pico 2 right socket")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Pico 2 SC1631 physical pins 21-40 socket row")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "21_GP16")
+					(type "bidirectional")
+				)
+				(pin
+					(num "2")
+					(name "22_GP17")
+					(type "output")
+				)
+				(pin
+					(num "3")
+					(name "23_GND")
+					(type "power_in")
+				)
+				(pin
+					(num "4")
+					(name "24_GP18")
+					(type "bidirectional")
+				)
+				(pin
+					(num "5")
+					(name "25_GP19")
+					(type "bidirectional")
+				)
+				(pin
+					(num "6")
+					(name "26_GP20")
+					(type "bidirectional")
+				)
+				(pin
+					(num "7")
+					(name "27_GP21")
+					(type "bidirectional")
+				)
+				(pin
+					(num "8")
+					(name "28_GND")
+					(type "power_in")
+				)
+				(pin
+					(num "9")
+					(name "29_GP22")
+					(type "output")
+				)
+				(pin
+					(num "10")
+					(name "30_RUN")
+					(type "input")
+				)
+				(pin
+					(num "11")
+					(name "31_GP26")
+					(type "output")
+				)
+				(pin
+					(num "12")
+					(name "32_GP27")
+					(type "bidirectional")
+				)
+				(pin
+					(num "13")
+					(name "33_AGND")
+					(type "power_in")
+				)
+				(pin
+					(num "14")
+					(name "34_GP28")
+					(type "output")
+				)
+				(pin
+					(num "15")
+					(name "35_ADC_VREF")
+					(type "input")
+				)
+				(pin
+					(num "16")
+					(name "36_3V3")
+					(type "power_out")
+				)
+				(pin
+					(num "17")
+					(name "37_3V3_EN")
+					(type "input")
+				)
+				(pin
+					(num "18")
+					(name "38_GND")
+					(type "power_in")
+				)
+				(pin
+					(num "19")
+					(name "39_VSYS")
+					(type "power_in")
+				)
+				(pin
+					(num "20")
+					(name "40_VBUS")
+					(type "power_in")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "R")
+			(description "Two-terminal resistor")
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "R")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Two-terminal resistor")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "TP")
+			(description "Single-pad loop test point")
+			(fields
+				(field
+					(name "Reference") "TP")
+				(field
+					(name "Value") "TestPoint")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Single-pad loop test point")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "TP")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "TPL7407LDR")
+			(description "40 V seven-channel low-side NMOS driver")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "TPL7407LDR")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "40 V seven-channel low-side NMOS driver")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "IN1")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "IN2")
+					(type "input")
+				)
+				(pin
+					(num "3")
+					(name "IN3")
+					(type "input")
+				)
+				(pin
+					(num "4")
+					(name "IN4")
+					(type "input")
+				)
+				(pin
+					(num "5")
+					(name "IN5")
+					(type "input")
+				)
+				(pin
+					(num "6")
+					(name "IN6")
+					(type "input")
+				)
+				(pin
+					(num "7")
+					(name "IN7")
+					(type "input")
+				)
+				(pin
+					(num "8")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "9")
+					(name "COM")
+					(type "power_in")
+				)
+				(pin
+					(num "10")
+					(name "OUT7")
+					(type "open_collector")
+				)
+				(pin
+					(num "11")
+					(name "OUT6")
+					(type "open_collector")
+				)
+				(pin
+					(num "12")
+					(name "OUT5")
+					(type "open_collector")
+				)
+				(pin
+					(num "13")
+					(name "OUT4")
+					(type "open_collector")
+				)
+				(pin
+					(num "14")
+					(name "OUT3")
+					(type "open_collector")
+				)
+				(pin
+					(num "15")
+					(name "OUT2")
+					(type "open_collector")
+				)
+				(pin
+					(num "16")
+					(name "OUT1")
+					(type "open_collector")
+				)
+			)
+		)
+		(libpart
+			(lib "IFB01")
+			(part "ZENER")
+			(description "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "Zener")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Two-terminal clamp diode; pin 1 anode, pin 2 cathode")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "A")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "K")
+					(type "passive")
+				)
+			)
+		)
+	)
+	(libraries
+		(library
+			(logical "IFB01")
+			(uri "${KIPRJMOD}/if-b01.kicad_sym")
+		)
+	)
+	(nets
+		(net
+			(code "1")
+			(name "/+5V_ENC_L")
+			(class "Default")
+			(node
+				(ref "F2")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J8")
+				(pin "1")
+				(pinfunction "1_+5V_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "2")
+			(name "/+5V_ENC_R")
+			(class "Default")
+			(node
+				(ref "F3")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J9")
+				(pin "1")
+				(pinfunction "1_+5V_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "3")
+			(name "/+5V_LOGIC")
+			(class "Default")
+			(node
+				(ref "F2")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "F3")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "19")
+				(pinfunction "39_VSYS_19")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J3")
+				(pin "3")
+				(pinfunction "3_+5V_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP2")
+				(pin "1")
+				(pinfunction "TP_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "4")
+			(name "/+24V_PELV")
+			(class "Default")
+			(node
+				(ref "F1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "1")
+				(pinfunction "1_+24V_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP1")
+				(pin "1")
+				(pinfunction "TP_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "5")
+			(name "/+24V_TPL_COM")
+			(class "Default")
+			(node
+				(ref "C2")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "F1")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "9")
+				(pinfunction "COM_9")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U3")
+				(pin "9")
+				(pinfunction "COM_9")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "6")
+			(name "/0V_PELV")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C10")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C11")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C12")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C13")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C2")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C3")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C4")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C5")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C6")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C7")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C8")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C9")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "D1")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D10")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D2")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D3")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D4")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D5")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D6")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D7")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D8")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D9")
+				(pin "1")
+				(pinfunction "A_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "13")
+				(pinfunction "13_GND_13")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J1")
+				(pin "18")
+				(pinfunction "18_GND_18")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J1")
+				(pin "3")
+				(pinfunction "03_GND_3")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J1")
+				(pin "8")
+				(pinfunction "08_GND_8")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J10")
+				(pin "10")
+				(pinfunction "10_10")
+				(pintype "passive")
+			)
+			(node
+				(ref "J10")
+				(pin "12")
+				(pinfunction "12_12")
+				(pintype "passive")
+			)
+			(node
+				(ref "J10")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J10")
+				(pin "4")
+				(pinfunction "4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J10")
+				(pin "6")
+				(pinfunction "6_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "J10")
+				(pin "8")
+				(pinfunction "8_8")
+				(pintype "passive")
+			)
+			(node
+				(ref "J11")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J11")
+				(pin "4")
+				(pinfunction "4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J11")
+				(pin "6")
+				(pinfunction "6_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "J11")
+				(pin "8")
+				(pinfunction "8_8")
+				(pintype "passive")
+			)
+			(node
+				(ref "J12")
+				(pin "4")
+				(pinfunction "4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "13")
+				(pinfunction "33_AGND_13")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J2")
+				(pin "18")
+				(pinfunction "38_GND_18")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J2")
+				(pin "3")
+				(pinfunction "23_GND_3")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J2")
+				(pin "8")
+				(pinfunction "28_GND_8")
+				(pintype "power_in")
+			)
+			(node
+				(ref "J3")
+				(pin "2")
+				(pinfunction "2_0V_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "4")
+				(pinfunction "4_0V_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J4")
+				(pin "4")
+				(pinfunction "4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J5")
+				(pin "4")
+				(pinfunction "4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J6")
+				(pin "4")
+				(pinfunction "4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J7")
+				(pin "4")
+				(pinfunction "4_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "J8")
+				(pin "2")
+				(pinfunction "2_0V_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J9")
+				(pin "2")
+				(pinfunction "2_0V_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP4")
+				(pin "1")
+				(pinfunction "TP_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "12")
+				(pinfunction "~G_12")
+				(pintype "input")
+			)
+			(node
+				(ref "U1")
+				(pin "8")
+				(pinfunction "GND_8")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U2")
+				(pin "8")
+				(pinfunction "GND_8")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U3")
+				(pin "6")
+				(pinfunction "IN6_6")
+				(pintype "input")
+			)
+			(node
+				(ref "U3")
+				(pin "7")
+				(pinfunction "IN7_7")
+				(pintype "input")
+			)
+			(node
+				(ref "U3")
+				(pin "8")
+				(pinfunction "GND_8")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "7")
+			(name "/3V3_MCU")
+			(class "Default")
+			(node
+				(ref "C1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "16")
+				(pinfunction "36_3V3_16")
+				(pintype "power_out")
+			)
+			(node
+				(ref "R28")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R29")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R30")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R31")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R32")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R33")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R34")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R35")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R36")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R37")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP3")
+				(pin "1")
+				(pinfunction "TP_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "16")
+				(pinfunction "VDD_16")
+				(pintype "power_in")
+			)
+			(node
+				(ref "U1")
+				(pin "4")
+				(pinfunction "G_4")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "8")
+			(name "/BF_DIR_IN")
+			(class "Default")
+			(node
+				(ref "R7")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "2")
+				(pinfunction "IN2_2")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "9")
+			(name "/BF_DIR_NEG")
+			(class "Default")
+			(node
+				(ref "J4")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "15")
+				(pinfunction "OUT2_15")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "10")
+			(name "/BF_PUL_IN")
+			(class "Default")
+			(node
+				(ref "R6")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "1")
+				(pinfunction "IN1_1")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "11")
+			(name "/BF_PUL_NEG")
+			(class "Default")
+			(node
+				(ref "J4")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "16")
+				(pinfunction "OUT1_16")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "12")
+			(name "/BR_DIR_IN")
+			(class "Default")
+			(node
+				(ref "R9")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "4")
+				(pinfunction "IN4_4")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "13")
+			(name "/BR_DIR_NEG")
+			(class "Default")
+			(node
+				(ref "J5")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "13")
+				(pinfunction "OUT4_13")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "14")
+			(name "/BR_PUL_IN")
+			(class "Default")
+			(node
+				(ref "R8")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "3")
+				(pinfunction "IN3_3")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "15")
+			(name "/BR_PUL_NEG")
+			(class "Default")
+			(node
+				(ref "J5")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "14")
+				(pinfunction "OUT3_14")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "16")
+			(name "/BUZZER_IN")
+			(class "Default")
+			(node
+				(ref "R17")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "5")
+				(pinfunction "IN5_5")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "17")
+			(name "/BUZZER_NEG")
+			(class "Default")
+			(node
+				(ref "J12")
+				(pin "3")
+				(pinfunction "3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "12")
+				(pinfunction "OUT5_12")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "18")
+			(name "/DRV_ENABLE_IN")
+			(class "Default")
+			(node
+				(ref "R14")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "2")
+				(pinfunction "IN2_2")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "19")
+			(name "/DRV_ENA_NEG")
+			(class "Default")
+			(node
+				(ref "J4")
+				(pin "3")
+				(pinfunction "3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "J5")
+				(pin "3")
+				(pinfunction "3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "J6")
+				(pin "3")
+				(pinfunction "3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "J7")
+				(pin "3")
+				(pinfunction "3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP5")
+				(pin "1")
+				(pinfunction "TP_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "15")
+				(pinfunction "OUT2_15")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "20")
+			(name "/FL_DIR_IN")
+			(class "Default")
+			(node
+				(ref "R11")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "6")
+				(pinfunction "IN6_6")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "21")
+			(name "/FL_DIR_NEG")
+			(class "Default")
+			(node
+				(ref "J6")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "11")
+				(pinfunction "OUT6_11")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "22")
+			(name "/FL_PUL_IN")
+			(class "Default")
+			(node
+				(ref "R10")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "5")
+				(pinfunction "IN5_5")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "23")
+			(name "/FL_PUL_NEG")
+			(class "Default")
+			(node
+				(ref "J6")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "12")
+				(pinfunction "OUT5_12")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "24")
+			(name "/FR_DIR_IN")
+			(class "Default")
+			(node
+				(ref "R13")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "1")
+				(pinfunction "IN1_1")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "25")
+			(name "/FR_DIR_NEG")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "16")
+				(pinfunction "OUT1_16")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "26")
+			(name "/FR_PUL_IN")
+			(class "Default")
+			(node
+				(ref "R12")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "7")
+				(pinfunction "IN7_7")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "27")
+			(name "/FR_PUL_NEG")
+			(class "Default")
+			(node
+				(ref "J7")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "10")
+				(pinfunction "OUT7_10")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "28")
+			(name "/GP0")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "1")
+				(pinfunction "01_GP0_1")
+				(pintype "output")
+			)
+			(node
+				(ref "R6")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP6")
+				(pin "1")
+				(pinfunction "TP_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "29")
+			(name "/GP1")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "2")
+				(pinfunction "02_GP1_2")
+				(pintype "output")
+			)
+			(node
+				(ref "R7")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "30")
+			(name "/GP2")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "4")
+				(pinfunction "04_GP2_4")
+				(pintype "output")
+			)
+			(node
+				(ref "R8")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "31")
+			(name "/GP3")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "5")
+				(pinfunction "05_GP3_5")
+				(pintype "output")
+			)
+			(node
+				(ref "R9")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "32")
+			(name "/GP4")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "6")
+				(pinfunction "06_GP4_6")
+				(pintype "output")
+			)
+			(node
+				(ref "R10")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "33")
+			(name "/GP5")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "7")
+				(pinfunction "07_GP5_7")
+				(pintype "output")
+			)
+			(node
+				(ref "R11")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "34")
+			(name "/GP6")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "9")
+				(pinfunction "09_GP6_9")
+				(pintype "output")
+			)
+			(node
+				(ref "R12")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "35")
+			(name "/GP7")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "10")
+				(pinfunction "10_GP7_10")
+				(pintype "output")
+			)
+			(node
+				(ref "R13")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "36")
+			(name "/GP8")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "11")
+				(pinfunction "11_GP8_11")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "TP7")
+				(pin "1")
+				(pinfunction "TP_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "3")
+				(pinfunction "1Y_3")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "37")
+			(name "/GP9")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "12")
+				(pinfunction "12_GP9_12")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "5")
+				(pinfunction "2Y_5")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "38")
+			(name "/GP10")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "14")
+				(pinfunction "14_GP10_14")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "TP8")
+				(pin "1")
+				(pinfunction "TP_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "11")
+				(pinfunction "3Y_11")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "39")
+			(name "/GP11")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "15")
+				(pinfunction "15_GP11_15")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "U1")
+				(pin "13")
+				(pinfunction "4Y_13")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "40")
+			(name "/GP12")
+			(class "Default")
+			(node
+				(ref "C4")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D1")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "16")
+				(pinfunction "16_GP12_16")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R18")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R28")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "41")
+			(name "/GP13")
+			(class "Default")
+			(node
+				(ref "C5")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D2")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "17")
+				(pinfunction "17_GP13_17")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R19")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R29")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "42")
+			(name "/GP14")
+			(class "Default")
+			(node
+				(ref "C6")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D3")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "19")
+				(pinfunction "19_GP14_19")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R20")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R30")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "43")
+			(name "/GP15")
+			(class "Default")
+			(node
+				(ref "C7")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D4")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "20")
+				(pinfunction "20_GP15_20")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R21")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R31")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "44")
+			(name "/GP16")
+			(class "Default")
+			(node
+				(ref "C8")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D5")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "1")
+				(pinfunction "21_GP16_1")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R22")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R32")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "45")
+			(name "/GP17")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "2")
+				(pinfunction "22_GP17_2")
+				(pintype "output")
+			)
+			(node
+				(ref "R14")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "46")
+			(name "/GP18")
+			(class "Default")
+			(node
+				(ref "C10")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D7")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "4")
+				(pinfunction "24_GP18_4")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R24")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R34")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "47")
+			(name "/GP19")
+			(class "Default")
+			(node
+				(ref "C11")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D8")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "5")
+				(pinfunction "25_GP19_5")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R25")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R35")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "48")
+			(name "/GP20")
+			(class "Default")
+			(node
+				(ref "C12")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D9")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "6")
+				(pinfunction "26_GP20_6")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R26")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R36")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "49")
+			(name "/GP21")
+			(class "Default")
+			(node
+				(ref "C13")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D10")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "7")
+				(pinfunction "27_GP21_7")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R27")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R37")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "50")
+			(name "/GP22")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "9")
+				(pinfunction "29_GP22_9")
+				(pintype "output")
+			)
+			(node
+				(ref "R15")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "51")
+			(name "/GP26")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "11")
+				(pinfunction "31_GP26_11")
+				(pintype "output")
+			)
+			(node
+				(ref "R16")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "52")
+			(name "/GP27")
+			(class "Default")
+			(node
+				(ref "C9")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D6")
+				(pin "2")
+				(pinfunction "K_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "12")
+				(pinfunction "32_GP27_12")
+				(pintype "bidirectional")
+			)
+			(node
+				(ref "R23")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R33")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "53")
+			(name "/GP28")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "14")
+				(pinfunction "34_GP28_14")
+				(pintype "output")
+			)
+			(node
+				(ref "R17")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "54")
+			(name "/GREEN_IN")
+			(class "Default")
+			(node
+				(ref "R15")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "3")
+				(pinfunction "IN3_3")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "55")
+			(name "/GREEN_NEG")
+			(class "Default")
+			(node
+				(ref "J12")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "14")
+				(pinfunction "OUT3_14")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "56")
+			(name "/IN_ALM_BF")
+			(class "Default")
+			(node
+				(ref "J11")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R24")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "57")
+			(name "/IN_ALM_BR")
+			(class "Default")
+			(node
+				(ref "J11")
+				(pin "3")
+				(pinfunction "3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "R25")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "58")
+			(name "/IN_ALM_FL")
+			(class "Default")
+			(node
+				(ref "J11")
+				(pin "5")
+				(pinfunction "5_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "R26")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "59")
+			(name "/IN_ALM_FR")
+			(class "Default")
+			(node
+				(ref "J11")
+				(pin "7")
+				(pinfunction "7_7")
+				(pintype "passive")
+			)
+			(node
+				(ref "R27")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "60")
+			(name "/IN_HOME_FRONT")
+			(class "Default")
+			(node
+				(ref "J10")
+				(pin "11")
+				(pinfunction "11_11")
+				(pintype "passive")
+			)
+			(node
+				(ref "R23")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "61")
+			(name "/IN_HOME_REAR")
+			(class "Default")
+			(node
+				(ref "J10")
+				(pin "9")
+				(pinfunction "9_9")
+				(pintype "passive")
+			)
+			(node
+				(ref "R22")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "62")
+			(name "/IN_RESET")
+			(class "Default")
+			(node
+				(ref "J10")
+				(pin "5")
+				(pinfunction "5_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "R20")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "63")
+			(name "/IN_SAFETY_OK")
+			(class "Default")
+			(node
+				(ref "J10")
+				(pin "7")
+				(pinfunction "7_7")
+				(pintype "passive")
+			)
+			(node
+				(ref "R21")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "64")
+			(name "/IN_START")
+			(class "Default")
+			(node
+				(ref "J10")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R18")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "65")
+			(name "/IN_STOP_OK")
+			(class "Default")
+			(node
+				(ref "J10")
+				(pin "3")
+				(pinfunction "3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "R19")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "66")
+			(name "/L_ENC_A_N")
+			(class "Default")
+			(node
+				(ref "J8")
+				(pin "4")
+				(pinfunction "4_A-_4")
+				(pintype "output")
+			)
+			(node
+				(ref "R1")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "1")
+				(pinfunction "1B_1")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "67")
+			(name "/L_ENC_A_P")
+			(class "Default")
+			(node
+				(ref "J8")
+				(pin "3")
+				(pinfunction "3_A+_3")
+				(pintype "output")
+			)
+			(node
+				(ref "R1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "2")
+				(pinfunction "1A_2")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "68")
+			(name "/L_ENC_B_N")
+			(class "Default")
+			(node
+				(ref "J8")
+				(pin "6")
+				(pinfunction "6_B-_6")
+				(pintype "output")
+			)
+			(node
+				(ref "R2")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "7")
+				(pinfunction "2B_7")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "69")
+			(name "/L_ENC_B_P")
+			(class "Default")
+			(node
+				(ref "J8")
+				(pin "5")
+				(pinfunction "5_B+_5")
+				(pintype "output")
+			)
+			(node
+				(ref "R2")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "6")
+				(pinfunction "2A_6")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "70")
+			(name "/RED_IN")
+			(class "Default")
+			(node
+				(ref "R16")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "4")
+				(pinfunction "IN4_4")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "71")
+			(name "/RED_NEG")
+			(class "Default")
+			(node
+				(ref "J12")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "13")
+				(pinfunction "OUT4_13")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "72")
+			(name "/R_ENC_A_N")
+			(class "Default")
+			(node
+				(ref "J9")
+				(pin "4")
+				(pinfunction "4_A-_4")
+				(pintype "output")
+			)
+			(node
+				(ref "R3")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "9")
+				(pinfunction "3B_9")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "73")
+			(name "/R_ENC_A_P")
+			(class "Default")
+			(node
+				(ref "J9")
+				(pin "3")
+				(pinfunction "3_A+_3")
+				(pintype "output")
+			)
+			(node
+				(ref "R3")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "10")
+				(pinfunction "3A_10")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "74")
+			(name "/R_ENC_B_N")
+			(class "Default")
+			(node
+				(ref "J9")
+				(pin "6")
+				(pinfunction "6_B-_6")
+				(pintype "output")
+			)
+			(node
+				(ref "R4")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "15")
+				(pinfunction "4B_15")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "75")
+			(name "/R_ENC_B_P")
+			(class "Default")
+			(node
+				(ref "J9")
+				(pin "5")
+				(pinfunction "5_B+_5")
+				(pintype "output")
+			)
+			(node
+				(ref "R4")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "14")
+				(pinfunction "4A_14")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "76")
+			(name "unconnected-(J2-30_RUN-Pad10)")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "10")
+				(pinfunction "30_RUN_10")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "77")
+			(name "unconnected-(J2-35_ADC_VREF-Pad15)")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "15")
+				(pinfunction "35_ADC_VREF_15")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "78")
+			(name "unconnected-(J2-37_3V3_EN-Pad17)")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "17")
+				(pinfunction "37_3V3_EN_17")
+				(pintype "input+no_connect")
+			)
+		)
+		(net
+			(code "79")
+			(name "unconnected-(J2-40_VBUS-Pad20)")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "20")
+				(pinfunction "40_VBUS_20")
+				(pintype "power_in+no_connect")
+			)
+		)
+		(net
+			(code "80")
+			(name "unconnected-(U3-OUT6-Pad11)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "11")
+				(pinfunction "OUT6_11")
+				(pintype "open_collector+no_connect")
+			)
+		)
+		(net
+			(code "81")
+			(name "unconnected-(U3-OUT7-Pad10)")
+			(class "Default")
+			(node
+				(ref "U3")
+				(pin "10")
+				(pinfunction "OUT7_10")
+				(pintype "open_collector+no_connect")
+			)
+		)
+	)
+)

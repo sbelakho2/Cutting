@@ -1,0 +1,13 @@
+{
+  "revision": "S1-B-KK86-R6-2026-09-12",
+  "report_generated": true,
+  "run_complete": true,
+  "analytical_checks": 17,
+  "failed_checks": 2,
+  "fem_failed_or_unconverged_checks": 0,
+  "finite_elements_run": false,
+  "finite_elements_scope": "not_run",
+  "full_machine_modelled": false,
+  "physical_validation_complete": false,
+  "production_ready": false
+}

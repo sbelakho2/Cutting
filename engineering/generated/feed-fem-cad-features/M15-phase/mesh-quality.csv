@@ -1,0 +1,2 @@
+bulk_mm,root_mm,nodes,tets,min_SICN,CAD_volume_mm3,mesh_volume_mm3,relative_volume_error
+0.75,0.01953125,78131,349080,0.0338601320405,14390.4167475,14374.7483404,0.0010899952254
