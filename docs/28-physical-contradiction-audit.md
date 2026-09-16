@@ -17,6 +17,8 @@ measurement gates are listed with their exact procedures and remain open.
 | 6 | Encoder shaft | Autonics E40S6 shaft 5.985–5.990 mm into a 6 mm coupling bore | none | Consistent (6 h6 class into coupling); M202 measuring shaft 6 h6 into Kübler 6 H7 wheel bore |
 | 7 | A12 ring vs groove | Ring free ID 11.39–11.50, groove Ø11.43–11.47: worst-case axial float 0.07 mm or 0.08 mm elastic spread at install | low | Accepted with assembly verification (below); no function depends on a tight A12 seat |
 | 8 | UMCL collar | Bore 10.000–10.030 on 10 h6 shaft: 0–0.039 mm clearance, key-transmitted | none | Consistent with docs/12; no interference-fit claim |
+| 9 | CB-PS05 identity | The cabinet row claims a 5 V output from a Siemens LOGO!POWER identity (a 24 V product family) | medium | Row corrected 2026-09-16: second 24 V PSU feeding the 5 V rail via the IF-B01 on-board regulator; exact 6EP3310 identity and the 5 V derivation to be confirmed at purchase. The 6EP3332-6SB00-0AY0 (CB-PS24) identity was verified against a live Automation24 listing (EUR 68.60, in stock) |
+| 10 | STEPPERONLINE shop prices | CL57T-V41 and LE-350-36 prices are only visible in a browser | low | Purchase-time record step defined in the master plan §2.2 |
 
 ## 2. Analytic closures
 

@@ -1,6 +1,6 @@
 id,quantity,manufacturer,exact_order,source_record,release_status,function_or_hold
 CB-PS24,1,Siemens,LOGO!POWER 6EP3332-6SB00-0AY0,bom/selected-controls.csv,selected_load_calculation_open,24 V PELV control source; distribution and branch protection reviewed in docs/22 11.4
-CB-PS05,1,Siemens,LOGO!POWER 6EP3310-6SB00-0AY0,bom/selected-controls.csv,selected_load_calculation_open,5 V logic source to TB24-03 and IF-B01 J3-3; branch protection per docs/22 11.4
+CB-PS05,1,Siemens,LOGO!POWER 6EP3310-6SB00-0AY0,bom/selected-controls.csv,selected_load_calculation_open,Second 24 V PSU feeding the IF-B01 5 V rail through its on-board regulator; verify the 6EP3310 identity and the 5 V derivation at purchase (docs/28 finding 9)
 CB-XPS,1,Schneider Electric,Harmony XPSUAF13AP,bom/selected-controls.csv,selected_system_unqualified,Hardwired two-channel safety relay; component capability is not a completed machine safety function
 CB-K1-K3,3,Schneider Electric,TeSys Deca LC1D12BD,bom/selected-controls.csv,selected_DC_duty_unqualified,Power-isolation contactors K1/K2/K3; DC utilisation answer outstanding (docs/22 11.1)
 CB-KA1-KA10,10,Phoenix Contact,PLC-RSC-24DC/21 2966171,bom/selected-controls.csv,selected_load_and_interface_review_open,Isolated field/alarm contact relays for J10/J11 pairs

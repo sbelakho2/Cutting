@@ -72,6 +72,8 @@ comparison boundaries.
 | TR-N01 | SKF KM 2 (×8) | GBP 7.90 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/km2-skf) |
 | TR-W01 | SKF MB 2 (×8) | GBP 2.15 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/mb2-skf) |
 | MC-B03 | SKF 6204-2Z/C3 (×2, payoff spindle) | GBP 8.68 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/6204-2z-c3-skf) |
+| CB-PS24 | Siemens LOGO!POWER 6EP3332-6SB00-0AY0, 24 V 2.5 A (item 103609) | EUR 68.60 ex VAT (page RRP 80.60); in stock, dispatch next working day | [automation24.com/logo-power-supply](https://www.automation24.com/logo-power-supply) |
+| TR-RR01 alt. | Simply Bearings d1400-012, 12 mm external circlip (DIN471-class) | GBP 0.85 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/d1400-012) |
 
 Quality-equivalent same-designation alternatives were observed on the same
 page family (FAG, KOYO); they are recorded in
