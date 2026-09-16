@@ -55,7 +55,7 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | CL57T-V41 | 2 | [stepperonline.com](https://www.omc-stepperonline.com/closed-loop-stepper-driver-v4-1-0-8-0a-24-48vdc-for-nema-17-23-24-stepper-motor-cl57t-v41) |
 | LE-350-36 | 1 | [stepperonline.com](https://www.omc-stepperonline.com/350w-36v-9-7a-115-230v-switching-power-supply-stepper-motor-cnc-router-kits-le-350-36) |
 | SEEGER A12 (or the GBP 0.85 alternative above) | 8 | SEEGER-ORBIS distributor |
-| DF2FA-class DIN-rail 10×38 holder | 1 | [se.com](https://www.se.com/) · distributor |
+| DF2BA-class DIN-rail 10×38 fuse base | 1 | [se.com](https://www.se.com/) · distributor |
 | Wago 282-364 | — | replaced by Phoenix 3046032 above (5×20 instead of 10×38) |
 | Lapp Skintop MS-M 20 EMC | — | priced above (Conrad) |
 | Rittal AE enclosure ≥800×600×210 | 1 | [rittal.com](https://www.rittal.com/) · distributor |

@@ -59,7 +59,7 @@ accepted):**
 | Guard lock / actuator | SLC-F-024-20/20-R4 6018200007 / ACF-1 3911742391 | 1 / 1 (EUR 143.50 / 17.90 observed) |
 | Contactor | LC1D12BD | 3 (EUR 70.40 observed) |
 | Fuse link | DF2CN02 | 1 |
-| Fuse holder | DF2FA-class DIN-rail 10×38 (confirm identity) | 1 |
+| Fuse holder | DF2BA-class DIN-rail 10×38 fuse base (confirm identity) | 1 |
 | 24 V supply | 6EP3332-7SB00-0AX0 | 1 |
 | Pico | Raspberry Pi Pico 2 SC1631 | 1 (USD 5.00 observed) |
 | Cooler | Rittal SK3303.500 | 1 (quotation) |

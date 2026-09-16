@@ -424,7 +424,7 @@ between 5–10 A and is therefore **too large**. Corrected selection: **Schneide
 The identity change DF2CN10 → DF2CN02 is recorded in
 [selected-controls.csv](../bom/selected-controls.csv) and
 [sourcing-evidence.csv](../bom/sourcing-evidence.csv); the holder identity
-remains the DF2FA-class DIN-rail 10×38 holder subject to catalogue
+remains the DF2BA-class DIN-rail 10×38 fuse base subject to catalogue
 confirmation. Prospective short-circuit coordination with the 24 V supply
 current limiting is verified at commissioning (physical).
 
@@ -456,7 +456,7 @@ Proposed identities (procurement intent, not selections): Phoenix Contact
 PT 2,5 feed-through terminals 3209510 (grey) / 3209523 (blue) for the
 24 V/5 V distribution; Phoenix UT 4 3044131 per DC branch termination;
 a fused 10×38 terminal (Wago 282-364 or Phoenix UT 4-HESI, identity to be
-confirmed) for `+24V_DRVLOGIC`; a DF2FA-class DIN-rail 10×38 holder for the
+confirmed) for `+24V_DRVLOGIC`; a DF2BA-class DIN-rail 10×38 fuse base for the
 DF2CN02 link; a dedicated separated terminal group for the safety loop;
 a copper PE bar with M6 bonds; 2 × M20 EMC metal cable glands (Lapp Skintop
 MS-M or Pflitsch blueglobe, identity to be confirmed); H07V-K 0.75/1.0/1.5
