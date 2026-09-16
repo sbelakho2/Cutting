@@ -392,6 +392,33 @@ GBP 4.98. Both observed 2026-09-13.
   wheel exists on the marketplace and the exact Kübler 8.0000.3123.0006
   is not listed on Amazon.de — the Kübler distributor route remains the
   only source for the selected 100±0.1 mm wheel.
+
+### Dedicated channel searches, 2026-09-16 (agent findings files)
+
+Two dedicated multi-channel searches are archived with every attempt
+tabulated (channel, URL, HTTP result, evidence):
+
+1. **[HIWIN KK8610P340A1F0 findings](sourcing-findings-hiwin.md)** (31
+   channels, 55 live fetches): **absent** — no reachable channel publishes
+   a price for the genuine article 10.00026. Manufacturer pages carry no
+   price; exact-code searches return zero or placeholder prices at Conrad,
+   Octopart, Simply Bearings, Made-in-China, Amazon.de, CNC4You, Quality
+   Bearings, bearing-king, Proax (N/A, no stock) and Unitech UA (0 грн
+   placeholder, out of stock). Best non-valid candidate: eBay item
+   [406408632737](https://www.ebay.com/itm/406408632737) "Hiwin KK8610P-340,
+   10 mm lead, 215 mm stroke" at **US $450.00** — snippet only, page 403 to
+   every fetch method; re-check from an unblocked browser. Genuine C-grade
+   sibling KK8610C-340A1-F0 is on the MISUMI VN/TH shelf (detail
+   221005545419) but all MISUMI fetches were rate-blocked.
+2. **[R+W MK2/100/50 findings](sourcing-findings-rw.md)** (23 channels):
+   exact bores **absent**; the manufacturer publishes no prices
+   ("auf Anfrage"). Closest genuine R+W MK2 100 50 items with live public
+   prices, as quote anchors: **MK2/100/50/10/14 at ebmia.pl = EUR 99.43 net
+   / 122.30 gross each** (0 in stock, 7–14 days)
+   ([page](https://www.ebmia.pl/sprzegla-mieszkowe-bkl/213877-sprzeglo-bezluzowe-mk2-100-50-10-14.html?SubmitCurrency=1&id_currency=2))
+   and MK2/100/50/8/21.4 at 418.85 zł gross, 24 h. Page dimensions confirm
+   OD 40 mm, length 50 mm, hub 16 mm — matching the recorded BOM description
+   (the "100" is the size class, not an OD).
 - **Priced encoder alternatives (observed 2026-09-16, automation24):**
   the selected Autonics E40S6-1024-6-L-5 has no observed public price.
   Automation24 lists two in-stock ifm magnetic 1024 PPR Ø6 mm shaft

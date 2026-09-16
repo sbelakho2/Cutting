@@ -48,6 +48,8 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | CL57T-class driver fallback (Amazon.de market) | ref | EUR 189.10 | [amazon.de](https://www.amazon.de/dp/B0HJ23YQVQ) |
 | 350 W 36 V supply fallback (Amazon.de market) | ref | EUR 77.04 | [amazon.de](https://www.amazon.de/dp/B0HDN818SJ) |
 | LAPP H07V-K 1.5 mm² (100 m reels, red/bk/bu/gnye) | 4 reels | EUR 0.37–0.44/m | [conrad.com](https://www.conrad.com/en/search?search=H07V-K%201.5) |
+| R+W MK2 100/50 class anchor (10/14 variant, in-stock order path) | 2 | EUR 99.43 net/pc | [ebmia.pl](https://www.ebmia.pl/sprzegla-mieszkowe-bkl/213877-sprzeglo-bezluzowe-mk2-100-50-10-14.html?SubmitCurrency=1&id_currency=2) (0 stock, 7–14 days; exact bores orderable via any R+W dealer) |
+| HIWIN KK8610P340A1F0 candidate (unverified, snippet-only price) | 2 | US $450 (snippet) | [ebay.com/itm/406408632737](https://www.ebay.com/itm/406408632737) — page 403s to automation; re-check in a browser; also MISUMI VN/TH shelf item 221005545419 (C-grade sibling) |
 
 ## Open — click and take the cheapest in-stock offer
 
