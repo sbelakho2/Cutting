@@ -40,9 +40,11 @@ ShaftFeatureGuide feedShaftFeatureGuide(const TopoDS_Shape& shaft,std::string_vi
     ShaftFeatureGuide guide;guide.feature=feature;
     const bool rear=feature=="A12_S18_5",front=feature=="A12_S19_62",slot=feature=="M15_slot_exit",pulley=feature=="pulley_slot_blends",
         floor=feature=="pulley_key_floor",shoulder=feature=="rear_shoulder_blends",roller=feature=="roller_key_floor",
-        allTori=feature=="concave_fillet_tori";
-    if(!(rear||front||slot||pulley||floor||shoulder||roller||allTori))throw std::invalid_argument("Unknown CAD refinement feature");
-    guide.region=allTori?"":rear||front?"A12_groove":slot?"M15_relief":shoulder?"rear_shoulder_and_slot_entry":roller?"roller_key_root":"pulley_key_and_MB2_slot";
+        allTori=feature=="concave_fillet_tori",fiveTori=feature=="five_fillet_tori",fiveA12=feature=="five_fillet_tori_a12",
+        a12Roots=feature=="a12_roots",boreGuide=feature=="concave_fillet_tori_and_bore";
+    const bool wholeShaft=allTori||fiveTori||fiveA12||a12Roots||boreGuide;
+    if(!(rear||front||slot||pulley||floor||shoulder||roller||wholeShaft))throw std::invalid_argument("Unknown CAD refinement feature");
+    guide.region=wholeShaft?"":rear||front?"A12_groove":slot?"M15_relief":shoulder?"rear_shoulder_and_slot_entry":roller?"roller_key_root":"pulley_key_and_MB2_slot";
     TopTools_IndexedMapOfShape faces;TopExp::MapShapes(shaft,TopAbs_FACE,faces);
     for(int i=1;i<=faces.Extent();++i) {
         const auto face=TopoDS::Face(faces(i));const BRepAdaptor_Surface surface(face);const auto b=bounds(face);
@@ -63,19 +65,32 @@ ShaftFeatureGuide feedShaftFeatureGuide(const TopoDS_Shape& shaft,std::string_vi
             include=selected.kind==RefinementSurface::torus&&std::abs(selected.origin_mm.y()-station)<tolerance&&
                 std::abs(selected.major_radius_mm-5.765)<tolerance&&std::abs(selected.minor_radius_mm-0.04)<tolerance&&
                 std::abs(std::abs(selected.axis.y())-1)<1e-10;
-        } else if(allTori) {
-            // Whole-shaft sizing only (empty region): all concave fillet tori
-            // diagnosed in the exterior-centroid study (rear-shoulder R0.20,
-            // both MB2 washer-entry R0.15 tori, both pulley key-floor end
-            // R0.15 tori, both roller key-floor end R0.15 tori) plus both
-            // A12 ring-groove roots, selected by torus geometry.
+        } else if(wholeShaft) {
+            // Whole-shaft sizing only (empty region). concave_fillet_tori: the
+            // six diagnosed concave fillet tori (face 68, the washer-entry
+            // pair, both pulley key-floor end tori, both roller key-floor end
+            // tori) plus both A12 ring-groove roots, selected by torus
+            // geometry (nine faces). five_fillet_tori: exactly the six
+            // diagnosed faces, no A12 roots and no roller front end (face 9).
+            // five_fillet_tori_a12 adds both A12 roots (eight faces).
+            // a12_roots: both A12 ring-groove roots alone. The blind-bore
+            // variant adds the bore cone and cylinder faces of the
+            // blind-bore/cosmetic-thread region (S93.4-113.1, |x|,|z|<=2.9)
+            // so the same-surface audit also sizes the concave bore wall.
             const bool nearRearShoulder=selected.kind==RefinementSurface::torus&&selected.minor_radius_mm<=0.200001&&b.ymin>=31.199999&&b.ymax<=31.700001;
             const bool pulleyFloorEnd=selected.kind==RefinementSurface::torus&&selected.minor_radius_mm<=0.200001&&b.ymin>=33.449999&&b.ymax<=61.550001&&b.zmax<=4.150001;
-            const bool rollerFloorEnd=selected.kind==RefinementSurface::torus&&selected.minor_radius_mm<=0.200001&&b.ymin>=94.449999&&b.ymax<=112.550001&&b.zmax<=-3.199999;
+            const bool rollerRearEnd=selected.kind==RefinementSurface::torus&&selected.minor_radius_mm<=0.200001&&b.ymin>=94.449999&&b.ymax<=96.000001&&b.zmax<=-3.199999;
+            const bool rollerBothEnds=selected.kind==RefinementSurface::torus&&selected.minor_radius_mm<=0.200001&&b.ymin>=94.449999&&b.ymax<=112.550001&&b.zmax<=-3.199999;
             const bool a12Root=selected.kind==RefinementSurface::torus&&std::abs(selected.major_radius_mm-5.765)<tolerance&&
                 std::abs(selected.minor_radius_mm-0.04)<tolerance&&std::abs(std::abs(selected.axis.y())-1)<1e-10&&
                 (std::abs(selected.origin_mm.y()-18.54)<tolerance||std::abs(selected.origin_mm.y()-19.58)<tolerance);
-            include=nearRearShoulder||pulleyFloorEnd||rollerFloorEnd||a12Root;
+            const bool boreFace=boreGuide&&(selected.kind==RefinementSurface::cylinder||surface.GetType()==GeomAbs_Cone)&&
+                b.ymin>=93.399999&&b.ymax<=113.100001&&b.xmin>=-2.900001&&b.xmax<=2.900001&&b.zmin>=-2.900001&&b.zmax<=2.900001;
+            include=(nearRearShoulder&&(allTori||fiveTori||fiveA12||boreGuide))||
+                (pulleyFloorEnd&&(allTori||fiveTori||fiveA12||boreGuide))||
+                ((allTori||boreGuide)?rollerBothEnds:(fiveTori||fiveA12)&&rollerRearEnd)||
+                (a12Root&&(allTori||fiveA12||a12Roots||boreGuide));
+            if(boreGuide)include=include||boreFace;
         } else if(shoulder) {
             // Rear bearing-shoulder R0.20 blend (S31.3-31.5) and the two R0.15
             // MB2 washer-entry floor tori (S31.2-31.7); all diagnosed exterior
@@ -103,7 +118,8 @@ ShaftFeatureGuide feedShaftFeatureGuide(const TopoDS_Shape& shaft,std::string_vi
         if(include)guide.faces.push_back(std::move(selected));
     }
     if(guide.faces.empty()||((rear||front)&&guide.faces.size()!=1)||(shoulder&&guide.faces.size()!=3)||(roller&&guide.faces.size()!=2)||
-        (allTori&&guide.faces.size()!=9))
+        (allTori&&guide.faces.size()!=9)||(fiveTori&&guide.faces.size()!=6)||(fiveA12&&guide.faces.size()!=8)||
+        (a12Roots&&guide.faces.size()!=2)||(boreGuide&&guide.faces.size()!=13))
         throw std::runtime_error("CAD feature selection is empty or ambiguous");
     return guide;
 }

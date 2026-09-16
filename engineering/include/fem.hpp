@@ -41,6 +41,11 @@ struct FoundationPatch {
     // linear foundation, not a contact or friction solve.
     std::function<bool(const Eigen::Vector3d& centroid_mm)> select;
     Eigen::Vector3d stiffness_pa_per_m=Eigen::Vector3d::Zero();
+    // Optional resolved-profile weight w(centroid) in [0,1] multiplying the
+    // per-unit-area stiffness before the face tributary split, so the seat
+    // stiffness varies smoothly over the patch (e.g. a smooth annulus
+    // profile that vanishes at the seat edges). Empty means uniform w=1.
+    std::function<double(const Eigen::Vector3d& centroid_mm)> weight;
 };
 using Constraint=std::array<std::optional<double>,3>; // Prescribed displacement in metres.
 using Constraints=std::function<Constraint(const Eigen::Vector3d& point_mm)>;
@@ -49,6 +54,12 @@ struct LoadPatch {
     Eigen::Vector3d force_n=Eigen::Vector3d::Zero();
     std::optional<Eigen::Vector3d> resultant_point_mm;
     Eigen::Vector3d couple_nm=Eigen::Vector3d::Zero(); // Free moment, in addition to r × F.
+    // Optional resolved-profile weight w(centroid) >= 0 multiplying the face
+    // area tributary before normalisation, so the applied traction varies
+    // smoothly with position (pressure = weight × force_n / ∫weight dA). The
+    // patch resultant stays exactly force_n plus the couple, and the moment
+    // transfer uses the weighted tributaries. Empty means uniform w=1.
+    std::function<double(const Eigen::Vector3d& centroid_mm)> weight;
 };
 struct ElasticResult {
     std::vector<Eigen::Vector3d> displacement_m;

@@ -162,8 +162,10 @@ Eigen::VectorXd patchVector(const TetMesh& mesh,const std::vector<std::array<int
         const auto& b=mesh.nodes_mm[static_cast<std::size_t>(f[1])];
         const auto& c=mesh.nodes_mm[static_cast<std::size_t>(f[2])];
         if(load.select((a+b+c)/3)) {
+            const double w=load.weight?load.weight((a+b+c)/3):1.;
+            check(std::isfinite(w)&&w>=0,"Invalid distributed patch weight");
             const double area=(b-a).cross(c-a).norm()/2;
-            for(int id:f)weights[id]+=area/3;
+            for(int id:f)weights[id]+=area/3*w;
         }
     }
     check(weights.sum()>1e-12,"Distributed patch selected no boundary area");weights/=weights.sum();
@@ -390,9 +392,11 @@ std::vector<ElasticResult> solveElasticCasesImpl(const TetMesh& mesh,ElasticMate
             for(const auto& foundation:foundations) if(foundation.select((a+b+c)/3)) {
                 check(foundation.stiffness_pa_per_m.allFinite()&&(foundation.stiffness_pa_per_m.array()>=0).all()&&
                       foundation.stiffness_pa_per_m.norm()>0,"Invalid foundation spring stiffness");
+                const double w=foundation.weight?foundation.weight((a+b+c)/3):1.;
+                check(std::isfinite(w)&&w>=0&&w<=1,"Invalid foundation profile weight");
                 const double areaM2=(b-a).cross(c-a).norm()/2*1e-6;
                 for(int id:f) for(int d=0;d<3;++d) {
-                    const double kv=areaM2/3*foundation.stiffness_pa_per_m[static_cast<std::size_t>(d)];
+                    const double kv=areaM2/3*w*foundation.stiffness_pa_per_m[static_cast<std::size_t>(d)];
                     if(kv<=0) continue;
                     springStiffness[3*id+d]+=kv; k.coeffRef(3*id+d,3*id+d)+=kv;
                 }
@@ -461,8 +465,10 @@ std::vector<ElasticResult> solveElasticCasesImpl(const TetMesh& mesh,ElasticMate
             const auto& b=mesh.nodes_mm[static_cast<std::size_t>(f[1])];
             const auto& c=mesh.nodes_mm[static_cast<std::size_t>(f[2])];
             if(load.select((a+b+c)/3)) {
+                const double w=load.weight?load.weight((a+b+c)/3):1.;
+                check(std::isfinite(w)&&w>=0,"Invalid load patch weight");
                 const double area=(b-a).cross(c-a).norm()/2;
-                for(int id:f) weights[id]+=area/3;
+                for(int id:f) weights[id]+=area/3*w;
             }
         }
         check(weights.sum()>1e-12,"Load patch selected no boundary area");

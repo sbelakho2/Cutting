@@ -31,7 +31,13 @@ foreach(request IN ITEMS
     "--focus-region;A12_groove;--focus-feature;M15_slot_exit;--meshes;2:0.02"
     "--focus-region;A12_groove;--focus-feature;pulley_key_floor;--meshes;2:0.02"
     "--focus-feature;concave_fillet_tori;--focus-region;M15_relief;--meshes;2:0.02"
+    "--focus-feature;concave_fillet_tori_and_bore;--focus-region;M15_relief;--meshes;2:0.02"
     "--focus-feature;concave_fillet_tori;--background-root;0.2"
+    "--torus-root;0.03;--meshes;2:0.02"
+    "--focus-feature;concave_fillet_tori;--torus-root;nan;--meshes;2:0.02"
+    "--focus-feature;concave_fillet_tori;--torus-root;0.001;--meshes;2:0.02"
+    "--focus-feature;concave_fillet_tori;--torus-root;0.3;--meshes;2:0.02"
+    "--focus-feature;concave_fillet_tori;--torus-root;0.05;--meshes;1:0.03"
     "--focus-region")
   execute_process(COMMAND "${ANALYSIS_EXE}" --report "${OUTPUT_DIR}" ${request}
     RESULT_VARIABLE result OUTPUT_QUIET ERROR_QUIET TIMEOUT 10)

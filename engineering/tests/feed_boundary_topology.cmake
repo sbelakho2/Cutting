@@ -59,6 +59,15 @@ execute_process(COMMAND "${PROBE_EXE}" "${OUTPUT_DIR}/rejected" netgen 0.85 0.00
 if(result STREQUAL "0")
   message(FATAL_ERROR "Probe accepted an unknown option")
 endif()
+# The sweep-parameter options must fail closed on out-of-range or malformed
+# values before any mesh is generated; defaults reproduce the pinned run.
+foreach(bad IN ITEMS "--background-root 1.5" "--background-root junk" "--focus-growth 2" "--focus-growth nan" "--torus-root 0.5" "--torus-root junk")
+  execute_process(COMMAND "${PROBE_EXE}" "${OUTPUT_DIR}/rejected" netgen 0.85 0.009375 ${bad}
+    RESULT_VARIABLE result OUTPUT_QUIET ERROR_QUIET TIMEOUT 60)
+  if(result STREQUAL "0")
+    message(FATAL_ERROR "Probe accepted invalid sizing option '${bad}'")
+  endif()
+endforeach()
 file(READ "${OUTPUT_DIR}/netgen/status.json" record)
 string(JSON focus GET "${record}" focus_features)
 if(NOT focus STREQUAL "A12_S19_62")

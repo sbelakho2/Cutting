@@ -54,7 +54,7 @@ void close(std::ofstream& stream){stream.close();if(!stream)throw std::runtime_e
 }
 int main(int argc,char** argv)try{
     fs::path out;std::vector<Level> levels{{2.0,0.30},{1.6,0.20},{1.2,0.13}};std::size_t phases=48;bool requireConverged=false;
-    std::string focus,feature;double backgroundRoot=0.20,focusGrowth=0.45;bool backgroundSpecified=false,growthSpecified=false;
+    std::string focus,feature;double backgroundRoot=0.20,focusGrowth=0.45,torusRoot=0;bool backgroundSpecified=false,growthSpecified=false,torusSpecified=false;
     se::RefinedMeshOptimizer optimizer=se::RefinedMeshOptimizer::gmsh;std::string optimizerName="gmsh";
     for(int i=1;i<argc;++i) {
         const std::string arg=argv[i];
@@ -67,6 +67,7 @@ int main(int argc,char** argv)try{
         }
         else if(arg=="--background-root"&&i+1<argc){backgroundRoot=number(argv[++i]);backgroundSpecified=true;}
         else if(arg=="--focus-growth"&&i+1<argc){focusGrowth=number(argv[++i]);growthSpecified=true;}
+        else if(arg=="--torus-root"&&i+1<argc){torusRoot=number(argv[++i]);torusSpecified=true;}
         else if(arg=="--focus-feature"&&i+1<argc){feature=argv[++i];if(feature.empty())throw std::invalid_argument("Nonempty CAD feature required");}
         else if(arg=="--mesh-optimizer"&&i+1<argc) {
             optimizerName=argv[++i];
@@ -90,10 +91,13 @@ int main(int argc,char** argv)try{
     }
     if(focus.empty()&&(backgroundSpecified||(growthSpecified&&!featureGuide)))throw std::invalid_argument("Focused sizing options require a focus region");
     if(focusGrowth<0.05||focusGrowth>1)throw std::invalid_argument("Focused size growth must be0.05–1");
+    if(torusSpecified&&!featureGuide)throw std::invalid_argument("Torus root requires a CAD focus feature");
+    if(torusSpecified&&(torusRoot<0.005||torusRoot>0.2))throw std::invalid_argument("Torus root must be0.005–0.2 mm");
     for(const auto& level:levels) {
         if(focus.empty()&&level.root<0.02)throw std::invalid_argument("All-root minimum remains0.02 mm");
         if(!focus.empty()&&(backgroundRoot<level.root||backgroundRoot>level.bulk))
             throw std::invalid_argument("Focused root must not exceed background root; background must not exceed bulk");
+        if(torusSpecified&&torusRoot>level.root)throw std::invalid_argument("Torus root must not exceed the level root");
     }
     fs::create_directories(out);
     {std::ofstream pending(out/"status.json");pending<<"{\"run_complete\":false,\"fabrication_released\":false}\n";close(pending);}
@@ -147,10 +151,11 @@ int main(int argc,char** argv)try{
         std::cout<<"Meshing F101 R6 bulk="<<level.bulk<<" root="<<level.root<<" mm focus="<<(focus.empty()?"all_roots":focus)<<" optimizer="<<optimizerName<<std::endl;
         const auto mesh=se::meshStepRefined(out/"F101-R6-analysis.step",level.bulk,level.root,[=](const Eigen::Vector3d& p){
             const double original=std::min(level.bulk,(focus.empty()?level.root:backgroundRoot)+0.45*se::feedShaftRootDistance(p));
+            const double featureRoot=torusSpecified?torusRoot:level.root;
             if(focus.empty())
-                return featureGuide?std::min(original,level.root+focusGrowth*featureGuide->distance_mm(p)):original;
+                return featureGuide?std::min(original,featureRoot+focusGrowth*featureGuide->distance_mm(p)):original;
             const double focusedDistance=featureGuide?featureGuide->distance_mm(p):se::feedShaftRootDistance(p,focus);
-            return std::min(original,level.root+focusGrowth*focusedDistance);
+            return std::min(original,featureRoot+focusGrowth*focusedDistance);
         },optimizer);
         std::cout<<"Shaft mesh nodes="<<mesh.nodes_mm.size()<<" tets="<<mesh.tetrahedra.size()<<std::endl;
         if(!mesh.geometry_audit)throw std::runtime_error("Refined STEP geometry audit missing");
@@ -284,7 +289,8 @@ int main(int argc,char** argv)try{
             <<"## Mesh sizing scope\n\n";
         if(focus.empty()) {
             report<<"Original all-root sizing: min(bulk,root+0.45*root_distance).\n\n";
-            if(featureGuide)report<<"Whole-shaft torus-focused augmentation with the **"<<feature<<"** guide: min(bulk,root+0.45*all_root_distance,root+"<<focusGrowth
+            if(featureGuide)report<<"Whole-shaft torus-focused augmentation with the **"<<feature<<"** guide: min(bulk,root+0.45*all_root_distance,"
+                <<(torusSpecified?std::to_string(torusRoot):"root")<<"+"<<focusGrowth
                 <<"*torus_guide_distance). The analytic trimmed-torus distance replaces the approximate ring/capsule offsets for the selected concave fillet tori. "
                 <<"Every stress region, load, phase, torque vertex, gravity term, node cap and5% gate is unchanged.\n\n";
         }
@@ -329,7 +335,7 @@ int main(int argc,char** argv)try{
     close(table);close(basisTable);close(criteria);close(report);close(meshTable);close(surfaceTable);close(sameSurfaceTable);close(peakCadTable);
     std::ofstream status(out/"status.json");status<<"{\"revision\":\""<<starz::feed::revision<<"\",\"run_complete\":true,\"mesh_levels\":"<<levels.size()
             <<",\"mesh_focus_region\":\""<<(focus.empty()?"all_roots":focus)<<"\",\"background_root_mm\":"<<(focus.empty()?0:backgroundRoot)
-              <<",\"focus_growth\":"<<focusGrowth
+              <<",\"focus_growth\":"<<focusGrowth<<",\"torus_root_mm\":"<<(torusSpecified?torusRoot:0)
               <<",\"mesh_focus_feature\":\""<<feature<<"\",\"sizing_face_count\":"<<(featureGuide?featureGuide->faces.size():0)
               <<",\"mesh_optimizer\":\""<<optimizerName<<"\",\"finest_same_surface_tets\":"<<last.sameSurface
               <<",\"finest_exterior_same_surface_centroids\":"<<last.outsideSameSurface<<",\"finest_exterior_peak_centroids\":"<<last.outsidePeaks

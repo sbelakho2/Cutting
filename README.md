@@ -43,6 +43,8 @@ with every verified price and clickable source:
 - [Guard/payoff R2 selection record](docs/26-guard-and-payoff-selection.md)
 - [Machine assembly sequence and interface-fit register](docs/30-machine-assembly-sequence.md)
 - [Physical contradiction audit](docs/28-physical-contradiction-audit.md)
+- [Gate ledger — every open gate, category and closure action](docs/33-gate-ledger.md)
+- [Weld and assembly procedures (payoff and guard)](docs/34-weld-and-assembly-procedures.md)
 - [Master production and release plan](docs/24-production-and-release-plan.md): stepwise procurement, fabrication, assembly, inspection, commissioning and first-article gates; templates remain blank until actual work is performed.
 - [Auditable sourcing evidence](bom/sourcing-evidence.csv): direct public-page observations and exact-SKU comparison boundaries; no delivered-cost claim without equivalent quotations. Added 2026-09-13: LC1D12BD EUR70.40 (Automation24), SKF bearing/retention GBP prices (Simply Bearings), with FAG/KOYO quality-equivalent comparisons in [catalogue evidence](engineering/sources/catalogue-evidence.md).
 - [IF-B01/RP2350 GPIO allocation](hardware/if-b01/if-b01-gpio-allocation.csv): machine-readable connector-to-firmware allocation checked against the native intent, cabinet schedule and RP2350 source.

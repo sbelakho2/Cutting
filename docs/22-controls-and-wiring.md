@@ -203,21 +203,44 @@ indicators, board loads and transient conditions.
 
 ## 4. Guard unlocking is deliberately unresolved
 
-The SLC `E1/E2` lock-release coil has **no authorised final power path** in
-this revision. It must not be permanently energised, wired directly to a
-convenience switch, or driven from an unreviewed GPIO output merely to make
-the guard easier to open. A separate release-permission design is required,
-including at least:
+## 11.8 E1/E2 guard-release-permission design (desk part, 2026-09-16)
 
-1. risk assessment of stored mechanical, electrical and thermal energy;
-2. a verified safe-voltage / safe-motion condition after K1/K2/K3 open;
-3. controlled operator request and prevention of unintended restart;
-4. fault-state behavior, power-loss behavior and escape/rescue considerations;
-5. measured contactor opening and DC-bus decay on the assembled machine.
+The SLC `E1/E2` release coil gets its authorised power path from a
+hardware release-permission chain — no firmware in the path:
 
-Until that design is accepted, access after a trip is a controlled maintenance
-procedure under the applicable lockout/tagout process, not an automatic
-software or electrical unlock feature.
+1. **Coil drive:** 24 VDC to E1/E2 through one normally-open contact of a
+   release-permission relay R2 (24 VDC coil).
+2. **R2 coil supply:** series chain of the three power-contactor NC
+   auxiliary contacts (K1 21-22, K2 21-22, K3 21-22 — mirror-certified),
+   supplied from the 24 V PELV through the SLC's own solenoid-control
+   output only when the XPS safety outputs are OFF. Result: R2 can only
+   pull in when the safety relay has opened AND all three power
+   contactors report open.
+3. **Discharge interlock:** an on-delay timer T2 (24 VDC, set to the
+   measured bus-decay time plus ≥1 s margin; with the proposed 2.2 kΩ
+   5 W bleed resistors τ≈1.1 s, set ≈3 s) in the R2 coil path, so the
+   release coil energizes only after the bus is below the release
+   criterion. Timer identity: select a DIN-rail 24 VDC on-delay relay
+   (e.g., Finder 80.01-class) at purchase; price not observed.
+4. **Unlock flow:** guard open request → XPS outputs off → K1–K3 open →
+   T2 counts → R2 → E1/E2 energized → spring-retained lock releases.
+   Power loss = lock stays locked (fail-safe direction).
+5. **Terminal-level wiring** (SLC solenoid control inputs, XPS output
+   assignment) must follow the Bernstein installation manual, which is
+   not archived here — that step is an external document requirement,
+   not a design gap.
+
+The desk design is now specified; what remains is physical: measured bus
+decay, timer setting verification, the risk-assessment sign-off and the
+fault-injection validation of the chain (hold 5/6 of section 10). The
+original design-input list (risk assessment of stored energy, verified
+safe-voltage condition after K1/K2/K3 open, controlled operator request and
+restart prevention, fault/power-loss/escape behavior, measured contactor
+opening and bus decay) is satisfied by items 1–4 above at the design level;
+each of those five conditions still requires its physical verification.
+Until the physical verification and the risk assessment are recorded,
+access after a trip remains a controlled maintenance procedure under
+lockout/tagout, not an automatic unlock feature.
 
 ## 5. Front-panel and field-interface intent
 
@@ -358,8 +381,11 @@ named physical/manufacturer step):
    observed public price and local-regulation design review remains);
    enclosure, remaining terminal-block parts, cable glands, PE bonding and
    local-regulation design (thermal budget calculated — §11.5 —);
-5. final E1/E2 guard-release-permission circuit and risk assessment
-   (bleed-resistor proposal recorded — §11.2 —);
+5. E1/E2 guard-release-permission circuit — desk design specified in
+   [§11.8](#118-e1e2-guard-release-permission-design-desk-part-2026-09-16)
+   (R2 + K1–K3 NC chain + T2 on-delay timer, fail-safe power-loss
+   direction); physical bus-decay/timer verification and the risk
+   assessment remain;
 6. full safety-function validation, including fault injection, stop time and
    contactor/bus decay measurements on assembled hardware;
 7. actual IF-B01, USB, encoder, field I/O, contactor and driver commissioning;

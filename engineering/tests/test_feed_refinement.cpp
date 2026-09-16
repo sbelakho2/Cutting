@@ -16,7 +16,7 @@ template<class F>void rejects(F f){bool rejected=false;try{f();}catch(const std:
 }
 int main()try {
     const auto shape=se::feedShaftShape();std::size_t checked=0;
-    for(const char* feature:{"A12_S18_5","A12_S19_62","M15_slot_exit","pulley_slot_blends","pulley_key_floor","rear_shoulder_blends","roller_key_floor","concave_fillet_tori"}) {
+    for(const char* feature:{"A12_S18_5","A12_S19_62","M15_slot_exit","pulley_slot_blends","pulley_key_floor","rear_shoulder_blends","roller_key_floor","concave_fillet_tori","five_fillet_tori","five_fillet_tori_a12","a12_roots","concave_fillet_tori_and_bore"}) {
         const auto guide=se::feedShaftFeatureGuide(shape,feature);
         std::cout<<feature<<" selected "<<guide.faces.size()<<" faces\n";
         for(const auto& face:guide.faces) {
@@ -96,6 +96,38 @@ int main()try {
         "Concave fillet tori guide misses a diagnosed exterior centroid");
     require(tori.distance_mm({5.725,18.54,0})<1e-9&&tori.distance_mm({5.725,19.58,0})<1e-9,"A12 roots missing from concave fillet tori guide");
     require(tori.distance_mm({0,0,0})>1,"Concave fillet tori guide unexpectedly refines the distant axis");
+    // Whole-shaft feature subsets: the six diagnosed tori alone, the six plus
+    // both A12 roots, the A12 roots alone, and the blind-bore extension that
+    // also sizes the bore cone/cylinder faces of the S93.4-113.1 band.
+    const auto five=se::feedShaftFeatureGuide(shape,"five_fillet_tori");
+    require(five.region.empty()&&five.faces.size()==6,"Five fillet tori feature must select the six diagnosed faces");
+    std::size_t fiveA12Count=0,fiveRoller=0,fiveA12=0;
+    for(const auto& f:five.faces) {
+        require(f.kind==se::RefinementSurface::torus,"Five fillet tori feature selected a non-torus");
+        if(std::abs(f.minor_radius_mm-0.04)<1e-9)++fiveA12Count;
+        if(std::abs(f.minor_radius_mm-0.15)<1e-9&&std::abs(f.major_radius_mm-1.37)<1e-9)++fiveRoller;
+    }
+    require(fiveA12Count==0&&fiveRoller==1,"Five fillet tori feature must exclude A12 roots and the roller front end");
+    const auto fiveA12Guide=se::feedShaftFeatureGuide(shape,"five_fillet_tori_a12");
+    require(fiveA12Guide.region.empty()&&fiveA12Guide.faces.size()==8,"Five tori plus A12 feature must select eight faces");
+    for(const auto& f:fiveA12Guide.faces)if(std::abs(f.minor_radius_mm-0.04)<1e-9)++fiveA12;
+    require(fiveA12==2,"Five tori plus A12 feature missing the two groove roots");
+    const auto a12=se::feedShaftFeatureGuide(shape,"a12_roots");
+    require(a12.region.empty()&&a12.faces.size()==2,"A12-roots-only feature must select two faces");
+    require(a12.distance_mm({5.725,18.54,0})<1e-9&&a12.distance_mm({5.725,19.58,0})<1e-9&&a12.distance_mm({0,0,0})>1,"A12-roots guide is wrong");
+    const auto bore=se::feedShaftFeatureGuide(shape,"concave_fillet_tori_and_bore");
+    require(bore.region.empty()&&bore.faces.size()==13,"Bore-extended tori feature must select thirteen faces");
+    std::size_t boreCylinders=0,boreCones=0;
+    for(const auto& f:bore.faces) {
+        if(f.kind==se::RefinementSurface::cylinder&&std::abs(f.major_radius_mm-2.5)<1e-9)++boreCylinders;
+        if(f.kind==se::RefinementSurface::cylinder&&std::abs(f.major_radius_mm-2.1)<1e-9)++boreCylinders;
+        if(f.kind==se::RefinementSurface::bounded_other&&f.upper_mm.y()<=95.000001&&f.lower_mm.y()>=93.4)++boreCones;
+    }
+    require(boreCylinders==2&&boreCones>=1,"Bore guide missing drill/envelope cylinders or drill-point cone");
+    require(bore.distance_mm({-1.79674249309,94.8472369687,-0.18164108165})<0.005&&
+        bore.distance_mm({-0.917131794546,105.031390221,-2.31670727861})<0.01,
+        "Bore guide misses a diagnosed blind-bore exterior centroid");
+    require(bore.distance_mm({0,0,0})>1,"Bore guide unexpectedly refines the distant axis");
     rejects([&]{(void)se::feedShaftFeatureGuide(shape,"unknown");});
     rejects([&]{(void)se::feedShaftFeatureGuide(BRepPrimAPI_MakeBox(1,2,3).Shape(),"A12_S18_5");});
     rejects([]{(void)se::ShaftFeatureGuide{}.distance_mm(Eigen::Vector3d::Zero());});

@@ -26,16 +26,23 @@ void close(std::ofstream& stream){stream.close();require(bool(stream),"Boundary 
 }
 int main(int argc,char** argv)try {
     bool allCentroids=false;std::string focusList="A12_S19_62";
+    double backgroundRoot=0.2,focusGrowth=0.7,torusRoot=0;bool torusSpecified=false;
     for(int i=5;i<argc;++i) {
         const std::string arg=argv[i];
         if(arg=="--all-centroids")allCentroids=true;
         else if(arg=="--focus"&&i+1<argc){focusList=argv[++i];require(!focusList.empty(),"Nonempty focus feature list required");}
-        else throw std::runtime_error("Use OUTPUT_DIRECTORY baseline|netgen BULK_MM ROOT_MM [--all-centroids] [--focus FEATURE[,FEATURE...]]");
+        else if(arg=="--background-root"&&i+1<argc){backgroundRoot=number(argv[++i]);}
+        else if(arg=="--focus-growth"&&i+1<argc){focusGrowth=number(argv[++i]);}
+        else if(arg=="--torus-root"&&i+1<argc){torusRoot=number(argv[++i]);torusSpecified=true;}
+        else throw std::runtime_error("Use OUTPUT_DIRECTORY baseline|netgen BULK_MM ROOT_MM [--all-centroids] [--focus FEATURE[,FEATURE...]] [--background-root mm] [--focus-growth ratio] [--torus-root mm]");
     }
-    require(argc>=5,"Use OUTPUT_DIRECTORY baseline|netgen BULK_MM ROOT_MM [--all-centroids] [--focus FEATURE[,FEATURE...]]");
+    require(argc>=5,"Use OUTPUT_DIRECTORY baseline|netgen BULK_MM ROOT_MM [--all-centroids] [--focus FEATURE[,FEATURE...]] [--background-root mm] [--focus-growth ratio] [--torus-root mm]");
     const fs::path out=argv[1];const std::string method=argv[2];
     require(method=="baseline"||method=="netgen","Unknown boundary probe method");
     const double bulk=number(argv[3]),root=number(argv[4]);require(root>=0.005&&root<=0.2&&bulk>=0.2&&bulk<=5,"Invalid probe mesh limits");
+    require(backgroundRoot>=0.005&&backgroundRoot<=bulk,"Probe background root must be0.005–bulk mm");
+    require(focusGrowth>=0.05&&focusGrowth<=1,"Probe focus growth must be0.05–1");
+    require(!torusSpecified||(torusRoot>=0.005&&torusRoot<=root),"Probe torus root must be0.005–root mm");
     fs::create_directories(out);
     {std::ofstream state(out/"status.json");state<<"{\"run_complete\":false,\"fabrication_released\":false}\n";close(state);}
     const auto shaft=se::feedShaftShape();std::vector<se::ShaftFeatureGuide> guides;
@@ -46,8 +53,8 @@ int main(int argc,char** argv)try {
     }
     se::writeStep(shaft,out/"F101-R6-analysis.step");
     const auto mesh=se::meshStepRefined(out/"F101-R6-analysis.step",bulk,root,[&](const Eigen::Vector3d& p) {
-        double focus=bulk;for(const auto& guide:guides)focus=std::min(focus,root+0.7*guide.distance_mm(p));
-        return std::min({bulk,0.2+0.45*se::feedShaftRootDistance(p),focus});
+        double focus=bulk;for(const auto& guide:guides)focus=std::min(focus,(torusSpecified?torusRoot:root)+focusGrowth*guide.distance_mm(p));
+        return std::min({bulk,backgroundRoot+0.45*se::feedShaftRootDistance(p),focus});
     },method=="netgen"?se::RefinedMeshOptimizer::netgen:se::RefinedMeshOptimizer::gmsh);
     require(mesh.geometry_audit.has_value(),"Boundary probe geometry audit missing");const auto& audit=*mesh.geometry_audit;
     require(std::abs(audit.cad_volume_mm3/se::volume(shaft)-1)<1e-9,"STEP changed nominal shaft volume");
@@ -84,7 +91,8 @@ int main(int argc,char** argv)try {
         close(exterior);
     }
     std::ofstream state(out/"status.json");state<<std::setprecision(14)<<"{\"run_complete\":true,\"method\":\""<<method
-        <<"\",\"focus_features\":\""<<focusList<<"\",\"bulk_mm\":"<<bulk<<",\"root_mm\":"<<root<<",\"background_root_mm\":0.2,\"focus_growth\":0.7,\"node_limit\":150000"
+        <<"\",\"focus_features\":\""<<focusList<<"\",\"bulk_mm\":"<<bulk<<",\"root_mm\":"<<root<<",\"background_root_mm\":"<<backgroundRoot
+        <<",\"focus_growth\":"<<focusGrowth<<",\"torus_root_mm\":"<<(torusSpecified?torusRoot:0)<<",\"node_limit\":150000"
         <<",\"nodes\":"<<mesh.nodes_mm.size()<<",\"tets\":"<<mesh.tetrahedra.size()<<",\"min_SICN\":"<<audit.min_sicn
         <<",\"volume_relative_error\":"<<volumeError<<",\"same_surface_tets\":"<<audit.same_surface_tetrahedra.size()<<",\"exterior_centroid_tets\":"<<outside
         <<",\"A12_same_surface_tets\":"<<a12Bridges<<",\"A12_exterior_centroid_tets\":"<<a12Outside

@@ -1,0 +1,145 @@
+# 33 — Gate ledger: every open gate and hold in the repository
+
+**Revision:** `S1-B-LEDGER-R1-2026-09-16`
+**Status:** single source of truth for "what remains". One table below lists
+every open gate/hold found across the repository (docs/24 §9+§10, docs/22
+§10, docs/26 §6, docs/28 §4+§7, docs/20, docs/12, docs/15–18, docs/30,
+README.md warnings, engineering/README.md "not yet qualified" mentions, and
+the verdict/status files under `engineering/generated/`). Categories:
+
+- **CLOSED** — fully closed with recorded evidence (none of the open gates
+  qualify; the table contains no CLOSED rows).
+- **DESK-CLOSABLE** — closable by calculation/document work at a desk. Gates
+  whose desk part is now closed say so and give the study/record; gates
+  being handled by a parallel workstream are named.
+- **PHYSICAL-ONLY** — requires hardware, measurement or competent-person
+  sign-off; the exact procedure/template is cited.
+- **EXTERNAL-INQUIRY** — requires a manufacturer/distributor answer; the
+  exact enquiry text/row is cited.
+
+Nothing in this ledger releases fabrication or energisation. Desk closures
+recorded here (§2) are calculations with stated assumptions; the physical
+steps attached to each gate remain mandatory.
+
+## 1. Open gates
+
+| # | Gate | Where | Category | Current evidence | Exact closure action |
+|---|---|---|---|---|---|
+| 1 | Housing/collar key contact | docs/24 §3/§9/§10.6; docs/12:68,158; feed-fem "key/collar contact" holds | DESK-CLOSABLE — desk part **CLOSED 2026-09-16** | New [collar-contact study](../engineering/generated/collar-contact/report.md): 5 Nm resolved-pressure linear FEM, ≤35 k nodes, both key identities PASS the C45 allowables (bearing 120, shear 180 MPa). F109 3×4×18: contact 26.2 MPa FEM (25.25 ideal), shear 18.5, seat bearing 30.9, key peak vm 164 MPa < 300 MPa F109 min yield, aluminium collar-wall margin 1.66× (limit 65/1.5 = 43.3 MPa). DIN 3×3×20 passes C45 allowables but erodes the aluminium margin to ≈1.0× — not an endorsed F109 substitute. Clamp: M4 8.8 @2.8 Nm, K=0.2 → 3.5 kN/screw, 7 kN total (69% of 5.1 kN proof) | Remaining physical part: incoming bore 10.000–10.030 mm and keyway 3.04±0.01/2.35±0.025 measurement on F110 (inspection/incoming-inspection-template.csv), clamp-screw identity + torque record at assembly, belt proof test 5 Nm/10 s/10 cycles slip-marked (docs/12:152) |
+| 2 | Adapter FEM raw-peak REFINE / seat contact model | docs/24 §9/§10.6; adapter-r6-analysis; engineering/sources/adapter-contact-findings.md | DESK-CLOSABLE + PHYSICAL-ONLY (adapter workstream completed 2026-09-16) | Resolved-pressure model (C¹ quartic seat profile, peak 376.33 MPa, mean 200.71 MPa per 8.0 kN seat; resolved Winkler foundation) removes the patch-edge singularity: pair peak 285.99 MPa sits 0.59 mm inside the washer-OD edge; gate pair (1.0→0.7 mm) still 18.46% raw peak / 4.96% displacement → rows stay REFINE (never relaxed); seat-scale pair (0.15→0.1 mm, 64,944 nodes) refines 321.67→312.71 MPa, 2.86% ≤ 5%, bounding the model peak at ≈313 MPa (below 650 MPa yield, above the 216.7 MPa yield/3 screen) | Remaining gap is physical: measured washer/joint contact stiffness or a two-body ISO7092 washer contact solve (docs/24 §9, adapter-contact-findings.md); keep the unchanged gates and the 150 k-node cap |
+| 3 | 34-exterior same-surface centroid whole-shaft audit | docs/26:22; docs/28 §7; README warnings; engineering/sources/centroid-closure-findings.md | DESK-CLOSABLE — desk part **CLOSED 2026-09-16** (exterior-centroid workstream) | Config sweep + final rerun: `no_exterior_same_surface_centroids` 0 → PASS_SCOPED and `all_reported_peak_centroids_in_CAD` 0 → PASS_SCOPED on the gmsh torus series (≤150 k nodes; loads/phases/gates unchanged; Netgen series reproduced byte-identically); residual flag `continuous_CAD_containment_verified:false` is a whole-shaft containment audit, not a criteria gate | Residual: continuous CAD-containment audit of the whole-shaft mesh (not a release blocker); keep the four-mesh raw values unaltered |
+| 4 | Fastener preload/torque record (M5/M10 joints) | docs/24 §10.5; docs/30:97; docs/12:115 | DESK-CLOSABLE — desk part **CLOSED 2026-09-16** (ledger §2.2) | Torque values "not published" for M5/M10; H003 joint preload record pending | Desk calc recorded §2.2; physical: record actual torque values in the production build record (inspection/production-build-record-template.csv) at assembly |
+| 5 | Roller-key identity slip (3×3×20 vs F109 3×4×18) | docs/28 §2.3 ("UMCL roller key … (3×3)"); docs/12:109 (F109 3×4×18); catalogue-evidence:142 | DESK-CLOSABLE — desk part **CLOSED 2026-09-16** (ledger §2.3) | F109 is 3×4×18 C45+N (width 2.975–3.000, height 3.950–4.000, length 17.90–18.00); the audit's "3×3" shear line is a transcription slip | Both identities evaluated in the collar-contact study (gate 1); keep F109 as the governing selection; no doc edit made outside this ledger |
+| 6 | Kübler wheel M4×6 set-screw torque | docs/30:182 | DESK-CLOSABLE — desk part **CLOSED 2026-09-16** (ledger §2.4) | Register row "set screw torque pending" | Desk value 2.0 Nm recorded §2.4; physical: record applied torque at assembly in the build record |
+| 7 | Guard/payoff weld & assembly procedure | docs/26 §6.7; docs/34 | CLOSED-DESK (physical inspection remains) | Procedures drafted with fixtures, processes and criteria: post-to-base coaxial weld (gauge-pin fixture, coaxiality ≤0.1), spool hub weld (runout ≤1.0), jamb/door-frame weld + glazing (docs/34) | Physical weld inspection and first-article checks (docs/26 §6.3, docs/20) |
+| 8 | True helical-thread roots (M5 blind hole, M15) | feed-fem holds "true_threads_verified:false"; docs/15:124; docs/12:60 | PHYSICAL-ONLY | FEM uses nominal thread envelopes; not qualified | Machining QA per docs/12 (M5 depth/tip record docs/14, thread gauge) plus thread inspection at receipt; no FEM number releases the thread |
+| 9 | Final edge breaks 0.05–0.10 mm | feed-fem; docs/12 | PHYSICAL-ONLY | Deburr practice specified; not measured | Deburr without raised lips and inspect per docs/12:127 + build record |
+| 10 | Bearing/housing compliance, preload, thermal field | docs/24 §9 "Bearings, joints and thermal behavior"; bearing-fit (`thermal_field_verified:false`); docs/12:68 | PHYSICAL-ONLY | 256-corner fit envelope passes conditionally (min 1.28 µm); thermal field unverified | Measure/justify preload, contact, housing compliance and the seat temperature field on the actual build; apply the conduction calc in engineering/generated/bearing-fit/report.md; instrumented cold-start/hot-run test |
+| 11 | Rotating fatigue qualification | feed-fem (`fatigue_verified:false`); docs/15:124; docs/24 §9 | PHYSICAL-ONLY | No fatigue life established | Physical fatigue test on the actual shaft/build (docs/15 requirement); nothing desk-side substitutes |
+| 12 | ±60 N roller-force envelope / pressure, friction, jam | docs/verification/feed-shaft-fem.md:116; docs/24 §9 | PHYSICAL-ONLY | 5 Nm at r=20 mm could mean 250 N tangential — torque alone does not prove the force limit | Physical pressure/friction/jam qualification on the assembled cassette + docs/20 nip/wheel force records |
+| 13 | Blade pair T001 | docs/24 §4.4; head (`tooling_qualified:false`) | EXTERNAL-INQUIRY + PHYSICAL-ONLY | Purchase-to-drawing; edge-unqualified; no blade pair procured | Specialist manufacture quote to the drawing; loaded clearance verification before installation; edge qualification (docs/24 §4.4) |
+| 14 | Guard risk assessment & 30 mm aperture sign-off | docs/26 §6.1/6.5; README warnings; mechanism (`guard_safety_function_validated:false`) | PHYSICAL-ONLY | Desk reach calc passes 2.9× (EN ISO 13857: 345 mm > 120 mm, docs/28 §2.2); requires sign-off | Task-specific risk assessment (cutting, wire release, entanglement, ejection, access, maintenance, loading, power loss, egress) on inspection/guard-payoff-release-template.csv + aperture verification against the current standard edition |
+| 15 | Bernstein SLC/ACF mounting + G106 drilling pattern | docs/26 §6.2 + G106 row | EXTERNAL-INQUIRY | G106 drilling pattern "pending the Bernstein SLC mounting drawing" | Obtain Bernstein SLC-F-024-20/20-R4 article 6018200007 + ACF-1 3911742391 manufacturer mounting documentation; physical fit and locking-travel verification |
+| 16 | Payoff physical validation (spool mass, spindle deflection, welds, brake, runaway) | docs/26 §6.3; mechanism (`payoff_selection_complete/rotation_validated:false`) | PHYSICAL-ONLY | Desk spindle bending bounds: 30 kg → 0.65 mm/52 MPa; 61 kg → 1.33 mm/107 MPa (docs/28 §2.1) | Weigh full spool (≤30 kg until re-checked), measure spindle deflection, weld inspection, brake adjustment, runaway/overspeed measurement (docs/26 §6.3) |
+| 17 | PC door impact + door hardware | docs/26 §6.6 | PHYSICAL-ONLY | 5 mm PC front door selected; no impact evidence | Impact verification + door hardware inspection per docs/26 §6.6 |
+| 18 | IF-B01 review, fabrication, fixture | docs/22 §10.1; docs/24 §5 | PHYSICAL-ONLY | ERC/DRC/parity clean (draft); no human review or produced board | Electrical/mechanical review, fabricator panel/stack-up confirmation, bare-board build, `if-b01-factory-test.uf2` fixture run with J4–J7 disconnected (hardware/if-b01/if-b01-test.md); archive fixture logs |
+| 19 | LC1D12BD DC switching duty | docs/22 §10.2/§11.1; docs/24 §10.4; README | EXTERNAL-INQUIRY | Desk part done (§11.1); `selected_DC_duty_unqualified` | Enquiry to Schneider: DC utilization for three main poles in series at 36/60 V, branch currents 5.8/9.7 A, load time constant (driver input capacitance ≈ hundreds of µF + cable inductance — state it), switching frequency and breaking duty; then measured K1/K2/K3 opening behavior on hardware; documented alternatives (§11.1) need a change record |
+| 20 | DC branch fuses/holders/coordination/inrush | docs/22 §10.3/§11.6 | EXTERNAL-INQUIRY (identities — electrical-identities workstream) | Wire ampacity/regen/discharge desk parts done; XPS fuse corrected to DF2CN02 (2 A, docs/22 §11.3); holder/branch fuse identities UNSELECTED | Confirm branch fuse and 10×38 holder identities on live distributor pages at purchase (exact proposed identities in docs/22 §11.6); measured decay + prospective-fault coordination at commissioning |
+| 21 | AC incoming/protection, enclosure, terminals, glands, PE, local regulation | docs/22 §10.4/§11.5/§11.6; docs/24 §6 | EXTERNAL-INQUIRY + PHYSICAL-ONLY | Thermal budget passes on paper (≈152 W vs 280 W L35, docs/22 §11.5); identities proposed (§11.6); PE/AC design not released | Competent-person electrical review under local regulations; confirm enclosure/terminal/gland/PE identities at purchase; physical PE continuity/insulation tests (docs/23) |
+| 22 | E1/E2 guard-release-permission design | docs/22 §11.8 | CLOSED-DESK (physical verification remains) | R2 + K1–K3 NC chain + T2 on-delay design specified with fail-safe direction (docs/22 §11.8); original design-input list satisfied at design level | Physical: measured bus decay, timer setting, risk-assessment sign-off, fault-injection validation (docs/22 §10 hold 5/6) |
+| 23 | Safety-function validation (fault injection, stop time, bus decay) | docs/22 §10.6/§8.4–8.5; docs/20 | PHYSICAL-ONLY | Only the hardwired XPS/contactor path is the safety function; unvalidated | Reviewed test plan: each E-stop channel, both guard paths, cross-wire faults, reset/EDM, each contactor fault mode; measured stop time, DC-bus decay, regenerated-energy behavior (docs/22 §8) |
+| 24 | Commissioning of IF-B01, USB, encoders, field I/O, contactors, drivers | docs/22 §10.7; docs/24 §7 | PHYSICAL-ONLY | No hardware commissioning exists | Staged energisation under competent oversight per docs/24 §7: voltages, polarity, field contacts, encoder direction, drive enable, interlocks, fault response, restart prevention; record instruments |
+| 25 | Physical machine qualification (length cells, forces, Cpk) | docs/22 §10.8; docs/20; qualification (`qualification_passed` false everywhere) | PHYSICAL-ONLY | Procedure + fail-closed tool exist; all templates blank; synthetic fixtures are not results | Execute docs/20: ≥30 pieces per mandatory cell (OD 1.2/4.5 mm × 200/1000 mm), Cpk ≥ 1.33, nip 50–75 N, wheel 6–19 N, environment 15–30 °C, gauge U ≤ 0.05 mm / 1.0 N; retain raw CSVs; `physical_results` only for non-SYN identities |
+| 26 | First article + energisation gate | docs/24 §8.1 | PHYSICAL-ONLY | Template blank | Complete inspection/first-article-and-energisation-gate-template.csv with actual evidence and reviewer disposition |
+| 27 | Fabrication/incoming/build-record evidence | docs/24 §1–§3 | PHYSICAL-ONLY | All templates blank; source checks ≠ physical results | Execute inspection/production-build-record-template.csv and inspection/incoming-inspection-template.csv per work package; run tools/check_production_records.py etc. |
+| 28 | Measuring module physical support/torque + fabrication | engineering/README measuring paragraph; docs/13 | PHYSICAL-ONLY | M201 source and interfaces exist; "physical support/torque, fabrication and qualification evidence remain open" | Fabricate and measure per docs/13 + mechanism manifest; wheel contact force 6–19 N record (docs/20) |
+| 29 | Measurement calibration: factory accuracy (1.65 mm budget) + 626 CN thermal screen | measurement-analysis (`unresolved_source_checks:2`, `physical_calibration_qualified:false`); README:60; engineering/README:93–94 | PHYSICAL-ONLY | 392 synthetic observations, 0 residual failures (numerical only); 626 CN leaves 0.5 µm with 10 K ΔT — not accepted with full js5 interference | Traceable calibration of the 100±0.1 mm circumference claim + actual index reference; separate 626 thermal/matching design or substitution; `--require-factory-accuracy` fails until then |
+| 30 | R+W coupling interior clearance verification | docs/verification/feed-r6.md:46 | EXTERNAL-INQUIRY | "Original coupling interior clearance has not been verified from supplier CAD" | Obtain supplier CAD/data for MK2/100/50/8/14 and verify interior clearance before hub installation (R+W enquiry alongside the quotes in docs/24 §2.2) |
+| 31 | HIWIN KK8610P340A1F0 quote (article 10.00026, ×2) | docs/24 §2.2 | EXTERNAL-INQUIRY | 31-channel search found no public price; unverified leads: eBay item 406408632737 US $450 (403-gated), MISUMI VN/TH sibling | Request from two independent HIWIN distributors; compare against the eBay/MISUMI leads from a browser; keep the axis unsubstituted unless a change record approves |
+| 32 | R+W MK2/100/50 quotes (10/12 ×2, 8/14 ×2) | docs/24 §2.2; engineering/sources/sourcing-findings-rw.md | EXTERNAL-INQUIRY | Exact bores have no live price (23 channels); live class anchor MK2/100/50/10/14 EUR 99.43 net/pc (ebmia.pl); OD 40 × L 50 × hub 16 dims verified | Any R+W dealer can order the exact bores at the class price; confirm OD 40 × L 50 × hub 16; no substitute without a change record |
+| 33 | Kübler measuring wheel 8.0000.3123.0006 ×2 quote | docs/24 §2.2 | EXTERNAL-INQUIRY | No public price; 100±0.1 mm circumference claim unverified until receipt | Compare distributor offers against keeping the archived wheel; verify the circumference claim at incoming inspection |
+| 34 | Autonics E40S6-1024-6-L-5 ×2 quote | docs/24 §2.2 | EXTERNAL-INQUIRY | No public price observed | Request from an Autonics distributor |
+| 35 | Rittal SK3303.500 ×1 quote | docs/24 §2.2 | EXTERNAL-INQUIRY | Conrad listing observed EUR 1,669 incl VAT (merchandise only) | Request from a Rittal distributor; confirm the 230 V 50 Hz variant |
+| 36 | STEPPERONLINE CL57T-V41 ×2 / LE-350-36 ×1 | docs/24 §2.2 | EXTERNAL-INQUIRY | Exact strings have no live price (shop 403); class anchors: EUR 173.78 (amazon.de B0FYPDGC85), EUR 77.04 (B0HDN818SJ) | Record the StepperOnline shop price at purchase; class fallbacks documented |
+| 37 | SEEGER-ORBIS A12 ×8 | docs/24 §2.2 | EXTERNAL-INQUIRY | Brand-exact has no live price; DIN 471 12×1 anchors: 100 pcs EUR 8.57 (Wegertseder 1950-010) | Any DIN 471 12×1 federstahl ring meets the groove; brand substitution needs a change record |
+| 38 | Schneider DF2CN02 10×38 fuse holder + prospective-fault coordination | docs/22 §11.3/§11.6; docs/24 §2.2 | EXTERNAL-INQUIRY | DF2CN02 observed EUR 55.99/10 (Conrad, 2026-09-16); holder identity to confirm | Confirm the Schneider DIN-rail 10×38 holder identity on a live page; verify prospective short-circuit coordination at commissioning |
+| 39 | CT-PS36 6EP3332-7SB00-0AX0 + CT-IF-U1/U2-U3 identities | docs/24 §2.2 | EXTERNAL-INQUIRY | Identities per selected-controls.csv; no live-page price | Record the distributor page at order time; confirm USB-isolator/interface availability before the board order |
+| 40 | Tunisia sous-douane landed-cost RFQ | docs/24 §2.2 (2026-09-16 step) | EXTERNAL-INQUIRY | No landed-cost comparison exists (merchandise observations only) | Send the complete quotation-register SKU list as one RFQ to the sous-douane freight forwarder and two distributors shipping to Tunisia; require unit USD price, currency/payment terms, EXW/FOB, consolidation freight, handling, air/sea freight, destination charges, customs (DDU sous-douane), lead time, validity; record offers before ordering |
+| 41 | EMC assessment | docs/22 §7/§8; docs/24 §6 | EXTERNAL-INQUIRY + PHYSICAL-ONLY | No EMC assessment exists | Enclosure/standards review of segregation, shield terminations and ducts, then an EMC assessment on the built cabinet by competent persons |
+| 42 | Guard/payoff physical validation flags | mechanism status.json (`guard_door_kinematics_validated:false`, `guard_safety_function_validated:false`, `payoff_selection_complete:false`, `payoff_rotation_validated:false`) | PHYSICAL-ONLY | R2 CAD/checks pass; flags remain false | Physical build and validation per docs/26 §6 (rows 14–17 above) |
+| 43 | Full-machine integration flags | mechanism/layout/head/feed-cassette status.json (`full_machine_integrated:false`, `fabrication_released:false`, `physical_results:false`) | PHYSICAL-ONLY | 507-occurrence R3 source exists; cabinet/safety not modelled | Assemble per docs/30/docs/31 and record; no flag flips without physical evidence |
+| 44 | Feed-shaft regional stress release | feed-fem/feed-fem-torus status (`numerical_gates_passed:false`); docs/24 §9 | DESK-CLOSABLE — desk part closed by docs/26+28 (submodel record) + gate 3 | All eleven regional rows converge 0.02–4.0% at ≤150 k nodes with Pilkey cross-checks (docs/28 §5); 13 gmsh/10 Netgen four-mesh rows preserved unaltered; centroid gates now PASS_SCOPED (gate 3) | Residual: `continuous_CAD_containment_verified:false` (whole-shaft containment audit, not a criteria gate); no fabrication release from FEM alone (docs/24 §10.6) |
+
+## 2. Desk closures recorded in this ledger
+
+### 2.1 Housing/collar key contact — desk part (gate 1)
+
+[Study](../engineering/generated/collar-contact/report.md),
+[status](../engineering/generated/collar-contact/status.json),
+[source](../engineering/src/collar_contact.cpp),
+[header](../engineering/include/collar_contact.hpp),
+[test](../engineering/tests/test_collar_contact.cpp) (CTests
+`collar_contact_benchmarks`, `collar_contact_report`). Local linear FEM
+(OpenCASCADE solid → STEP → gmsh, ≤35,406 nodes, CHOLMOD/simplex direct
+solve): Ø10 × 60 mm shaft section, DIN 6885 t1=1.8 mm seat (R0.15 floor
+blends), key bonded, rigid collar as resolved pressures (clamp: ±x̂ traction
+on two 90° arcs over the 20 mm width ≈ 7 kN total; torque: +x̂ 1000 N on the
+protruding key side face reacted on the rear 120° bore arc), fixed end z=60.
+Numbers: 3×3×20 → contact 44.6 MPa FEM (41.67 ideal), shear 16.67 MPa,
+seat bearing 27.78 MPa, key peak vm 151.6 MPa; 3×4×18 (F109) → contact
+26.2 MPa (25.25 ideal), shear 18.52 MPa, seat bearing 30.86 MPa, key peak vm
+164.2 MPa; clamp-only key peak ≈20 MPa. Verdict **PASS** against the C45
+allowables (bearing 120, shear 180 MPa) for both identities; the F109
+3×4×18 configuration is the endorsed selection (aluminium collar-wall
+bearing 43.3 MPa limit: 1.66× margin; the DIN 3×3×20 identity leaves ≈1.0×).
+Physical part unchanged (gate 1 closure action).
+
+### 2.2 Fastener preload/torque desk values (gate 4)
+
+T = K·F·d with K=0.2 (dry zinc-plated steel, ISO 16047 range 0.15–0.25):
+
+| Joint | Fastener | Recommended torque | Preload | Utilisation of proof load |
+|---|---|---|---|---|
+| H003 adapter / motor (M5×16 and M5×25, class 10.9) | A_s=14.2 mm², proof ≈11.8 kN | 6 Nm | 7.5 kN | 64% (matches the adapter FEM's 8.0 kN F0 = 60% screen order) |
+| F108 roller retaining (M5×16, class 10.9) | A_s=14.2 mm², proof ≈11.8 kN | 6 Nm | 7.5 kN | 64% |
+| Bed F301 (M10×35 class 8.8 into DIN 929 nuts) | A_s=58 mm², proof ≈33.6 kN | 47 Nm (docs/31:164) | 23.5 kN | 70% |
+| Payoff spindle M20 nut | — | finger-tight + supplier spec (docs/31:164) | — | — |
+
+These are desk torque-to-preload conversions, not assembly authorisations:
+apply and record the actual torque values in the production build record at
+assembly.
+
+### 2.3 Roller key identity reconciliation (gate 5)
+
+docs/28 §2.3 computes the UMCL roller key shear as "τ = 1000/(3·20) =
+16.7 MPa" (a 3×3×20 key). The authoritative part record is docs/12:109
+F109 = **3×4×18** C45+N (width 2.975–3.000, height 3.950–4.000, length
+17.90–18.00, R1.5 ends, 0.2×45° shaft-facing chamfer), matching
+catalogue-evidence "3×4×18 mm positive key" and the 2.35 mm-deep collar
+keyway (protrusion 2.2 mm + 0.15 mm top clearance). The collar-contact
+study (gate 1) evaluated both identities; both pass, F109 governs. The
+slip is recorded here; docs/28 is left unedited.
+
+### 2.4 Kübler wheel set-screw torque desk value (gate 6)
+
+M4×6 ISO4029 cone-point set screw into the E40S6/M202 shaft flat: desk
+value **2.0 Nm** (cone-point practice range 1.5–2.5 Nm for M4 into a flat;
+retention/torque connection, not a clamping joint). Record the applied
+torque in the build record at assembly; the supplier's value governs if
+provided.
+
+## 3. Counts
+
+- DESK-CLOSABLE rows: 8 (gates 1, 3–7, 22, 44). Desk part now closed and
+  recorded in §2: 6 (gates 1, 3, 4, 5, 6, 44); in progress in parallel
+  workstreams: 1 (gate 22); open desk item requiring a released procedure
+  document: 1 (gate 7).
+- PHYSICAL-ONLY rows: 19 (gates 2, 8–12, 14, 16–18, 23–29, 42, 43).
+- EXTERNAL-INQUIRY rows: 17 (gates 13, 15, 19, 20, 21, 30–41).
+- Mixed rows counted by their governing remaining action: gates 2, 13, 21
+  and 41 count as PHYSICAL-ONLY/EXTERNAL-INQUIRY as listed above.
+- Total open rows: 44. CLOSED rows: 0 (no gate is fully closed — every
+  closed desk part retains its physical/enquiry step).
+
+Every row above keeps the original acceptance criteria unchanged; no raw
+failed data was deleted and no gate was closed by relaxing a number.
