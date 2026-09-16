@@ -24,6 +24,8 @@ add_test(NAME production_record_integrity
   COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/tools/check_production_records.py")
 add_test(NAME check_design_integrity
   COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/tools/check_design_integrity.py")
+add_test(NAME check_total_consistency
+  COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/tools/check_total_consistency.py")
 add_test(NAME if_b01_rp2350_gpio_allocation
   COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/tools/check_if_b01_gpio_mapping.py")
 add_test(NAME mechanism_generated_output_integrity

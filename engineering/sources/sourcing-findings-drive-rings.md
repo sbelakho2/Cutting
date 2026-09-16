@@ -16,6 +16,7 @@ Legend: **FOUND** = live page with concrete price; **PARTIAL** = item obtainable
   - €175.45 — <https://www.amazon.de/dp/B0FXRM4FV8> — same availability/dispatch terms.
   - €189.10 — <https://www.amazon.de/dp/B0HJ23YQVQ> (German title “CL57T Schrittmotor Treiber”) — same availability.
 - Note: none of the amazon.de listings is sold under the “STEPPERONLINE” brand (marketplace resellers); a search for “StepperOnline CL57T” returns no CL57T at all. StepperOnline-branded listing with price: **ABSENT**.
+- Made-in-China wholesale anchor attempt 2026-09-16: the multi-search page returns 300 fuzzy matches but no CL57T driver product on page 1 — no concrete made-in-china offer recorded; the amazon.de class anchors above remain the only live CL57T prices (see coupling-ring-replacement-findings.md §3).
 
 ### (b) STEPPERONLINE LE-350-36, 36 V / 350 W PSU (×1) — **ABSENT (exact), nearest verified equivalents priced**
 
@@ -79,6 +80,7 @@ Legend: **FOUND** = live page with concrete price; **PARTIAL** = item obtainable
 | https://www.aliexpress.com/store/1955025 | JS-only shell | “Your browser does not support JavaScript!”; no catalog/price data |
 | https://octopart.com/search?q=CL57T-V41 | 1 similar part | CL57T_V4.0 (OMC) — “No stock available. View Non-Authorized Dealers.” |
 | https://www.made-in-china.com/products-search/hot-china-products/CL57T.html | no matches | “Sorry! No matches were found for ‘CL57T’” |
+| https://www.made-in-china.com/multi-search/CL57T/F1/1.html | no CL57T driver product on page 1 | “CL57T” 300 fuzzy results; page 1 shows unrelated products (CNC lathe US$50,000, lifting clamps, AC motor) — no CL57T closed-loop driver listing with a price (fetched 2026-09-16) |
 | https://www.made-in-china.com/products-search/hot-china-products/LE-350-36.html | no exact match | closest: “S-350-36 … 350W” US$12.70–14.90, MOQ 1 (Junlin) |
 
 ### automation24.com

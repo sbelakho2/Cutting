@@ -294,9 +294,14 @@ std::vector<HeadPart> measuringModuleGroup(double d,double p) {
     housing=cut(housing,cylY(x,md::front_bearing_y+msc::bearing_width_mm-0.01,zw,8,md::rear_bearing_y-md::front_bearing_y-msc::bearing_width_mm+0.02));
     housing=cut(housing,cylY(x,md::rear_bearing_y,zw,(msc::bearing_D_mm+fit)/2,msc::bearing_width_mm+2));
     housing=cut(housing,cylY(x,md::rear_bearing_y+msc::bearing_width_mm+2-0.01,zw,11,md::housing_y_max-(md::rear_bearing_y+msc::bearing_width_mm+2)+0.02));
-    housing=cut(housing,cylY(x,md::housing_y_max-4,zw,20,4.01));
     housing=cut(housing,box(hx-0.01,md::coupling_y-2,zw-10,x-11-hx+0.02,msc::coupling_length_mm+4,20));
-    for(double sx:{-18.0,18.0})for(double sz:{-18.0,18.0})housing=cut(housing,cylY(x+sx,md::housing_y_max-12,zw+sz,2,12.01));
+    // Rear-face counterbores: three for the M4x12 flange-screw heads on
+    // PCD42 and four for the M4x6 plate support-screw heads at (+-18,+-18).
+    for(int i=0;i<3;++i) {
+        const double a=i*2*std::numbers::pi/3;
+        housing=cut(housing,cylY(x-21*std::sin(a),md::housing_y_max-4,zw+21*std::cos(a),3.75,4.01));
+    }
+    for(double sx:{-18.0,18.0})for(double sz:{-18.0,18.0})housing=cut(housing,cylY(x+sx,md::housing_y_max-4,zw+sz,3.75,4.01));
     const double arm_sx[2]={md::housing_x_min+10,md::housing_x_max-10},arm_sy[2]={md::arm_y_min+8,md::arm_y_max-8};
     for(double sx:arm_sx)for(double sy:arm_sy)housing=cut(housing,cylZ(sx,sy,zw+md::housing_half-12,2.5,12.01));
     add(parts,"M203","6082-T6 measuring bearing housing46x46x59.5;626 seats K6;coupling window",housing);
@@ -310,7 +315,8 @@ std::vector<HeadPart> measuringModuleGroup(double d,double p) {
     }
     int n=0;
     for(double sx:{-18.0,18.0})for(double sz:{-18.0,18.0})
-        add(parts,"FB301-"+std::to_string(++n),"ISO4762 M4x16 class8.8 encoder plate screw",screwMinusY(x+sx,md::plate_y+6,zw+sz,4,head_M4,16),true);
+        add(parts,"FB301-"+std::to_string(++n),"ISO4762 M4x6 class8.8 encoder plate support screw",
+            fuse(cylY(x+sx,md::housing_y_max-4,zw+sz,3.5,4),cylY(x+sx,md::housing_y_max,zw+sz,1.99,6)),true);
     // Pivot arm on top of the housing.
     const double arm_z=zw+md::housing_half,pivot_z=arm_z+md::arm_t/2;
     auto arm=fuse(box(md::arm_x_min,md::arm_y_min,arm_z,md::arm_x_max-md::arm_x_min,md::arm_y_max-md::arm_y_min,md::arm_t),

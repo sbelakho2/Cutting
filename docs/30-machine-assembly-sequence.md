@@ -7,7 +7,7 @@ physical check (torque, measured fit, weld inspection, first movement) is
 performed and recorded during the build; until then no step is claimed as
 performed.
 
-The geometric basis is the 507-occurrence mechanism R3 CAD whose code checks
+The geometric basis is the 504-occurrence mechanism R4 CAD whose code checks
 verify, at both wire diameters: valid solids for all nine groups, zero common
 volume between every guard/payoff pair and every implemented cross-group
 pair, spring-deflection windows, nip preload 50–75 N, wheel force 6–19 N,
@@ -83,7 +83,7 @@ Belt tensioning and the M5 blind-hole tap depth per
 1. Bolt H001 (180×1040×20) to the bed top at X−90…90; H002 risers set the
    stage planes at Z40. Datum check: H001 top flat and parallel to the bed
    within the drawing limits (H003 sheet governs tolerance classes).
-2. Mount the two HIWIN KK8610P340A1F0 axes to H001/H002; verify carriage
+2. Mount the two HIWIN KK8610C-340A1-F0 axes (C-grade substitution, 2026-09-16) to H001/H002; verify carriage
    travel parallel to X within the stage specification (physical run-in).
 3. Fit H003 motor adapters to the carriages: F0 register Ø49.97±0.01 into
    the carriage register, 4× M5×16 class 10.9 + ISO7092 washers on PCD70.
@@ -118,12 +118,13 @@ Belt tensioning and the M5 blind-hole tap depth per
    the M202 shaft (6 h6; seats 6 j5) with the M204 pivot arm, M209 cap and
    SWU10.5-35 spring; set the wheel force into 6–19 N (physical spring
    force check).
-2. Fit the Kübler 8.0000.3123.0006 wheel (6 H7 bore) on the shaft with the
-   No123 M4×6 set screw and the supplied encoder coupling; M201 plate holds
-   the Autonics E40S6 (pilot 19.98–20.00 into the 20 mm encoder pilot bore;
-   tip 20 mm; 3× M3×10 + ISO7092 washers).
-3. Wheel runout and circumference: 100±0.1 mm is the manufacturer claim;
-   measure and enter into the calibration (docs/13 — physical).
+2. Fit the ifm E60137 wheel (6 mm bore) on the shaft with its radial clamp
+   (hub screw detail unpublished — confirm at receipt) and the supplied
+   encoder coupling; M201 R2 plate holds the ifm RU3100 (flange face on A,
+   3× M4×12 into the PCD42 taps, 4× M4×6 support screws in the M203
+   counterbores; shaft tip 10 mm from the face).
+3. Wheel runout and circumference: 200 mm is the ifm claim (no tolerance
+   published); measure and enter into the calibration (docs/13 — physical).
 
 ### P7 — payoff (independent floor assembly)
 
@@ -179,8 +180,8 @@ measurement remain physical first-article gates.
 | A12 ring ↔ shaft groove | groove 11.45±0.02 vs ring 11.50−0.11; conditional clearance — audited in [docs/28](28-physical-contradiction-audit.md) | docs/15, measurement report |
 | KM2 nut ↔ M15×1 thread; MB2 tang ↔ 4.2 slot | turn one outer tab into a slot; replace MB2 every reinstall | docs/12 |
 | M202 shaft ↔ 626-2Z bores | 6 h6 shaft, 6 j5 seats, K6 housing pockets | measurement record |
-| Kübler wheel ↔ M202 | 6 H7 on 6 h6; set screw torque pending | catalogue evidence |
-| E40S6 encoder ↔ M201 | pilot 19.98–20.00 into encoder bore; tip 20 mm | M201 sheet |
+| ifm E60137 wheel ↔ M202 | 6 bore on 6 h6; hub clamp detail pending | catalogue evidence |
+| RU3100 encoder ↔ M201 | synchro flange on A; 3×M4×12 PCD42; tip 10 mm | M201 sheet |
 | P002 spindle ↔ P001 spool | Ø20 h6 in Ø20.5 bores (0.5 clearance) | docs/26, P002 sheet |
 | P002 ↔ 6204 pockets | Ø20 h6 in bearing bores; pockets Ø47 H7 | docs/26, P004–P007 sheet |
 | PSFJ12-240 posts ↔ F201 bores | Ø12 g6 in Ø12.01 bores, clamp slits | mechanism spec |

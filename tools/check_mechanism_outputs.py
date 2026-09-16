@@ -59,7 +59,7 @@ EXPECTED_GROUP_COUNTS = {
     "head": 55,
     "RIGHT_": 181,
     "LEFT_": 181,
-    "MM_": 46,
+    "MM_": 43,
     "FR_": 29,
     "GD_": 8,
     "PO_": 7,
@@ -116,8 +116,8 @@ def verify_status() -> None:
         raise OutputError(f"{status_path.relative_to(ROOT)} is invalid JSON: {error}") from error
     if status.get("mechanism_revision") != source_revision():
         raise OutputError("published mechanism status revision does not match shared/mechanism_spec.hpp")
-    if status.get("occurrences") != 507:
-        raise OutputError(f"published mechanism occurrence count is {status.get('occurrences')!r}, expected 507")
+    if status.get("occurrences") != 504:
+        raise OutputError(f"published mechanism occurrence count is {status.get('occurrences')!r}, expected 504")
     for key in EXPECTED_TRUE:
         if status.get(key) is not True:
             raise OutputError(f"published mechanism status must retain {key}:true")
@@ -132,8 +132,8 @@ def verify_status() -> None:
 def verify_manifest_and_bom() -> None:
     manifest_path = OUTPUT / "manifest.csv"
     manifest = read_csv(manifest_path, MANIFEST_HEADERS)
-    if len(manifest) != 507:
-        raise OutputError(f"published manifest has {len(manifest)} rows, expected 507")
+    if len(manifest) != 504:
+        raise OutputError(f"published manifest has {len(manifest)} rows, expected 504")
     seen_ids: set[str] = set()
     group_counts = dict.fromkeys(EXPECTED_GROUP_COUNTS, 0)
     for row_number, row in enumerate(manifest, start=2):
@@ -199,7 +199,7 @@ def main() -> int:
         verify_status()
         verify_manifest_and_bom()
         verify_step()
-        print("mechanism generated-output integrity passed: R3, 507 occurrences, 15 guard/payoff parts, unreleased")
+        print("mechanism generated-output integrity passed: R4, 504 occurrences, 15 guard/payoff parts, unreleased")
     except (OSError, csv.Error, OutputError) as error:
         print(f"mechanism generated-output integrity failed: {error}", file=sys.stderr)
         return 1

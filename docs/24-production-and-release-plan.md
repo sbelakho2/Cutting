@@ -56,7 +56,7 @@ execution path.
    [the incoming-inspection template](inspection/incoming-inspection-template.csv).
    Quarantine mismatches; do not silently substitute or mix lots.
 
-### 2.1 Observed merchandise price register (2026-09-13)
+### 2.1 Observed merchandise price register (2026-09-13, updated 2026-09-16)
 
 Direct public-page observations added 2026-09-13; merchandise prices only,
 no freight/duty/tax terms, and never a delivered-cost claim. Sourcing rows in
@@ -81,6 +81,7 @@ comparison boundaries.
 | CB-AC-INCOMING (RCD half) | Schneider Acti9 iID 2P 25 A 30 mA type A A9Z21225 | EUR 35.99 incl VAT; 5 in stock, fast track dispatch Fri 18 Sep | [conrad.com](https://www.conrad.com/en/p/schneider-electric-a9z21225-a9z21225-rccb-a-25-a-0-03-a-240-v-1861630.html) |
 | CB-ENC-ENTRY | LAPP Skintop MS-M 20 EMC 53112532 brass gland | EUR 17.99 each incl VAT; 52 in stock | [conrad.com](https://www.conrad.com/en/p/lapp-53112532-cable-gland-emc-m20-brass-brass-1-pc-s-1601941.html) |
 | TR-RR01 alt. | Simply Bearings d1400-012, 12 mm external circlip (DIN471-class) | GBP 0.85 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/d1400-012) |
+| AX-01 | HIWIN KK8610C-340A1-F0 complete axis (×2, C-grade substitution for KK8610P340A1F0, 2026-09-16) | VND 21,146,653 per unit (= USD 824.72, open.er-api 2026-09-16); 23–99 days, "temporarily NOT available — ask MISUMI for next ship date" | [MISUMI VN shelf](https://vn.misumi-ec.com/vona2/detail/221005545419/?HissuCode=KK8610C-340A1-F0) — live price read 2026-09-16 from the MISUMI VN catalogue API (`api.vn.misumi-ec.com/api/v1/partNumber/search`, inner code MDM00005346643); evidence in [axis-replacement-findings](../engineering/sources/axis-replacement-findings.md) |
 
 Quality-equivalent same-designation alternatives were observed on the same
 page family (FAG, KOYO); they are recorded in
@@ -96,10 +97,10 @@ currency, freight/duty terms, lead time and validity.
 
 | BOM rows | Exact request | Decision basis |
 |---|---|---|
-| TR-AX01 / AX-01 | HIWIN KK8610P340A1F0, article 10.00026, ×2; 31-channel search found NO public price (see [findings](../engineering/sources/sourcing-findings-hiwin.md)); best unverified candidate: eBay item 406408632737 at US $450 (snippet-only, page 403); genuine C-grade sibling on MISUMI VN/TH shelf (detail 221005545419, price never readable) | Request from two independent HIWIN distributors; compare against the eBay/MISUMI leads from a browser; keep the axis unsubstituted unless a change record approves |
+| TR-AX01 / AX-01 | HIWIN KK8610P340A1F0, article 10.00026, ×2 — RESOLVED 2026-09-16 (priced P→C substitution adopted) | Substituted by the genuine C-grade sibling **KK8610C-340A1-F0** on the MISUMI VN shelf ([detail 221005545419](https://vn.misumi-ec.com/vona2/detail/221005545419/?HissuCode=KK8610C-340A1-F0)): live price **VND 21,146,653** per unit (USD 824.72 converted) read 2026-09-16 from the MISUMI VN catalogue API; 23–99 days with a "temporarily NOT available — ask MISUMI" caution; identical carriage/F0/Ø8 h7/440 mm interfaces → no CAD change (accuracy analysis in [axis-replacement-findings](../engineering/sources/axis-replacement-findings.md)); verify C grade and interfaces at incoming inspection |
 | TR-CP01 / CP-01 | R+W MK2/100/50/10/12 ×2 and MK2/100/50/8/14 ×2 (exact ordering codes per [catalogue evidence](../engineering/sources/catalogue-evidence.md)); exact bores have NO live price (23-channel search, [findings](../engineering/sources/sourcing-findings-rw.md)); live anchor: MK2/100/50/10/14 at EUR 99.43 net/pc on [ebmia.pl](https://www.ebmia.pl/sprzegla-mieszkowe-bkl/213877-sprzeglo-bezluzowe-mk2-100-50-10-14.html?SubmitCurrency=1&id_currency=2) | Any R+W dealer can order the exact bores at the class price; confirm OD 40 × L 50 × hub 16 dims (verified) and no substitute without a change record |
-| ME-W01 | Kübler measuring wheel 8.0000.3123.0006 ×2 | Compare any distributor offer against the alternative of keeping the archived wheel; the 100±0.1 mm circumference claim stays unverified until receipt |
-| ME-E01 | Autonics E40S6-1024-6-L-5 ×2 | Request from an Autonics distributor; no public price was observed |
+| ME-W01 | Kübler measuring wheel 8.0000.3123.0006 ×2 — RESOLVED 2026-09-16 | Substituted by ifm E60137 (200 mm, EUR 57.00 ex VAT automation24, in stock); verify the 200 mm claim and hub detail at incoming inspection |
+| ME-E01 | Autonics E40S6-1024-6-L-5 ×2 — RESOLVED 2026-09-16 | Substituted by ifm RU3100 (EUR 186.40 ex VAT automation24, in stock); M201 R2 plate redesign; J8/J9 receiver review CLOSED 2026-09-16 (TTL mode via IO-Link + 2.5 V mid-bias wiring; docs/22 §6/§7) |
 | TH-C01 | Rittal SK3303.500 ×1 | Request from a Rittal distributor; confirm the 230 V 50 Hz variant |
 | TR-D01 | STEPPERONLINE CL57T-V41 ×2; exact string has no live price (StepperOnline 403); cheapest live class price EUR 173.78 ([amazon.de/dp/B0FYPDGC85](https://www.amazon.de/dp/B0FYPDGC85), 2–3 days) | Record the StepperOnline shop price at purchase (usually cheaper); class fallback above |
 | TR-P01 | STEPPERONLINE LE-350-36 ×1; exact string absent online; cheapest live 36 V/350 W equivalent EUR 77.04 ([amazon.de/dp/B0HDN818SJ](https://www.amazon.de/dp/B0HDN818SJ)); wholesale S-350-36 class US $12.70–14.90 MOQ 1 (made-in-china) | Record the StepperOnline shop price at purchase; alternatives above |

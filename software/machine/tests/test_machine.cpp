@@ -346,13 +346,13 @@ int test_jog_and_commands() {
     REQUIRE(r.run_until(State::Ready, 10000));
     CHECK(r.c.telemetry().blade_um[0] == 2000);
     CHECK(r.c.start() == CommandResult::NoJob);
-    CHECK(r.c.set_calibration(41000, 40900) == CommandResult::Accepted);
-    CHECK(r.c.set_calibration(30000, 40900) == CommandResult::InvalidArgument);
+    CHECK(r.c.set_calibration(21000, 20800) == CommandResult::Accepted);
+    CHECK(r.c.set_calibration(19000, 20800) == CommandResult::InvalidArgument);
     const Job saved = good_job();
     CHECK(r.c.load_job(saved) == CommandResult::Accepted);
     // Calibration and the valid screenless operating recipe survive a re-init.
     Controller c2(r.b); c2.init();
-    CHECK(c2.telemetry().settings.counts_per_metre[0] == 41000);
+    CHECK(c2.telemetry().settings.counts_per_metre[0] == 21000);
     CHECK(c2.telemetry().job_loaded);
     CHECK(c2.telemetry().job.length_um == saved.length_um && c2.telemetry().job.quantity == saved.quantity);
     CHECK(c2.clear_job() == CommandResult::Accepted);
@@ -368,7 +368,7 @@ int test_settings_storage_failure() {
     CHECK(r.c.load_job(recipe) == CommandResult::StorageError);
     CHECK(!r.c.telemetry().job_loaded);
     const Settings before = r.c.telemetry().settings;
-    CHECK(r.c.set_calibration(41000, 40900) == CommandResult::StorageError);
+    CHECK(r.c.set_calibration(21000, 20800) == CommandResult::StorageError);
     const Settings after = r.c.telemetry().settings;
     CHECK(after.counts_per_metre[0] == before.counts_per_metre[0]);
     CHECK(after.counts_per_metre[1] == before.counts_per_metre[1]);

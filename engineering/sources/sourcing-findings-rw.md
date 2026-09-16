@@ -90,3 +90,49 @@ Treat the exact codes as **quote items**: request 2 pcs each of MK2/100/50/8/14 
 MK2/100/50/10/12 from R+W / ebmia.pl / archimedes.pl with the price anchors above as the
 reference level (~100 € net/pc for the 100-size class, PLN/EUR list ≈ 99–122 €). Re-confirm the
 required OD (40 mm, not 100 mm) and that only bores within 5–24 mm are orderable.
+
+**2026-09-16 order-path update:** ebmia.pl is now the recorded order path
+for the exact bores (made-to-bore quote items at the class price, anchors
+above); R+W direct is the fallback. See §5 for the same-class replacement
+check executed the same day — no acceptable priced substitute exists, so
+the zero-backlash MK2 bellows selection is retained (BOM CP-01/TR-CP01).
+
+## 5) 2026-09-16 same-class replacement re-check (torque/backlash verdict)
+
+Exact-bore ebmia searches re-run live 2026-09-16 — both still empty:
+
+| Query | Result |
+|---|---|
+| https://www.ebmia.pl/szukaj?controller=search&s=MK2%2F100%2F50%2F8%2F14 | "Brak wyników wyszukiwania" (no results) |
+| https://www.ebmia.pl/szukaj?controller=search&s=MK2%2F100%2F50%2F10%2F12 | "Brak wyników wyszukiwania" (no results) |
+| https://www.ebmia.pl/szukaj?controller=search&s=MK2%2F100%2F50 | 2 items, re-confirmed: 10/14 530,35 zł gross/431,18 zł net (7–14 days); 8/21,4 418,85 zł/340,53 zł net (24 h) |
+
+Priced same-class candidates found via ebmia generic searches
+(`sprzeglo 8/14`, `sprzeglo 10/12`), all live 2026-09-16:
+
+| Item | Bores | Dims | Torque | Price (gross/net, PLN) | Verdict |
+|---|---|---|---|---|---|
+| Z-SP-SBK19-8/14+K-98SHA (and 64SHD/80SHA/92SHA) | 8 / 14 | D40 × L66 | 32 Nm | 321,88 / 261,69 (up to 326,33 / 265,31) | **REJECTED — jaw coupling** |
+| Z-SP-SBK19-10/12-98SHA (and -64SHD/80SHA/92SHA, +K variants) | 10 / 12 | D40 × L66 | 32 Nm | 267,96 / 217,85 (up to 272,41 / 221,47) | **REJECTED — jaw coupling** |
+| Z-SP-SBK14-8/14-*, SBK14-10/12-* | 8/14, 10/12 | D30 × L35 | 5.5 Nm | 196,49–220,05 / 159,75–178,90 | REJECTED — torque 5.5 < 8.5 Nm |
+| IW-SP-JM30C / JM40C 8/14, 10/12(.7) jaw sets | 8/14, 10/12(.7) | D30/D40 | not listed (jaw class) | 53,76–97,63 / 43,71–79,37 | REJECTED — jaw backlash |
+| SP BKL3/10/12 (R+W bellows, backlash-free) | 10 / 12 | OD 25 (B), L 32, hub 10, bore max 12.7 | not listed; undersized class | 130,38 / 106,00 (24 h) | REJECTED — not the 40×50×16 / 10 Nm class |
+| SP-GS14/1.0/12+K L11 (KTR ROTEX GS 14 hub only) | 12 | hub only | — | 78,84 / 64,10 (24 h) | REJECTED — hub only, not a complete coupling |
+
+**Torque/backlash verdict (recorded per the selection rules):** the SBK19
+pairs meet torque (32 Nm ≥ 8.5 Nm motor holding torque) but are jaw
+couplings with ≈0.5° angular backlash: at the 10 mm lead that is
+0.5/360 × 10 = **0.0139 mm ≈ 14 µm**, i.e. **56 % of the 25 µm axis
+positioning budget** (shared/cutting_head_spec.hpp positioning_mm 0.025)
+and 4.6× the ±3 µm repeatability. The CL86T/CL57T encoders sit on the motor
+shaft, so this dead band is not closed by the drive loop, and jaw inserts
+wear it open further. SBK19 geometry (L66, 11 mm hubs) also breaks the
+frozen 49–50 mm free-length / 16 mm-hub stack. **Verdict: no acceptable
+priced substitute; keep the R+W MK2 bellows couplings, order the exact
+bores via ebmia.pl at the class price.**
+
+Channels re-attempted 2026-09-16 for same-class priced couplings:
+Conrad.com search (`/en/search?search=ROTEX%20GS`) HTTP 403; conrad.de
+search path HTTP 404; automation24 search paths (`/search?query=ROTEX`,
+`/search?sSearch=ROTEX`) HTTP 404 — all recorded as attempted-blocked,
+consistent with the §2 table.

@@ -28,9 +28,9 @@ remain hardwired cabinet functions described as an unreleased design concept in
 | PUL/DIR | `TPL7407LDR` low-side NMOS channels to common-anode 24 V inputs | `GP0`–`GP7` high is intended to sink the named drive input |
 | Shared enable | One `TPL7407LDR` channel with a `100 kΩ` input pull-down | `GP17` high is intended to sink every `ENA−`; reset/power loss should keep the channel off |
 | Indicator/buzzer | `TPL7407LDR` low-side channels | `GP22`, `GP26`, `GP28` high are intended to sink the assigned 24 V load |
-| Measuring encoders | `AM26LV32EIDR` 3.3 V RS-422 receiver with four 120 Ω input terminations | Non-inverted A/B outputs intended for `GP8`–`GP11` |
+| Measuring encoders | `AM26LV32EIDR` 3.3 V receiver (input common mode −7…+7 V); R1–R4 120 Ω RS-422 terminators replaced by a 2.5 V mid-bias network for the RU3100 single-ended TTL inputs | Non-inverted A/B outputs intended for `GP8`–`GP11` |
 | Field/alarm contacts | Ten protected dry-contact-to-0 V inputs, active low | `GP12`–`GP16`, `GP18`–`GP21` |
-| Encoder power | Two individually resettable 5 V branches | One branch per E40S encoder |
+| Encoder power | Two individually resettable 5 V branches | One branch per ifm RU3100 encoder |
 
 The firmware-facing signal names and polarities are defined in the
 [controls specification](../../shared/controls_spec.hpp). The exact draft
@@ -103,7 +103,7 @@ and assembly compatibility require schematic/PCB review.
 | J1/J2 | 20 + 20 | Pico 2 socket rows |
 | J3 | 4 | `+24V_PELV`, `0V_PELV`, `+5V_LOGIC`, `0V_PELV` |
 | J4–J7 | 4 each | BF, BR, FL, FR: `PUL−`, `DIR−`, `ENA−`, `0V_PELV` |
-| J8/J9 | 6 each | Left/right encoder: `+5V`, `0V`, `A+`, `A−`, `B+`, `B−` |
+| J8/J9 | 6 each | Left/right ifm RU3100 encoder: `+5V`, `0V`, `A+`, `A−`, `B+`, `B−` (single-ended A/B to the + terminals; A−/B− are the receiver mid-bias points, not encoder wires) |
 | J10 | 12 | Six isolated field-input contact pairs |
 | J11 | 8 | Four isolated driver-alarm contact pairs |
 | J12 | 4 | `GREEN−`, `RED−`, `BUZZER−`, `0V_PELV` |
@@ -115,10 +115,14 @@ encoder supply and the TPL `COM` feed are intended to pass through a Bourns
 `MF-R050` resettable fuse. These values require schematic/ERC review and
 physical testing; neither a CSV nor a firmware pull-up proves their behaviour.
 
-For encoder cables, the intended order is the documented E40S `A+`, `A−`,
-`+5V`, `0V`, `B+`, `B−` allocation in [if-b01-netlist.csv](if-b01-netlist.csv).
-The two Z conductors remain unconnected and individually insulated. Bond the
-cable screen at the cabinet PE entry, never to IF-B01 `0V_PELV`.
+For encoder cables, the intended order is the RU3100 single-ended allocation:
+A and B to the J8/J9 A+/B+ terminals; the RU3100 has no A-bar/B-bar outputs,
+so the A−/B− terminals are the receiver **mid-bias** points, not encoder
+wires. Parameterise each RU3100 to **TTL mode** via IO-Link before wiring
+(factory setting is HTL 50 mA). The Z conductor stays unconnected and
+individually insulated (it doubles as the IO-Link line for bench
+parameterisation). Bond the cable screen at the cabinet PE entry, never to
+IF-B01 `0V_PELV`.
 
 ## Safety boundary
 

@@ -39,6 +39,8 @@ inline constexpr double front_bearing_d=15,front_bearing_D=32,front_bearing_B=9;
 inline constexpr double rear_bearing_C=5400,rear_bearing_C0=2360;
 inline constexpr double front_bearing_C=5850,front_bearing_C0=2850;
 inline constexpr double bearing_bore_minus=0.007,bearing_width_minus=0.060;
+// A12-class shaft ring (2026-09-16 selection: Wegertseder Art. 1950-010
+// DIN 471 12x1 Federstahl, TR-RR01; same groove geometry, no CAD change).
 inline constexpr double seeger_a12_groove_d=11.5,seeger_a12_groove_minus=0.11;
 inline constexpr double seeger_a12_width=1,seeger_a12_width_minus=0.06;
 inline constexpr double seeger_a12_groove_width_min=1.1;

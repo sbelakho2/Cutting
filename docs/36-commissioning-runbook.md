@@ -38,7 +38,7 @@ overrides the governing document it cites.
 | 1 (key/collar physical) | P0-2, P4-1, P4-4, P4-5 |
 | 2 (adapter joint stiffness physical) | P4-2 |
 | 4 (M5/M10 torque record) | P4-1 |
-| 6 (Kübler set-screw record) | P4-3 |
+| 6 (wheel hub-clamp record) | P4-3 |
 | 7 (weld inspection) | P3-1–P3-4 |
 | 8 (true thread roots) | P2-2, P2-3 |
 | 9 (edge breaks) | P2-4 |
@@ -105,14 +105,16 @@ the [incoming-inspection template](inspection/incoming-inspection-template.csv)
   no seat may be finished to nominal j5 without a measured bore (docs/12:36).
 - **RECORD:** incoming template + matching-limits.csv workflow.
 
-### P0-4 Kübler wheel 100 ± 0.1 mm circumference claim (gate 33 physical)
+### P0-4 ifm E60137 wheel 200 mm circumference claim (gate 33 physical)
 
 - **DO:** verify the manufacturer circumference claim at receipt
-  (Kübler 8.0000.3123.0006, Ø31.83 ± 0.025, 100 ± 0.1 mm).
+  (ifm E60137 "U:200 N:06", Ø63.66 mm, 200 mm circumference; ifm publishes
+  no tolerance).
 - **MEASURE:** traceable calibrated reference (roll/tape method of
   [docs/13 §5](13-measuring-interfaces-and-calibration.md)); record reference
   identity and uncertainty.
-- **CRITERION:** 100 ± 0.1 mm (99.9–100.1).
+- **CRITERION:** 200 mm (assumed ±0.2 mm acceptance 199.8–200.2 until a
+  manufacturer tolerance exists); confirm the hub/clamping-screw detail.
 - **RECORD:** incoming template; result retained as input to P6-7.
 
 ### P0-5 Blade pair T001 (gate 13 physical)
@@ -135,7 +137,7 @@ the [incoming-inspection template](inspection/incoming-inspection-template.csv)
 ### P0-7 Electrical/controls identities and revisions
 
 - **DO:** verify XPSUAF13AP, 3SU1851 E-stop, SLC-F-024-20/20-R4 + ACF-1,
-  LC1D12BD ×3, PSUs, E40S6 encoders, CL57T/CL86T drives, IF-B01 board, fused
+  LC1D12BD ×3, PSUs, ifm RU3100 encoders, CL57T/CL86T drives, IF-B01 board, fused
   terminals/links (ESKA 522620 2 A / 522617 1 A in 3046032) and the incoming
   iC60N + iID against [docs/22 §2–§3, §11](22-controls-and-wiring.md); archive
   all manuals (incl. the Bernstein installation manual 0800000865).
@@ -329,7 +331,7 @@ assembly part of 27.
 | F112 module M4×20, class 10.9; collar clamp M4 8.8 | **2.8 Nm** |
 | Bed F301 M10×35, class 8.8 (into DIN 929) | **47 Nm** |
 | Payoff spindle M20 nut | **finger-tight + 1/8 turn** against the tab washer |
-| Kübler wheel M4×6 ISO4029 set screw | **2.0 Nm** |
+| ifm E60137 wheel hub clamp (M4 class, detail unpublished) | **2.0 Nm placeholder** (confirm at receipt) |
 | M3 (M3×8 / M3×10, class 8.8) | 1.2 Nm |
 | R+W MK2 hub clamp screws | 4.5 Nm per R+W |
 | Belt static proof | **5 Nm / 10 s hold / 10 cycles**, each direction |
@@ -356,12 +358,13 @@ Full table incl. M6 10 Nm / M8 24 Nm: docs/31 §7.
   with the resolved-pressure model inputs.
 - **RECORD:** build record + adapter findings reference.
 
-### P4-3 Kübler wheel set screw (gate 6)
+### P4-3 Measuring-wheel hub clamp (gate 6)
 
-- **DO:** torque the M4×6 ISO4029 cone-point set screw into the E40S6/M202
-  shaft flat.
+- **DO:** clamp the ifm E60137 wheel hub onto the M202 shaft (hub screw
+  detail unpublished — confirm from the manufacturer drawing at receipt;
+  2.0 Nm is the retained M4 cone-point placeholder only).
 - **MEASURE:** calibrated torque driver.
-- **CRITERION:** 2.0 Nm recorded.
+- **CRITERION:** supplier value, or 2.0 Nm placeholder, recorded.
 - **RECORD:** build record.
 
 ### P4-4 Collar clamp identity + torque (gate 1 physical)

@@ -46,8 +46,8 @@ Every J10/J11 input is an isolated dry-contact closure to its adjacent
 
 | IF-B01 connection | Cabinet endpoint | Required boundary |
 |---|---|---|
-| J8 | left E40S6 encoder | `+5V`, `0V`, A+, A−, B+, B− in the exact netlist order; keep Z/Z-bar insulated. |
-| J9 | right E40S6 encoder | `+5V`, `0V`, A+, A−, B+, B− in the exact netlist order; keep Z/Z-bar insulated. |
+| J8 | left ifm RU3100 encoder (REVIEWED 2026-09-16: TTL mode via IO-Link required; factory setting HTL) | `+5V` = M12-1 UB, `0V` = M12-3 GND, A → J8-3, B → J8-5; A−/B− (J8-4/J8-6) are the receiver mid-bias points; Z (M12-4) insulated. |
+| J9 | right ifm RU3100 encoder (REVIEWED 2026-09-16: TTL mode via IO-Link required; factory setting HTL) | `+5V` = M12-1 UB, `0V` = M12-3 GND, A → J9-3, B → J9-5; A−/B− (J9-4/J9-6) are the receiver mid-bias points; Z (M12-4) insulated. |
 | J8/J9 cable screen | PE-BAR at entry | Bond the screen at the cabinet PE entry, never to IF-B01 `0V_PELV`. |
 | J12-1 | PB01 green LED cathode | Anode uses separately protected `+24V_PELV`; `GP22` controls the low side. |
 | J12-2 | PB02 red LED cathode | Anode uses separately protected `+24V_PELV`; `GP26` controls the low side. |

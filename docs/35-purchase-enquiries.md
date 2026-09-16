@@ -1,14 +1,21 @@
 # 35 — Purchase enquiries: ready-to-send letters for every external-inquiry line
 
-**Revision:** `S1-B-ENQ-R1-2026-09-16`
-**Status:** ready-to-send enquiry package. Eight letters (L1–L8) cover every
+**Revision:** `S1-B-ENQ-R2-2026-09-16`
+**Status:** ready-to-send enquiry package. Four active letters (L2, L5,
+L6, L8; L1, L3, L4 and L7 resolved 2026-09-16 — L7 by the priced Wegertseder
+ring substitution, L3/L4 by the priced ifm measuring-wheel/encoder
+substitutions, L1 by the priced MISUMI VN C-grade axis substitution) cover
+every remaining
 EXTERNAL-INQUIRY quotation line of the [gate ledger](33-gate-ledger.md)
-(gates 30–37 and 40) and of the [quotation register in docs/24 §2.2](24-production-and-release-plan.md#22-quotation-register-for-lines-without-a-public-price-2026-09-15).
+(gates 30, 32, 35, 36 and 40) and of the [quotation register in docs/24 §2.2](24-production-and-release-plan.md#22-quotation-register-for-lines-without-a-public-price-2026-09-15).
 Sourcing evidence behind the letters:
 [HIWIN](../engineering/sources/sourcing-findings-hiwin.md),
+[axis replacement](../engineering/sources/axis-replacement-findings.md),
 [R+W](../engineering/sources/sourcing-findings-rw.md),
 [Kübler](../engineering/sources/sourcing-findings-kuebler.md),
-[drives/rings/hardware](../engineering/sources/sourcing-findings-drive-rings.md);
+[drives/rings/hardware](../engineering/sources/sourcing-findings-drive-rings.md),
+[coupling/ring replacement](../engineering/sources/coupling-ring-replacement-findings.md),
+[measurement replacement](../engineering/sources/measurement-replacement-findings.md);
 exact identities and quantities come from the
 [BOM CSVs](../bom/README.md) ([transport/cabinet](../bom/selected-transport-and-cabinet.csv),
 [cutting head](../bom/selected-cutting-head.csv),
@@ -23,8 +30,10 @@ exact identities and quantities come from the
    company**: a named company with a Tunisian address that receives the
    goods under sous-douane (duty-suspension) arrangements; the seller's
    delivery term to be quoted is **DDU sous-douane**.
-3. Send L1–L7 to the named recipient class (L1 to two independent
-   distributors). Send L8 to the sous-douane freight forwarder and copy two
+3. Send L2/L5/L6 to the named recipient class (L2 to R+W dealers, L5 to a
+   Rittal distributor, L6 to StepperOnline; L1, L3, L4 and L7 are resolved
+   2026-09-16 — no enquiry needed). Send L8 to
+   the sous-douane freight forwarder and copy two
    distributors that ship to Tunisia.
 4. Record every response (unit price USD, currency, EXW/FOB, freight to the
    consolidation point, forwarder handling, air/sea freight, destination
@@ -48,46 +57,34 @@ on its own.
 
 ---
 
-## L1 — HIWIN KK8610P340A1F0 precision axis, article 10.00026, ×2
+## L1 — HIWIN KK8610P340A1F0 precision axis, article 10.00026, ×2 — RESOLVED 2026-09-16 (no enquiry needed)
 
-**Recipient type:** authorised HIWIN distributor. Send this letter to TWO
-independent distributors; candidates from the search record: **Rodavigo**
-(ES), **Proax** (CA), and the HIWIN regional offices (hiwin.de / hiwin.fr)
-for a distributor referral. MISUMI VN/TH is the shelf channel (see
-comparison leads below).
+**Resolution:** the P-grade axis has no public price on any channel (ledger
+gate 31), and the priced genuine C-grade sibling **KK8610C-340A1-F0** is
+adopted as the substitution. Live price read 2026-09-16 from the MISUMI VN
+catalogue API (`api.vn.misumi-ec.com/api/v1/partNumber/search`,
+seriesCode 221005545419, inner code MDM00005346643):
+**VND 21,146,653 per unit** (USD 824.72 at 1 USD = 25,641 VND, open.er-api
+2026-09-16), shelf page
+[MISUMI VN detail 221005545419](https://vn.misumi-ec.com/vona2/detail/221005545419/?HissuCode=KK8610C-340A1-F0).
+Availability: 23–99 days with the caution "This product is temporary NOT
+available. Please ask MISUMI to check the next available ship date" —
+confirm the ship date at order time. BOM row AX-01 updated; recorded in
+docs/24 §2.1/§2.2, docs/32, docs/33 gate 31 and
+[axis-replacement-findings](../engineering/sources/axis-replacement-findings.md).
 
-**Buyer comparison leads (do not send):** eBay item
-[406408632737](https://www.ebay.com/itm/406408632737) "Hiwin KK8610P-340
-Precision Linear Ball Screw Actuator, 10 mm Lead, 215 mm Stroke" at
-US $450 — snippet-only, page 403 to automation, NOT a verified price; and
-MISUMI VN/TH [detail 221005545419](https://vn.misumi-ec.com/vona2/detail/221005545419)
-listing the C-grade sibling KK8610C-340A1-F0 (price never read). Both are
-leads to re-check from a browser, not accepted offers.
+**Substitution evaluation (accuracy grade P → C):** the C grade shares the
+identical carriage, F0 flange (Ø49.97 register on PCD70), Ø8 h7/18 mm input
+shaft, 46×46 M6 carriage pad, 340/440 mm rail and every load rating; only
+the accuracy class changes (C axial play 0.02 mm, expected repeatability
+≈±0.01 mm vs P ±0.003). The axis positions the blade, not the piece length
+(length is wheel-measured, ±0.70 mm at 1 m), so the C-grade margin is ~4× on
+the ±0.20 mm strip target — **no CAD, spec, drawing or check change** (full
+analysis in [axis-replacement-findings](../engineering/sources/axis-replacement-findings.md) §3).
 
-**Parts requested:**
-
-| Part number | Manufacturer article | Quantity |
-|---|---|---|
-| KK8610P340A1F0 | HIWIN article 10.00026 | 2 |
-
-The quote must confirm: genuine HIWIN KK86 single-axis robot, accuracy grade
-**P**, lead **10 mm**, rail **340 mm** / overall **440 mm**, one standard
-block, no cover, input shaft **Ø8 h7** with 18 mm exposed (HIWIN catalogue
-PS-11-1-EN-2605-K, 2026-05-22, archived). State whether the units are new or
-used.
-
-**Required response fields:** unit price USD + offer currency; currency and
-payment terms; EXW/FOB terms; freight to the Tunisia sous-douane
-consolidation point; forwarder handling; air/sea freight; destination
-charges and customs (DDU sous-douane); lead time; validity.
-
-**Delivery address type:** Tunisia sous-douane company (DDU sous-douane).
-
-**Decision criteria (BOM AX-01/TR-AX01, docs/24 §2.2, ledger gate 31):** the
-axis stays unsubstituted unless a change record approves — a C-grade, clone
-or different rail length is not an acceptable substitute. Compare offers
-against the eBay/MISUMI leads from a browser. Verify article, lead and P
-grade at incoming inspection.
+**Remaining action:** record the receipt lot and certificate in
+incoming-inspection-template.csv; verify C grade, lead 10, 340/440 mm and
+the Ø8 h7 shaft at incoming inspection. No letter is sent for this line.
 
 ---
 
@@ -97,10 +94,29 @@ grade at incoming inspection.
 (rw-couplings.com). Candidates: **ebmia.pl** (PL), **Archimedes sp. z o.o.**
 (PL, B2B), **MISUMI** (sells MK2 per bore pair), **R+W** factory direct.
 
+**Order path (2026-09-16):** ebmia.pl. Order the exact bores
+MK2/100/50/8/14 ×2 and MK2/100/50/10/12 ×2 from ebmia.pl as made-to-bore
+quote items at the class price; R+W direct is the fallback. The 2026-09-16
+re-run of the ebmia exact-bore searches (`MK2/100/50/8/14`, `MK2/100/50/10/12`)
+returned zero results again; the priced same-class alternatives found on
+ebmia were all rejected (see negotiation reference and
+[coupling-ring-replacement-findings](../engineering/sources/coupling-ring-replacement-findings.md)).
+
 **Negotiation reference (do not send):** live class anchor on ebmia.pl —
 MK2/100/50/10/14 at **EUR 99.43 net / 122.30 gross per pc** (stock 0,
 dispatch 7–14 days) and MK2/100/50/8/21.4 at PLN 340.53 net (24 h). The
 exact bores are quote items; use ≈EUR 100 net/pc as the class price level.
+Rejected 2026-09-16 candidates (torque/backlash verdict recorded): ebmia
+jaw couplings **SBK19-8/14** (PLN 261.69–265.31 net) and **SBK19-10/12**
+(PLN 217.85–221.47 net), D40 × L66, **32 Nm ≥ 8.5 Nm (torque PASS)** but
+0.5° jaw backlash = 0.0139 mm ≈ **14 µm at the 10 mm lead**, which is **56%
+of the 25 µm axis positioning budget** and 4.6× the ±3 µm repeatability,
+is not closed by the motor-shaft encoder, grows with insert wear, and the
+L66/11 mm-hub geometry does not match the 49–50 mm free length / 16 mm hub
+stack — **REJECTED**. ebmia BKL3/10/12 bellows (PLN 130.38 gross, 24 h) is
+an undersized class (OD 25, L 32, hub 10, bore max 12.7) — not the
+40 × 50 × 16 / 10 Nm class — **REJECTED**. Conrad (403) and automation24
+(404) search remained unusable.
 
 **Parts requested:**
 
@@ -125,80 +141,60 @@ charges and customs (DDU sous-douane); lead time; validity.
 
 **Decision criteria (BOM TR-CP01/CP-01, docs/24 §2.2, ledger gates 30/32):**
 10 Nm TKN must exceed the 8.5 Nm motor holding torque; confirm OD 40 × L 50
-× hub 16 dimensions; no substitute without a change record; verify the
-interior clearance before hub installation.
+× hub 16 dimensions; no substitute without a change record (the priced jaw
+alternatives were rejected on backlash — see negotiation reference); verify
+the interior clearance before hub installation. The ebmia order instruction
+above is the concrete order path for the exact bores.
 
 ---
 
-## L3 — Kübler measuring wheel 8.0000.3123.0006, ×2
+## L3 — Kübler measuring wheel 8.0000.3123.0006, ×2 — RESOLVED 2026-09-16 (no enquiry needed)
 
-**Recipient type:** Kübler authorised distributor (via the kuebler.com
-distributor channel). Candidates: no distributor is named for this wheel in
-the search record; request a distributor referral from Kübler direct
-(kuebler.com). Family price-class reference: Conrad carries the Kübler
-Perambulator 05.2400.0040.1000.5045 at EUR 395 incl VAT (family reference,
-not the selected part).
+**Resolution:** the brand-exact Kübler wheel has no public price or stock
+channel (ledger gate 33), and a priced 100 mm-circumference substitute could
+not be verified on automation24, Conrad or Amazon.de. The substitution is the
+priced, in-stock **ifm E60137 measuring wheel "U:200 N:06"** — 200 mm
+circumference, Ø63.66 mm, Ø6 bore, PU surface 90 Shore A on aluminium,
+64.5 g — **EUR 57.00 ex VAT** (RRP 61.90), item 102756, in stock, dispatch
+next working day, live-verified 2026-09-16 at
+[automation24.com](https://www.automation24.com/measuring-wheel-ifm-electronic-e60137).
+BOM row ME-W01 updated; recorded in docs/32, docs/33 gate 33 and
+[measurement-replacement-findings](../engineering/sources/measurement-replacement-findings.md).
 
-**Parts requested:**
+**Substitution evaluation:** the 200 mm circumference halves the PPR/mm
+ratio (4096 counts/200 mm = 0.048828 mm/count instead of 0.024414); the
+calibration model, M201/M203/fork/bracket CAD, arm-spring lug geometry and
+docs/13 were re-derived for the Ø63.66 wheel envelope and every measurement,
+mechanism and wire-route gate stays green. The ifm datasheet publishes no
+circumference/OD tolerance and no hub/clamping-screw dimensions; verify the
+200 mm claim and the hub detail at incoming inspection (runbook P0-4).
 
-| Part number | Quantity |
-|---|---|
-| Kübler 8.0000.3123.0006 | 2 |
-
-The quote must confirm the catalogue identity: wheel No. **123**, natural
-rubber **60 Shore A**, **Ø31.83 ±0.025** (free circumference **100 ±0.1
-mm**), tread width **9.5 mm** / overall width **14.5 mm**, bore **6 mm
-(H7)**, set screw **M4×6 ISO 4029**. State whether the type is stocked or
-made to order.
-
-**Required response fields:** unit price USD + offer currency; currency and
-payment terms; EXW/FOB terms; freight to the Tunisia sous-douane
-consolidation point; forwarder handling; air/sea freight; destination
-charges and customs (DDU sous-douane); lead time; validity.
-
-**Delivery address type:** Tunisia sous-douane company (DDU sous-douane).
-
-**Decision criteria (BOM ME-W01, docs/24 §2.2, ledger gate 33):** compare
-distributor offers against the alternative of keeping the archived wheel;
-the 100 ±0.1 mm circumference claim stays unverified until incoming
-inspection.
+**Remaining action:** record the receipt lot and certificate in
+incoming-inspection-template.csv; no letter is sent for this line.
 
 ---
 
-## L4 — Autonics E40S6-1024-6-L-5, ×2
+## L4 — Autonics E40S6-1024-6-L-5, ×2 — RESOLVED 2026-09-16 (no enquiry needed)
 
-**Recipient type:** Autonics authorised distributor. Candidates: none named
-in the repository search record; automation24.com (which carries the priced
-ifm alternatives below) is a candidate channel and referral point.
+**Resolution:** the brand-exact Autonics encoder has no public price (ledger
+gate 34). The substitution is the priced, in-stock **ifm RU3100 incremental
+encoder** — Ø6 solid shaft ×10 mm (no flat), 1024 PPR factory (IO-Link
+programmable 1…10000), HTL/TTL push-pull, 4.75–30 VDC, 1000 kHz, 12000 rpm,
+starting torque ≤0.01 Nm, body Ø58.6×63.5 mm, synchro flange with
+3×M4×0.7×6 mm on PCD42, M12 5-pole radial/axial connector —
+**EUR 186.40 ex VAT** (RRP 207.10), item 102717, in stock, dispatch next
+working day, live-verified 2026-09-16 at
+[automation24.com](https://www.automation24.com/incremental-encoder-ifm-electronic-ru3100)
+([datasheet](../engineering/sources/ifm-ru3100-datasheet.pdf) archived;
+the RUP500 display variant at EUR 255.50 was not needed). BOM row ME-E01
+updated; M201 plate redesigned to R2 (60×60, Ø36.5-class synchro-flange seat,
+3×Ø4.5 on PCD42, 4×M4 taps); recorded in docs/32, docs/33 gate 34 and
+[measurement-replacement-findings](../engineering/sources/measurement-replacement-findings.md).
 
-**Priced alternatives (buyer-side, do not send):** ifm RU3100 (Ø6, 1024,
-TTL/HTL) EUR 185.50 and ifm RUP500 (Ø6 synchro, 1024, display) EUR 255.50,
-both observed at automation24. Used only to judge the Autonics offer, not
-automatic substitutes.
-
-**Parts requested:**
-
-| Part number | Quantity |
-|---|---|
-| Autonics E40S6-1024-6-L-5 | 2 |
-
-The quote must confirm the exact suffix: **Ø6 shaft (−0.004/−0.016)**,
-**1024 P/R**, line driver outputs **A,Ā,B,B̄,Z,Z̄**, **5 VDC ±5 %**, **3×M3
-DP5 on PCD30**, pilot **Ø20 (−0.021/0)**, body Ø40×31 mm, shaft 15 + pilot 5
-(EN product manual TCD210019AD, 2025-07-21).
-
-**Required response fields:** unit price USD + offer currency; currency and
-payment terms; EXW/FOB terms; freight to the Tunisia sous-douane
-consolidation point; forwarder handling; air/sea freight; destination
-charges and customs (DDU sous-douane); lead time; validity.
-
-**Delivery address type:** Tunisia sous-douane company (DDU sous-douane).
-
-**Decision criteria (BOM ME-E01, docs/24 §2.2, ledger gate 34):** verify the
-shaft and pilot tolerances at receipt against the measurement
-specification (the shaft-tolerance/pilot-tolerance deltas recorded as a FLAG
-in the mechanical-documents findings stay open); the ifm alternatives are
-priced fallbacks only.
+**Remaining action:** confirm the synchro-flange centering feature and shaft
+fit at incoming inspection, and review the J8/J9 line-receiver wiring for
+the TTL/HTL outputs (open controls item, findings file); no letter is sent
+for this line.
 
 ---
 
@@ -271,37 +267,28 @@ fallbacks are documented but not automatic substitutes.
 
 ---
 
-## L7 — SEEGER-ORBIS A12 retaining rings, ×8
+## L7 — SEEGER-ORBIS A12 retaining rings, ×8 — RESOLVED 2026-09-16 (no enquiry needed)
 
-**Recipient type:** SEEGER-ORBIS authorised distributor (brand-exact).
-Candidates: none found in the search record (brand-exact ABSENT on every
-channel tried); the DIN 471 equivalents below are the buyer anchors.
+**Resolution:** the brand-exact SEEGER-ORBIS A12 has no live priced channel
+(ABSENT on every channel tried), and the priced DIN 471 12×1 Federstahl
+equivalent is adopted as the substitution: **Wegertseder Art. 1950-010
+"12 x 1"**, Kleinpaket **100 pcs EUR 8.57 incl 19 % VAT** (= EUR 0.086/pc),
+in stock, live-verified 2026-09-16 at
+[wegertseder.com](https://www.wegertseder.com/DIN-471-Sicherungsringe-fuer-Wellen-Regelausfuehrung-FEDERSTAHL-Diameter-12).
+BOM row TR-RR01 updated; recorded in docs/32, docs/33 gate 37 and
+[coupling-ring-replacement-findings](../engineering/sources/coupling-ring-replacement-findings.md).
 
-**Buyer anchors (do not send):** Wegertseder Art. 1950-010 "12×1"
-Federstahl, 100 pcs EUR 8.57 incl VAT, in stock; Amazon MZA
-[B00IZC9GVO](https://www.amazon.de/dp/B00IZC9GVO) EUR 0.62/pc; Simply
-Bearings d1400-012 GBP 0.85/pc.
+**Fit verdict (groove Ø11.45±0.02):** ring d3 = 11.0 mm, s = 1.0 (−0.06).
+Install spread 1.0 mm (11.0 → 12.0 shaft); seated spread ≈0.45 mm at the
+groove bottom — since d3 < groove bottom (11.43–11.47) always, the ring
+grips the groove (no radial float). Seated OD ≈13.45 mm → ≈0.72 mm radial
+protrusion per side. Axial float = groove width 1.12±0.02 (1.10–1.14) −
+ring 0.94–1.00 → **0.10–0.20 mm** — acceptable; no function depends on a
+tight A12 seat (docs/28 finding 7). ZGA-1 pliers per the Seeger catalogue.
 
-**Parts requested:**
-
-| Part number | Quantity |
-|---|---|
-| SEEGER-ORBIS A12 (DIN 471 for 12 mm shaft, 12×1: s = 1.0 mm, d3 = 11.0 mm) | 8 |
-
-Request the smallest pack that covers 8 pieces; confirm spring steel
-(Federstahl) and DIN 471 12×1.
-
-**Required response fields:** unit price USD + offer currency; currency and
-payment terms; EXW/FOB terms; freight to the Tunisia sous-douane
-consolidation point; forwarder handling; air/sea freight; destination
-charges and customs (DDU sous-douane); lead time; validity.
-
-**Delivery address type:** Tunisia sous-douane company (DDU sous-douane).
-
-**Decision criteria (BOM TR-RR01, docs/24 §2.2, ledger gate 37):** shaft 12,
-ring 1 (−0.06), groove 11.5 (−0.11), groove width min 1.10, ZGA-1 pliers.
-Any DIN 471 12×1 Federstahl ring meets the groove — brand substitution needs
-a change record.
+**Remaining action:** record the receipt lot and certificate in
+incoming-inspection-template.csv; no letter is sent for this line. The
+smallest pack (100 pcs) covers the ×8 requirement with spare.
 
 ---
 
@@ -317,15 +304,15 @@ lines; no landed-cost comparison exists anywhere in the repository).
 
 | # | Line | Quantity |
 |---|---|---|
-| 1 | HIWIN KK8610P340A1F0 (article 10.00026) | 2 |
+| 1 | HIWIN KK8610C-340A1-F0 (C-grade substitution, MISUMI VN detail 221005545419, VND 21,146,653/unit) | 2 |
 | 2 | R+W MK2/100/50/10/12 | 2 |
 | 3 | R+W MK2/100/50/8/14 | 2 |
-| 4 | Kübler 8.0000.3123.0006 | 2 |
-| 5 | Autonics E40S6-1024-6-L-5 | 2 |
+| 4 | ifm E60137 measuring wheel (U:200 N:06) | 2 |
+| 5 | ifm RU3100 incremental encoder | 2 |
 | 6 | Rittal SK3303.500 | 1 |
 | 7 | STEPPERONLINE CL57T-V41 | 2 |
 | 8 | STEPPERONLINE LE-350-36 | 1 |
-| 9 | SEEGER-ORBIS A12 (DIN 471 12×1) | 8 |
+| 9 | Wegertseder 1950-010 DIN 471 12×1 Federstahl rings (A12 substitution, 100-pc pack) | 8 |
 | 10 | Standard hardware (traceable industrial supplier), full list below | per row |
 | 11 | Schneider Acti9 iC60N 2P C10 A9F54210 (AC incoming MCB half) | 1 |
 | 12 | Siemens 6EP3332-7SB00-0AX0 (CT-PS36 register row) | 1 |
@@ -344,8 +331,9 @@ Line 10 — standard hardware (rows per
 | ISO 4762 M5×25 class 10.9 (HM-B, head) | 8 |
 | ISO 4762 M4×20 class 10.9 (TR-FB02) | 16 |
 | ISO 4762 M3×8 class 8.8 (TR-FB03) | 32 |
-| ISO 4762 M3×10 class 8.8 (ME-FB01) | 6 |
+| ISO 4762 M4×12 class 8.8 (ME-FB01) | 6 |
 | ISO 4762 M10×35 class 8.8 (FB306, into DIN 929 nuts) | 8 |
+| ISO 4762 M4×6 class 8.8 (FB301) | 4 |
 | ISO 4762 M4×10 class 8.8 | 16 |
 | ISO 4762 M4×16 class 8.8 | 4 |
 | ISO 4762 M5×16 class 8.8 | 4 |
@@ -358,9 +346,7 @@ Line 10 — standard hardware (rows per
 | ISO 4762 M8×55 class 8.8 | 8 |
 | ISO 7092 M5 200HV 5.3×9×1 (HM-W, head) | 16 |
 | ISO 7092 M4 200HV 4.3×8×0.5 (TR-FW02) | 16 |
-| ISO 7092 M3 200HV 3.2×6×0.5 (ME-FW01) | 6 |
 | ISO 7092 M5 200HV (mechanism BOM) | 32 |
-| ISO 7092 M3 200HV (mechanism BOM) | 3 |
 | ISO 8734 3m6×20 hardened dowels (TR-FD02) | 16 |
 | ISO 8734 10m6×24 / 6m6×20 / 6m6×22 / 6m6×70 dowels (mechanism BOM) | 2 / 1 / 1 / 1 |
 | ISO 4032 M8 class 8 lock nut | 2 |
@@ -395,6 +381,6 @@ this pricing, so only this RFQ establishes it.
 
 - [docs/24 §2.2](24-production-and-release-plan.md#22-quotation-register-for-lines-without-a-public-price-2026-09-15) — quotation register and the Tunisia sous-douane step.
 - [docs/32](32-sourcing-list.md) — clickable sourcing list and the Tunisia USD delivery note.
-- [docs/33](33-gate-ledger.md) — gates 30–37 and 40 (closure action: send the matching letter above).
-- [HIWIN findings](../engineering/sources/sourcing-findings-hiwin.md), [R+W findings](../engineering/sources/sourcing-findings-rw.md), [Kübler findings](../engineering/sources/sourcing-findings-kuebler.md), [drive/rings findings](../engineering/sources/sourcing-findings-drive-rings.md), [catalogue evidence](../engineering/sources/catalogue-evidence.md).
+- [docs/33](33-gate-ledger.md) — gates 30–36 and 40 (closure action: send the matching letter above; gate 37 closed by substitution).
+- [HIWIN findings](../engineering/sources/sourcing-findings-hiwin.md), [R+W findings](../engineering/sources/sourcing-findings-rw.md), [Kübler findings](../engineering/sources/sourcing-findings-kuebler.md), [drive/rings findings](../engineering/sources/sourcing-findings-drive-rings.md), [coupling/ring replacement findings](../engineering/sources/coupling-ring-replacement-findings.md), [catalogue evidence](../engineering/sources/catalogue-evidence.md).
 - BOM identity and quantity rows: [transport/cabinet](../bom/selected-transport-and-cabinet.csv), [cutting head](../bom/selected-cutting-head.csv), [controls](../bom/selected-controls.csv), [mechanism BOM](../engineering/generated/mechanism/mechanism-bom.csv).

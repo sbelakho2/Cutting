@@ -5,7 +5,28 @@ Research date: 2026-09-11. Numerical values below are transcribed facts, not an 
 ## AX-01 — selected complete linear axis
 
 - Manufacturer: HIWIN.
-- Selected ordering identity: **KK8610P340A1F0**, article **10.00026**.
+- Selected ordering identity (2026-09-16): **KK8610C-340A1-F0** (accuracy
+  grade **C**), the genuine C-grade sibling of the originally selected
+  **KK8610P340A1F0** (article **10.00026**, grade P). The P→C substitution
+  is adopted because a live price exists only for the C grade (record below)
+  and the accuracy analysis in
+  [axis-replacement-findings](axis-replacement-findings.md) §3 shows the C
+  grade is a valid functional equivalent for the cut axis. All interfaces,
+  ratings and dimensions in the table below are grade-independent.
+- **Observed price (2026-09-16, live MISUMI VN catalogue API):**
+  KK8610C-340A1-F0 on the [MISUMI VN shelf, detail 221005545419](https://vn.misumi-ec.com/vona2/detail/221005545419/?HissuCode=KK8610C-340A1-F0)
+  (MISUMI inner code MDM00005346643, product code KK8610C-340A1-F0, type
+  code KK8610C) — **standard unit price VND 21,146,653** (= USD 824.72 at
+  1 USD = 25,641 VND, open.er-api ECB-fed rate 2026-09-16; = EUR 697.84 at
+  1 EUR = 30,296 VND), read from
+  `GET https://api.vn.misumi-ec.com/api/v1/partNumber/search?seriesCode=221005545419&partNumber=KK8610C-340A1-F0&field=@detail&applicationId=6083a03d-34a3-4c9e-a19a-aa0f29aaa291`
+  (applicationId recovered from the VN frontend runtime config). Ship
+  **23–99 days** with the caution "This product is temporary NOT available.
+  Please ask MISUMI to check the next available ship date";
+  discontinuedProductFlag 0; currency VND. The P-grade code
+  KK8610P340A1F0 returns no part-number row on the VN shelf (grade P is a
+  HIWIN catalogue/quote item only). Full method record:
+  [axis-replacement-findings](axis-replacement-findings.md) §4.
 - [Manufacturer product record](https://www.hiwin.de/en/Products/Precision-axes-%26-precision-systems/Precision-axes-KK-KF/KK/KK8610P340A1F0/p/10.00026).
 - [Catalogue drawing, PDF page 19](hiwin-kk-stages.pdf); [rendered drawing](hiwin-kk86-drawing.png). Retrieved from [HIWIN UK / CRD Devices catalogue](https://hiwin.co.uk/wp-content/uploads/2017/05/Data-Sheets-KK-Linear-Stages.pdf).
 - The older drawing lists 210 mm physical travel. The current manufacturer page lists **194 mm usable travel and 8 mm reserve at each end**. Use the current usable limit, not both numbers interchangeably.
@@ -91,6 +112,7 @@ Observed kit merchandise price: **USD 130.77**, China warehouse. No Tunisia frei
 - No claim of personnel-safety torque limiting: this is a shaft coupling, **not** an overload clutch.
 - **Assembly operation: remove the supplied motor's5×5×25mm parallel key before inserting the14mm shaft into the keyless MK2 hub.** The original supplier STEP includes the fitted key; its interference with the keyless coupling was detected by the exact solid intersection test. The assembly CAD removes only that removable key, using its original R2.495mm end geometry, and leaves the shaft and keyway unchanged.
 - Price not observed; no fabricated USD amount.
+- **2026-09-16 replacement/sourcing check ([coupling-ring-replacement-findings.md](coupling-ring-replacement-findings.md)):** ebmia.pl exact-bore searches for MK2/100/50/8/14 and MK2/100/50/10/12 were re-run live — both still return zero results. The MK2 100/50 class anchor remains the ebmia 10/14 listing (EUR 99.43 net / 122.30 gross; 0 stock, 7–14 days) with the 8/21,4 sibling (PLN 340.53 net, 24 h); the exact bores are now the **ebmia.pl made-to-bore order path** (BOM CP-01/TR-CP01 basis updated). Priced same-class alternatives found on ebmia were rejected with a recorded torque/backlash verdict: jaw couplings **SBK19-8/14** (PLN 261.69–265.31 net) and **SBK19-10/12** (PLN 217.85–221.47 net), D40 × L66, **32 Nm ≥ 8.5 Nm (torque PASS)**, but 0.5° jaw backlash = 0.0139 mm ≈ 14 µm at the 10 mm lead = **56% of the 25 µm axis positioning budget** and 4.6× the ±3 µm repeatability, invisible to the motor-shaft encoder and growing with insert wear, and the L66/11 mm-hub geometry breaks the 49–50 mm free-length / 16 mm-hub stack — **REJECTED**. BKL3/10/12 bellows (PLN 130.38 gross, 24 h) is an undersized class (OD 25, L 32, hub 10, bore max 12.7) — **REJECTED**. Conrad (403) and automation24 (404) search remained unusable. The zero-backlash MK2 bellows selection is retained.
 
 ### Original coupling CAD access — checked 2026-09-12
 
@@ -113,6 +135,12 @@ Observed kit merchandise price: **USD 130.77**, China warehouse. No Tunisia frei
 - One separate supply per cutting axis. No uncontrolled paralleling. A bus discharge/overvoltage circuit and its component ratings remain required before electrical release.
 
 ## ME-01 — selected measuring wheel
+
+**SUPERSEDED 2026-09-16:** replaced by the priced, in-stock **ifm E60137
+"U:200 N:06"** measuring wheel (200 mm circumference, Ø63.66, Ø6 bore, PU
+90 Shore A, 64.5 g; automation24 item 102756, EUR 57.00 ex VAT, in stock).
+See [measurement-replacement-findings.md](measurement-replacement-findings.md)
+and docs/13 R2. The original Kübler research below is retained as history.
 
 - [Kübler original local catalogue](kuebler-messrad-en.pdf), PDF pages2–4.
 - Order structure: `8.0000.3XXX.00XX`; wheel number123 and bore06 unambiguously configure **8.0000.3123.0006**:100 mm nominal circumference,9.5 mm tread,natural rubber60 Shore A,6 mm bore,16 g.
@@ -146,6 +174,13 @@ Observed kit merchandise price: **USD 130.77**, China warehouse. No Tunisia frei
 
 ## ME-02 — selected measurement encoder and shaft bearings
 
+**SUPERSEDED 2026-09-16:** the encoder is replaced by the priced, in-stock
+**ifm RU3100** (Ø6×10 shaft, 1024 PPR factory TTL/HTL, 4.75–30 VDC, 1000 kHz,
+12000 rpm, body Ø58.6×63.5, synchro flange 3×M4×0.7×6 PCD42; automation24
+item 102717, EUR 186.40 ex VAT, in stock). See
+[measurement-replacement-findings.md](measurement-replacement-findings.md)
+and docs/13 R2. The original Autonics research below is retained as history.
+
 - Two **Autonics E40S6-1024-6-L-5**:Ø6 shaft,1024 PPR, differentialA/B/Z,5 V±5%,300 kHz,5000 rpm, starting torque≤0.00392 Nm,IP50.
 - [Manufacturer model](https://www.autonics.com/us/model/E40S6-1024-6-L-5); [local family drawing](autonics-e40-encoder.pdf), printed pageF-20. From the mounting face: body31 mm rearward; pilot5 mm forward; shaft15 mm beyond the pilot, so **tip20 mm from the mounting face**, not15. ShaftØ6−0.010/−0.015 mm =5.985–5.990 mm. Single D-flat5 mm across over the last10 mm; not opposing flats. PilotØ20,0/−0.02. Front pattern3×M3×0.5 onPCD30,120° apart,5 mm thread depth; bodyØ40.
 - SuppliedØ6 coupling:Ø15×22 mm; bore6.0–6.1 mm;4×M3×0.5 radial screws,centres2.8 mm from ends; maximum misalignments0.25 mm parallel,5° angular,0.5 mm axial,not simultaneous installation targets. Its effective hub lengths, screw torque and internal flexure transitions are not dimensioned. The CAD is an explicitly labelled interface envelope,not a machined solid coupling or original supplier STEP.
@@ -155,7 +190,7 @@ Observed kit merchandise price: **USD 130.77**, China warehouse. No Tunisia frei
 - The current SKF CAD panel explicitly requires login; no account or login was attempted. Its Download PDF control did not produce a downloadable document in this browser attempt; the new numeric table is transcribed below, not presented as a newly archived PDF.
 - The encoder's suppliedØ6 coupling transmits only measuring torque. The independent bearings carry wheel spring force; it is not applied to an unsupported encoder shaft.
 - CN minimum2 µm leaves0.5 µm under the SKF10 K ring-temperature equation **before** any fit reduction. Full js5 interference must not be accepted without an actual measuring-bearing matching/thermal design. The [measurement report](../generated/measurement-analysis/report.md) exposes this conditional clearance failure rather than approving it.
-- [Transcribed numeric interfaces](measurement-interfaces.csv), [catalogue-interface STEP files](../generated/measurement/manifest.csv), [M201 encoder plate drawing](../generated/drawings/M201-R1-encoder-plate.pdf) and [measurement assembly/calibration record](../../docs/13-measuring-interfaces-and-calibration.md) are the current measurement detail. They do not yet constitute the shaft/pressure/guide assembly.
+- [Transcribed numeric interfaces](measurement-interfaces.csv), [catalogue-interface STEP files](../generated/measurement/manifest.csv), [M201 encoder plate drawing](../generated/drawings/M201-R2-encoder-plate.pdf) and [measurement assembly/calibration record](../../docs/13-measuring-interfaces-and-calibration.md) are the current measurement detail. They do not yet constitute the shaft/pressure/guide assembly.
 - **Commercial check2026-09-12:** the [DigiKey exact-part search](https://www.digikey.com/en/products?keywords=E40S6-1024-6-L-5), after normal page loading, displayed **0 results** for `E40S6-1024-6-L-5` and suggested the different `E40S6-1024-3-N-5`. That NPN-output part is **not a substitute**. No current price, stock or lead time was observed for the selected line-driver model. The historical `$48.50`, `1864-1042-ND`, `3 days` claims remain withdrawn; reading them from the old BOM is not verification. An unsuccessful search also does not establish global unavailability or an inability to special-order.
 
 ## TH-01 — selected electrical-cabinet cooler
@@ -183,6 +218,7 @@ R3rollerlayout clarification:the original[collar-roller catalogue](misumi-collar
 - Eight each **SKF6001-2Z/C3** and **6002-2Z/C3**, confirmed manufacturer products.6001:12×28×8mm,C5400N,C0=2360N,0.0217kg.6002:15×32×9mm,C5850N,C0=2850N,0.031kg. C3 is the selected clearance, notCN. The manufacturer6001/6002 basic dimensional records specify bore deviation−0.007/0mm,width−0.060/0mm;6001OD−0.008/0,6002OD−0.009/0.6001shaft abutment14–16.9mm,housing≤26mm;6002shaft17–20.4mm,housing≤30mm;both fillet≤0.3mm. The catalogue runout classes are not completed-machine runout measurements.
 - Eight **SKF KM2**:M15×1,25OD,5mm width,21mm locating face,4×2mm spanner slots,14.6kN axial static rating;useHN2-3spanner. Eight **MB2** new lock washers:15bore,21side face,28OD,1mm thickness,4mm inner tab,13.5mm inside dimension under tab. Turn one outer tab into a nut slot;replace the washer on every reinstallation. The inner tang uses the shaft's4.2mm-wide slot.
 - Eight **SEEGER A12**,spring steel,DIN471. [Original manufacturer's2022 catalogue](seeger-catalogue-2022.pdf),PDF pages24–25:1.00mm ring thickness−0.06;groove11.50mm−0.11;groove width minimum1.10;minimum edge margin0.8mm;groove capacity1500N,ring capacity5000N before application factors;ZGA-1pliers. STARZ groove11.45±0.02mm,1.12±0.02mm width. These dimensions do not come from an unverified generic ring image.
+- **2026-09-16 substitution (BOM TR-RR01):** the brand-exact A12 has no priced channel, so the priced DIN 471 12×1 Federstahl ring **Wegertseder Art. 1950-010** is adopted (100 pcs EUR 8.57 incl VAT = EUR 0.086/pc, in stock, live-verified 2026-09-16). Fit verdict: d3 = 11.0 mm vs groove 11.43–11.47 → seated spread ≈0.45 mm, ring always grips the groove bottom; axial float 0.10–0.20 mm; radial protrusion ≈0.72 mm — PASS ([coupling-ring-replacement-findings.md](coupling-ring-replacement-findings.md)).
 - Same catalogue, PDF page131 / printed page129, section8.1.3: a rectangular groove's loaded-side root may have radius up to0.1×ring thickness without noticeably changing seating. R5selectsR0.04±0.01: maximum0.05mm is below0.094mm for the thinnest specifiedA12. Its minimum1.10mm groove retains1.00mm flat width between both maximum-radius tangencies. This manufacturer geometry guidance does not supply a fatigue notch factor for the custom12mm42CrMo4shaft.
 - [Dated ECB/Frankfurter conversion](eur-usd-2026-09-11.json):**1EUR=1.1592USD,2026-09-11**. Active BOM conversions retain the exact source amount and date. They are not USD vendor quotations or Tunisia-delivered prices. Freight remains separate; tax/duty is budgetedzero solely under the user's stated sous-douane arrangement.
 
@@ -350,7 +386,15 @@ GBP 4.98. Both observed 2026-09-13.
   (Canmeng KK86D20C/D10C, US$50–200). Clones are not selected: they are a
   different precision class than the genuine HIWIN axis and require a
   change record plus a full repeat of every affected check if ever
-  considered. The genuine axis stays on the distributor-quotation route.
+  considered.
+- **AX-01 price resolved (2026-09-16, MISUMI VN catalogue API):** the
+  genuine C-grade sibling **KK8610C-340A1-F0** is priced on the MISUMI VN
+  shelf ([detail 221005545419](https://vn.misumi-ec.com/vona2/detail/221005545419/?HissuCode=KK8610C-340A1-F0)):
+  **VND 21,146,653** per unit (USD 824.72 converted 2026-09-16), 23–99 days
+  with a "temporarily NOT available — ask MISUMI" caution. The P→C
+  substitution is adopted (BOM AX-01 updated); the P grade stays a
+  HIWIN-distributor quote item for a later comparison. Method and accuracy
+  analysis: [axis-replacement-findings](axis-replacement-findings.md).
 - **Circlip observation:** Simply Bearings lists a quality-equivalent
   DIN471-class 12 mm external circlip, code `d1400-012`
   ([page](https://www.simplybearings.co.uk/products/d1400-012)), GBP 0.85,
@@ -434,18 +478,30 @@ tabulated (channel, URL, HTTP result, evidence):
    EUR 6.19 in stock** (Wegertseder Art. 2540-034); **ISO 8734 3m6×20
    hardened dowels, 10 pcs EUR 2.73 in stock** (Wegertseder Art. 1018-078,
    DIN 6325 hardened m6 ≈ ISO 8734). All read live 2026-09-16.
-- **Priced encoder alternatives (observed 2026-09-16, automation24):**
-  the selected Autonics E40S6-1024-6-L-5 has no observed public price.
-  Automation24 lists two in-stock ifm magnetic 1024 PPR Ø6 mm shaft
-  alternatives: RU3100
+- **Priced encoder and wheel substitutions ADOPTED (observed 2026-09-16, automation24):**
+  the selected Autonics E40S6-1024-6-L-5 has no observed public price, so
+  the in-stock ifm magnetic encoder was adopted: **RU3100**
   ([page](https://www.automation24.com/incremental-encoder-ifm-electronic-ru3100))
-  EUR 185.50 ex VAT (RRP 206.10, −10%), M12 5-pole; RUP500 with synchro
-  flange and display
+  **EUR 186.40 ex VAT** (RRP 207.10, −10%; the 2026-09-16 re-fetch shows
+  186.40, superseding the earlier 185.50 read), item 102717, M12 5-pole,
+  HTL/TTL, factory 1024 PPR, Ø6×10 shaft, body Ø58.6×63.5, synchro flange
+  3×M4×0.7×6 PCD42, 1000 kHz, 12000 rpm, in stock, dispatch next working
+  day. The RUP500 display variant
   ([page](https://www.automation24.com/incremental-encoder-ifm-electronic-rup500))
-  EUR 255.50 ex VAT (RRP 283.90, −10%), item 102715, M12 8-pole. Both are
-  HTL/TTL 50 mA with factory setting 1024. Substitution requires an
-  approved change record plus the M201 flange/pilot and IF-B01 input-level
-  re-check.
+  EUR 255.50 ex VAT (RRP 283.90), item 102715, M12 8-pole was not needed.
+  The M201 plate was redesigned to R2 and the IF-B01 input-level re-check
+  remains an open controls item (measurement-replacement-findings.md).
+- **Measuring wheel substitution ADOPTED (observed 2026-09-16, automation24):**
+  the exact Kübler 8.0000.3123.0006 is not listed and has no public price;
+  no priced 100 mm-circumference encoder measuring wheel could be verified
+  on automation24, Conrad or Amazon.de. The priced 200 mm class was adopted:
+  **ifm E60137 "U:200 N:06"**
+  ([page](https://www.automation24.com/measuring-wheel-ifm-electronic-e60137))
+  **EUR 57.00 ex VAT** (RRP 61.90, −8%), item 102756, EAN 4021179060219,
+  200 mm circumference, Ø63.66, Ø6 bore, PU surface 90 Shore A on aluminium,
+  64.5 g, in stock, dispatch next working day. The 200 mm circumference
+  halves the PPR/mm ratio; the calibration model, module CAD and controls
+  nominal scale were re-derived (measurement-replacement-findings.md).
 - No public catalogue page publishes a delivered-to-Tunisia (sous-douane)
   USD price for any line; that pricing only exists as a freight-forwarder /
   broker quotation. The consolidated RFQ step for that quotation is

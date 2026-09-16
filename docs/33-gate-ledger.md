@@ -35,8 +35,8 @@ steps attached to each gate remain mandatory.
 | 8 | True helical-thread roots (M5 blind hole, M15) | feed-fem holds "true_threads_verified:false"; docs/15:124; docs/12:60 | PHYSICAL-ONLY | FEM uses nominal thread envelopes; not qualified | Machining QA per docs/12 (M5 depth/tip record docs/14, thread gauge) plus thread inspection at receipt; no FEM number releases the thread — runbook steps [P2-2, P2-3](36-commissioning-runbook.md) |
 | 9 | Final edge breaks 0.05–0.10 mm | feed-fem; docs/12 | PHYSICAL-ONLY | Deburr practice specified; not measured | Deburr without raised lips and inspect per docs/12:127 + build record — runbook step [P2-4](36-commissioning-runbook.md) |
 | 10 | Bearing/housing compliance, preload, thermal field | docs/24 §9 "Bearings, joints and thermal behavior"; bearing-fit (`thermal_field_verified:false`); docs/12:68 | PHYSICAL-ONLY — desk parts (housing compliance + thermal field) **CLOSED 2026-09-16** (ledger §2.5) | 256-corner fit envelope passes conditionally (min 1.28 µm); new [bearing-contact-thermal study](../engineering/generated/bearing-contact-thermal/report.md): the 6 µm matched interference resolves to 17.65 MPa on the seat (seat vm 22.73 vs 650 MPa, ring 82.26 vs ≈1700 MPa); the record's F112 bore is a clearance fit, so the housing carries no fit pressure (bore-wall 0.98 MPa under the resolved 310 N); housing compliance changes the seat stress ≤3.9 MPa absolute (a rigid-boundary artifact) — not material; the 30 W standstill thermal FEM gives a 29.66 K front-seat rise vs the record's 20 K shaft-above-housing envelope → **not met at the central stated seat conductance** (sensitivity 15.5–51.7 K) | Remaining physical: measure/justify preload, contact and the seat temperature field on the actual build; instrumented cold-start/hot-run test (docs/12:38); record the motor-case temperature at rated hold (docs/28 §2.5) — runbook steps [P1-1…P1-5, P9-1…P9-3](36-commissioning-runbook.md) |
-| 11 | Rotating fatigue qualification | feed-fem (`fatigue_verified:false`); docs/15:124; docs/24 §9 | PHYSICAL-ONLY | No fatigue life established | Physical fatigue test on the actual shaft/build (docs/15 requirement); nothing desk-side substitutes — runbook step [P6-9](36-commissioning-runbook.md) |
-| 12 | ±60 N roller-force envelope / pressure, friction, jam | docs/verification/feed-shaft-fem.md:116; docs/24 §9 | PHYSICAL-ONLY | 5 Nm at r=20 mm could mean 250 N tangential — torque alone does not prove the force limit | Physical pressure/friction/jam qualification on the assembled cassette + docs/20 nip/wheel force records — runbook steps [P6-4…P6-6](36-commissioning-runbook.md) |
+| 11 | Rotating fatigue qualification | feed-fem (`fatigue_verified:false`); docs/15:124; docs/24 §9 | PHYSICAL-ONLY — desk part **CLOSED 2026-09-16** (ledger §2.6); whole-machine load context in [docs/37](37-system-dynamics.md) §1/§4 (ledger §2.7) | Desk S-N in [docs/38](38-fatigue-and-life.md): working whole-shaft bound 76.6 MPa, worst converged regional working peak 60.4 MPa (M15 corner, docs/28 §5); 42CrMo4+QT σ_w 400–450 MPa (FKM-Richtlinie basis), Kt 1.5–2 (Pilkey) with record-computed 2.534–2.586, surface 0.85 / size 0.97 → n_f ≥ 1.7 (worst stated combination) and ≥ 5.5 at the converged regional peaks; 5 Nm fault 158–165 MPa = 3.9–4.1× below yield, 1000 cycles <0.2 % S-N damage; bearing L10 all ≥ 20,000 h by ≥ 7.9× (docs/38 §4) → desk PASS, infinite-life regime | Physical rotating-fatigue test on the actual shaft/build (docs/15 requirement) remains the gate; the desk S-N does not substitute — runbook step [P6-9](36-commissioning-runbook.md) |
+| 12 | ±60 N roller-force envelope / pressure, friction, jam | docs/verification/feed-shaft-fem.md:116; docs/24 §9 | PHYSICAL-ONLY — desk dynamics half **CLOSED 2026-09-16** ([docs/37](37-system-dynamics.md) §1/§5, ledger §2.7) | 5 Nm at r=20 mm could mean 250 N tangential — torque alone does not prove the force limit; docs/37 bounds the attainable wire pull (2·μ·N = 40–90 N per nip at μ 0.4–0.6 × 50–75 N preload; 80–180 N two-nip worst case) against the 0.83 N acceleration demand and 5–20 N payoff-brake guidance | Physical pressure/friction/jam qualification on the assembled cassette + docs/20 nip/wheel force records — runbook steps [P6-4…P6-6](36-commissioning-runbook.md) |
 | 13 | Blade pair T001 | docs/24 §4.4; head (`tooling_qualified:false`) | EXTERNAL-INQUIRY + PHYSICAL-ONLY | Purchase-to-drawing; edge-unqualified; no blade pair procured | Specialist manufacture quote to the drawing; loaded clearance verification before installation; edge qualification (docs/24 §4.4) — runbook steps [P0-5, P6-8](36-commissioning-runbook.md) |
 | 14 | Guard risk assessment & 30 mm aperture sign-off | docs/26 §6.1/6.5; README warnings; mechanism (`guard_safety_function_validated:false`) | PHYSICAL-ONLY | Desk reach calc passes 2.9× (EN ISO 13857: 345 mm > 120 mm, docs/28 §2.2); requires sign-off | Task-specific risk assessment (cutting, wire release, entanglement, ejection, access, maintenance, loading, power loss, egress) on inspection/guard-payoff-release-template.csv + aperture verification against the current standard edition — runbook steps [P8-2, P8-3](36-commissioning-runbook.md) |
 | 15 | Bernstein SLC/ACF mounting + G106 drilling pattern | docs/26 §6.2 + G106 row | EXTERNAL-INQUIRY — desk part **CLOSED 2026-09-16** | Manufacturer documents retrieved and archived: Bernstein installation/operating manual 0800000865 (2022-07-12, `engineering/sources/bernstein-slc-installation-manual-0800000865.pdf`) + datasheet 6018200007 (`engineering/sources/bernstein-slc-f-024-20-20-r4-datasheet.pdf`). Geometry recorded in docs/26 §2/§6: SLC-F 30×192×44 mm, 4×M5 (Ø5.4; rows 161.6 mm / columns 22 mm), 3×M20×1.5, flat surface, any orientation, alignment X/Y 29+3, 2 mm overtravel (stop 0.2–2 mm), ACF-1 R ≥400 mm, one-way screws M5×25/40 available | Physical fit and locking-travel verification remains (docs/26 §6); transfer the exact hole coordinates from the archived drawing p.8 to the G106 fabrication sheet before drilling — runbook steps [P3-4, P8-1](36-commissioning-runbook.md) |
@@ -53,21 +53,21 @@ steps attached to each gate remain mandatory.
 | 26 | First article + energisation gate | docs/24 §8.1 | PHYSICAL-ONLY | Template blank | Complete inspection/first-article-and-energisation-gate-template.csv with actual evidence and reviewer disposition — runbook step [P10-6](36-commissioning-runbook.md) |
 | 27 | Fabrication/incoming/build-record evidence | docs/24 §1–§3 | PHYSICAL-ONLY | All templates blank; source checks ≠ physical results | Execute inspection/production-build-record-template.csv and inspection/incoming-inspection-template.csv per work package; run tools/check_production_records.py etc. — runbook steps [P0-1…P0-7, P2-1…P2-6, P3-1…P3-4, P4-1…P4-7, P10-8](36-commissioning-runbook.md) |
 | 28 | Measuring module physical support/torque + fabrication | engineering/README measuring paragraph; docs/13 | PHYSICAL-ONLY | M201 source and interfaces exist; "physical support/torque, fabrication and qualification evidence remain open" | Fabricate and measure per docs/13 + mechanism manifest; wheel contact force 6–19 N record (docs/20) — runbook steps [P2-6, P6-5](36-commissioning-runbook.md) |
-| 29 | Measurement calibration: factory accuracy (1.65 mm budget) + 626 CN thermal screen | measurement-analysis (`unresolved_source_checks:2`, `physical_calibration_qualified:false`); README:60; engineering/README:93–94 | PHYSICAL-ONLY | 392 synthetic observations, 0 residual failures (numerical only); 626 CN leaves 0.5 µm with 10 K ΔT — not accepted with full js5 interference | Traceable calibration of the 100±0.1 mm circumference claim + actual index reference; separate 626 thermal/matching design or substitution; `--require-factory-accuracy` fails until then — runbook steps [P1-5, P6-7](36-commissioning-runbook.md) |
+| 29 | Measurement calibration: factory accuracy (1.65 mm budget) + 626 CN thermal screen | measurement-analysis (`unresolved_source_checks:2`, `physical_calibration_qualified:false`); README:60; engineering/README:93–94 | PHYSICAL-ONLY — desk error-budget half **CLOSED 2026-09-16** ([docs/37](37-system-dynamics.md) §3, ledger §2.7) | 392 synthetic observations, 0 residual failures (numerical only); 626 CN leaves 0.5 µm with 10 K ΔT — not accepted with full js5 interference; docs/37 full-chain budget: 1.65 mm/m uncalibrated FAIL, ≈0.80 mm/m calibrated-at-allocations still FAIL vs ±0.70 mm/m → the process terms (slip 0.25, tension 0.15, 15–30 °C) must be demonstrated by the 30-piece cells, not re-budgeted | Traceable calibration of the ifm E60137 200 mm circumference claim + actual index reference; separate 626 thermal/matching design or substitution; `--require-factory-accuracy` fails until then — runbook steps [P1-5, P6-7](36-commissioning-runbook.md) |
 | 30 | R+W coupling interior clearance verification | docs/verification/feed-r6.md:46 | EXTERNAL-INQUIRY | "Original coupling interior clearance has not been verified from supplier CAD". 2026-09-16 re-fetch of the June-2026 MK2 datasheet (byte-identical to rw-mk2-datasheet-2026.pdf, SHA256 f6c663d7…; see mechanical-documents-findings.md §2) still does not dimension the bellows interior | Send letter [L2](35-purchase-enquiries.md) requesting the MK2/100/50/8/14 interior clearance CAD/data; verify interior clearance before hub installation |
-| 31 | HIWIN KK8610P340A1F0 quote (article 10.00026, ×2) | docs/24 §2.2 | EXTERNAL-INQUIRY | 31-channel search found no public price; unverified leads: eBay item 406408632737 US $450 (403-gated), MISUMI VN/TH sibling. 2026-09-16: current HIWIN catalogue PS-11-1-EN-2605-K (2026-05-22) archived as hiwin-kk86-catalogue-2026.pdf — confirms 340/440, lead 10, P class, and the **input shaft Ø8 h7 / 18 mm exposed** (mechanical-documents-findings.md §1); price still unobserved | Send letter [L1](35-purchase-enquiries.md) to two independent HIWIN distributors; compare against the eBay/MISUMI leads from a browser; keep the axis unsubstituted unless a change record approves |
-| 32 | R+W MK2/100/50 quotes (10/12 ×2, 8/14 ×2) | docs/24 §2.2; engineering/sources/sourcing-findings-rw.md | EXTERNAL-INQUIRY | Exact bores have no live price (23 channels); live class anchor MK2/100/50/10/14 EUR 99.43 net/pc (ebmia.pl); OD 40 × L 50 × hub 16 dims verified. 2026-09-16 re-verified from the June-2026 datasheet (byte-identical to rw-mk2-datasheet-2026.pdf): size 100 = **10 Nm** TKN > 8.5 Nm motor holding torque, OD 40, A-1 50/60 (selected 50), fit length C 16, bores 5–24 H7 (8/14 and 10/12 both in range), M4 @ 4.5 Nm | Send letter [L2](35-purchase-enquiries.md); any R+W dealer can order the exact bores at the class price; confirm OD 40 × L 50 × hub 16; no substitute without a change record |
-| 33 | Kübler measuring wheel 8.0000.3123.0006 ×2 quote | docs/24 §2.2 | EXTERNAL-INQUIRY | No public price; 100±0.1 mm circumference claim unverified until receipt. 2026-09-16 re-verified from the live kuebler.com `/pdf?Messrad_en.pdf` (byte-identical to kuebler-messrad-en.pdf): wheel No.123 natural rubber 60 Shore A, **Ø31.83 ±0.025**, 100 ±0.1 mm circumference, 6 mm (H7) bore, 9.5 tread / 14.5 overall, M4×6 ISO4029; not a stock type. Supplementary kuebler-messradsysteme-2025.pdf archived | Send letter [L3](35-purchase-enquiries.md); compare distributor offers against keeping the archived wheel; verify the circumference claim at incoming inspection — runbook step [P0-4](36-commissioning-runbook.md) |
-| 34 | Autonics E40S6-1024-6-L-5 ×2 quote | docs/24 §2.2 | EXTERNAL-INQUIRY | No public price observed. 2026-09-16: live product page + current EN product manual TCD210019AD 2025-07-21 (archived autonics-e40s-datasheet-2025.pdf) confirm Ø6 shaft (−0.004/−0.016), 1024 P/R, line driver A,Ā,B,B̄,Z,Z̄, 5 VDC ±5%, 3-M3 DP5 on PCD30, pilot Ø20 −0.021/0, body Ø40×31, shaft 15 + pilot 5; M201 plate check unchanged; FLAG: shaft-tolerance and pilot-tolerance deltas vs shared/measurement_spec.hpp (see mechanical-documents-findings.md §4; spec.hpp not edited) | Send letter [L4](35-purchase-enquiries.md) to an Autonics distributor |
+| 31 | HIWIN KK8610P340A1F0 quote (article 10.00026, ×2) | docs/24 §2.2 | EXTERNAL-INQUIRY — **CLOSED 2026-09-16 (priced P→C substitution adopted)** | 31-channel search found no public price; 2026-09-16: current HIWIN catalogue PS-11-1-EN-2605-K (2026-05-22) archived as hiwin-kk86-catalogue-2026.pdf confirms 340/440, lead 10, P class and the input shaft Ø8 h7 / 18 mm exposed; then the MISUMI VN catalogue API (api.vn.misumi-ec.com/api/v1/partNumber/search, seriesCode 221005545419, applicationId from the VN runtime config) returned the live shelf price of the genuine C-grade sibling **KK8610C-340A1-F0**: VND 21,146,653/unit (USD 824.72 converted, 2026-09-16), 23–99 days, caution "temporarily NOT available — ask MISUMI for next ship date". C-grade accuracy analysis: axial play 0.02 mm, expected repeatability ≈±0.01 mm — ~4× inside the ±0.20 mm strip target and the length is wheel-measured, so the P→C switch needs no CAD change; identical carriage/F0/Ø8 h7/340-440 mm interfaces. BOM AX-01 updated | Letter L1 resolved 2026-09-16 — no enquiry needed. Confirm the ship date at order time and verify C grade, lead 10 and the Ø8 h7 shaft at incoming inspection. Record in [axis-replacement-findings](../engineering/sources/axis-replacement-findings.md) |
+| 32 | R+W MK2/100/50 quotes (10/12 ×2, 8/14 ×2) | docs/24 §2.2; engineering/sources/sourcing-findings-rw.md; engineering/sources/coupling-ring-replacement-findings.md | EXTERNAL-INQUIRY | Exact bores have no live price (23 channels; ebmia exact-bore searches re-run 2026-09-16 — still empty); live class anchor MK2/100/50/10/14 EUR 99.43 net/pc (ebmia.pl, 7–14 days) and 8/21,4 PLN 340.53 net (24 h); OD 40 × L 50 × hub 16 dims verified. 2026-09-16 replacement check: priced ebmia jaw couplings SBK19-8/14 (PLN 261.69–265.31 net) and SBK19-10/12 (PLN 217.85–221.47 net), D40 × L66, 32 Nm ≥ 8.5 Nm (torque PASS) were REJECTED: 0.5° backlash = 14 µm at 10 mm lead = 56% of the 25 µm positioning budget and 4.6× the ±3 µm repeatability, not closed by the motor-shaft encoder, plus L66/11 mm-hub geometry vs the 49–50 mm/16 mm stack; BKL3/10/12 bellows (PLN 130.38 gross, 24 h) is an undersized class (OD 25/L 32/hub 10); Conrad 403, automation24 404 | Send letter [L2](35-purchase-enquiries.md) with the ebmia order instruction (made-to-bore quote items at the class price; R+W direct fallback); confirm OD 40 × L 50 × hub 16; no substitute without a change record |
+| 33 | Kübler measuring wheel 8.0000.3123.0006 ×2 quote | docs/24 §2.2 | EXTERNAL-INQUIRY — **CLOSED 2026-09-16 (priced substitution adopted)** | No public price; 100±0.1 mm circumference claim unverified until receipt. 2026-09-16 re-verified from the live kuebler.com `/pdf?Messrad_en.pdf` (byte-identical to kuebler-messrad-en.pdf): wheel No.123 natural rubber 60 Shore A, **Ø31.83 ±0.025**, 100 ±0.1 mm circumference, 6 mm (H7) bore, 9.5 tread / 14.5 overall, M4×6 ISO4029; not a stock type. Supplementary kuebler-messradsysteme-2025.pdf archived. No priced 100 mm-circumference wheel verified anywhere; substituted by **ifm E60137 "U:200 N:06"** (200 mm circumference, Ø63.66, Ø6 bore, PU 90 Shore A, 64.5 g), automation24 item 102756, **EUR 57.00 ex VAT**, in stock, dispatch next working day. The 200 mm substitution halves the PPR/mm ratio (0.048828 mm/count); CAD (wheel envelope, fork/bracket clearances, lug raised 15.915 mm), calibration constants, docs/13 and the controls nominal scale (20480 counts/m) were re-derived and all gates stay green | Letter L3 resolved 2026-09-16 — no enquiry needed. Verify the 200 mm claim and hub/screw detail at incoming inspection — runbook step [P0-4](36-commissioning-runbook.md). Record in [measurement-replacement-findings](../engineering/sources/measurement-replacement-findings.md) |
+| 34 | Autonics E40S6-1024-6-L-5 ×2 quote | docs/24 §2.2 | EXTERNAL-INQUIRY — **CLOSED 2026-09-16 (priced substitution adopted)** | No public price observed. 2026-09-16: live product page + current EN product manual TCD210019AD 2025-07-21 (archived autonics-e40s-datasheet-2025.pdf) confirm Ø6 shaft (−0.004/−0.016), 1024 P/R, line driver A,Ā,B,B̄,Z,Z̄, 5 VDC ±5%, 3-M3 DP5 on PCD30, pilot Ø20 −0.021/0, body Ø40×31, shaft 15 + pilot 5; FLAG: shaft-tolerance and pilot-tolerance deltas vs shared/measurement_spec.hpp (see mechanical-documents-findings.md §4; spec.hpp not edited). Substituted by **ifm RU3100** (Ø6×10 shaft no flat, 1024 PPR factory TTL/HTL, 4.75–30 VDC, 1000 kHz, 12000 rpm, synchro flange 3×M4×0.7×6 PCD42, body Ø58.6×63.5), automation24 item 102717, **EUR 186.40 ex VAT**, in stock; M201 plate redesigned to R2 (60×60, Ø36.5 seat, 3×Ø4.5 PCD42, 4×M4 taps), coupling moved Y44→Y48, housing rear counterbores; J8/J9 line-receiver review CLOSED 2026-09-16 (TTL mode via IO-Link, single-ended A/B with a 2.5 V mid-bias on the AM26LV32EIDR − inputs, 120 Ω terminators not fitted; docs/22 §6/§7) | Letter L4 resolved 2026-09-16 — no enquiry needed. Confirm the synchro-flange centering feature at receipt. Record in [measurement-replacement-findings](../engineering/sources/measurement-replacement-findings.md) |
 | 35 | Rittal SK3303.500 ×1 quote | docs/24 §2.2 | EXTERNAL-INQUIRY | Conrad listing observed EUR 1,669 incl VAT (merchandise only) | Send letter [L5](35-purchase-enquiries.md) to a Rittal distributor; confirm the 230 V 50 Hz variant |
-| 36 | STEPPERONLINE CL57T-V41 ×2 / LE-350-36 ×1 | docs/24 §2.2 | EXTERNAL-INQUIRY | Exact strings have no live price (shop 403); class anchors: EUR 173.78 (amazon.de B0FYPDGC85), EUR 77.04 (B0HDN818SJ) | Send letter [L6](35-purchase-enquiries.md) to StepperOnline; record the shop price at purchase; class fallbacks documented |
-| 37 | SEEGER-ORBIS A12 ×8 | docs/24 §2.2 | EXTERNAL-INQUIRY | Brand-exact has no live price; DIN 471 12×1 anchors: 100 pcs EUR 8.57 (Wegertseder 1950-010) | Send letter [L7](35-purchase-enquiries.md); any DIN 471 12×1 federstahl ring meets the groove; brand substitution needs a change record |
+| 36 | STEPPERONLINE CL57T-V41 ×2 / LE-350-36 ×1 | docs/24 §2.2 | EXTERNAL-INQUIRY | Exact strings have no live price (shop 403); class anchors: EUR 173.78 (amazon.de B0FYPDGC85), EUR 77.04 (B0HDN818SJ). 2026-09-16 made-in-china multi-search CL57T: 300 fuzzy results, no CL57T driver product on page 1 — no wholesale anchor | Send letter [L6](35-purchase-enquiries.md) to StepperOnline; record the shop price at purchase; class fallbacks documented |
+| 37 | SEEGER-ORBIS A12 ×8 | docs/24 §2.2 | EXTERNAL-INQUIRY — **CLOSED 2026-09-16 (priced substitution adopted)** | Brand-exact has no live price on any channel; substituted by Wegertseder Art. 1950-010 DIN 471 12×1 Federstahl, 100 pcs EUR 8.57 incl VAT (EUR 0.086/pc), in stock, live-verified 2026-09-16; fit verified: d3 11.0 into groove Ø11.45±0.02 → seated spread ≈0.45 mm (always grips the groove bottom), axial float 0.10–0.20 mm (groove 1.10–1.14 vs ring 0.94–1.00), radial protrusion ≈0.72 mm; BOM TR-RR01 updated; evidence in coupling-ring-replacement-findings.md | No letter needed (L7 resolved); record receipt lot/certificate in incoming-inspection-template.csv at receipt |
 | 38 | Schneider DF2CN02 10×38 fuse holder + prospective-fault coordination | docs/22 §11.3/§11.6; docs/24 §2.2 | EXTERNAL-INQUIRY — desk part **CLOSED 2026-09-16** | DF2CN02 observed EUR 55.99/10 (Conrad, 2026-09-16); holder identity CONFIRMED from the TeSys 2026 catalogue (B4/4, B4/10–11, archived schneider-tesys-deca-catalogue-2026.pdf): **DF101** — 1P DIN-rail 10×38 fuse carrier, Ith 32 A, Ui 690 V, IP20, 17.5 mm, padlockable (family DF101N/DF102/DF103, LED DF101V…DF103NV); price not_observed (no shop listing reached 2026-09-16, acceptable); recorded as the confirmed catalogue identity (CB-FUSE-HOLDER row, superseded) | Design keeps the priced 5×20 CB-XPS-FUSE solution (docs/22 §11.3); DF101 not reintroduced; verify prospective short-circuit coordination at commissioning |
 | 39 | CT-PS36 6EP3332-7SB00-0AX0 + CT-IF-U1/U2-U3 identities | docs/24 §2.2 | EXTERNAL-INQUIRY | Identities per selected-controls.csv; no live-page price | Record the distributor page at order time; confirm USB-isolator/interface availability before the board order |
 | 40 | Tunisia sous-douane landed-cost RFQ | docs/24 §2.2 (2026-09-16 step) | EXTERNAL-INQUIRY | No landed-cost comparison exists (merchandise observations only) | Send letter [L8](35-purchase-enquiries.md), the master RFQ with the complete quotation-register SKU list, to the sous-douane freight forwarder and two distributors shipping to Tunisia; require unit USD price, currency/payment terms, EXW/FOB, consolidation freight, handling, air/sea freight, destination charges, customs (DDU sous-douane), lead time, validity; record offers before ordering |
 | 41 | EMC assessment | docs/22 §7/§8; docs/24 §6 | EXTERNAL-INQUIRY + PHYSICAL-ONLY | No EMC assessment exists | Enclosure/standards review of segregation, shield terminations and ducts, then an EMC assessment on the built cabinet by competent persons — runbook step [P5-9](36-commissioning-runbook.md) |
 | 42 | Guard/payoff physical validation flags | mechanism status.json (`guard_door_kinematics_validated:false`, `guard_safety_function_validated:false`, `payoff_selection_complete:false`, `payoff_rotation_validated:false`) | PHYSICAL-ONLY | R2 CAD/checks pass; flags remain false | Physical build and validation per docs/26 §6 (rows 14–17 above) — runbook steps [P7-1…P7-4, P8-1…P8-6](36-commissioning-runbook.md) |
-| 43 | Full-machine integration flags | mechanism/layout/head/feed-cassette status.json (`full_machine_integrated:false`, `fabrication_released:false`, `physical_results:false`) | PHYSICAL-ONLY | 507-occurrence R3 source exists; cabinet/safety not modelled | Assemble per docs/30/docs/31 and record; no flag flips without physical evidence — runbook steps [P0–P9, P10-7](36-commissioning-runbook.md) |
+| 43 | Full-machine integration flags | mechanism/layout/head/feed-cassette status.json (`full_machine_integrated:false`, `fabrication_released:false`, `physical_results:false`) | PHYSICAL-ONLY | 504-occurrence R4 source exists; cabinet/safety not modelled | Assemble per docs/30/docs/31 and record; no flag flips without physical evidence — runbook steps [P0–P9, P10-7](36-commissioning-runbook.md) |
 | 44 | Feed-shaft regional stress release | feed-fem/feed-fem-torus status (`numerical_gates_passed:false`); docs/24 §9 | DESK-CLOSABLE — desk part closed by docs/26+28 (submodel record) + gate 3 | All eleven regional rows converge 0.02–4.0% at ≤150 k nodes with Pilkey cross-checks (docs/28 §5); 13 gmsh/10 Netgen four-mesh rows preserved unaltered; centroid gates now PASS_SCOPED (gate 3) | Residual: `continuous_CAD_containment_verified:false` — the whole-shaft containment audit is now executed and reported (gate 3: 32 exterior / 0 on-boundary of 1,125,721 centroids, 2026-09-16); no fabrication release from FEM alone (docs/24 §10.6) |
 
 ## 2. Desk closures recorded in this ledger
@@ -120,12 +120,14 @@ keyway (protrusion 2.2 mm + 0.15 mm top clearance). The collar-contact
 study (gate 1) evaluated both identities; both pass, F109 governs. The
 slip is recorded here; docs/28 is left unedited.
 
-### 2.4 Kübler wheel set-screw torque desk value (gate 6)
+### 2.4 Measuring-wheel set-screw torque desk value (gate 6)
 
-M4×6 ISO4029 cone-point set screw into the E40S6/M202 shaft flat: desk
-value **2.0 Nm** (cone-point practice range 1.5–2.5 Nm for M4 into a flat;
-retention/torque connection, not a clamping joint). Record the applied
-torque in the build record at assembly; the supplier's value governs if
+Wheel-to-shaft clamping: the ifm E60137 datasheet does not publish the hub
+screw detail, so the previous Kübler desk value **2.0 Nm** (M4 cone-point
+practice range 1.5–2.5 Nm into a shaft flat; retention/torque connection,
+not a clamping joint) is retained only as a placeholder for an equivalent
+M4 clamp. Confirm the ifm hub geometry at incoming inspection and record the
+applied torque in the build record; the supplier's value governs if
 provided.
 
 ### 2.5 Bearing/housing compliance and thermal field — desk parts (gate 10)
@@ -175,15 +177,90 @@ measured motor-case temperature remain the required closure. The S5M belt
 thermal break and the rear-half conduction path are stated mitigations,
 not used to relax the number. `thermal_field_verified` stays false.
 
+### 2.6 Fatigue S-N, fault LCF, bearing L10 and fretting — desk halves (gate 11 + bearing-life assessment)
+
+[docs/38](38-fatigue-and-life.md). Desk study; nothing releases fabrication.
+
+**Shaft fatigue (F101, gate 11 desk half):** duty 8 h/day × 30 cuts/min ×
+250 d/yr × 5 yr = 10,000 h, ≈1.8×10⁷ cuts, ≈2–6×10⁸ alternating cycles
+(roller Ø20, 20–32 rev/cut) — an endurance-limit regime. Working basis:
+whole-shaft bound **76.6 MPa** (feed-fem; torus 74.7) and the converged
+regional peaks from docs/28 §5 — worst working regional **60.4 MPa** (M15
+washer-slot corner, netgen; bound 63.5), roller shoulder 45.2, roller key
+floor 43.0, pulley slot-lip 37.1. Material σ_w = **400–450 MPa** notched-bar
+(42CrMo4 V, FKM-Richtlinie σ_w,zd ≈ 398 MPa at Rm ≈ 1000 MPa; 0.4–0.5·Rm
+rule); Kt 1.5–2 stated (Pilkey) plus the record's computed 2.534–2.586 at
+the R0.2 runouts (docs/28 §6); surface 0.85, size 0.97. **n_f = 2.9/3.2 at
+Kt 1.5, 2.2/2.4 at Kt 2.0, 1.7/1.9 at Kt 2.6 (σ_w 400/450); 5.5 against the
+converged worst regional peak (no re-Kt).** Verdict: desk PASS — infinite
+life at design duty; the physical rotating-fatigue test remains.
+
+**Fault LCF (5 Nm, 1000 cycles):** fault bounds 158.2 (feed-fem) /
+165.0 MPa (torus) vs 650 MPa yield → 3.9–4.1× elastic margin, no
+yielding/ratcheting; even double-counting Kt = 2.6 on the converged peak
+gives ≈429 MPa ≈ 1.07·σ_w → 1000 cycles ≈0.14 % damage at S-N slope 5.
+Fatigue-benign.
+
+**Bearing L10 (ISO 281, P = Fr):** 6001-2Z/C3 rear P 400 N (feed-analysis
+321.2 N + 75 N nip) at 260 rpm → **1.6×10⁵ h**; 6002-2Z/C3 front P 390 N →
+**2.2×10⁵ h**; 626-2Z wheel shaft P 19 N (docs/20 6–19 N cell) at 150 rpm →
+**2.1×10⁸ h**; 6204-2Z/C3 payoff P 294 N (≤60 kg total ÷ 2; 589 N at the
+docs/26 "≤60 kg half-load" reading → 1.3×10⁶ h) at ≤160 rpm → **1.0×10⁷ h**.
+Target 20,000 h set in docs/38 (2× the 10,000 h duty; SKF 8 h-service
+guidance) — all pass, minimum margin **7.9×** (6001); at the 478 rpm implied
+by 0.5 m/s feed the 6001 still clears at 8.6×10⁴ h (4.3×). Key/collar
+fretting (gate 1 numbers, qualitative): fault key force 1000 N vs
+μN ≈ 1050 N clamp-friction capacity → fault-level micro-slip expected,
+working margin ≈5×; the aluminium collar wall is the consumable fretting
+interface; belt proof + incoming measurement unchanged. A12 ring: static
+axial locator, no torque path, benign. Blade pair: literature order
+10⁵–10⁷ cuts per edge set (Kalpakjian & Schmid, blanking tool life for soft
+metals) vs the ≈1.8×10⁷-cut duty → consumable with scheduled regrind;
+physical edge qualification (gate 13) is the gate.
+
+### 2.7 Whole-machine dynamics, belt dynamics and error budget — desk halves (gates 11, 12, 29)
+
+[docs/37](37-system-dynamics.md). Desk study; nothing releases fabrication.
+
+- **Feed drive sizing (gate 12 context):** reflected inertia **4.35e-4 kg·m²**
+  per cassette motor (rotor 1.08e-4 + coupling 1.6e-5 assumed + 2 shafts
+  4.5e-6 + 2 pulleys 9.8e-6 + 2 rollers 2.8e-5 + belt 4.8e-6 + worst-case
+  wire 2.21e-4 kg·m² — 3 m part + 880 mm route of Ø4.5 mm Cu). Peak demand
+  1.0 Nm envelope + J·75 rad/s² = **1.03 Nm at 239 rpm**; **2.58 Nm** with
+  the 2.5 reversal factor. Belt capacity 10.89 Nm → 4.36×. Motor curve
+  (24HS40, ≈4.4 Nm low speed) at 239 rpm is **not digitised**; the assumed
+  60–70 % band gives 2.5–3.0× unfactored margin but only **1.01–1.20×** if
+  the 2.5 factor is applied to the motor — digitise the curve at 200–300 rpm
+  before release.
+- **Belt dynamics:** S5M 25 mm unit mass 85 g/m (MISUMI 34 g/m per 10 mm
+  width); first strand mode **378 Hz at 190 N** (368–388 Hz across the
+  180–200 N acceptance) vs 100 Hz tooth-passing at 500 mm/s → 3.8×
+  separation; slack strand stays 22.9 N > 0 at the 5 Nm fault.
+- **Head axes:** blade force estimate 700–1200 N (guillotine shear bound
+  2.15–2.62 kN on Ø4.5 mm Cu at τ 135–165 MPa × 0.3–0.5 stated V-wedge
+  factor); KK86 2.79 Nm input cap → 1578 N thrust, motor 3381 N at 0.8×
+  curve — PASS; the 2500 N `working_thrust_n` is an externally applied
+  acceptance load, not a drive demand. Holder H004 deflection ≈4 µm;
+  blade-edge stiffness is a purchase-drawing requirement (gate 13).
+- **Measuring-chain budget (gate 29 desk half):** 1.65 mm/m uncalibrated
+  (FAIL), ≈0.80 mm/m calibrated-at-allocations (FAIL vs ±0.70 mm/m) — the
+  constant process allocations (slip 0.25, tension 0.15 mm) dominate short
+  lengths and must be demonstrated, not re-budgeted.
+- **Payoff/feed guidance:** nip traction 2·μ·N = 40–90 N per nip
+  (μ 0.4–0.6 stated), 80–180 N two-nip; payoff brake 5–20 N; wire accel
+  demand 0.83 N.
+
 ## 3. Counts
 
 - DESK-CLOSABLE rows: 8 (gates 1, 3–7, 22, 44). Desk part now closed and
   recorded in §2: 6 (gates 1, 3, 4, 5, 6, 44); in progress in parallel
   workstreams: 1 (gate 22); open desk item requiring a released procedure
   document: 1 (gate 7). In addition, the desk parts of the PHYSICAL-ONLY
-  gate 10 (housing compliance + thermal field) are closed and recorded in
-  §2.5; gate 10 remains PHYSICAL-ONLY because its remaining action is the
-  physical build measurement and instrumented test.
+  gates 10 (housing compliance + thermal field, §2.5), 11 (fatigue S-N,
+  §2.6) and 11/12/29 (whole-machine dynamics, belt dynamics and
+  measuring-chain error budget, §2.7) are closed and recorded; all remain
+  PHYSICAL-ONLY because their remaining actions are the physical build
+  measurements, instrumented tests and traceable calibration.
 - PHYSICAL-ONLY rows: 19 (gates 2, 8–12, 14, 16–18, 23–29, 42, 43).
 - EXTERNAL-INQUIRY rows: 17 (gates 13, 15, 19, 20, 21, 30–41).
 - Mixed rows counted by their governing remaining action: gates 2, 13, 21

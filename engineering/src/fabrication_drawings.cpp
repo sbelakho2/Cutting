@@ -288,73 +288,76 @@ void shaftDetails(const fs::path& out) {
 }
 void encoderPlate(const fs::path& out) {
     namespace m=starz::measurement;
-    const auto path=out/"M201-R1-encoder-plate.svg";std::ofstream s(path);
-    s<<std::setprecision(10);begin(s,"M201 — MEASURING ENCODER PLATE / R1");
+    const auto path=out/"M201-R2-encoder-plate.svg";std::ofstream s(path);
+    s<<std::setprecision(10);begin(s,"M201 — MEASURING ENCODER PLATE / R2");
     constexpr double cx=85,cy=100,scale=2;
     const double width=m::design::encoder_plate_width_mm;
     s<<"<rect class='edge' x='"<<cx-width<<"' y='"<<cy-width<<"' width='"<<2*width<<"' height='"<<2*width<<"'/>\n";
-    circle(s,cx,cy,m::design::encoder_plate_pilot_mm);
+    circle(s,cx,cy,m::design::encoder_plate_seat_mm);
     circle(s,cx,cy,m::catalogue::encoder_mount_pcd_mm,"centre");
     line(s,31,cy,139,cy,"centre");line(s,cx,46,cx,154,"centre");
     for(int i=0;i<3;++i) {
         const double angle=i*2*std::numbers::pi/3;
-        circle(s,cx+30*std::sin(angle),cy-30*std::cos(angle),m::design::encoder_plate_encoder_clearance_mm);
+        circle(s,cx+21*std::sin(angle),cy-21*std::cos(angle),m::design::encoder_plate_encoder_clearance_mm);
     }
-    for(double x:{-36.0,36.0})for(double z:{-36.0,36.0})circle(s,cx+x,cy-z,m::design::encoder_plate_support_clearance_mm);
-    dimension(s,cx-width,cx+width,cy+width,164,"46.00 ±0.05");
-    dimension(s,cx-36,cx+36,54,43,"36 BASIC");
+    for(double x:{-18.0,18.0})for(double z:{-18.0,18.0})circle(s,cx+x,cy-z,m::design::encoder_plate_support_tap_mm);
+    dimension(s,cx-width,cx+width,cy+width,164,"60.00 ±0.05");
+    dimension(s,cx-18,cx+18,54,43,"36 BASIC");
     text(s,37,176,"VIEW FROM COUPLING SIDE / 2:1",3.3);
-    text(s,17,189,"3 × Ø3.40 +0.10/0 THRU;PCD30 BASIC;120° apart;one hole on+Z.");
-    text(s,17,197,"4 × Ø4.50 +0.10/0 THRU;36×36 BASIC square;future support attachment.");
-    text(s,17,205,"Central bore Ø20.040 +0.020/0 THRU;no shoulder against encoder pilot tip.");
+    text(s,17,189,"3 × Ø4.50 +0.10/0 THRU;PCD42 BASIC;120° apart;one hole on+Z.");
+    text(s,17,197,"4 × M4×0.7 TAP THRU at(±18,±18);36×36 BASIC;plate support screws from coupling side.");
+    text(s,17,205,"Central seat bore Ø36.50 +0.05/0 THRU;Ø36.5-class synchro-flange seat;no shoulder.");
     text(s,17,213,"All hole positions Ø0.10 to A|B|C. Hole coordinates below are BASIC.");
-    // Axial section: face A at left;pilot protrudes5 of the6mm plate thickness.
+    // Axial section: face A at left;seat bore through the6mm plate thickness.
     constexpr double sx=205,sy=100;
-    const double t=scale*m::design::encoder_plate_thickness_mm,r=m::design::encoder_plate_pilot_mm;
+    const double t=scale*m::design::encoder_plate_thickness_mm,r=m::design::encoder_plate_seat_mm;
     for(int sign:{-1,1})s<<"<rect class='edge' x='"<<sx<<"' y='"<<(sign<0?sy-width:sy+r)<<"' width='"<<t<<"' height='"<<width-r<<"'/>\n";
     line(s,sx-10,sy,sx+25,sy,"centre");dimension(s,sx,sx+t,146,164,"6.00 ±0.02");
     text(s,188,176,"AXIAL SECTION / 2:1",3.3);
     text(s,258,46,"DATUM A: encoder mounting face Y0");
     text(s,258,53,"DATUM B: central bore axis");
-    text(s,258,60,"DATUM C: left edge X−23 in this view");
+    text(s,258,60,"DATUM C: left edge X−30 in this view");
     text(s,258,71,"A flatness0.02;opposite face parallel0.02");
     text(s,258,78,"B perpendicularity0.02 to A");
-    text(s,258,85,"B cylindricity0.01;pilot bore Ra0.8µm");
+    text(s,258,85,"B cylindricity0.01;seat bore Ra0.8µm");
     text(s,258,92,"Joint faces Ra1.6µm;other faces Ra3.2µm");
     text(s,258,103,"Material EN AW-6082-T6;no coating on A/B");
-    text(s,258,110,"Stock50×50×8;quantity2;edgesC0.20±0.05");
-    text(s,258,121,"Encoder holes (X,Z),PCD30 BASIC:");
-    text(s,258,128,"(0,+15), (+12.990381,−7.5)");
-    text(s,258,135,"(−12.990381,−7.5)");
-    text(s,258,146,"3 ×ISO4762 M3×10,class8.8");
-    text(s,258,153,"3 ×ISO7092 M3,3.2×6×0.5,200HV");
-    text(s,258,164,"Nominal encoder thread engagement3.5");
-    text(s,258,171,"Nominal thread-bottom clearance1.5");
-    text(s,258,182,"Encoder pilot19.979–20.000 ×5 long");
-    text(s,258,189,"Diametral pilot clearance0.040–0.080");
-    text(s,258,200,"Encoder tip20 from A,not15");
-    text(s,258,207,"Final mounting torque/support still open");
-    line(s,8,222,412,222);
-    text(s,14,231,"PROCESS: square stock;finish A/opposite face;finish pilot bore;drill3PCD holes and4support holes;deburr without dishing A.");
-    text(s,14,239,"INSPECT:46square;6thickness;pilot diameter/cylindricity;face flatness/parallelism;hole positions and clearance diameters.");
-    text(s,14,247,"ASSEMBLY: encoder body behind A;pilot passes freely;washers on coupling side. Do not use screws to pull a misaligned pilot in.");
-    text(s,14,255,"SCOPE: eight-part encoder face mount only. Pressure arm,shaft bearings,complete tool access and wire guides are not this drawing.");
-    line(s,8,264,412,264);line(s,235,264,235,289);
-    text(s,14,274,"PART M201 · MEASURING ENCODER PLATE",4);
-    text(s,14,282,std::string(m::revision),3.2);
-    text(s,241,274,"SCALE2:1 / SINGLE SELECTED DIMENSION RECORD",3);
-    text(s,241,282,"SOURCE: Autonics E40 drawing;STARZ measurement_spec",3);
+    text(s,258,110,"Stock66×66×8;quantity2;edgesC0.20±0.05");
+    text(s,258,121,"Encoder holes (X,Z),PCD42 BASIC:");
+    text(s,258,128,"(0,+21), (+18.1865,−10.5)");
+    text(s,258,135,"(−18.1865,−10.5)");
+    text(s,258,146,"3 ×ISO4762 M4×12,class8.8");
+    text(s,258,153,"Nominal flange engagement6.0");
+    text(s,258,160,"(ifm M4×0.7 thread depth6)");
+    text(s,258,171,"4 ×ISO4762 M4×6,class8.8 support screws");
+    text(s,258,178,"Heads in M203 rear counterbores Ø7.5×4");
+    text(s,258,189,"Encoder ifm RU3100: body Ø58.6×63.5");
+    text(s,258,196,"Shaft Ø6×10;tip10 from A;no flat");
+    text(s,258,203,"Flange 3×M4×0.7×6 on PCD42;no pilot");
+    text(s,258,210,"on the archived drawing — confirm centering");
+    text(s,258,217,"M12 5-pole radial connector;orient +X");
+    text(s,258,224,"Final mounting torque/support still open");
+    line(s,8,231,412,231);
+    text(s,14,240,"PROCESS: square stock;finish A/opposite face;finish seat bore;drill3PCD holes;tap4M4 support holes;deburr without dishing A.");
+    text(s,14,248,"INSPECT:60square;6thickness;seat bore diameter/cylindricity;face flatness/parallelism;hole positions and clearance diameters;M4 tap engagement.");
+    text(s,14,256,"ASSEMBLY: encoder flange face on A;shaft passes the seat bore;M4×12 screws from the coupling side into the flange;support screws into the M203 counterbores.");
+    text(s,14,264,"SCOPE: five-part encoder face mount only. Pressure arm,shaft bearings,complete tool access and wire guides are not this drawing.");
+    line(s,8,273,412,273);line(s,235,273,235,289);
+    text(s,14,283,"PART M201 · MEASURING ENCODER PLATE",4);
+    text(s,14,291,std::string(m::revision),3.2);
+    text(s,241,283,"SCALE2:1 / SINGLE SELECTED DIMENSION RECORD",3);
+    text(s,241,291,"SOURCE: ifm RU3100 datasheet;STARZ measurement_spec",3);
     s<<"</svg>\n";s.close();if(!s)throw std::runtime_error("Encoder plate SVG failed");
     QSvgRenderer renderer(QString::fromStdString(path.string()));if(!renderer.isValid())throw std::runtime_error("Encoder plate SVG invalid");
-    QPdfWriter pdf(QString::fromStdString((out/"M201-R1-encoder-plate.pdf").string()));
+    QPdfWriter pdf(QString::fromStdString((out/"M201-R2-encoder-plate.pdf").string()));
     pdf.setPageSize(QPageSize(QPageSize::A3));pdf.setPageOrientation(QPageLayout::Landscape);pdf.setPageMargins(QMarginsF(0,0,0,0));pdf.setResolution(300);
-    pdf.setTitle("STARZ M201 R1 encoder plate — dimension record,release hold");
+    pdf.setTitle("STARZ M201 R2 encoder plate — dimension record,release hold");
     QPainter painter(&pdf);if(!painter.isActive())throw std::runtime_error("Encoder plate PDF failed");
     renderer.render(&painter,QRectF(0,0,pdf.width(),pdf.height()));painter.end();
     std::ifstream drawing(path);std::ofstream review(out/"encoder-plate-review.html");
     review<<"<!doctype html><html lang='en'><meta charset='utf-8'><title>STARZ M201 drawing review</title>"
           <<"<style>body{margin:24px;background:#e5e7eb;font-family:Arial,sans-serif}svg{width:100%;height:auto;background:white}</style>"
-          <<"<body><h1>M201 R1 encoder plate</h1><p><a href='M201-R1-encoder-plate.pdf'>A3 vector PDF</a> · Engineering release hold</p>"
+          <<"<body><h1>M201 R2 encoder plate</h1><p><a href='M201-R2-encoder-plate.pdf'>A3 vector PDF</a> · Engineering release hold</p>"
           <<drawing.rdbuf()<<"</body></html>";
     if(!drawing||!review)throw std::runtime_error("Encoder plate review output failed");
 }
@@ -525,6 +528,6 @@ int main(int argc,char** argv) try {
     const fs::path out=argv[2];fs::create_directories(out);
     adapter(out);shaft(out);shaftDetails(out);encoderPlate(out);
     payoffSpindle(out);payoffPlates(out);guardPanels(out);
-    std::cout<<"H003 R6,F101 R6(two sheets),M201 R1,P002 R2,P004-P007 R2 andG101-G106 R2 A3 dimensioned SVG/vector PDFs generated\n";
+    std::cout<<"H003 R6,F101 R6(two sheets),M201 R2,P002 R2,P004-P007 R2 andG101-G106 R2 A3 dimensioned SVG/vector PDFs generated\n";
     return 0;
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}

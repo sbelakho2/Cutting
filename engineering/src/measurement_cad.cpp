@@ -35,10 +35,10 @@ int main(int argc,char** argv)try {
     if(short_tip||wrong_screw) {
         if(short_tip&&wrong_screw)throw std::invalid_argument("Choose one measurement geometry regression");
         bool caught=false;
-        try {se::checkMeasuringInterfaces(se::measuringWheelInterface(wrong_screw?3:4),se::measuringEncoderInterface(short_tip?15:20));}
+        try {se::checkMeasuringInterfaces(se::measuringWheelInterface(wrong_screw?3:4),se::measuringEncoderInterface(short_tip?8:10));}
         catch(const std::runtime_error& error) {
             const std::string message=error.what();
-            caught=message==(short_tip?"Encoder tip must be20mm from mounting face":"No123 wheel requiresM4 notM3 radial holes");
+            caught=message==(short_tip?"Encoder tip must be10mm from mounting face":"ifm wheel requiresM4 notM3 radial holes");
             if(!caught)throw;
         }
         if(!caught)throw std::runtime_error("Invalid measurement interface was accepted");
@@ -53,11 +53,11 @@ int main(int argc,char** argv)try {
     se::checkMeasuringInterfaces(wheel,encoder);
     const auto mount=se::measuringEncoderMount();se::checkMeasuringEncoderMount(mount);
     if(!out.empty()) {
-        std::vector<se::HeadPart> interfaces{{"ME-W01","Kuebler No123 dimensioned external/bore/thread envelope",wheel,true,false},
-            {"ME-E01","Autonics E40S6 dimensioned body/pilot/shaft/face envelope",encoder,true,false},
-            {"ME-C01","Autonics supplied6mm coupling envelope;flexure interior not provided",se::measuringCouplingInterface(),true,false},
+        std::vector<se::HeadPart> interfaces{{"ME-W01","ifm E60137 measuring wheel dimensioned external/bore/thread envelope;U:200 N:06",wheel,true,false},
+            {"ME-E01","ifm RU3100 synchro-flange dimensioned body/shaft/flange envelope",encoder,true,false},
+            {"ME-C01","Supplied6/6 flexible coupling15x22 envelope;flexure interior not provided",se::measuringCouplingInterface(),true,false},
             {"ME-B01","SKF626-2Z outer/bore/width interface;no raceway internals",se::measuringBearingInterface(),true,false},
-            {"M201","STARZ encoder plate46x46x6",se::measuringEncoderPlate(),false,false}};
+            {"M201","STARZ encoder plate60x60x6",se::measuringEncoderPlate(),false,false}};
         std::ofstream manifest(out/"manifest.csv");manifest<<std::setprecision(12)<<"id,description,volume_mm3,xmin_mm,ymin_mm,zmin_mm,xmax_mm,ymax_mm,zmax_mm\n";
         for(const auto& part:interfaces) {
             exportReadback(part.shape,out/"step"/(part.id+".step"));const auto b=se::bounds(part.shape);
@@ -70,11 +70,11 @@ int main(int argc,char** argv)try {
         std::ofstream status(out/"status.json");
         status<<"{\n  \"revision\":\""<<starz::measurement::revision<<"\",\n  \"run_complete\":true,\n"
             <<"  \"source_scope\":\"catalogue interfaces,not original supplier CAD or purchased-part manufacturing definitions\",\n"
-            <<"  \"interface_solids\":5,\n  \"encoder_mount_occurrences\":8,\n  \"encoder_mount_intersections_checked\":true,\n  \"step_readbacks\":true,\n"
-            <<"  \"wheel_radial_thread_note\":\"M4x6 callout;four openings depicted;quantity not separately stated\",\n"
+            <<"  \"interface_solids\":5,\n  \"encoder_mount_occurrences\":5,\n  \"encoder_mount_intersections_checked\":true,\n  \"step_readbacks\":true,\n"
+            <<"  \"wheel_radial_thread_note\":\"M4x6 clamp envelope retained;ifm E60137 hub screw detail not published;confirm at receipt\",\n"
             <<"  \"encoder_cable_route_modelled\":false,\n  \"coupling_internal_clearance_verified\":false,\n  \"measurement_module_integrated\":false,\n"
             <<"  \"complete_support_tooling_and_torques_released\":false,\n  \"fabrication_released\":false\n}\n";
         status.flush();if(!status)throw std::runtime_error("Measurement CAD status write failure");
     }
-    std::cout<<"Measuring wheel/encoder/bearing/coupling interfaces and8-part encoder mounting assembly checked\n";return 0;
+    std::cout<<"Measuring wheel/encoder/bearing/coupling interfaces and5-part encoder mounting assembly checked\n";return 0;
 }catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}

@@ -1,0 +1,90 @@
+Title: RU3100-01_EN-GB.pdf
+
+URL Source: https://media.ifm.com/dam/ad22b6b5-75c7-4d9c-83e6-771020d56e2d/Original/RU3100-01_EN-GB.pdf
+
+Published Time: Mon, 04 May 2026 02:41:00 GMT
+
+Number of Pages: 3
+
+Markdown Content:
+# RU3100 
+
+Incremental encoder with solid shaft 
+
+> INCREMENTAL ENCODER BASIC LINE
+> ifm electronic gmbh • Friedrichstraße 1 • 45128 Essen — We reserve the right to make technical alterations without prior notice. — EN-GB — RU3100-01 — 23.05.2025 —
+
+1 M4 x 0.7 Depth 6 mm 
+
+Product characteristics 
+
+Resolution 1...10000; (parameterisable; Factory setting: 1024) resolution Communication interface IO-Link Shaft design solid shaft Shaft diameter [mm] 6
+
+Application 
+
+Function principle incremental Detection system magnetic 
+
+Electrical data 
+
+Operating voltage [V] 4.75...30 DC Current consumption [mA] < 150 Protection class III Reverse polarity protection yes Power-on delay time [s] 0.5 Max. revolution electrical [U/min] 12000 
+
+Outputs 
+
+Electrical design HTL/TTL Switching frequency [kHz] 1000 Factory setting Output function: HTL (50 mA) Short-circuit protection yes Phase difference A and B [°] 90 
+
+Measuring/setting range 
+
+Resolution 1...10000; (parameterisable; Factory setting: 1024) resolution 
+
+Accuracy / deviations 
+
+Accuracy [°] 0.1 RU3100 
+
+Incremental encoder with solid shaft 
+
+> INCREMENTAL ENCODER BASIC LINE
+> ifm electronic gmbh • Friedrichstraße 1 • 45128 Essen — We reserve the right to make technical alterations without prior notice. — EN-GB — RU3100-01 — 23.05.2025 —
+
+Software / programming 
+
+Parameter setting options Resolution; direction of rotation; HTL; TTL 
+
+Interfaces 
+
+Communication interface IO-Link Transmission type COM2 (38,4 kBaud) IO-Link revision 1.1 Profiles Smart Sensor - SSP 0 Generic Profiled Sensor Function Device identification Function Process data variable Function Device diagnosis SIO mode yes Min. process cycle time [ms] 2.3 Supported DeviceIDs Type of operation DeviceID 
+
+default 499 
+
+Operating conditions 
+
+Ambient temperature [°C] -40...85 Storage temperature [°C] -40...85 Max. relative air humidity [%] 95; (condensation not permissible) Protection IP 65; IP 66; (on the housing: IP67; on the shaft: IP64) 
+
+Tests / approvals 
+
+Shock resistance 100 g Vibration resistance 20 g MTTF [years] 292 
+
+Mechanical data 
+
+Weight [g] 381 Housing cylindrical Dimensions [mm] Ø 58.6 / L = 63.5 Materials flange: aluminium; housing: stainless steel (444/1.4521) Max. revolution, mechanical [U/min] 12000 Max. starting torque [Nm] 0.01 Reference temperature torque [°C] 20 Shaft design solid shaft Shaft diameter [mm] 6Shaft material stainless steel Max. shaft load axial (at the shaft end) [N] 40 Max. shaft load radial (at the shaft end) [N] 60 Fixing flange synchro-flange 
+
+Remarks 
+
+Pack quantity 1 pcs. RU3100 
+
+Incremental encoder with solid shaft 
+
+INCREMENTAL ENCODER BASIC LINE 
+
+> ifm electronic gmbh • Friedrichstraße 1 • 45128 Essen — We reserve the right to make technical alterations without prior notice. — EN-GB — RU3100-01 — 23.05.2025 —
+
+Electrical connection 
+
+Connector: 1 x M12, radial, can also be used axially; coding: A; Contacts: 5; Moulded body: stainless steel (316 / 1.4401); Maximum cable length: 100 m; (IO-Link: max. 20 m) 
+
+IO-Link 1 L+ 2 not to be used 3 L-4 IO-Link 5 not to be used Screen plug encoder 1 UB 2 A3 GND 4 Z/0-Pulse (90 deg) 5 BScreen plug 
+
+Diagrams and graphs 
+
+Pulse diagram 
+
+direction of rotation clockwise (looking at the shaft)

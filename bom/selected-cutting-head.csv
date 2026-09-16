@@ -1,7 +1,7 @@
 id,quantity,manufacturer,exact_order,source,status,observed_unit_usd,price_basis,interface
-AX-01,2,HIWIN,KK8610P340A1F0 / article10.00026,HIWIN manufacturer / authorised distributor,catalogue_selected,,not_observed,440mm total;10mm lead;86mm rail;8h7 shaft18mm exposed
+AX-01,2,HIWIN,KK8610C-340A1-F0,https://vn.misumi-ec.com/vona2/detail/221005545419/?HissuCode=KK8610C-340A1-F0,priced_live_observed,824.72,VND21146653_observed_2026-09-16_MISUMI_VN_API_converted_open_er_api_1USD_25641VND_NOT_USD_quote;availability_23to99days_temporarily_not_available_ask_MISUMI;P_to_C_grade_substitution_approved_accuracy_margin_4x_no_CAD_change,440mm total;10mm lead;86mm rail;8h7 shaft18mm exposed
 DR-01,2,STEPPERONLINE,1-CL86T-P85-V41,STEPPERONLINE direct,catalogue_selected,130.77,merchandise_only_no_freight,34E1K-85+CL86T-V41+CM2M-18+CE2M+CABLE-PC-1;134.1mm rear motor envelope
-CP-01,2,R+W,MK2/100/50/8/14,R+W manufacturer / authorised distributor,configured_catalogue_selected,,not_observed,10Nm;40OD;50L;16mm hubs;8H7/14H7
+CP-01,2,R+W,MK2/100/50/8/14,ebmia.pl quote order path / R+W dealer,configured_catalogue_selected,,not_observed_exact_bores;ebmia_quote_order_path;class_anchor_MK2_100_50_10_14_EUR99.43_net_observed_2026-09-16;SBK19_8_14_32Nm_jaw_rejected_backlash_0.5deg_14um_vs_25um_positioning,10Nm;40OD;50L;16mm hubs;8H7/14H7
 PS-01,2,STEPPERONLINE,LE-350-60,STEPPERONLINE direct,catalogue_selected_electrical_release_pending,17.88,merchandise_only_no_freight,60V5.8A;one per axis;no paralleling;bus protection separate
 H001,1,STARZ,H001 S1-B ground datum,Local certified steel stock and qualified machining,custom_design_not_released,,not_quoted,180x1040x20;see STEP and drawing requirements
 H002,2,STARZ,H002 S1-B riser,Local certified steel stock and qualified machining,custom_design_not_released,,not_quoted,110x355x20;actual six-hole stage grid

@@ -700,7 +700,7 @@ CommandResult Controller::jog(Axis a, bool forward, std::int32_t distance_um, st
 
 CommandResult Controller::set_calibration(std::int32_t left_counts_per_metre, std::int32_t right_counts_per_metre) {
     if (state_ == State::Running || state_ == State::Stopping || state_ == State::Homing || state_ == State::Jogging) return CommandResult::Busy;
-    // Wheel 100 +/- 0.1 mm free circumference, 4096 counts/rev: 40960 nominal; allow +/-5 % for wear/preload.
+    // ifm E60137 wheel 200 mm nominal circumference, 4096 counts/rev: 20480 nominal; allow +/-5 % for wear/preload.
     const std::int32_t lo = ctrl::enc::nominal_counts_per_metre * 95 / 100, hi = ctrl::enc::nominal_counts_per_metre * 105 / 100;
     if (left_counts_per_metre < lo || left_counts_per_metre > hi || right_counts_per_metre < lo || right_counts_per_metre > hi) return CommandResult::InvalidArgument;
     Settings updated = settings_;

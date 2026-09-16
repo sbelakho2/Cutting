@@ -6,7 +6,7 @@
 // coordinates (wire along X at Y=0, Z=112; RIGHT feed at +X). LEFT parts are
 // the RIGHT parts rotated 180 degrees about Z, as the feed cassettes are.
 namespace starz::mechanism {
-inline constexpr std::string_view revision="S1-B-MECH-R3-2026-09-13";
+inline constexpr std::string_view revision="S1-B-MECH-R4-2026-09-16";
 namespace catalogue {
 // MISUMI UK web catalogue, read 2026-09-13, prices EUR ex-VAT, Frankfurt stock.
 inline constexpr std::string_view bushing="LHFRW12";
@@ -54,13 +54,17 @@ inline constexpr double insert_d=8,insert_bore_clearance=0.5,insert_cone_depth=1
 inline constexpr double meas_x=-205;
 inline constexpr double wheel_front_y=-4.75;
 inline constexpr double housing_x_min=-228,housing_x_max=-182,housing_y_min=10.5,housing_y_max=70,housing_half=23;
-inline constexpr double front_bearing_y=12,rear_bearing_y=30,coupling_y=44,plate_y=70;
+inline constexpr double front_bearing_y=12,rear_bearing_y=30,coupling_y=48,plate_y=70;
 inline constexpr double shaft_y_min=-5.75,shaft_y_max=52;
 inline constexpr double arm_x_min=-283,arm_x_max=-182,arm_y_min=20,arm_y_max=60,arm_t=12,arm_hub_d=30;
 inline constexpr double pivot_x=-266,arm_spring_x=-241;
 inline constexpr double column_x_min=-290,column_x_max=-250,column_y_min=10,column_y_max=80;
 inline constexpr double column_slot_y_min=19.5,column_slot_y_max=60.5,column_slot_z=138;
-inline constexpr double lug_z_min=204,lug_z_max=216,lug_x_max=-232;
+// Lug raised 2026-09-16 with the 200 mm (63.66 OD) ifm E60137 wheel: the arm
+// pivot and housing rise with the wheel radius, so the lug/column top must
+// follow by the same 15.915 mm to keep the SWU10.5-35 arm spring inside its
+// deflection window and the 10 N wheel contact force.
+inline constexpr double lug_z_min=219.915,lug_z_max=231.915,lug_x_max=-232;
 inline constexpr double bracket_base_x_min=-306,bracket_base_x_max=-235,bracket_base_y_min=-16,bracket_base_y_max=96,bracket_base_t=12;
 inline constexpr double bracket_screw_inset=8;
 inline constexpr double wheel_force_target_n=10,wheel_force_min_n=6,wheel_force_max_n=19;

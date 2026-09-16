@@ -41,16 +41,16 @@ def rows(path: Path) -> list[dict[str, str]]:
 
 # Purchased CAD rows -> the BOM record that must cover them.
 PURCHASED_COVERAGE = {
-    "8.0000.3123.0006": ("selected-mechanism.csv", "ME-W01"),
+    "E60137": ("selected-transport-and-cabinet.csv", "ME-W01"),
     "Bernstein ACF-1": ("selected-controls.csv", "CT-GLA01"),
     "Bernstein SLC-F": ("selected-controls.csv", "CT-GL01"),
-    "E40S6-1024-6-L-5": ("selected-mechanism.csv", "ME-E01"),
+    "RU3100": ("selected-transport-and-cabinet.csv", "ME-E01"),
     "LHFRW12": ("selected-mechanism.csv", "MC-B01"),
     "PSFJ12-240": ("selected-mechanism.csv", "MC-S01"),
     "SKF 626-2Z": ("selected-transport-and-cabinet.csv", "ME-B01"),
     "SWU10.5-35": ("selected-mechanism.csv", "MC-P02"),
     "SWU17-60": ("selected-mechanism.csv", "MC-P01"),
-    "Supplied6/6 flexible coupling": ("selected-mechanism.csv", "ME-E01"),
+    "Supplied6/6 flexible coupling": ("selected-transport-and-cabinet.csv", "ME-E01"),
 }
 
 # Standard ISO/DIN fastener rows in the mechanism BOM are covered by the
@@ -141,10 +141,11 @@ def check_purchased_cad_coverage() -> None:
     # The mechanism CAD models ONE representative measuring module of the TWO
     # designed (docs/13): those rows carry a x2 design-intent multiplier.
     module_scale = {
-        "8.0000.3123.0006": 2,
-        "E40S6-1024-6-L-5": 2,
+        "E60137": 2,
+        "RU3100": 2,
         "SKF 626-2Z": 2,
         "Supplied6/6 flexible coupling": 2,
+        "SWU10.5-35": 2,
     }
     for token, (_, bom_id) in PURCHASED_COVERAGE.items():
         bom_qty = int(float(selected_rows[bom_id]["quantity"]))
@@ -161,10 +162,10 @@ def check_arithmetic() -> None:
     pitch_length = 2 * C + 3.141592653589793 * Dp
     if abs(pitch_length - 225) > 0.01:
         fail(f"belt arithmetic mismatch: 2*{C}+pi*Dp={pitch_length:.3f} != 225")
-    # Measuring wheel envelope diameter = 100/pi
-    wheel_d = 100 / 3.141592653589793
-    if abs(wheel_d - 31.83) > 0.005:
-        fail(f"measuring wheel diameter check: {wheel_d:.4f} != 31.83")
+    # Measuring wheel envelope diameter = 200/pi (ifm E60137 U:200 N:06)
+    wheel_d = 200 / 3.141592653589793
+    if abs(wheel_d - 63.66) > 0.005:
+        fail(f"measuring wheel diameter check: {wheel_d:.4f} != 63.66")
     # Encoder counts
     if 1024 * 4 != 4096:
         fail("encoder count arithmetic wrong (1024 PPR x4 != 4096)")
@@ -185,10 +186,15 @@ def check_fastener_engagement() -> None:
     eng_motor = 25 - 15
     if eng_motor < 7.5:
         fail(f"H003 motor M5x25 engagement {eng_motor:.1f} mm < 1.5D (7.5 mm)")
-    # M201: M3x10 through 6 plate -> 4 protrusion into 3.5-deep encoder thread
-    prot = 10 - 6
-    if prot < 3.5 or prot > 5.0:
-        fail(f"M201 M3x10 protrusion {prot:.1f} mm outside [3.5,5.0]")
+    # M201: M4x12 through 6 plate -> 6 protrusion into the 6-deep ifm
+    # synchro-flange M4 thread (flush engagement, >=1.5D and no bottoming).
+    prot = 12 - 6
+    if prot < 5.5 or prot > 6.1:
+        fail(f"M201 M4x12 protrusion {prot:.1f} mm outside [5.5,6.1]")
+    # M201 support screws: M4x6 through the 6 plate -> flush tip at the
+    # encoder flange face (0 protrusion), head seated in the M203 counterbore.
+    if 6 - 6 != 0:
+        fail("M201 M4x6 support screw length mismatch")
     # Bed: M10x35 through 25 bed -> 10 into the DIN929 M10 weld nut (height ~9)
     eng_bed = 35 - 25
     if eng_bed < 9:

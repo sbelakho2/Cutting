@@ -33,9 +33,13 @@ inline constexpr std::uint8_t blade_front_pul = 0, blade_front_dir = 1;
 inline constexpr std::uint8_t blade_rear_pul  = 2, blade_rear_dir  = 3;
 inline constexpr std::uint8_t feed_left_pul   = 4, feed_left_dir   = 5;
 inline constexpr std::uint8_t feed_right_pul  = 6, feed_right_dir  = 7;
-// Measuring encoders E40S6-1024-6-L-5 (5V RS-422 line drivers): differential
-// A+/A- and B+/B- pairs feed an AM26LV32EIDR at 3.3 V. PIO quadrature decoder
-// needs the non-inverted receiver outputs on consecutive pins.
+// Measuring encoders ifm RU3100 (TTL/HTL push-pull, 4.75-30 VDC): the
+// 2026-09-16 substitution from the Autonics 5 V RS-422 line driver keeps the
+// A/B capture pins. Reviewed 2026-09-16: the encoder must be parameterised
+// to TTL mode via IO-Link (factory setting is HTL 50 mA); its single-ended
+// A/B outputs drive the AM26LV32EIDR + inputs while the - inputs sit on a
+// 2.5 V mid-bias, and the four 120 ohm RS-422 terminators are not fitted.
+// Wiring note in docs/22 §6/§7.
 inline constexpr std::uint8_t enc_left_a = 8,  enc_left_b = 9;
 inline constexpr std::uint8_t enc_right_a = 10, enc_right_b = 11;
 // 24 V field loops through Phoenix PLC-RSC-24DC/21 relay couplers; the coupler
@@ -102,11 +106,11 @@ inline constexpr std::uint32_t dir_setup_us = 5;   // >= 2 us required by the dr
 // ------------------------------------------------------- measuring encoders
 namespace enc {
 inline constexpr std::int32_t counts_per_rev = spec::encoder_counts_rev;              // 4096 (x4 decode)
-inline constexpr double nominal_wheel_circumference_mm = spec::wheel_circumference_mm; // 100 +/- 0.1, uncalibrated
-inline constexpr double nominal_um_per_count = nominal_wheel_circumference_mm * 1000.0 / counts_per_rev; // 24.414
+inline constexpr double nominal_wheel_circumference_mm = spec::wheel_circumference_mm; // 200 mm ifm E60137 nominal, uncalibrated
+inline constexpr double nominal_um_per_count = nominal_wheel_circumference_mm * 1000.0 / counts_per_rev; // 48.828
 // Calibration scale is stored as counts per metre in flash and set by the CLI
 // after the docs/20 length record; nominal value until a physical calibration exists.
-inline constexpr std::int32_t nominal_counts_per_metre = 40960;
+inline constexpr std::int32_t nominal_counts_per_metre = 20480;
 inline constexpr std::int32_t max_slip_um = 1500;  // encoder vs commanded disagreement that trips a fault.
 }
 

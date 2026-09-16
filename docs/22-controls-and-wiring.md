@@ -279,7 +279,7 @@ inferred solely from connector position.
 |---|---|---|
 | J3 | `TB24-01 +24V_PELV`, `TB24-02 0V_PELV`, `TB24-03 +5V_LOGIC`, `TB24-02 0V_PELV` | Board power only; actual terminal product and branch protection are release holds |
 | J4–J7 | One labelled CL86T/CL57T drive each | IF-B01 sinks `PUL−`, `DIR−`, `ENA−`; common-anode positives come from separately protected `+24V_DRVLOGIC` cabinet wiring and are never routed through IF-B01 |
-| J8–J9 | Left/right E40S6 measuring encoders | 5 V through board PTCs; A/A-bar and B/B-bar are differential pairs; Z/Z-bar are individually insulated and not connected |
+| J8–J9 | Left/right ifm RU3100 measuring encoders — **REVIEWED 2026-09-16**: **TTL mode required via IO-Link** (factory setting is HTL 50 mA); single-ended A/B into the AM26LV32EIDR + inputs with the − inputs tied to a **2.5 V mid-bias**; the four **120 Ω** RS-422 terminators (R1–R4) are **not fitted** for TTL drive (bias network instead); Z insulated | 5 V through board PTCs; A/B single-ended push-pull (no Ā/B̄ outputs); receiver common mode −7…+7 V accepts the TTL swing |
 | J10 | KA1–KA6 isolated contact pairs | Inputs close only to `0V_PELV`; no 24 V field voltage reaches Pico GPIO |
 | J11 | KA7–KA10 isolated alarm-contact pairs | Inputs close only to `0V_PELV`; no 24 V driver-alarm voltage reaches Pico GPIO |
 | J12 | PB01 green LED cathode, PB02 red LED cathode and buzzer negative | Their positive terminals use separately protected `+24V_PELV`; IF-B01 uses low-side channels |
@@ -299,11 +299,19 @@ they are not selected terminal-block products:
 
 ## 7. Signal integrity and segregation requirements
 
-- Route RS-422 encoder pairs as pairs from J8/J9 to their respective encoders.
-  Bond each encoder cable screen to the cabinet PE bar at the metal cable entry;
-  do not bond the screen to IF-B01 `0V_PELV`.
+- RU3100 encoders are **single-ended push-pull** (no Ā/B̄): parameterise each
+  encoder to **TTL mode via IO-Link** on the bench before installation (the
+  factory setting is HTL 50 mA and must not be wired to IF-B01). Wire A to
+  the J8/J9 A+ terminal and B to B+; tie the receiver A−/B− terminals to a
+  **2.5 V mid-bias** derived from the encoder 5 V branch — never ground or
+  float them (a floated failsafe input reads high; grounding reads a TTL low
+  as high). Do **not** fit the four 120 Ω RS-422 terminators for TTL drive;
+  fit the mid-bias network in their place (board change). Bond each encoder
+  cable screen to the cabinet PE bar at the metal cable entry; do not bond
+  the screen to IF-B01 `0V_PELV`.
 - Keep the two unused encoder Z conductors individually insulated at the board
-  plug. Do not join them to `0V_PELV`, the screen or each other.
+  plug. Do not join them to `0V_PELV`, the screen or each other. (The RU3100
+  Z pin doubles as the IO-Link line used only for bench parameterisation.)
 - Maintain physical segregation between AC/mains, switched 36/60 V drive
   power, low-voltage relay wiring, USB and differential encoder cables. Final
   distances, ducts, shield terminations and EMC components require enclosure

@@ -6,14 +6,14 @@
 One lane; two independent feed cassettes; four closed-loop stepper axes; two independently driven opposing 90° V blades; separate actual-wire measuring wheels; guarded payoff, contained scrap and supported output. Optional crimping is a separate guarded module, not an unguarded attachment to this head.
 | Subsystem | Selected hardware |
 |---|---|
-| Each cutting axis | HIWINKK8610P340A1F0,34E1K-85,CL86T-V41,R+WMK2/100/50/8/14 |
+| Each cutting axis | HIWINKK8610C-340A1-F0,34E1K-85,CL86T-V41,R+WMK2/100/50/8/14 |
 | Cutting power | 2×LE-350-60, one isolated 60V branch per drive; not paralleled |
 | Each feed cassette | 24HS40-5004D-E1000,CL57T-V41,R+WMK2/100/50/10/12; two driven lower/two passive upper rollers |
 | Feed transmission | HTPA20S5M250-A-N14×2,HTBN225S5M-250×1 per cassette |
 | Rollers | UMCL40-10-20-MC with documented F110 secondary keyway; 8 total |
 | Rotor bearings/retention | SKF6001-2Z/C3+6002-2Z/C3,KM2,MB2,SEEGER A12 per rotor |
 | Feed power | 1×LE-350-36, separate protected branches to both drives |
-| Each measuring module | Kübler 8.0000.3123.0006, Autonics E40S6-1024-6-L-5, two SKF 626-2Z; independent wheel-shaft support |
+| Each measuring module | ifm E60137 wheel, ifm RU3100 encoder (2026-09-16 substitutions), two SKF 626-2Z; independent wheel-shaft support |
 | Cabinet cooling | Rittal SK3303.500; 230V 50Hz; 280W manufacturer L35/L50 capacity |
 | Cabinet controls | Initial design input in [controls and wiring](22-controls-and-wiring.md); not an electrical/safety release |
 
@@ -49,7 +49,7 @@ The wire contact is at rotor station S108.75, **5.25 mm off the 20 mm roller's m
 
 R4bearingseats are matchedj5,3–6µmactualinterference inside−3/+5µmnominalshaftlimits. Housingbores28.008–28.018and32.008–32.019retainouter-ringclearance. [Fit/temperature envelope](../engineering/generated/bearing-fit/report.md) enumerates256corners;itdoesnot replace verificationoftheactual thermalfield ormanufacturinggaugecapability.
 
-Measured wire travel: nominal 100 mm wheel circumference/4096 counts = 0.0244140625 mm/count. The catalogue specifies **100±0.1 mm** free circumference, which alone permits1.0 mm error per commanded metre. The corrected uncalibrated1m allocation sum is1.65 mm, not1.15. The wheel's loaded circumference, phase error, wire tension, temperature and wear must be calibrated; motor shaft feedback is not a substitute. At0.50 m/s, nominal measuring count rate20480/s. The [R1 measurement record](13-measuring-interfaces-and-calibration.md) includes the source dimensions, separate8-part encoder face mount, A3 M201 plate drawing, reversible phase-map fitter and explicitly synthetic numerical validation. It does not claim that the shaft/pressure/guide assemblies or physical calibration are complete.
+Measured wire travel: nominal 200 mm wheel circumference (ifm E60137)/4096 counts = 0.048828125 mm/count. The assumed ±0.2 mm free circumference alone permits1.0 mm error per commanded metre. The corrected uncalibrated1m allocation sum is1.65 mm, not1.15. The wheel's loaded circumference, phase error, wire tension, temperature and wear must be calibrated; motor shaft feedback is not a substitute. At0.50 m/s, nominal measuring count rate10240/s. The [R2 measurement record](13-measuring-interfaces-and-calibration.md) includes the source dimensions, separate5-part encoder face mount, A3 M201 plate drawing, reversible phase-map fitter and explicitly synthetic numerical validation. It does not claim that the shaft/pressure/guide assemblies or physical calibration are complete.
 ## 4. Process geometry
 
 This is the required sequence, not a claim of commissioned hardware firmware. Start with trimmed stock tip at X0; output cassette empty; blades open. Prime/ejection require the final guide/sensor/takeaway integration and are not validated by commanded roller travel alone.

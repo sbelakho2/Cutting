@@ -1,20 +1,20 @@
 # Measuring-wheel interfaces and calibration model
 
-Revision **S1-B-MEAS-R1-2026-09-12**.
+Revision **S1-B-MEAS-R2-2026-09-16**.
 
 ## Source corrections
 
-Kübler wheel **8.0000.3123.0006**, catalogue pp.3–4: **100 ±0.1 mm** free circumference; Ø31.83 (±0.025) mm, 9.5 mm tread, 14.5 mm overall, Ø6 H7 bore, Ø16.5 mm hub and Ø9 mm end land. The No.123 callout is **M4×6 ISO4029**, not No.113's M3×5. Its section shows holes but does not separately state screw quantity. The rubber section/bond thickness and edge chamfers are not dimensioned. No such dimensions are invented in the interface model.
+Measuring wheel **E60137** (ifm E60137 "U:200 N:06", substituted 2026-09-16 for the unpriced Kübler 8.0000.3123.0006): **200 mm** circumference, **Ø63.66 mm**, Ø6 bore, aluminium wheel with PU surface **90 Shore A**, 64.5 g. ifm publishes no circumference/OD tolerance and no hub/clamping-screw dimensions; the 0.1% (0.2 mm) tolerance and the retained 9.5 mm tread / 14.5 mm overall / Ø16.5 mm hub / Ø9 mm end-land profile stations are assumed placeholders pending the manufacturer drawing at incoming inspection. The four M4×6 radial clamp openings are a retained envelope, not a published ifm screw callout.
 
-Autonics **E40S6-1024-6-L-5**: body31 mm behind mounting face, pilot5 mm in front, shaft15 mm beyond pilot. The tip is **20 mm from the mounting face**, not15 mm. Shaft diameter5.985–5.990 mm; single flat5 mm across, last10 mm long; pilot19.98–20.00 mm;3×M3×0.5 on PCD30,5 mm deep. Original public CAD viewer links a shared800/75PPR/24V family model; it is not relabelled as the selected1024PPR/5V unit.
+Encoder **RU3100** (ifm RU3100, substituted 2026-09-16 for the unpriced Autonics E40S6-1024-6-L-5): body **Ø58.6×63.5 mm** behind the mounting face, solid **Ø6×10 mm** shaft with no flat, tip **10 mm from the mounting face**. Synchro-flange fixing with **3×M4×0.7** tapped 6 mm deep on **PCD42**; the archived drawing front view labels only Ø42 and Ø58.6, so no pilot is modeled and the plate's Ø36.5-class seat bore follows the ifm mounting practice (confirm the centering feature at receipt). 4.75–30 VDC, HTL/TTL push-pull, factory 1024 PPR (IO-Link programmable 1…10000), 1000 kHz switching frequency, 12000 rpm, starting torque ≤0.01 Nm, M12 5-pole connector.
 
 ## Uncalibrated length and bearing gates
 
-The factory circumference alone gives **1.0 mm error per commanded metre**. Adding the previous0.2 runout,0.05 quantisation,0.15 tension and0.25 slip allocations gives **1.65 mm**, not the earlier1.15 mm. Those four terms are allocations, not measured errors; this is a failing uncalibrated budget, not a worst-case physical guarantee. The separate factory diameter tolerance is not treated as an additional independent scale error.
+The factory circumference alone gives **1.0 mm error per commanded metre** (assumed ±0.2 mm on 200 mm; ifm publishes no tolerance). Adding the previous0.2 runout,0.05 quantisation,0.15 tension and0.25 slip allocations gives **1.65 mm**, not the earlier1.15 mm. Those four terms are allocations, not measured errors; this is a failing uncalibrated budget, not a worst-case physical guarantee. The separate factory diameter tolerance is not treated as an additional independent scale error. The 200 mm wheel halves the count resolution: 0.048828 mm/count instead of0.024414; the0.05 mm quantisation allocation still covers the half-count error.
 
 SKF626-2Z CN minimum clearance2 µm leaves only **0.5 µm** with10 K inner-to-outer ring difference, even before a press fit. The chosen CN bearing is not silently accepted with full js5 interference. Its actual matching/thermal design remains open.
 
-At500 mm/s and99.9 mm circumference: 300.3003003 rpm, 5125.125125 A/B cycles/s and 20500.5005 quadrature edges/s. The300 kHz encoder limit is a pulse-frequency specification; MCU edge capture and electrical receivers are separate work.
+At500 mm/s and199.8 mm circumference: 150.1501502 rpm, 2562.562563 A/B cycles/s and 10250.25025 quadrature edges/s. The1000 kHz encoder limit is a pulse-frequency specification; MCU edge capture and electrical receivers are separate work.
 
 ## Reversible phase calibration
 
@@ -26,7 +26,7 @@ The chosen metrology allocation is **0.025 mm +0.01% of reference travel**. Each
 
 ## SYNTHETIC benchmark — NOT machine calibration
 
-Circumference from the map: **100.07 mm**. Local pitch 0.02427873803–0.02458356666 mm/count. 392 verification observations; 0 allocation failures; max absolute residual **0.0006502037777 mm**, max guarded residual **0.001650203778 mm**. Forward records: yes; reverse: yes.
+Circumference from the map: **200.14 mm**. Local pitch 0.04870989037–0.049014719 mm/count. 392 verification observations; 0 allocation failures; max absolute residual **0.0006502037777 mm**, max guarded residual **0.001650203778 mm**. Forward records: yes; reverse: yes.
 
 For the synthetic first-harmonic0.2 mm TIR profile only, the independent linear-interpolation distance bound is **0.0009638285548 mm**. Arbitrary tread lobing, contact deformation, slip and time-varying errors do not inherit this bound. Synthetic files are labelled explicitly and may not be loaded as production calibration.
 

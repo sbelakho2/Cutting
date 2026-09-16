@@ -31,7 +31,7 @@ The [cartridge status](../../engineering/generated/feed/status.json), [cassette 
 
 - [F101 R6 shaft dimensions](../../engineering/generated/drawings/F101-R6-shaft.pdf): one A3 page,1191×842 pt. Its SVG review had37 text labels, all within the border, with no overlapping label boxes.
 - [F101 R6 machining details](../../engineering/generated/drawings/F101-R6-details.pdf): one A3 page,1191×842 pt. Its SVG review had38 text labels, all within the border, with no overlapping label boxes. The drawing was also visually reviewed.
-- H003 R6 and M201 R1 drawings were regenerated without geometry changes. Earlier F101 sheets remain historical.
+- H003 R6 and M201 R2 drawings were regenerated; M201 R2 is the 2026-09-16 ifm substitution redesign (R1 remains historical). Earlier F101 sheets remain historical.
 - [Blank F101 inspection record](../inspection/F101-R6.csv):55 characteristics,10 columns; measured values, uncertainties, instrument identities, results, inspectors and dates remain blank.
 - [Selected M5 tapping operation](../14-f101-tapping-operation.md): actual Dormer E412M5/7441118, physical-tip allowance distinguished from cutting lead, same-lot coupon and depth-gauge requirements. [Tooling BOM](../../bom/fabrication-tooling.csv):2×USD40.55=USD81.10 observed merchandise, not Tunisia-delivered cost. Source-interface CSV structure and price arithmetic checked.
 

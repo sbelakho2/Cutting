@@ -4,34 +4,53 @@
 #include <string_view>
 
 namespace starz::measurement {
-inline constexpr std::string_view revision="S1-B-MEAS-R1-2026-09-12";
+inline constexpr std::string_view revision="S1-B-MEAS-R2-2026-09-16";
 namespace catalogue {
-inline constexpr std::string_view wheel="8.0000.3123.0006";
-// Kübler catalogue engineering/sources/kuebler-messrad-en.pdf, May 2026, pp.3–4, wheel No.123, bore06.
-// Circumference is a catalogue free-wheel value, not loaded calibration.
-inline constexpr double circumference_mm=100.0,circumference_tolerance_mm=0.1;
-inline constexpr double wheel_od_mm=31.83,wheel_od_tolerance_mm=0.025;
+inline constexpr std::string_view wheel="E60137";
+// ifm E60137 measuring wheel "U:200 N:06", datasheet E60137-01 EN-GB
+// (engineering/sources/ifm-e60137-datasheet-en.txt, read 2026-09-16):
+// circumference 200 mm, OD 63.66 mm, bore 6 mm, aluminium wheel with PU
+// (polyurethane) surface 90 Shore A, 64.5 g. Selected at automation24 item
+// 102756, EUR 57.00 ex VAT, in stock, dispatch next working day. ifm publishes
+// no circumference/OD tolerance and no hub or clamping-screw dimensions;
+// the 0.1% tolerance and the retained profile stations below are assumed
+// placeholders pending the manufacturer drawing at incoming inspection.
+inline constexpr double circumference_mm=200.0,circumference_tolerance_mm=0.2;
+inline constexpr double wheel_od_mm=63.66,wheel_od_tolerance_mm=0.1;
 inline constexpr double wheel_tread_mm=9.5,wheel_overall_mm=14.5;
 inline constexpr double wheel_bore_mm=6.0,wheel_bore_h7_plus_mm=0.012;
 inline constexpr double wheel_hub_od_mm=16.5,wheel_end_hub_od_mm=9.0;
 inline constexpr double wheel_end_land_mm=0.75,wheel_screw_from_end_mm=2.5;
-inline constexpr double wheel_tir_mm=0.2,wheel_mass_kg=0.016;
-inline constexpr double wheel_shore_a=60;
-inline constexpr std::string_view wheel_screw="M4x6 ISO4029";
+inline constexpr double wheel_tir_mm=0.2,wheel_mass_kg=0.0645;
+inline constexpr double wheel_shore_a=90;
+inline constexpr std::string_view wheel_screw="M4x6 radial clamp envelope;ifm hub screw detail not published";
 
-inline constexpr std::string_view encoder="E40S6-1024-6-L-5";
+inline constexpr std::string_view encoder="RU3100";
+// ifm RU3100 incremental encoder, basic line, magnetic, datasheet RU3100-01
+// (archived engineering/sources/ifm-ru3100-datasheet.pdf, DE, 2023-04-13;
+// EN-GB text read 2026-09-16): solid shaft 6 mm x 10 mm, no flat, body
+// 58.6 mm x 63.5 mm, synchro-flange fixing with 3 x M4 x 0.7 tapped 6 mm
+// deep on PCD 42 (drawing front view labels only 42 and 58.6; the
+// 36.5-class flange seat is the plate-side centering per the ifm mounting
+// practice - confirm the centering feature at receipt). 4.75...30 VDC,
+// HTL/TTL push-pull, factory 1024 PPR, 1000 kHz switching frequency,
+// 12000 rpm, starting torque <= 0.01 Nm, M12 5-pole radial/axial connector.
+// Resolution is programmable 1...10000 via IO-Link; 1024 factory is used so
+// no commissioning is required. Selected at automation24 item 102717,
+// EUR 186.40 ex VAT, in stock, dispatch next working day.
 inline constexpr std::uint32_t pulses_per_revolution=1024;
 inline constexpr std::uint32_t counts_per_revolution=4*pulses_per_revolution;
-inline constexpr double encoder_body_od_mm=40,encoder_body_length_mm=31;
-inline constexpr double encoder_pilot_od_mm=20,encoder_pilot_minus_mm=0.02;
-inline constexpr double encoder_pilot_length_mm=5,encoder_shaft_length_mm=15;
-inline constexpr double encoder_shaft_min_mm=5.984,encoder_shaft_max_mm=5.996;
-inline constexpr double encoder_flat_across_mm=5,encoder_flat_length_mm=10;
-inline constexpr double encoder_mount_pcd_mm=30,encoder_mount_thread_depth_mm=5;
-inline constexpr double encoder_starting_torque_nm=0.00392,encoder_inertia_kg_m2=4e-6;
-inline constexpr double encoder_pulse_limit_hz=300000,encoder_speed_limit_rpm=5000;
-inline constexpr double encoder_radial_limit_n=2*9.80665,encoder_axial_limit_n=9.80665;
-inline constexpr double encoder_cable_d_mm=5,encoder_cable_length_mm=2000;
+inline constexpr double encoder_body_od_mm=58.6,encoder_body_length_mm=63.5;
+inline constexpr double encoder_shaft_length_mm=10;
+// ifm publishes no shaft-diameter tolerance (the archived datasheet states
+// only "Shaft diameter [mm] 6"); 5.99-6.01 is an assumed incoming-inspection
+// placeholder, like the retained wheel-profile stations below.
+inline constexpr double encoder_shaft_min_mm=5.99,encoder_shaft_max_mm=6.01;
+inline constexpr double encoder_mount_pcd_mm=42,encoder_mount_thread_depth_mm=6;
+inline constexpr double encoder_starting_torque_nm=0.01,encoder_inertia_kg_m2=4e-6;
+inline constexpr double encoder_pulse_limit_hz=1000000,encoder_speed_limit_rpm=12000;
+inline constexpr double encoder_radial_limit_n=60,encoder_axial_limit_n=40;
+inline constexpr double encoder_cable_d_mm=6,encoder_cable_length_mm=2000;
 
 // The supplied coupling drawing defines these interfaces, but no hub length,
 // screw tightening torque or minimum internal flexure clearance.
@@ -46,9 +65,14 @@ inline constexpr double bearing_dynamic_n=2340,bearing_static_n=950;
 inline constexpr double bearing_cn_min_um=2,bearing_cn_max_um=13;
 }
 namespace design {
-inline constexpr double encoder_plate_width_mm=46,encoder_plate_thickness_mm=6;
-inline constexpr double encoder_plate_pilot_mm=20.04,encoder_plate_outer_grid_mm=36;
-inline constexpr double encoder_plate_encoder_clearance_mm=3.4,encoder_plate_support_clearance_mm=4.5;
+inline constexpr double encoder_plate_width_mm=60,encoder_plate_thickness_mm=6;
+// 36.5-class synchro-flange seat bore (ifm mounting practice; the encoder
+// envelope models no pilot because the archived drawing labels none).
+inline constexpr double encoder_plate_seat_mm=36.5,encoder_plate_outer_grid_mm=36;
+inline constexpr double encoder_plate_encoder_clearance_mm=4.5;
+// Tapped M4 support holes are modelled at the thread major diameter per the
+// repository convention (screw shanks at major-0.02 leave 0.01 clearance).
+inline constexpr double encoder_plate_support_tap_mm=4.0;
 inline constexpr double encoder_plate_edge_chamfer_mm=0.2;
 // A chosen interpolation grid, not measured production calibration data.
 inline constexpr std::size_t calibration_intervals=32;

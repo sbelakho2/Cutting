@@ -77,7 +77,7 @@ int main(int argc,char** argv)try {
     // Separately named SYNTHETIC fixtures exercise both fit and validation
     // paths. They must never be loaded as commissioned hardware calibration.
     if(!user_data) {
-        constexpr double circumference=100.07,eccentricity=0.1;
+        constexpr double circumference=200.14,eccentricity=0.1;
         const auto exact=[](std::int64_t count) {
             return circumference*static_cast<double>(count)/4096+
                 eccentricity*std::sin(2*std::numbers::pi*static_cast<double>(count)/4096);
@@ -103,11 +103,11 @@ int main(int argc,char** argv)try {
         ++check_count;if(!pass)++design_failures;
     };
     const auto rates=se::wheelRates(starz::feed::design::feed_limit_m_s*1000,c::circumference_mm-c::circumference_tolerance_mm);
-    check("encoder_speed_factory_min_circumference",rates.rpm,c::encoder_speed_limit_rpm,"rpm",rates.rpm<=c::encoder_speed_limit_rpm,"99.9mm factory circumference;500mm/s;not loaded circumference");
-    check("encoder_A_B_frequency",rates.pulse_hz,c::encoder_pulse_limit_hz,"Hz",rates.pulse_hz<=c::encoder_pulse_limit_hz,"1024A/B_cycles_per_revolution;do_not_compare_x4_edges_as_A/B_pulses");
-    check("nominal_count_spacing",100.0/4096,0.025,"mm",100.0/4096<=0.025,"Resolution_only_not_accuracy");
+    check("encoder_speed_factory_min_circumference",rates.rpm,c::encoder_speed_limit_rpm,"rpm",rates.rpm<=c::encoder_speed_limit_rpm,"199.8mm assumed minimum circumference;500mm/s;not loaded circumference");
+    check("encoder_A_B_frequency",rates.pulse_hz,c::encoder_pulse_limit_hz,"Hz",rates.pulse_hz<=c::encoder_pulse_limit_hz,"1024A/B_cycles_per_revolution_factory;ifm1000kHz_switching_frequency;do_not_compare_x4_edges_as_A/B_pulses");
+    check("nominal_count_spacing",200.0/4096,0.05,"mm",200.0/4096<=0.05,"200mm wheel halves the resolution vs the 100mm wheel;0.05mm quantisation allocation still covers half-count0.0244");
     const double factory_error=se::factoryWheelLengthError(1000),cn_clearance=se::measuringBearingThermalClearance(2,10);
-    check("factory_scale_error_1m",factory_error,0.7,"mm",factory_error<=0.7,"Manufacturer100plusminus0.1mm;factory_scale_alone_exceeds_entire1m_target");
+    check("factory_scale_error_1m",factory_error,0.7,"mm",factory_error<=0.7,"Assumed200plusminus0.2mm;ifm publishes no tolerance;factory_scale_alone_exceeds_entire1m_target");
     check("CN_10K_ring_clearance_before_fit",cn_clearance,1,"um",cn_clearance>=1,"SourceCNminimum2um;steel12um/m/K;no_interference_loss_yet;thermal_and_fits_unresolved");
     for(double length:{200.0,500.0,1000.0,3000.0}) {
         const double factory=se::factoryWheelLengthError(length),total=factory+0.2+0.05+0.15+0.25,target=0.2+0.0005*length;
@@ -123,22 +123,26 @@ int main(int argc,char** argv)try {
             <<observation.reference_uncertainty_mm<<','<<result.guarded_error_mm<<','<<result.allocation_mm<<','<<(result.within_allocation?"PASS_RESIDUAL":"FAIL")<<'\n';
     }
     report<<std::setprecision(10)<<"# Measuring-wheel interfaces and calibration model\n\nRevision **"<<starz::measurement::revision<<"**.\n\n"
-        <<"## Source corrections\n\nKübler wheel **"<<c::wheel<<"**, catalogue pp.3–4: **100 ±0.1 mm** free circumference; "
-        <<"Ø31.83 (±0.025) mm, 9.5 mm tread, 14.5 mm overall, Ø6 H7 bore, Ø16.5 mm hub and Ø9 mm end land. "
-        <<"The No.123 callout is **M4×6 ISO4029**, not No.113's M3×5. Its section shows holes but does not separately state screw quantity. "
-        <<"The rubber section/bond thickness and edge chamfers are not dimensioned. No such dimensions are invented in the interface model.\n\n"
-        <<"Autonics **"<<c::encoder<<"**: body31 mm behind mounting face, pilot5 mm in front, shaft15 mm beyond pilot. "
-        <<"The tip is **20 mm from the mounting face**, not15 mm. Shaft diameter5.985–5.990 mm; single flat5 mm across, last10 mm long; "
-        <<"pilot19.979–20.000 mm;3×M3×0.5 on PCD30,5 mm deep. Original public CAD viewer links a shared800/75PPR/24V family model; "
-        <<"it is not relabelled as the selected1024PPR/5V unit.\n\n"
-        <<"## Uncalibrated length and bearing gates\n\nThe factory circumference alone gives **1.0 mm error per commanded metre**. "
+        <<"## Source corrections\n\nMeasuring wheel **"<<c::wheel<<"** (ifm E60137 \"U:200 N:06\", substituted 2026-09-16 for the unpriced Kübler 8.0000.3123.0006): "
+        <<"**200 mm** circumference, **Ø63.66 mm**, Ø6 bore, aluminium wheel with PU surface **90 Shore A**, 64.5 g. ifm publishes no circumference/OD "
+        <<"tolerance and no hub/clamping-screw dimensions; the 0.1% (0.2 mm) tolerance and the retained 9.5 mm tread / 14.5 mm overall / Ø16.5 mm hub / Ø9 mm "
+        <<"end-land profile stations are assumed placeholders pending the manufacturer drawing at incoming inspection. The four M4×6 radial clamp openings "
+        <<"are a retained envelope, not a published ifm screw callout.\n\n"
+        <<"Encoder **"<<c::encoder<<"** (ifm RU3100, substituted 2026-09-16 for the unpriced Autonics E40S6-1024-6-L-5): body **Ø58.6×63.5 mm** behind the "
+        <<"mounting face, solid **Ø6×10 mm** shaft with no flat, tip **10 mm from the mounting face**. Synchro-flange fixing with **3×M4×0.7** tapped 6 mm "
+        <<"deep on **PCD42**; the archived drawing front view labels only Ø42 and Ø58.6, so no pilot is modeled and the plate's Ø36.5-class seat bore "
+        <<"follows the ifm mounting practice (confirm the centering feature at receipt). 4.75–30 VDC, HTL/TTL push-pull, factory 1024 PPR (IO-Link "
+        <<"programmable 1…10000), 1000 kHz switching frequency, 12000 rpm, starting torque ≤0.01 Nm, M12 5-pole connector.\n\n"
+        <<"## Uncalibrated length and bearing gates\n\nThe factory circumference alone gives **1.0 mm error per commanded metre** (assumed ±0.2 mm on "
+        <<"200 mm; ifm publishes no tolerance). "
         <<"Adding the previous0.2 runout,0.05 quantisation,0.15 tension and0.25 slip allocations gives **1.65 mm**, not the earlier1.15 mm. "
         <<"Those four terms are allocations, not measured errors; this is a failing uncalibrated budget, not a worst-case physical guarantee. "
-        <<"The separate factory diameter tolerance is not treated as an additional independent scale error.\n\n"
+        <<"The separate factory diameter tolerance is not treated as an additional independent scale error. The 200 mm wheel halves the count resolution: "
+        <<"0.048828 mm/count instead of0.024414; the0.05 mm quantisation allocation still covers the half-count error.\n\n"
         <<"SKF626-2Z CN minimum clearance2 µm leaves only **0.5 µm** with10 K inner-to-outer ring difference, even before a press fit. "
         <<"The chosen CN bearing is not silently accepted with full js5 interference. Its actual matching/thermal design remains open.\n\n"
-        <<"At500 mm/s and99.9 mm circumference: "<<rates.rpm<<" rpm, "<<rates.pulse_hz<<" A/B cycles/s and "<<rates.quadrature_edge_hz
-        <<" quadrature edges/s. The300 kHz encoder limit is a pulse-frequency specification; MCU edge capture and electrical receivers are separate work.\n\n"
+        <<"At500 mm/s and199.8 mm circumference: "<<rates.rpm<<" rpm, "<<rates.pulse_hz<<" A/B cycles/s and "<<rates.quadrature_edge_hz
+        <<" quadrature edges/s. The1000 kHz encoder limit is a pulse-frequency specification; MCU edge capture and electrical receivers are separate work.\n\n"
         <<"## Reversible phase calibration\n\nThe mapping is C times signed whole turns plus a strictly increasing one-turn distance table. "
         <<"Negative counts use floor division; reversal, rollover across the4096-phase boundary and int64 endpoint extremes are tested. "
         <<"Differences are computed without subtracting two large floating-point positions or overflowing signed raw counters. "

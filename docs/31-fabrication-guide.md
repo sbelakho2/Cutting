@@ -23,7 +23,7 @@ quotation request in [the plan §2.2](24-production-and-release-plan.md).
 
 | Item | Exact order | Qty | Price observed |
 |---|---|---|---|
-| HIWIN axis * | KK8610P340A1F0 (article 10.00026) | 2 | quotation required |
+| HIWIN axis * | KK8610C-340A1-F0 (C-grade substitution; VND 21,146,653 MISUMI VN, observed 2026-09-16; confirm ship date) | 2 | priced, 23–99 days |
 | R+W coupling * | MK2/100/50/8/14 | 2 | quotation required |
 | R+W coupling * | MK2/100/50/10/12 | 2 | quotation required |
 | Cut motor kit | 1-CL86T-P85-V41 (34E1K-85, CL86T-V41, CM2M-18, CE2M, CABLE-PC-1) | 2 | kit contents per catalogue evidence |
@@ -44,10 +44,10 @@ quotation request in [the plan §2.2](24-production-and-release-plan.md).
 | MISUMI post | PSFJ12-240 | 4 | EUR 11.70 |
 | MISUMI spring | SWU17-60 | 2 | EUR 3.53 |
 | MISUMI spring | SWU10.5-35 | 1 | EUR 1.80 |
-| Kübler wheel | 8.0000.3123.0006 | 2 | quotation |
-| Autonics encoder | E40S6-1024-6-L-5 | 2 | quotation |
+| ifm wheel | E60137 (U:200 N:06) | 2 | automation24 EUR 57.00 ex VAT, in stock |
+| ifm encoder | RU3100 | 2 | automation24 EUR 186.40 ex VAT, in stock |
 | Dormer tap | E412M5 material 7441118 | 1 | per docs/14 |
-| Fasteners | ISO4762 M5×16 (8), M5×25 (8), M4×20 (16), M3×8 (32), M3×10 (6), M10×35 (8); ISO7092 M5/M4/M3 washers; ISO8734 3m6×20 (16); DIN929 M10 (8); C45 key 5×5×28 (4) | Wegertseder: M5×16 10.9 50pcs EUR6.19 (2540-034); 3m6×20 dowels 10pcs EUR2.73 (1018-078) |  |
+| Fasteners | ISO4762 M5×16 (8), M5×25 (8), M4×20 (16), M3×8 (32), M4×12 (6), M4×6 (4), M10×35 (8); ISO7092 M5/M4 washers; ISO8734 3m6×20 (16); DIN929 M10 (8); C45 key 5×5×28 (4) | Wegertseder: M5×16 10.9 50pcs EUR6.19 (2540-034); 3m6×20 dowels 10pcs EUR2.73 (1018-078) |  |
 
 **Phase B — controls/cabinet (order after §2 of the electrical record is
 accepted):**
@@ -81,7 +81,7 @@ Machine in this order; each part's drawing sheet is linked.
 | H002 ×2 | per head manifest | mill risers | parallel/height |
 | H003 ×2 | 105×105×20 | mill both faces, registers Ø49.97/Ø73.10, counterbores, 4×M5 | [H003 sheet](../engineering/generated/drawings/H003-R6-adapter.pdf) |
 | H004 ×2 | per head manifest | mill blade holders | per sheet |
-| M201 | 50×50×8 | mill plate, pilot, 3 PCD holes | [M201 sheet](../engineering/generated/drawings/M201-R1-encoder-plate.pdf) |
+| M201 | 66×66×8 | mill plate, seat bore, 3 PCD42 holes, 4 M4 taps | [M201 sheet](../engineering/generated/drawings/M201-R2-encoder-plate.pdf) |
 | M202–M210 | per measurement manifest | mill/turn per record | docs/13 |
 | F201–F208, F301–F305 | per mechanism manifest | mill/laser + weld frame | [manifest](../engineering/generated/mechanism/manifest.csv) |
 | P002 | Ø20 ground bar | cut 660, thread M20×1.5 both ends | [P002 sheet](../engineering/generated/drawings/P002-R2-payoff-spindle.pdf) |
@@ -118,8 +118,8 @@ HTBN belts, check belt alignment and minimum tooth engagement.
 
 **3.6 Measuring module.** M206 bracket + M207 column on bed → 626 bearings
 into M203 → M202 shaft → M204 arm + SWU10.5-35 → wheel force 6–19 N
-(measured) → Kübler wheel (6H7 on 6h6, M4×6 set screw) → M201 plate + E40S6
-encoder (pilot 19.98–20.00, tip 20 mm, 3×M3×10).
+(measured) → ifm E60137 wheel (6 bore on 6h6, hub clamp) → M201 R2 plate +
+RU3100 encoder (synchro flange, 3×M4×12 PCD42, tip 10 mm).
 
 **3.7 Payoff (floor, independent).** Weld P004/P005 to P003 on a coaxial
 fixture (pockets coaxial ≤0.1 after welding) → press 6204 bearings → P002
