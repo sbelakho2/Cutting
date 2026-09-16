@@ -45,6 +45,8 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | Schneider DF2BA0200 fuse link (2 A gG 10×38, cheaper class) | 10 pcs | EUR 49.99 | [conrad.com](https://www.conrad.com/en/p/schneider-electric-df2ba0200-fuse-10-pc-s-2935281.html) |
 | Kübler encoder beam coupling 8.0000.1102.1008 (Ø10/Ø8) | ref | EUR 43.99 | [conrad.com](https://www.conrad.com/en/p/kubler-group-8-0000-1102-1008-beam-coupling-rotary-encoder-1102-1-pc-s-198995.html) |
 | Kübler Perambulator measuring wheel (family reference) | ref | EUR 395.00 | [conrad.com](https://www.conrad.com/en/p/kubler-group-perambulator-1-pc-s-05-2400-0040-1000-5045-125696.html) |
+| CL57T-class driver fallback (Amazon.de market) | ref | EUR 189.10 | [amazon.de](https://www.amazon.de/dp/B0HJ23YQVQ) |
+| 350 W 36 V supply fallback (Amazon.de market) | ref | EUR 77.04 | [amazon.de](https://www.amazon.de/dp/B0HDN818SJ) |
 
 ## Open — click and take the cheapest in-stock offer
 

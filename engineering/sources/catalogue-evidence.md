@@ -377,6 +377,14 @@ GBP 4.98. Both observed 2026-09-13.
   ([page](https://www.conrad.com/en/p/kubler-group-8-0000-1102-1008-beam-coupling-rotary-encoder-1102-1-pc-s-198995.html))
   EUR 43.99 incl VAT, in stock — encoder-coupling class reference; these
   are not power couplings and do not substitute the R+W MK2 lines.
+- **Amazon.de market references (2026-09-16):** a CL57T-class closed-loop
+  driver (2-phase 0–8 A, 24–48 V, Nema 17/23/24) lists at EUR 189.10
+  ([page](https://www.amazon.de/dp/B0HJ23YQVQ)); 350 W 36 V industrial
+  supplies (ERP-350-36/LRS-350-36 class) list from EUR 77.04
+  ([page](https://www.amazon.de/dp/B0HDN818SJ)). Both sit above the
+  STEPPERONLINE shop pricing recorded in the BOM, confirming the direct
+  shop as the cheapest observed source for CL57T-V41 and LE-350-36;
+  these Amazon offers are recorded as fallback market evidence.
 - **Priced encoder alternatives (observed 2026-09-16, automation24):**
   the selected Autonics E40S6-1024-6-L-5 has no observed public price.
   Automation24 lists two in-stock ifm magnetic 1024 PPR Ø6 mm shaft
