@@ -50,6 +50,11 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | LAPP H07V-K 1.5 mm² (100 m reels, red/bk/bu/gnye) | 4 reels | EUR 0.37–0.44/m | [conrad.com](https://www.conrad.com/en/search?search=H07V-K%201.5) |
 | R+W MK2 100/50 class anchor (10/14 variant, in-stock order path) | 2 | EUR 99.43 net/pc | [ebmia.pl](https://www.ebmia.pl/sprzegla-mieszkowe-bkl/213877-sprzeglo-bezluzowe-mk2-100-50-10-14.html?SubmitCurrency=1&id_currency=2) (0 stock, 7–14 days; exact bores orderable via any R+W dealer) |
 | HIWIN KK8610P340A1F0 candidate (unverified, snippet-only price) | 2 | US $450 (snippet) | [ebay.com/itm/406408632737](https://www.ebay.com/itm/406408632737) — page 403s to automation; re-check in a browser; also MISUMI VN/TH shelf item 221005545419 (C-grade sibling) |
+| DIN 471 12×1 retaining rings (A12 class) | 100 pcs | EUR 8.57 incl VAT | [wegertseder.com Art. 1950-010](https://www.wegertseder.com/DIN-471-Sicherungsringe-fuer-Wellen-Regelausfuehrung-FEDERSTAHL-Diameter-12) (in stock; also Amazon MZA B00IZC9GVO €0.62/pc) |
+| ISO4762 M5×16 class 10.9 socket screws | 50 pcs | EUR 6.19 incl VAT | [wegertseder.com Art. 2540-034](https://www.wegertseder.com/DIN-912-Zylinderschrauben-mit-Innensechskant-STAHL-10-9-Diameter-5) (in stock) |
+| ISO 8734 3m6×20 hardened dowels (DIN 6325 m6) | 10 pcs | EUR 2.73 incl VAT | [wegertseder.com Art. 1018-078](https://www.wegertseder.com/DIN-6325-Zylinderstifte-durchgehaertet-Passung-m6) (in stock) |
+| CL57T-class driver (cheapest live) | 2 | EUR 173.78 | [amazon.de/dp/B0FYPDGC85](https://www.amazon.de/dp/B0FYPDGC85) (2–3 days; StepperOnline direct shop usually cheaper — record at purchase) |
+| 36 V/350 W PSU (cheapest live equivalent) | 1 | EUR 77.04 | [amazon.de/dp/B0HDN818SJ](https://www.amazon.de/dp/B0HDN818SJ) (ERP-350-36; wholesale class US$12.70 MOQ 1 on [made-in-china](https://junlin-power-supply.en.made-in-china.com/product/LfqRezWPJJcM/China-AC-DC-36V-LED-SMPS-9-7A-350W-Switch-Power-Supply-LED-Driver-S-350-36.html)) |
 
 ## Open — click and take the cheapest in-stock offer
 

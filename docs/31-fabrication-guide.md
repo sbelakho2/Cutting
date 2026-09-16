@@ -28,9 +28,9 @@ quotation request in [the plan §2.2](24-production-and-release-plan.md).
 | R+W coupling * | MK2/100/50/10/12 | 2 | quotation required |
 | Cut motor kit | 1-CL86T-P85-V41 (34E1K-85, CL86T-V41, CM2M-18, CE2M, CABLE-PC-1) | 2 | kit contents per catalogue evidence |
 | Feed motor | 24HS40-5004D-E1000 | 2 | USD 36.87 (STEPPERONLINE) |
-| Feed driver | CL57T-V41 | 2 | shop price at purchase |
+| Feed driver | CL57T-V41 | 2 | shop price at purchase; class fallback EUR173.78 (Amazon.de B0FYPDGC85) |
 | 60 V supply | LE-350-60 | 2 | in motor kit / shop |
-| 36 V supply | LE-350-36 | 1 | shop price at purchase |
+| 36 V supply | LE-350-36 | 1 | shop price at purchase; equivalent EUR77.04 (Amazon.de B0HDN818SJ) |
 | SKF bearing | 6001-2Z/C3 | 8 | GBP 6.32 |
 | SKF bearing | 6002-2Z/C3 | 8 | GBP 6.91 |
 | SKF bearing | 626-2Z | 4 | GBP 4.49 |
@@ -47,7 +47,7 @@ quotation request in [the plan §2.2](24-production-and-release-plan.md).
 | Kübler wheel | 8.0000.3123.0006 | 2 | quotation |
 | Autonics encoder | E40S6-1024-6-L-5 | 2 | quotation |
 | Dormer tap | E412M5 material 7441118 | 1 | per docs/14 |
-| Fasteners | ISO4762 M5×16 (8), M5×25 (8), M4×20 (16), M3×8 (32), M3×10 (6), M10×35 (8); ISO7092 M5/M4/M3 washers; ISO8734 3m6×20 (16); DIN929 M10 (8); C45 key 5×5×28 (4) | — | traceable supplier |
+| Fasteners | ISO4762 M5×16 (8), M5×25 (8), M4×20 (16), M3×8 (32), M3×10 (6), M10×35 (8); ISO7092 M5/M4/M3 washers; ISO8734 3m6×20 (16); DIN929 M10 (8); C45 key 5×5×28 (4) | Wegertseder: M5×16 10.9 50pcs EUR6.19 (2540-034); 3m6×20 dowels 10pcs EUR2.73 (1018-078) |  |
 
 **Phase B — controls/cabinet (order after §2 of the electrical record is
 accepted):**

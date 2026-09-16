@@ -99,10 +99,10 @@ currency, freight/duty terms, lead time and validity.
 | ME-W01 | Kübler measuring wheel 8.0000.3123.0006 ×2 | Compare any distributor offer against the alternative of keeping the archived wheel; the 100±0.1 mm circumference claim stays unverified until receipt |
 | ME-E01 | Autonics E40S6-1024-6-L-5 ×2 | Request from an Autonics distributor; no public price was observed |
 | TH-C01 | Rittal SK3303.500 ×1 | Request from a Rittal distributor; confirm the 230 V 50 Hz variant |
-| TR-D01 | STEPPERONLINE CL57T-V41 ×2 | Direct shop price visible to a human; record it at purchase time (site blocks automated retrieval) |
-| TR-P01 | STEPPERONLINE LE-350-36 ×1 | Same as above |
-| TR-RR01 | SEEGER A12 DIN471 ×8 | Any SEEGER-ORBIS distributor; the archived catalogue governs geometry |
-| Standard hardware (TR-K01; all TR-FB*/TR-FW*/TR-FD*/ME-FB*/ME-FW* rows; the ISO4762/ISO4032/ISO7092/DIN913/DIN929 rows of the mechanism BOM) | Class-specified standard parts, purchase from a traceable industrial fastener/hardware supplier | Commodity purchase-to-requirement; record certificate and lot at receipt |
+| TR-D01 | STEPPERONLINE CL57T-V41 ×2; exact string has no live price (StepperOnline 403); cheapest live class price EUR 173.78 ([amazon.de/dp/B0FYPDGC85](https://www.amazon.de/dp/B0FYPDGC85), 2–3 days) | Record the StepperOnline shop price at purchase (usually cheaper); class fallback above |
+| TR-P01 | STEPPERONLINE LE-350-36 ×1; exact string absent online; cheapest live 36 V/350 W equivalent EUR 77.04 ([amazon.de/dp/B0HDN818SJ](https://www.amazon.de/dp/B0HDN818SJ)); wholesale S-350-36 class US $12.70–14.90 MOQ 1 (made-in-china) | Record the StepperOnline shop price at purchase; alternatives above |
+| TR-RR01 | SEEGER-ORBIS A12 ×8; brand-exact has no live price; verified DIN 471 12×1 rings 100 pcs EUR 8.57 in stock ([Wegertseder Art. 1950-010](https://www.wegertseder.com/DIN-471-Sicherungsringe-fuer-Wellen-Regelausfuehrung-FEDERSTAHL-Diameter-12)); Amazon MZA EUR 0.62/pc; Simply Bearings GBP 0.85/pc | Any DIN 471 12×1 federstahl ring meets the groove; brand substitution needs a change record |
+| Standard hardware (TR-K01; all TR-FB*/TR-FW*/TR-FD*/ME-FB*/ME-FW* rows; the ISO4762/ISO4032/ISO7092/DIN913/DIN929 rows of the mechanism BOM) | Priced anchors in stock at [Wegertseder](https://www.wegertseder.com/): ISO4762 M5×16 class 10.9, 50 pcs EUR 6.19 (Art. 2540-034); ISO 8734-class 3m6×20 hardened dowels (DIN 6325 m6), 10 pcs EUR 2.73 (Art. 1018-078) | Commodity purchase-to-requirement; record certificate and lot at receipt |
 | CT-FSR01 | Schneider DF2CN02 ×1 | EUR55.99/10 incl VAT (Conrad, 60 sets in stock, 2026-09-16); holder and coordination before purchase |
 | CT-PS36 | 6EP3332-7SB00-0AX0 ×1 | Record the distributor page at order time |
 | CT-IF-U1 / CT-IF-U2-U3 | Exact USB-isolator/interface identities per selected-controls.csv | Confirm availability before the board order |

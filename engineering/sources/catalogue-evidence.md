@@ -419,6 +419,21 @@ tabulated (channel, URL, HTTP result, evidence):
    and MK2/100/50/8/21.4 at 418.85 zł gross, 24 h. Page dimensions confirm
    OD 40 mm, length 50 mm, hub 16 mm — matching the recorded BOM description
    (the "100" is the size class, not an OD).
+3. **[Drive, ring and fastener findings](sourcing-findings-drive-rings.md)**
+   (new working channel **wegertseder.com** plus amazon.de and
+   made-in-china): live priced anchors — STEPPERONLINE CL57T-V41 exact
+   string absent everywhere (StepperOnline shops 403/JS); cheapest live
+   CL57T-class driver **EUR 173.78** (Amazon.de B0FYPDGC85); LE-350-36
+   exact absent; cheapest live 36 V/350 W unit **EUR 77.04** (Amazon.de
+   B0HDN818SJ, ERP-350-36) and a wholesale S-350-36 class unit at
+   **US $12.70–14.90, MOQ 1** (made-in-china, export terms); branded
+   SEEGER-ORBIS A12 absent, but the **DIN 471 12×1 ring, 100 pcs
+   EUR 8.57 incl VAT in stock at Wegertseder** (Art. 1950-010, federstahl;
+   Amazon MZA 12×1 at EUR 0.62/pc and Simply Bearings d1400-012 at
+   GBP 0.85/pc as further options); **ISO4762 M5×16 class 10.9, 50 pcs
+   EUR 6.19 in stock** (Wegertseder Art. 2540-034); **ISO 8734 3m6×20
+   hardened dowels, 10 pcs EUR 2.73 in stock** (Wegertseder Art. 1018-078,
+   DIN 6325 hardened m6 ≈ ISO 8734). All read live 2026-09-16.
 - **Priced encoder alternatives (observed 2026-09-16, automation24):**
   the selected Autonics E40S6-1024-6-L-5 has no observed public price.
   Automation24 lists two in-stock ifm magnetic 1024 PPR Ø6 mm shaft
