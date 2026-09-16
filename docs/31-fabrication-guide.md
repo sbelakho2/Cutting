@@ -58,8 +58,8 @@ accepted):**
 | E-stop | 3SU1851-0NB00-2AC2 | 1 (EUR 110.70 observed) |
 | Guard lock / actuator | SLC-F-024-20/20-R4 6018200007 / ACF-1 3911742391 | 1 / 1 (EUR 143.50 / 17.90 observed) |
 | Contactor | LC1D12BD | 3 (EUR 70.40 observed) |
-| Fuse link | DF2CN02 | 1 |
-| Fuse holder | Schneider DIN-rail 10×38 fuse base (confirm identity) (confirm identity) | 1 |
+| Fuse terminals + links | Phoenix 3046032 ×5 (XPS output, +24V_DRVLOGIC, 3 drive-logic feeds) + ESKA 522620 2 A T 5×20 ×1 + ESKA 522617 1 A T 5×20 ×4 | EUR 7.99 / 1.49 / 1.49 observed 2026-09-16 |
+| Mains MCB + RCD | Schneider Acti9 iC60N 2P C10 (A9F54210) + iID 2P 25 A 30 mA (A9Z21225) | 1 + 1 (RCD EUR 35.99 observed; MCB price at purchase) |
 | 24 V supply | 6EP3332-7SB00-0AX0 | 1 |
 | Pico | Raspberry Pi Pico 2 SC1631 | 1 (USD 5.00 observed) |
 | Cooler | Rittal SK3303.500 | 1 (quotation) |
@@ -170,8 +170,9 @@ with raw data retention.
   measured bore.
 - Guard safety distance, aperture treatment and risk assessment must be
   signed off before first guarded movement (docs/26 §6, docs/28 §2.2).
-- The XPS fuse is DF2CN02 (2 A) — a 10 A link does not protect the 5 A
-  DC-1 relay outputs (docs/22 §11.3).
+- The XPS fuse is an ESKA 522620 2 A T 5×20 link in a Phoenix 3046032 fused
+  terminal — a 10 A link does not protect the 5 A DC-1 relay outputs
+  (docs/22 §11.3). The 2 A rating is fixed: do not substitute a larger link.
 - LC1D12BD DC switching duty is unconfirmed: obtain the manufacturer DC
   utilization answer before relying on the three-pole series arrangement.
 - Cabinet energisation is prohibited until the docs/22 §10 holds have

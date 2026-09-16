@@ -104,11 +104,12 @@ The proposed assignments are:
 | K3 | feed `LE-350-36` positive branch | XPS `33-34` |
 
 The selected XPS documentation specifies a 10 A gG external fuse for its
-safety output circuit. Schneider Electric `DF2CN10` is an identified matching
-10 × 38 mm, 500 VAC, 10 A gG fuse link. Its compatible holder, DC branch
-coordination, prospective-fault assessment and installation are still release
-holds. `C10G` is not selected for this machine; it is an Eaton Bussmann series,
-not a Mersen or Schneider designation.
+safety output circuit; that rating cannot protect the 5 A DC-1 outputs, so
+the corrected 2 A selection is used (§11.3): an ESKA 522620 2 A T 5×20 link
+in a Phoenix 3046032 fused terminal (selected 2026-09-16, CB-XPS-FUSE).
+DC branch coordination, prospective-fault assessment and installation are
+still release holds. `C10G` is not selected for this machine; it is an
+Eaton Bussmann series, not a Mersen or Schneider designation.
 
 ## 3. Safety relay configuration and two-channel inputs
 
@@ -268,7 +269,7 @@ they are not selected terminal-block products:
 | TB24-01 | protected `+24V_PELV` to IF-B01 J3-1 | Terminal, wire and fuse coordination unselected |
 | TB24-02 | `0V_PELV` common to IF-B01 J3-2/J3-4 and contact returns | Terminal and return-current design unselected |
 | TB24-03 | protected `+5V_LOGIC` to IF-B01 J3-3 | Terminal and fuse coordination unselected |
-| TB-DL | separately protected `+24V_DRVLOGIC` common-anode drive input supply | Fuse rating, terminal product and branch wiring unselected |
+| TB-DL | separately protected `+24V_DRVLOGIC` common-anode drive input supply | CB-TB-DL: Phoenix 3046032 fused terminal, 1 A T 5x20 link (ESKA 522617); per-drive logic feeds on CB-TB-DL-K1-K3 (2026-09-16) |
 | TB-S | XPS / E-stop / guard field-loop terminations | Exact terminals, cable and cross-wire arrangement require schematic review |
 | TB-M1 / TB-M2 / TB-M3 | K1 / K2 / K3 DC supply and drive branch terminations | DC switching, fusing, discharge and wire sizing unselected |
 | PE-BAR | chassis, cable-screen entry and protective-earth bonds | Bar, conductor, enclosure and test plan unselected |
@@ -347,12 +348,16 @@ named physical/manufacturer step):
 2. confirmed `LC1D12BD` DC utilisation/rated switching duty for the exact
    36/60 V three-series-pole loads, plus measured switching behavior
    (desk part done — §11.1 — awaiting the manufacturer datasheet answer);
-3. DC branch fuses, holders, short-circuit coordination and inrush
-   measurement (wire ampacity, regen and discharge desk parts done — §11.2/
-   §11.4 —; the branch fuse identities and the measured decay remain);
-4. AC incoming disconnect/protection, enclosure, terminal-block system, cable
-   glands, PE bonding and applicable local-regulation design (enclosure
-   thermal budget calculated — §11.5 —; identities proposed — §11.6 —);
+3. DC branch fuse/holder identity (desk part CLOSED 2026-09-16 — §11.4: the
+   5.8/5.8/9.7 A power branches stay on the K1/K2/K3 contactors plus the
+   LE-350 overload protection, and the three drive-logic feeds get 3046032
+   fused terminals with 1 A links, CB-TB-DL-K1-K3); remaining: short-circuit
+   coordination review and the measured bus-decay and inrush checks;
+4. AC incoming disconnect/protection (identity SELECTED 2026-09-16 — §11.6:
+   iC60N 2P C10 A9F54210 + iID 2P 25 A 30 mA A9Z21225; the MCB has no
+   observed public price and local-regulation design review remains);
+   enclosure, remaining terminal-block parts, cable glands, PE bonding and
+   local-regulation design (thermal budget calculated — §11.5 —);
 5. final E1/E2 guard-release-permission circuit and risk assessment
    (bleed-resistor proposal recorded — §11.2 —);
 6. full safety-function validation, including fault injection, stop time and
@@ -415,18 +420,38 @@ change record and a repeat of this calculation.
   bleed resistor (e.g., 2.2 kΩ 5 W per branch, τ≈1.1 s) is proposed for
   determinism and is part of the §10 hold 5 design.
 
-### 11.3 XPS output fuse — corrected sizing
+### 11.3 XPS output fuse — corrected sizing and 5×20 holder closure (2026-09-16)
 
 XPSUAF13AP relay outputs are rated **5 A DC-1 / 3 A DC-13 at 24 V DC**
 (archived datasheet). The XPS output load is the two contactor coils
 (≈0.45 A total). A 10 A gG link (DF2CN10) cannot protect 5 A contacts
-between 5–10 A and is therefore **too large**. Corrected selection: **Schneider DF2CN02, 2 A gG 10×38** — clears overloads above 2 A while carrying the ≈0.5 A (plus coil surge) load without nuisance opening. Observed 2026-09-16: EUR 55.99 per 10 incl VAT at [Conrad](https://www.conrad.com/en/p/schneider-electric-df2cn02-fuse-holder-inset-10-pc-s-2935313.html) (60 sets in stock).
-The identity change DF2CN10 → DF2CN02 is recorded in
-[selected-controls.csv](../bom/selected-controls.csv) and
-[sourcing-evidence.csv](../bom/sourcing-evidence.csv); the holder identity
-remains the Schneider DIN-rail 10×38 fuse base (confirm identity) subject to catalogue
-confirmation. Prospective short-circuit coordination with the 24 V supply
-current limiting is verified at commissioning (physical).
+between 5–10 A and is therefore **too large**; the corrected link rating is
+2 A. The first 2 A selection was the Schneider DF2CN02 10×38 link, but its
+DIN-rail 10×38 holder had no reachable live price and stayed an open hold.
+On 2026-09-16 that hold was closed by moving the function to a priced 5×20
+solution:
+
+- **Phoenix Contact 3046032** 5×20 fuse serial terminal (6.3 A rated,
+  DIN rail) — already selected for the `+24V_DRVLOGIC` branch (CB-TB-DL);
+  EUR 7.99 incl VAT, 34 in stock, observed 2026-09-16 at
+  [Conrad](https://www.conrad.com/en/p/phoenix-contact-3046032-fuse-serial-terminal-6-2-mm-screws-black-1-pc-s-744510.html);
+- **ESKA 522620**, 2 A T (time-lag) 5×20 link, 250 V DC — carries the
+  ≈0.45 A coil load with surge margin and clears overloads above 2 A within
+  the 6.3 A terminal rating; EUR 1.49 incl VAT, 1368 in stock, observed
+  2026-09-16 at
+  [Conrad](https://www.conrad.com/en/p/eska-522620-522620-dc-fuse-o-x-l-5-mm-x-20-mm-2-a-250-v-dc-time-delay-t-content-1-pc-s-1414701.html).
+
+Equivalence reasoning: the DF2CN02 2 A gG 10×38 link and the 522620 2 A T
+5×20 link fuse the same ≈0.45 A load at the same 2 A nominal rating; the
+T characteristic is the IEC 60127 counterpart of the gG overload class, and
+the 250 V DC link voltage exceeds the 24 V DC circuit with a wide margin.
+The 10×38 holder is no longer required and the `HOLD-FUSE-HOLDER` rows are
+removed. The identity change is recorded in
+[selected-controls.csv](../bom/selected-controls.csv),
+[selected-cabinet-wiring.csv](../bom/selected-cabinet-wiring.csv) and
+[sourcing-evidence.csv](../bom/sourcing-evidence.csv). Prospective
+short-circuit coordination with the 24 V supply current limiting is
+verified at commissioning (physical).
 
 ### 11.4 Wiring schedule (calculated)
 
@@ -437,6 +462,19 @@ current limiting is verified at commissioning (physical).
 | 24 V control | ≤2 A | H07V-K 0.75 mm² | same |
 | Mains 230 V | 1050 W/230 V = 4.6 A | H07V-K 1.5 mm² | same |
 | PE conductors | — | equal to phase (1.5 mm² minimum); equipment PE bonds M6, ≤0.1 Ω continuity target | IEC 60204-1 §8 |
+
+**DC branch protection decision (2026-09-16).** The 60 V branches carry
+5.8 A each and the 36 V branch 9.7 A (nameplate). The 5×20 fused-terminal
+class ends at 6.3 A, so the power branches are **not** placed on 5×20
+links: the K1/K2/K3 three-series-pole contactor arrangement plus the
+LE-350 overload protection (self-recovery, archived datasheet) is the
+branch protection, and the wire ampacity margins hold per the table. The
+drive LOGIC supply feeds (PUL/DIR/ENA common-anode rails, a fraction of an
+amp each) get 3× Phoenix 3046032 fused terminals with 1 A T 5×20 links
+(ESKA 522617, EUR 1.49 incl VAT, 224 in stock, observed 2026-09-16 at
+[Conrad](https://www.conrad.com/en/p/eska-522617-522617-dc-fuse-o-x-l-5-mm-x-20-mm-1-a-250-v-dc-time-delay-t-content-1-pc-s-1414698.html);
+rows CB-TB-DL and CB-TB-DL-K1-K3). Short-circuit coordination and inrush
+remain commissioning measurements (§10 hold 3).
 
 ### 11.5 Enclosure thermal budget (calculated)
 
@@ -455,26 +493,35 @@ current limiting is verified at commissioning (physical).
 Proposed identities (procurement intent, not selections): Phoenix Contact
 PT 2,5 feed-through terminals 3209510 (grey) / 3209523 (blue) for the
 24 V/5 V distribution; Phoenix UT 4 3044131 per DC branch termination;
-a fused 10×38 terminal (Wago 282-364 or Phoenix UT 4-HESI, identity to be
-confirmed) for `+24V_DRVLOGIC`; a Schneider DIN-rail 10×38 fuse base (confirm identity) for the
-DF2CN02 link; a dedicated separated terminal group for the safety loop;
+Phoenix 3046032 5×20 fused terminals for the XPS output, `+24V_DRVLOGIC`
+and the three drive-logic feeds (priced and selected 2026-09-16 — §11.3/
+§11.4); AC incoming **Schneider Acti9 iC60N 2P C10 (A9F54210) + iID 2P
+25 A 30 mA type A (A9Z21225)** — the RCD is priced at Conrad (EUR 35.99
+incl VAT, 5 in stock, observed 2026-09-16); the MCB has no observed live
+price (channels exhausted 2026-09-16: automation24 search/category pages
+unreachable to automated fetch, Conrad lists only 1P/3P/4P iC60N, ebmia
+only 2P B-curve 6 kA, se.com 403) and is confirmed on a live distributor
+page at purchase; a dedicated separated terminal group for the safety loop;
 a copper PE bar with M6 bonds; 2 × M20 EMC metal cable glands (Lapp Skintop
 MS-M or Pflitsch blueglobe, identity to be confirmed); H07V-K 0.75/1.0/1.5
 mm² with insulated ferrules; a Rittal AE wall-mount enclosure ≥800×600×210
 to be size-confirmed from the 750×400 mm IF-B01 board plus K1–K3, three
 PSUs, XPS and terminal layout. Maker pages (phoenixcontact.com, wago.com,
 se.com) block automated retrieval and no live-page price could be observed
-for these identities; they are exact catalogue part numbers to be confirmed
-on a live distributor page at purchase. Until then the rows stay
-`UNSELECTED` release holds. This is the desk ceiling for those rows, not an
-unresolved engineering question: the exact confirm-and-purchase step is
-defined.
+for the remaining unpriced identities; they are exact catalogue part
+numbers to be confirmed on a live distributor page at purchase. Until then
+the remaining rows stay `UNSELECTED` release holds. This is the desk ceiling
+for those rows, not an unresolved engineering question: the exact
+confirm-and-purchase step is defined.
 
 ### 11.7 What this package closes vs leaves open
 
 Closed from the desk: branch current sizing, regen non-issue with numbers,
-discharge estimate + bleed proposal, XPS fuse correction (2 A), wiring
-schedule, PE sizing, enclosure thermal margin. Left open by nature:
-LC1D12BD DC duty (manufacturer enquiry), measured bus decay, prospective
-fault and stop-time measurements, risk-assessment sign-off, and the
-physical build itself (§10 holds 1–8 remain).
+discharge estimate + bleed proposal, XPS fuse correction (2 A) and its
+5×20 holder closure, the AC incoming identity (iC60N 2P C10 + iID 2P 25 A
+30 mA), the DC branch-protection decision, wiring schedule, PE sizing,
+enclosure thermal margin. Left open by nature: LC1D12BD DC duty
+(manufacturer enquiry), the unpriced incoming MCB (confirm at purchase),
+measured bus decay, prospective fault and stop-time measurements,
+risk-assessment sign-off, and the physical build itself (§10 holds 1–8
+remain).

@@ -77,6 +77,8 @@ comparison boundaries.
 | CB-TB24-01/02/03, CB-TB-S | Phoenix Contact PT 2,5 terminals 3209510 (grey) / 3209523 (blue) | EUR 1.29 each incl VAT; 2794/604 in stock | [3209510](https://www.conrad.com/en/p/phoenix-contact-3209510-continuity-5-2-mm-quick-connect-grey-1-pc-s-733311.html) · [3209523](https://www.conrad.com/en/p/phoenix-contact-3209523-continuity-5-2-mm-quick-connect-blue-1-pc-s-733325.html) |
 | CB-TB-M1-M3 | Phoenix Contact UT 4 3044131 | EUR 2.29 each incl VAT; 289 in stock | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3044131-continuity-8-2-mm-screws-grey-1-pc-s-744402.html) |
 | CB-TB-DL | Phoenix Contact 3046032 fuse serial terminal (5×20) | EUR 7.99 incl VAT; 34 in stock | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3046032-fuse-serial-terminal-6-2-mm-screws-black-1-pc-s-744510.html) |
+| CB-XPS-FUSE / CB-TB-DL-K1-K3 | ESKA 522620 2 A / 522617 1 A T 5×20 fuse links | EUR 1.49 each incl VAT; 1368 / 224 in stock, fast track dispatch Fri 18 Sep | [522620](https://www.conrad.com/en/p/eska-522620-522620-dc-fuse-o-x-l-5-mm-x-20-mm-2-a-250-v-dc-time-delay-t-content-1-pc-s-1414701.html) · [522617](https://www.conrad.com/en/p/eska-522617-522617-dc-fuse-o-x-l-5-mm-x-20-mm-1-a-250-v-dc-time-delay-t-content-1-pc-s-1414698.html) |
+| CB-AC-INCOMING (RCD half) | Schneider Acti9 iID 2P 25 A 30 mA type A A9Z21225 | EUR 35.99 incl VAT; 5 in stock, fast track dispatch Fri 18 Sep | [conrad.com](https://www.conrad.com/en/p/schneider-electric-a9z21225-a9z21225-rccb-a-25-a-0-03-a-240-v-1861630.html) |
 | CB-ENC-ENTRY | LAPP Skintop MS-M 20 EMC 53112532 brass gland | EUR 17.99 each incl VAT; 52 in stock | [conrad.com](https://www.conrad.com/en/p/lapp-53112532-cable-gland-emc-m20-brass-brass-1-pc-s-1601941.html) |
 | TR-RR01 alt. | Simply Bearings d1400-012, 12 mm external circlip (DIN471-class) | GBP 0.85 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/d1400-012) |
 
@@ -103,7 +105,7 @@ currency, freight/duty terms, lead time and validity.
 | TR-P01 | STEPPERONLINE LE-350-36 ×1; exact string absent online; cheapest live 36 V/350 W equivalent EUR 77.04 ([amazon.de/dp/B0HDN818SJ](https://www.amazon.de/dp/B0HDN818SJ)); wholesale S-350-36 class US $12.70–14.90 MOQ 1 (made-in-china) | Record the StepperOnline shop price at purchase; alternatives above |
 | TR-RR01 | SEEGER-ORBIS A12 ×8; brand-exact has no live price; verified DIN 471 12×1 rings 100 pcs EUR 8.57 in stock ([Wegertseder Art. 1950-010](https://www.wegertseder.com/DIN-471-Sicherungsringe-fuer-Wellen-Regelausfuehrung-FEDERSTAHL-Diameter-12)); Amazon MZA EUR 0.62/pc; Simply Bearings GBP 0.85/pc | Any DIN 471 12×1 federstahl ring meets the groove; brand substitution needs a change record |
 | Standard hardware (TR-K01; all TR-FB*/TR-FW*/TR-FD*/ME-FB*/ME-FW* rows; the ISO4762/ISO4032/ISO7092/DIN913/DIN929 rows of the mechanism BOM) | Priced anchors in stock at [Wegertseder](https://www.wegertseder.com/): ISO4762 M5×16 class 10.9, 50 pcs EUR 6.19 (Art. 2540-034); ISO 8734-class 3m6×20 hardened dowels (DIN 6325 m6), 10 pcs EUR 2.73 (Art. 1018-078) | Commodity purchase-to-requirement; record certificate and lot at receipt |
-| CT-FSR01 | Schneider DF2CN02 ×1 | EUR55.99/10 incl VAT (Conrad, 60 sets in stock, 2026-09-16); holder and coordination before purchase |
+| CB-AC-INCOMING (MCB half) | Schneider Acti9 iC60N 2P C10, A9F54210 ×1 | No reachable public price 2026-09-16 (automation24 category/search unreachable to automated fetch, Conrad 1P/3P/4P iC60N only, ebmia 2P B-curve only, se.com 403); confirm on a live distributor page at purchase |
 | CT-PS36 | 6EP3332-7SB00-0AX0 ×1 | Record the distributor page at order time |
 | CT-IF-U1 / CT-IF-U2-U3 | Exact USB-isolator/interface identities per selected-controls.csv | Confirm availability before the board order |
 
@@ -180,9 +182,14 @@ reviews have passed their separate records.
 
 ## 6. Cabinet construction and de-energised inspection
 
-1. Do not purchase or install a cabinet until the explicitly held terminal,
-   PE, enclosure, gland, conductor, fuse-holder, branch-protection, incoming
-   AC and thermal selections are released by competent review.
+1. Do not purchase or install a cabinet until the explicitly held enclosure,
+   PE, gland, conductor and remaining terminal identities and the
+   local-regulation design review are released by competent review. The
+   incoming-AC identity (iC60N 2P C10 A9F54210 + iID 2P 25 A 30 mA
+   A9Z21225), the XPS/output fuse solution (3046032 terminal + 2 A 5×20
+   link) and the DC branch-protection decision were selected on 2026-09-16
+   and still require that review plus the commissioning checks of
+   [docs/22 §10](22-controls-and-wiring.md).
 2. Follow the controlled sequence in
    [the cabinet electrical assembly procedure](23-cabinet-electrical-assembly.md).
    It is a de-energised plan, not an energisation permission.
@@ -238,7 +245,7 @@ traceable evidence.
 | Adapter FEM | Preloaded elastic-foundation support model re-run: 4×8.0kN F0 preload pressure on the counterbore-floor washer seats r∈[2.75,4.5]mm plus a Winkler foundation on the stage-side seat annuli (kn=50,538.5N/mm³ half-space calibration, kt=kn/2.67), supernodal CHOLMOD, unchanged6/4/2.8/2/1.4/1.0mm series plus the isolated pair; displacement refinement2.15931% passes3%; raw peak16.9981% remains **REFINE** against5%; peak219.489MPa fails the yield/3 screen (local preload seat compression, inside the640.7MPa Lamé bound); stiffness sensitivity×0.5/×2 moves the peak+0.46% | The ideal-clamp singularity is removed, but the raw peak now sits at the counterbore-floor washer-OD pressure-patch edge and still grows182.11→219.49MPa under peak-region refinement; a true contact analysis with measured joint stiffness (or a resolved seat pressure profile) is the remaining justified step |
 | Bearings, joints and thermal behavior | Analytical geometry and nominal fits are present | Measure/justify preload, contact, housing compliance and thermal field for the actual build |
 | Guard/payoff | [R2 selections](26-guard-and-payoff-selection.md) exist for panels, door, spool, spindle, bearings and friction brake; R2 CAD source changes and physical validation are pending | Complete risk assessment, Bernstein mounting evidence, load/runaway measurement, physical build and validation |
-| Electrical/safety | Logical topology, source checks, branch/wiring/regen/discharge/thermal calculations and the corrected XPS fuse selection ([docs/22 §11](22-controls-and-wiring.md)); LC1D12BD DC duty awaits the manufacturer answer; protection, PE, enclosure identities proposed | Close protection, DC switching confirmation, discharge measurement, PE, enclosure, EMC and safety-function evidence |
+| Electrical/safety | Logical topology, source checks, branch/wiring/regen/discharge/thermal calculations, the corrected XPS fuse selection and the 2026-09-16 closures (5×20 XPS fuse set, AC incoming iC60N 2P C10 + iID 2P 25 A 30 mA, DC branch-protection decision) ([docs/22 §11](22-controls-and-wiring.md)); LC1D12BD DC duty awaits the manufacturer answer | Close DC switching confirmation, discharge measurement, PE, enclosure, EMC and safety-function evidence; confirm the unpriced incoming MCB at purchase |
 | Process qualification | Procedure and fail-closed tool exist; all repository templates are blank | Execute controlled physical tests and retain raw records |
 
 No row in this table may be closed by relaxing a numerical acceptance criterion,
@@ -260,7 +267,8 @@ All remaining warnings, honesty boundaries and physical holds in one place:
    unvalidated.
 4. **Electrical.** Cabinet energisation is prohibited until every docs/22
    §10 hold has evidence; the LC1D12BD DC duty answer is outstanding; the
-   XPS fuse is DF2CN02 (2 A), never 10 A.
+   XPS fuse is an ESKA 522620 2 A T 5×20 link in a Phoenix 3046032 fused
+   terminal, never 10 A.
 5. **Fabrication.** Torque values are not published for M5/M10 joints
    (preload study pending); bearing seats are matched to measured bores;
    the blade pair is purchase-to-drawing and edge-unqualified.

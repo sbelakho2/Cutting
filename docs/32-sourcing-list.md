@@ -35,14 +35,16 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | PT 2,5 3209510 (grey) | 12+8 | EUR 1.29 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3209510-continuity-5-2-mm-quick-connect-grey-1-pc-s-733311.html) |
 | PT 2,5 3209523 (blue) | 12+4 | EUR 1.29 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3209523-continuity-5-2-mm-quick-connect-blue-1-pc-s-733325.html) |
 | UT 4 3044131 | 12 | EUR 2.29 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3044131-continuity-8-2-mm-screws-grey-1-pc-s-744402.html) |
-| 3046032 fuse serial terminal (5×20) | 1 | EUR 7.99 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3046032-fuse-serial-terminal-6-2-mm-screws-black-1-pc-s-744510.html) |
+| 3046032 fuse serial terminal (5×20) | 5 (CB-TB-DL + CB-XPS-FUSE + CB-TB-DL-K1-K3) | EUR 7.99 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3046032-fuse-serial-terminal-6-2-mm-screws-black-1-pc-s-744510.html) |
 | Lapp Skintop MS-M 20 EMC 53112532 | 2 | EUR 17.99 | [conrad.com](https://www.conrad.com/en/p/lapp-53112532-cable-gland-emc-m20-brass-brass-1-pc-s-1601941.html) |
 | Encoder alternative: ifm RU3100 (Ø6, 1024, TTL/HTL) | 2 | EUR 185.50 | [automation24.com](https://www.automation24.com/incremental-encoder-ifm-electronic-ru3100) |
 | Encoder alternative: ifm RUP500 (Ø6 synchro, 1024, display) | 2 | EUR 255.50 | [automation24.com](https://www.automation24.com/incremental-encoder-ifm-electronic-rup500) |
 | M5×16 DIN 912 A2-70 socket screws, 50 pcs | 1 box | EUR 13.99 | [conrad.com](https://www.conrad.com/en/p/swg-9451667-allen-screws-m5-16-mm-hex-socket-allen-din-912-stainless-steel-a2-50-pc-s-1205329.html) (general hardware; the F0 motor/stage joints need class 10.9 — buy 10.9 separately) |
-| Schneider DF2CN02 fuse link (2 A gG 10×38) | 10 pcs | EUR 55.99 | [conrad.com](https://www.conrad.com/en/p/schneider-electric-df2cn02-fuse-holder-inset-10-pc-s-2935313.html) |
+| Schneider DF2CN02 fuse link (2 A gG 10×38) — SUPERSEDED 2026-09-16 | — | replaced by the 3046032 + ESKA 522620 2 A 5×20 set below | [conrad.com](https://www.conrad.com/en/p/schneider-electric-df2cn02-fuse-holder-inset-10-pc-s-2935313.html) |
 | Phoenix UT 4-PE 3044128 (PE terminal, green-yellow) | 1 | EUR 4.79 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3044128-triple-port-pg-terminal-6-2-mm-screws-green-yellow-1-pc-s-744462.html) |
-| Schneider DF2BA0200 fuse link (2 A gG 10×38, cheaper class) | 10 pcs | EUR 49.99 | [conrad.com](https://www.conrad.com/en/p/schneider-electric-df2ba0200-fuse-10-pc-s-2935281.html) |
+| Schneider DF2BA0200 fuse link (2 A gG 10×38, cheaper class) — SUPERSEDED 2026-09-16 | — | replaced by the 5×20 set above | [conrad.com](https://www.conrad.com/en/p/schneider-electric-df2ba0200-fuse-10-pc-s-2935281.html) |
+| Schneider Acti9 iID 2P 25 A 30 mA type A A9Z21225 (RCD) | 1 | EUR 35.99 incl VAT | [conrad.com](https://www.conrad.com/en/p/schneider-electric-a9z21225-a9z21225-rccb-a-25-a-0-03-a-240-v-1861630.html) (5 in stock) |
+| ESKA 522620 2 A T 5×20 (XPS output) / 522617 1 A T 5×20 (drive logic) | 1 + 4 | EUR 1.49 each incl VAT | [522620](https://www.conrad.com/en/p/eska-522620-522620-dc-fuse-o-x-l-5-mm-x-20-mm-2-a-250-v-dc-time-delay-t-content-1-pc-s-1414701.html) · [522617](https://www.conrad.com/en/p/eska-522617-522617-dc-fuse-o-x-l-5-mm-x-20-mm-1-a-250-v-dc-time-delay-t-content-1-pc-s-1414698.html) |
 | Kübler encoder beam coupling 8.0000.1102.1008 (Ø10/Ø8) | ref | EUR 43.99 | [conrad.com](https://www.conrad.com/en/p/kubler-group-8-0000-1102-1008-beam-coupling-rotary-encoder-1102-1-pc-s-198995.html) |
 | Kübler Perambulator measuring wheel (family reference) | ref | EUR 395.00 | [conrad.com](https://www.conrad.com/en/p/kubler-group-perambulator-1-pc-s-05-2400-0040-1000-5045-125696.html) |
 | CL57T-class driver fallback (Amazon.de market) | ref | EUR 189.10 | [amazon.de](https://www.amazon.de/dp/B0HJ23YQVQ) |
@@ -68,7 +70,8 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | CL57T-V41 | 2 | [stepperonline.com](https://www.omc-stepperonline.com/closed-loop-stepper-driver-v4-1-0-8-0a-24-48vdc-for-nema-17-23-24-stepper-motor-cl57t-v41) |
 | LE-350-36 | 1 | [stepperonline.com](https://www.omc-stepperonline.com/350w-36v-9-7a-115-230v-switching-power-supply-stepper-motor-cnc-router-kits-le-350-36) |
 | SEEGER A12 (or the GBP 0.85 alternative above) | 8 | SEEGER-ORBIS distributor |
-| Schneider DIN-rail 10×38 fuse base (confirm identity) | 1 | [se.com](https://www.se.com/) · distributor |
+| Schneider Acti9 iC60N 2P C10 A9F54210 (mains MCB) | 1 | [Conrad search](https://www.conrad.com/en/search?search=iC60N) · distributor RFQ (no reachable public price 2026-09-16) |
+| Schneider DIN-rail 10×38 fuse base | — | no longer required (5×20 solution, 2026-09-16) |
 | Wago 282-364 | — | replaced by Phoenix 3046032 above (5×20 instead of 10×38) |
 | Lapp Skintop MS-M 20 EMC | — | priced above (Conrad) |
 | Rittal AE enclosure ≥800×600×210 | 1 | [rittal.com](https://www.rittal.com/) · distributor |
