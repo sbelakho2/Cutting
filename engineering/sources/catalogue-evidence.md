@@ -461,3 +461,41 @@ This section supersedes the FEM summary inside the R6-fasteners bullet above; th
 - Results (finest 111,349 nodes, supernodal CHOLMOD direct solver, 150,000-node cap unchanged): peak 219.489 MPa; displacement 0.00863849 mm; displacement refinement 2.15931% (PASS 3%); raw peak refinement 16.9981% (**REFINE** 5%); peak vs yield/3 = 219.489 vs 216.667 MPa (**FAIL**, local seat compression inside the 640.7 MPa Lamé bound).
 - Foundation-stiffness sensitivity ×0.5 / ×2 on the identical finest mesh: peak 219.07 → 220.08 MPa (+0.46%); displacement 0.01262 → 0.00667 mm. The raw-peak hold is an ideal uniform-pressure patch-edge artifact, not a spring-calibration uncertainty.
 - What remains: a true contact analysis with a measured joint stiffness, or a resolved seat pressure profile; both are outside desk-available evidence. The gate stays REFINE.
+
+## Mechanical document gates — manufacturer documents re-fetched 2026-09-16
+
+Detailed record: [mechanical-documents-findings.md](mechanical-documents-findings.md). Summary of the four gate confirmations:
+
+- **HIWIN KK8610P340A1F0** — current catalogue **PS-11-1-EN-2605-K**
+  (2026-05-22) archived as [hiwin-kk86-catalogue-2026.pdf](hiwin-kk86-catalogue-2026.pdf).
+  Confirms every recorded KK86 value (340/440, lead 10, P class with
+  0.005 mm axial play, 194 usable / 8 reserve travel, 5.7 kg, screw
+  Ø15 Cdyn 7144/C0 12642, guide 31458/50764, moments 1507/622/622,
+  bearing C0axial 9240 / Fmax 6320 N, starting torque 0.150 Nm,
+  740 mm/s, ±0.003/0.025/0.015) and the **input shaft Ø8 h7 / 18 mm
+  exposed** (28 mm including locknut), Ø46 cavity, F0 Ø50 +0.05/+0,
+  PCD70 4×M5×0.8×10DP. New value: max drive torque **2.79 Nm**
+  (Table 5.1). No contradiction with the repo CAD; the 8 mm
+  stage-side hub bore is confirmed.
+- **R+W MK2/100/50/8/14** — June-2026 datasheet re-fetched and
+  byte-identical to [rw-mk2-datasheet-2026.pdf](rw-mk2-datasheet-2026.pdf):
+  size 100 = **10 Nm** TKN, OD 40, length 50 (of 50/60), fit length 16,
+  bores 5–24 H7, M4 @ 4.5 Nm, 160 g·cm², 9050 Nm/rad. Interior bellows
+  clearance remains undimensioned (gate 30 stays open).
+- **Kübler 8.0000.3123.0006** — live kuebler.com `/pdf?Messrad_en.pdf`
+  re-fetched and byte-identical to [kuebler-messrad-en.pdf](kuebler-messrad-en.pdf):
+  wheel No.123 natural rubber 60 Shore A, 100 ±0.1 mm circumference,
+  Ø31.83 ±0.025, 9.5 tread / 14.5 overall, bore 6 H7, hub Ø16.5, end
+  land 0.75, M4×6 ISO4029 at 2.5 from the hub end; not a stock type.
+  Supplementary [kuebler-messradsysteme-2025.pdf](kuebler-messradsysteme-2025.pdf) archived.
+- **Autonics E40S6-1024-6-L-5** — current EN product manual
+  TCD210019AD 2025-07-21 archived as [autonics-e40s-datasheet-2025.pdf](autonics-e40s-datasheet-2025.pdf)
+  (plus [autonics-e40s-2dcad.zip](autonics-e40s-2dcad.zip)). Confirms Ø6 shaft,
+  1024 P/R, line driver A,Ā,B,B̄,Z,Z̄, 5 VDC ±5%, 300 kHz, 5000 rpm,
+  0.00392 Nm starting torque, 3-M3 DP5 on PCD30, pilot Ø20, body
+  Ø40×31, shaft 15 + pilot 5 (tip 20 from face), flat 5 across × 10.
+  **FLAG:** the manual's shaft tolerance **Ø6 −0.004/−0.016**
+  (5.984–5.996 mm) supersedes the F-20 catalogue transcription
+  5.985–5.990 in `shared/measurement_spec.hpp`, and the pilot minimum
+  becomes −0.021 vs the recorded 0.02; neither changes the M201 plate
+  check (pilot maximum stays 20.000). spec.hpp deliberately not edited.
