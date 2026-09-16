@@ -348,6 +348,18 @@ GBP 4.98. Both observed 2026-09-13.
   observed 2026-09-16. Free/un-sprung diameter 11 mm; the selected TR-RR01
   remains the SEEGER A12 identity — using this part requires an approved
   change record and the groove-fit check of the audit record.
+- **Priced encoder alternatives (observed 2026-09-16, automation24):**
+  the selected Autonics E40S6-1024-6-L-5 has no observed public price.
+  Automation24 lists two in-stock ifm magnetic 1024 PPR Ø6 mm shaft
+  alternatives: RU3100
+  ([page](https://www.automation24.com/incremental-encoder-ifm-electronic-ru3100))
+  EUR 185.50 ex VAT (RRP 206.10, −10%), M12 5-pole; RUP500 with synchro
+  flange and display
+  ([page](https://www.automation24.com/incremental-encoder-ifm-electronic-rup500))
+  EUR 255.50 ex VAT (RRP 283.90, −10%), item 102715, M12 8-pole. Both are
+  HTL/TTL 50 mA with factory setting 1024. Substitution requires an
+  approved change record plus the M201 flange/pilot and IF-B01 input-level
+  re-check.
 - No public catalogue page publishes a delivered-to-Tunisia (sous-douane)
   USD price for any line; that pricing only exists as a freight-forwarder /
   broker quotation. The consolidated RFQ step for that quotation is

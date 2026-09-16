@@ -37,6 +37,9 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | UT 4 3044131 | 12 | EUR 2.29 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3044131-continuity-8-2-mm-screws-grey-1-pc-s-744402.html) |
 | 3046032 fuse serial terminal (5×20) | 1 | EUR 7.99 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3046032-fuse-serial-terminal-6-2-mm-screws-black-1-pc-s-744510.html) |
 | Lapp Skintop MS-M 20 EMC 53112532 | 2 | EUR 17.99 | [conrad.com](https://www.conrad.com/en/p/lapp-53112532-cable-gland-emc-m20-brass-brass-1-pc-s-1601941.html) |
+| Encoder alternative: ifm RU3100 (Ø6, 1024, TTL/HTL) | 2 | EUR 185.50 | [automation24.com](https://www.automation24.com/incremental-encoder-ifm-electronic-ru3100) |
+| Encoder alternative: ifm RUP500 (Ø6 synchro, 1024, display) | 2 | EUR 255.50 | [automation24.com](https://www.automation24.com/incremental-encoder-ifm-electronic-rup500) |
+| M5×16 DIN 912 A2-70 socket screws, 50 pcs | 1 box | EUR 13.99 | [conrad.com](https://www.conrad.com/en/p/swg-9451667-allen-screws-m5-16-mm-hex-socket-allen-din-912-stainless-steel-a2-50-pc-s-1205329.html) (general hardware; the F0 motor/stage joints need class 10.9 — buy 10.9 separately) |
 
 ## Open — click and take the cheapest in-stock offer
 
