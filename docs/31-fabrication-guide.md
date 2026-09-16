@@ -58,7 +58,7 @@ accepted):**
 | E-stop | 3SU1851-0NB00-2AC2 | 1 (EUR 110.70 observed) |
 | Guard lock / actuator | SLC-F-024-20/20-R4 6018200007 / ACF-1 3911742391 | 1 / 1 (EUR 143.50 / 17.90 observed) |
 | Contactor | LC1D12BD | 3 (EUR 70.40 observed) |
-| Fuse link | DF2CN2 | 1 |
+| Fuse link | DF2CN02 | 1 |
 | Fuse holder | DF2CA-class 10×38 (confirm identity) | 1 |
 | 24 V supply | 6EP3332-7SB00-0AX0 | 1 |
 | Pico | Raspberry Pi Pico 2 SC1631 | 1 (USD 5.00 observed) |
@@ -170,7 +170,7 @@ with raw data retention.
   measured bore.
 - Guard safety distance, aperture treatment and risk assessment must be
   signed off before first guarded movement (docs/26 §6, docs/28 §2.2).
-- The XPS fuse is DF2CN2 (2 A) — a 10 A link does not protect the 5 A
+- The XPS fuse is DF2CN02 (2 A) — a 10 A link does not protect the 5 A
   DC-1 relay outputs (docs/22 §11.3).
 - LC1D12BD DC switching duty is unconfirmed: obtain the manufacturer DC
   utilization answer before relying on the three-pole series arrangement.

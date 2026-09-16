@@ -103,7 +103,7 @@ currency, freight/duty terms, lead time and validity.
 | TR-P01 | STEPPERONLINE LE-350-36 ×1 | Same as above |
 | TR-RR01 | SEEGER A12 DIN471 ×8 | Any SEEGER-ORBIS distributor; the archived catalogue governs geometry |
 | Standard hardware (TR-K01; all TR-FB*/TR-FW*/TR-FD*/ME-FB*/ME-FW* rows; the ISO4762/ISO4032/ISO7092/DIN913/DIN929 rows of the mechanism BOM) | Class-specified standard parts, purchase from a traceable industrial fastener/hardware supplier | Commodity purchase-to-requirement; record certificate and lot at receipt |
-| CT-FSR01 | Schneider DF2CN2 ×1 (se.com blocks automated retrieval) | Purchase with the CB-FUSE-HOLDER selection; record the maker page at order time |
+| CT-FSR01 | Schneider DF2CN02 ×1 | EUR55.99/10 incl VAT (Conrad, 60 sets in stock, 2026-09-16); holder and coordination before purchase |
 | CT-PS36 | 6EP3332-7SB00-0AX0 ×1 | Record the distributor page at order time |
 | CT-IF-U1 / CT-IF-U2-U3 | Exact USB-isolator/interface identities per selected-controls.csv | Confirm availability before the board order |
 
@@ -260,7 +260,7 @@ All remaining warnings, honesty boundaries and physical holds in one place:
    unvalidated.
 4. **Electrical.** Cabinet energisation is prohibited until every docs/22
    §10 hold has evidence; the LC1D12BD DC duty answer is outstanding; the
-   XPS fuse is DF2CN2 (2 A), never 10 A.
+   XPS fuse is DF2CN02 (2 A), never 10 A.
 5. **Fabrication.** Torque values are not published for M5/M10 joints
    (preload study pending); bearing seats are matched to measured bores;
    the blade pair is purchase-to-drawing and edge-unqualified.
