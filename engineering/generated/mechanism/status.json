@@ -16,7 +16,7 @@
   "wheel_contact_force_n":10,
   "minimum_moving_head_to_mechanism_X_gap_mm":3,
   "wire_envelope_common_mm3":0,
-  "scope":"head,two cassettes,two pressure carriers,two wire guides,measuring module,bed,welded frame,R2 guard/payoff selections with 6204 bearing pockets;cabinet and safety functions not modelled",
+  "scope":"head,two cassettes,two pressure carriers,two wire guides,measuring module (one of two;the mirror is not modeled),bed,welded frame,R2 guard/payoff selections with 6204 bearing pockets;cabinet and safety functions not modelled",
   "cross_subsystem_static_intersections_checked":true,
   "external_wire_route_checked":true,
   "guard_door_kinematics_validated":false,

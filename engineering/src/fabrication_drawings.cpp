@@ -414,7 +414,7 @@ void payoffSpindle(const fs::path& out) {
 }
 void payoffPlates(const fs::path& out) {
     const auto path=out/"P004-P007-R2-payoff-plates.svg";std::ofstream s(path);
-    s<<std::setprecision(10);begin(s,"P004/P005/P006 — PAYOFF POSTS AND BRAKE DISC / R2");
+    s<<std::setprecision(10);begin(s,"P001/P003/P004/P005/P006 — PAYOFF PLATES / R2");
     const double x=85,y=105;
     s<<"<rect class='edge' x='40' y='55' width='70' height='18'/>\n";
     circle(s,x,y,23.5);circle(s,x,y,10.25,"centre");circle(s,x,y,11.25,"dim");
@@ -440,12 +440,19 @@ void payoffPlates(const fs::path& out) {
     text(s,258,124,"bracket per docs/26 §3 (pads/spring");
     text(s,258,132,"purchase-to-requirement);no machining");
     text(s,258,140,"tolerances are released on this sheet.");
+    text(s,258,156,"SPOOL P001: two S235JR flanges Ø400 x3,");
+    text(s,258,164,"bore Ø20.5 +0.2/0, laser-cut, welded to a");
+    text(s,258,172,"Ø60x2.5 ERW hub tube 160 long; hub passes");
+    text(s,258,180,"through both flanges (welded joint); paint.");
+    text(s,258,196,"BASE P003: S235JR 430x560x8; four Ø13");
+    text(s,258,204,"anchor holes at 340x470 spacing; edges");
+    text(s,258,212,"deburred; posts welded to the top face.");
     line(s,8,222,412,222);
     text(s,14,231,"PROCESS: cut blanks;mill pockets/bore to the common datum;weld posts to base with a fixture holding both posts");
     text(s,14,239,"coaxial;stress-relieve;re-check pocket positions after welding.INSPECT: pocket Ø47 H7, coaxiality of the");
     text(s,14,247,"two posts ≤0.1 after welding;disc bore and faces.ASSEMBLY: press 6204 bearings;insert spindle.");
     line(s,8,264,412,264);line(s,235,264,235,289);
-    text(s,14,274,"PARTS P004 · P005 · P006 (P007 reference)",4);
+    text(s,14,274,"PARTS P001 · P003 · P004 · P005 · P006 (P007 reference)",4);
     text(s,14,282,std::string(starz::mechanism::revision),3.2);
     text(s,241,274,"SCALE1:1 / DIMENSION RECORD",3);
     text(s,241,282,"RELEASE HOLD: weld quality and load validation;not fabricated",3);

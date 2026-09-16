@@ -2,7 +2,7 @@
 
 ## 1. Selected parts and actual drawing dimensions
 
-One module upstream and one downstream. Each retains **Kübler 8.0000.3123.0006**, **Autonics E40S6-1024-6-L-5**, the encoder's supplied Ø6 coupling, and **two SKF 626-2Z** shaft-support bearings. The wheel load belongs on its own bearings, not on the encoder shaft.
+One module upstream and one downstream. Each retains **Kübler 8.0000.3123.0006**, **Autonics E40S6-1024-6-L-5**, the encoder's supplied Ø6 coupling, and **two SKF 626-2Z** shaft-support bearings. The wheel load belongs on its own bearings, not on the encoder shaft. The mechanism CAD additionally models, per module, one 626 as the fork counter-roller (outer ring runs on the wire underside) and two 626 as the arm pivot bearings: **five 626 per module, ten across the two modules** (ME-B01 quantity 10, 2026-09-16). The CAD models one representative module; the second is its mirror and is not modeled.
 
 | Interface | Current definition | Source |
 |---|---|---|

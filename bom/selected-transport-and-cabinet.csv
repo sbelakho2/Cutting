@@ -19,7 +19,7 @@ TR-FD02,16,standard,ISO8734 3m6x20 hardened_steel,,,not_observed,match_locating_
 TR-FB03,32,standard,ISO4762 M3x8 class8.8,,,not_observed,F103_cover_to_F112
 ME-W01,2,Kuebler,8.0000.3123.0006,https://www.kuebler.com/,,not_observed,100plusminus0.1mm_free_circumference;9.5tread;14.5overall;6H7bore;60ShoreA;No123M4x6ISO4029
 ME-E01,2,Autonics,E40S6-1024-6-L-5,https://www.autonics.com/us/model/E40S6-1024-6-L-5,,not_observed,5V_differential1024PPR;shaft5.985to5.990;tip20fromface;3M3PCD30;supplied6mm_coupling
-ME-B01,4,SKF,626-2Z,https://www.simplybearings.co.uk/products/626-2z-skf,6.07,GBP4.49_observed_2026-09-13_converted_ECB_2026-09-11_1.3508_GBPUSD_NOT_USD_quote,6x19x6;CN;two bearings per measuring-wheel shaft
+ME-B01,10,SKF,626-2Z,https://www.simplybearings.co.uk/products/626-2z-skf,6.07,GBP4.49_observed_2026-09-13_converted_ECB_2026-09-11_1.3508_GBPUSD_NOT_USD_quote,6x19x6;CN;five per module (2 shaft + 1 counter-roller + 2 pivot); two modules
 ME-FB01,6,standard,ISO4762 M3x10 class8.8,,,not_observed,M201_encoder_plate;3.5nominal_engagement;encoder_thread_torque_limit_pending
 ME-FW01,6,standard,ISO7092 M3 200HV 3.2x6x0.5,,,not_observed,M201_encoder_plate_reduced_ODwasher
 TH-C01,1,Rittal,SK3303.500,https://www.rittal.com/uk-en/products/PG20231215KLI101/PG20231215KLI103/PRO136367?variantId=3303500,,not_observed,230V50Hz;280W L35/L50;original mounting template archived

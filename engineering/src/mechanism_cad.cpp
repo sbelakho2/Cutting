@@ -142,7 +142,7 @@ Evaluation evaluate(double d,double carrier_p,double arm_p,bool shift_bushing,bo
               <<"  \"carried_mass_estimate_kg\":"<<mass<<",\n  \"carrier_adjuster_protrusion_mm\":"<<p<<",\n  \"carrier_spring_length_mm\":"<<cs.spring_length_mm<<",\n  \"carrier_spring_force_n\":"<<cs.spring_force_n<<",\n  \"nip_preload_per_nip_n\":"<<cs.nip_force_n<<",\n"
               <<"  \"arm_adjuster_protrusion_mm\":"<<ap<<",\n  \"arm_spring_length_mm\":"<<as.spring_length_mm<<",\n  \"wheel_contact_force_n\":"<<as.wheel_force_n<<",\n"
               <<"  \"minimum_moving_head_to_mechanism_X_gap_mm\":"<<gap<<",\n  \"wire_envelope_common_mm3\":"<<wire_common<<",\n"
-              <<"  \"scope\":\"head,two cassettes,two pressure carriers,two wire guides,measuring module,bed,welded frame,R2 guard/payoff selections with 6204 bearing pockets;cabinet and safety functions not modelled\",\n"
+              <<"  \"scope\":\"head,two cassettes,two pressure carriers,two wire guides,measuring module (one of two;the mirror is not modeled),bed,welded frame,R2 guard/payoff selections with 6204 bearing pockets;cabinet and safety functions not modelled\",\n"
               <<"  \"cross_subsystem_static_intersections_checked\":true,\n  \"external_wire_route_checked\":true,\n  \"guard_door_kinematics_validated\":false,\n  \"guard_safety_function_validated\":false,\n  \"payoff_selection_complete\":false,\n  \"payoff_rotation_validated\":false,\n  \"step_readback\":true,\n  \"frame_integrated\":true,\n  \"full_machine_integrated\":false,\n  \"physical_results\":false,\n  \"fabrication_released\":false\n}\n";
         status.close();
         if(!status)throw std::runtime_error("Mechanism status output failed");

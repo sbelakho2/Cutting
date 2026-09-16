@@ -6,11 +6,11 @@ CB-K1-K3,3,Schneider Electric,TeSys Deca LC1D12BD,bom/selected-controls.csv,sele
 CB-KA1-KA10,10,Phoenix Contact,PLC-RSC-24DC/21 2966171,bom/selected-controls.csv,selected_load_and_interface_review_open,Isolated field/alarm contact relays for J10/J11 pairs
 CB-KSR1,1,Phoenix Contact,PLC-RSC-24DC/21 2966171,bom/selected-controls.csv,proposed_reset_interposing_relay,Separate reset/EDM relay; safety-function suitability is not established
 CB-XPS-FUSE,1,Schneider Electric,DF2CN2,bom/selected-controls.csv,identified_XPS_output_fuse_link,10 x 38 mm 2 A gG fuse link for the XPS output (corrected from 10 A; docs/22 11.3); holder and coordination per CB-FUSE-HOLDER
-CB-TB24-01,12,Phoenix Contact,PT 2,5 3209510,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,24 V PELV distribution terminals; feeds IF-B01 J3-1; branch protection per docs/22 11.4
-CB-TB24-02,12,Phoenix Contact,PT 2,5 3209523,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,0 V PELV distribution terminals (blue); feeds IF-B01 return pins and isolated contact commons
-CB-TB24-03,4,Phoenix Contact,PT 2,5 3209523,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,5 V logic distribution terminals; feeds IF-B01 J3-3
+CB-TB24-01,12,Phoenix Contact,"PT 2,5 3209510",docs/22-controls-and-wiring.md,selected_identity_energisation_gated,24 V PELV distribution terminals; feeds IF-B01 J3-1; branch protection per docs/22 11.4
+CB-TB24-02,12,Phoenix Contact,"PT 2,5 3209523",docs/22-controls-and-wiring.md,selected_identity_energisation_gated,0 V PELV distribution terminals (blue); feeds IF-B01 return pins and isolated contact commons
+CB-TB24-03,4,Phoenix Contact,"PT 2,5 3209523",docs/22-controls-and-wiring.md,selected_identity_energisation_gated,5 V logic distribution terminals; feeds IF-B01 J3-3
 CB-TB-DL,1,Wago,282-364,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,10 x 38 fused terminal for +24V_DRVLOGIC common-anode branch; fuse link rating 1 A gG to be confirmed with the measured drive-logic load
-CB-TB-S,8,Phoenix Contact,PT 2,5 3209510,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,Dedicated separated terminal group for E-stop/guard channel field wiring
+CB-TB-S,8,Phoenix Contact,"PT 2,5 3209510",docs/22-controls-and-wiring.md,selected_identity_energisation_gated,Dedicated separated terminal group for E-stop/guard channel field wiring
 CB-TB-M1-M3,12,Phoenix Contact,UT 4 3044131,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,K1/K2/K3 DC branch terminations; DC fault fusing and discharge design per docs/22 11.2
 CB-PE-BAR,1,Phoenix Contact,"UT 4-PE 3044128 plus 10x3 copper PE rail",docs/22-controls-and-wiring.md,selected_pending_part_number_confirmation,Protective-earth bar and bonding set; confirm part numbers at purchase; PE continuity test at commissioning
 CB-ENC-ENTRY,2,Lapp,"Skintop MS-M 20x1.5 EMC (confirm order code)",docs/22-controls-and-wiring.md,selected_pending_part_number_confirmation,Screened encoder cable entry; screen bonds at PE entry only; gland code confirmed at purchase

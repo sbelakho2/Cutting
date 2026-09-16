@@ -87,15 +87,18 @@ currency, freight/duty terms, lead time and validity.
 
 | BOM rows | Exact request | Decision basis |
 |---|---|---|
-| TR-AX01 | HIWIN KK8610P340A1F0, article 10.00026, ×2; request from two independent HIWIN distributors (e.g., regional HIWIN sales office and a second authorized distributor); also request the KK86 accessories needed (none selected beyond the axis) | Compare against the R1/R2 architecture cost and lead time; keep the axis unsubstituted unless a change record approves |
-| TR-CP01 | R+W MK2/100/50/10/12 ×2 and MK2/100/50/8/14 ×2 (exact ordering codes per [catalogue evidence](../engineering/sources/catalogue-evidence.md) and archived [ordering page](../engineering/sources/rw-mk2-ordering.png)); rw-couplings.com shop reached but prices are not server-rendered; request from R+W or a distributor | Hub bore pairs and lengths must match the motor flats and shaft diameters; no substitute without a change record |
+| TR-AX01 / AX-01 | HIWIN KK8610P340A1F0, article 10.00026, ×2; request from two independent HIWIN distributors (e.g., regional HIWIN sales office and a second authorized distributor); also request the KK86 accessories needed (none selected beyond the axis) | Compare against the R1/R2 architecture cost and lead time; keep the axis unsubstituted unless a change record approves |
+| TR-CP01 / CP-01 | R+W MK2/100/50/10/12 ×2 and MK2/100/50/8/14 ×2 (exact ordering codes per [catalogue evidence](../engineering/sources/catalogue-evidence.md) and archived [ordering page](../engineering/sources/rw-mk2-ordering.png)); rw-couplings.com shop reached but prices are not server-rendered; request from R+W or a distributor | Hub bore pairs and lengths must match the motor flats and shaft diameters; no substitute without a change record |
 | ME-W01 | Kübler measuring wheel 8.0000.3123.0006 ×2 | Compare any distributor offer against the alternative of keeping the archived wheel; the 100±0.1 mm circumference claim stays unverified until receipt |
 | ME-E01 | Autonics E40S6-1024-6-L-5 ×2 | Request from an Autonics distributor; no public price was observed |
 | TH-C01 | Rittal SK3303.500 ×1 | Request from a Rittal distributor; confirm the 230 V 50 Hz variant |
 | TR-D01 | STEPPERONLINE CL57T-V41 ×2 | Direct shop price visible to a human; record it at purchase time (site blocks automated retrieval) |
 | TR-P01 | STEPPERONLINE LE-350-36 ×1 | Same as above |
 | TR-RR01 | SEEGER A12 DIN471 ×8 | Any SEEGER-ORBIS distributor; the archived catalogue governs geometry |
-| Standard fasteners (all TR-FB*/TR-FW*/TR-FD*/ME-FB*/ME-FW* rows) | ISO4762/7092/8734 class-specified, purchase from a traceable industrial fastener supplier | Commodity purchase-to-requirement; record certificate and lot at receipt |
+| Standard hardware (TR-K01; all TR-FB*/TR-FW*/TR-FD*/ME-FB*/ME-FW* rows; the ISO4762/ISO4032/ISO7092/DIN913/DIN929 rows of the mechanism BOM) | Class-specified standard parts, purchase from a traceable industrial fastener/hardware supplier | Commodity purchase-to-requirement; record certificate and lot at receipt |
+| CT-FSR01 | Schneider DF2CN2 ×1 (se.com blocks automated retrieval) | Purchase with the CB-FUSE-HOLDER selection; record the maker page at order time |
+| CT-PS36 | 6EP3332-7SB00-0AX0 ×1 | Record the distributor page at order time |
+| CT-IF-U1 / CT-IF-U2-U3 | Exact USB-isolator/interface identities per selected-controls.csv | Confirm availability before the board order |
 
 Every row above remains a `HOLD-`/unpriced line until its quotation and
 incoming inspection are recorded; none may be substituted silently.
