@@ -499,3 +499,36 @@ Detailed record: [mechanical-documents-findings.md](mechanical-documents-finding
   5.985–5.990 in `shared/measurement_spec.hpp`, and the pilot minimum
   becomes −0.021 vs the recorded 0.02; neither changes the M201 plate
   check (pilot maximum stays 20.000). spec.hpp deliberately not edited.
+
+## Electrical document gates — manufacturer documents retrieved 2026-09-16
+
+Detailed record: [electrical-documents-findings.md](electrical-documents-findings.md).
+
+- **Schneider LC1D12BD DC utilisation** — TeSys Deca catalogue
+  MKTED210011EN (2026) archived as
+  [schneider-tesys-deca-catalogue-2026.pdf](schneider-tesys-deca-catalogue-2026.pdf),
+  page extract [schneider-tesys-dc-tables-fuse-carriers.pdf](schneider-tesys-dc-tables-fuse-carriers.pdf).
+  Pages A5/120–121: 3 poles in series, DC-1 and DC-2..5 rated operational
+  current **20 A at ≤75 V** → the 36/60 V branches at 5.8/9.7 A are
+  covered with 3.45×/2.06× margin; load L/R ≈0.1–0.3 µs ≪ 1 ms.
+  CT-K1-K3 / CB-K1-K3 → `selected_DC_duty_qualified`.
+- **Bernstein SLC-F-024-20/20-R4 + ACF-1 mounting** — Bernstein manual
+  0800000865 (2022-07-12) archived as
+  [bernstein-slc-installation-manual-0800000865.pdf](bernstein-slc-installation-manual-0800000865.pdf)
+  and datasheet 6018200007 as
+  [bernstein-slc-f-024-20-20-r4-datasheet.pdf](bernstein-slc-f-024-20-20-r4-datasheet.pdf).
+  Geometry: 30 × 192 × 44 mm, 4 × M5 (Ø5.4 holes, rows 161.6 mm / columns
+  22 mm), 3 × M20×1.5, flat surface, alignment X/Y 29 + 3, 2 mm overtravel
+  (stop 0.2–2 mm), ACF-1 approach radius ≥400 mm. G106 drilling pattern
+  documented in docs/26 §2; the physical fit check stays.
+- **Schneider 10×38 DIN-rail fuse base** — same catalogue, pages B4/4 +
+  B4/10–11: the base accepting DF2CN/DF2BA 10×38 links is **DF101**
+  (1P, Ith 32 A, Ui 690 V, IP20, 17.5 mm, padlockable; family DF101N/DF102/
+  DF103, LED variants DF101V…DF103NV). Price not observed; recorded as the
+  confirmed catalogue identity (ledger gate 38) — the design keeps the
+  priced 5×20 CB-XPS-FUSE solution (docs/22 §11.3).
+- **Siemens 6EP3332-6SB00-0AY0** — official data sheet archived as
+  [siemens-6ep3332-6sb00-0ay0-datasheet.pdf](siemens-6ep3332-6sb00-0ay0-datasheet.pdf):
+  24 V/2.5 A, overload 150 % (3.75 A) typ. 200 ms, short-circuit
+  constant-current 3.2 A, mains buffering 40 ms, inrush limit 52 A / I²t
+  ≤3 A²s — inputs for the 24 V branch coordination (docs/22 §11.1).

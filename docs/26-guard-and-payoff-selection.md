@@ -29,9 +29,11 @@ dimensions (they were verified against the 1.2/4.5 mm wire route and the
 4. a friction-brake design with a catalogue spring and a brake disc;
 5. a documented static load envelope for the payoff assembly.
 
-R2 does **not** provide the Bernstein mounting-hole geometry, the safety
-distance calculation, a completed risk assessment, or measured static/runaway
-loads. Those remain gated in section 6.
+R2 records the Bernstein mounting geometry from the manufacturer documents
+retrieved 2026-09-16 (below), but does **not** provide the drilled G106
+pattern in CAD, the safety distance calculation, a completed risk
+assessment, or measured static/runaway loads. Those remain gated in
+section 6.
 
 ## 2. Enclosure selections
 
@@ -46,7 +48,7 @@ not finger-safe openings**; their safety treatment is a hold.
 | G103 | Rear panel | DC01 steel sheet, 2 mm, powder-coated RAL 7035 | Fixed panel; bolted to frame |
 | G104 | Roof | DC01 steel sheet, 2 mm, powder-coated RAL 7035 | Fixed panel |
 | G105 | Front door | 5 mm clear polycarbonate (Makrolon-class) door panel in a 20×20×2 S235JR steel tube door frame | Visibility plus impact resistance; PC grade/impact verification is a hold |
-| G106 | Lock mounting plate | S235JR plate, 5 mm, welded to the door frame jamb | Drilling pattern pending the Bernstein SLC mounting drawing; do not drill from the bounding box |
+| G106 | Lock mounting plate | S235JR plate, 5 mm, welded to the door frame jamb | Manufacturer drawing retrieved 2026-09-16 (Bernstein 0800000865 p.8, archived `bernstein-slc-installation-manual-0800000865.pdf`): 4×M5 fixing (Ø5.4 clearance holes) on the 30×192 mm face, rows 161.6 mm apart / 15.2 mm from the 192 mm ends, columns 22 mm apart; flat surface, any orientation. Transfer the exact coordinates from the archived drawing to the G106 sheet before drilling — do not drill from the bounding box |
 
 Door hardware (not fabricated, no supplier SKU is claimed):
 
@@ -54,10 +56,15 @@ Door hardware (not fabricated, no supplier SKU is claimed):
   purchase-to-requirement from a traceable industrial hardware supplier;
 - 1 × door handle (non-safety) for operator grip;
 - the Bernstein ACF-1 actuator mounts on the door, the SLC-F-024-20/20-R4
-  body mounts on the G106 plate; the 0.5 mm CAD pocket clearance is geometry
-  only. Actual actuator insertion depth, misalignment tolerance and locking
-  travel require the manufacturer's mounting documentation and a physical fit
-  check.
+  body (30 × 192 × 44 mm, 4 × M5, IP67, 3 × M20×1.5 entries) mounts on the
+  G106 plate on a flat surface in any orientation (Bernstein manual
+  0800000865 and datasheet 6018200007, archived 2026-09-16); ACF-1
+  (3911742391) requires an approach radius ≥400 mm, the actuator-to-head
+  alignment window is 29 + 3 mm in X/Y and a 2 mm overtravel remains with
+  the guard stop set inside 0.2–2 mm; no lateral force may act on the head;
+  the 0.5 mm CAD pocket clearance is geometry only. Actual actuator
+  insertion depth, misalignment tolerance and locking travel still require
+  a physical fit check.
 
 Panel fasteners: M6×12 class 8.8 button-head screws with M6 washers into
 M6 rivet nuts or weld nuts on the frame at ≤200 mm pitch (final pattern is a
@@ -134,7 +141,8 @@ Using the blank
 
 1. task-specific risk assessment: cutting, wire release, entanglement,
    ejection, access, maintenance, loading, loss of power, emergency egress;
-2. Bernstein SLC/ACF-1 manufacturer mounting documentation, physical fit
+2. Bernstein SLC/ACF-1 manufacturer mounting documentation
+   (**retrieved and archived 2026-09-16** — §2), physical fit
    check and locking-travel verification;
 3. full-spool mass, spindle deflection, weld quality, brake adjustment and
    runaway/overspeed measurements;

@@ -369,8 +369,10 @@ named physical/manufacturer step):
   fabricator confirmation for its panel, stack-up, footprint and assembly
   constraints; bare-board inspection, assembly and recorded fixture evidence;
 2. confirmed `LC1D12BD` DC utilisation/rated switching duty for the exact
-   36/60 V three-series-pole loads, plus measured switching behavior
-   (desk part done — §11.1 — awaiting the manufacturer datasheet answer);
+   36/60 V three-series-pole loads — **QUALIFIED 2026-09-16 from the
+   TeSys Deca catalogue (§11.1: 20 A at ≤75 V in DC-1 and DC-2..5,
+   margins 2.06×/3.45×)** — plus measured switching behavior
+   (physical, §8.5);
 3. DC branch fuse/holder identity (desk part CLOSED 2026-09-16 — §11.4: the
    5.8/5.8/9.7 A power branches stay on the K1/K2/K3 contactors plus the
    LE-350 overload protection, and the three drive-logic feeds get 3046032
@@ -415,18 +417,50 @@ commissioning measurement. The 24 V control load total is the sum of the
 two contactor coils (2 × 5.4 W = 0.45 A), the XPSUAF, IF-B01 and HMI — the
 exact total is verified against the final schematic before fusing.
 
-**DC switching duty of K1–K3 — unresolved manufacturer enquiry.** The
-LC1D12BD datasheet is not archived in this repository and se.com blocks
-automated retrieval (2026-09-13/15). Required from Schneider before any
-release: DC utilization data for three main poles in series at 36/60 V,
-branch currents 5.8/9.7 A, load time constant (driver input capacitance ≈
-hundreds of µF plus cable inductance — to be stated in the enquiry),
-switching frequency and breaking duty. Until that data exists, the rows
-stay `selected_DC_duty_unqualified`. Documented alternatives if the DC duty
-is inadequate: a DC-rated contactor (e.g., a Schneider DC switching series
-identity to be selected from the current catalogue), or a semiconductor
-disconnect with a series mechanical isolation contact — both require a
-change record and a repeat of this calculation.
+**DC switching duty of K1–K3 — manufacturer data retrieved 2026-09-16.**
+The current Schneider TeSys Deca catalogue (MKTED210011EN, 2026 edition)
+is archived as `schneider-tesys-deca-catalogue-2026.pdf` (page extract
+`schneider-tesys-dc-tables-fuse-carriers.pdf`). Pages A5/120–121 give the
+rated operational currents of the LC1D12 for DC utilisation, poles in
+series, ambient ≤60 °C:
+
+- DC-1 (L/R ≤ 1 ms): 24 V 20 A, 48/75 V 20 A, 125 V 20 A, 250 V 20 A,
+  300 V 4 A (1/2/3 poles: 125 V = 4/20/20 A, 250 V = 1/4/20 A,
+  300 V = –/–/4 A);
+- DC-2 to DC-5 (L/R ≤ 15 ms): 24 V 20 A, 48/75 V 20 A, 125 V 20 A,
+  250 V 8 A, 300 V 2 A (1/2/3 poles: 125 V = 2/20/20 A,
+  250 V = 0.5/2/8 A).
+
+Applied to the branches with three poles in series: 36 V and 60 V are both
+inside the 48/75 V row, so the rated operational current is **20 A** in
+DC-1 and DC-2..5 → margins **20/9.7 = 2.06×** (K3, 36 V) and
+**20/5.8 = 3.45×** (K1/K2, 60 V). The load time constant is far inside the
+DC-1 envelope: cable inductance (µH/m scale) against the 3.7 Ω (36 V) /
+10.3 Ω (60 V) branch resistance gives L/R ≈ 0.1–0.3 µs ≪ 1 ms, and the
+DC-2..5 row covers up to 15 ms regardless. The driver-input capacitance
+affects the make (capacitor-charge inrush, LE-350 soft-start limited),
+not the break L/R. Catalogue caveat carried over: DC currents below the
+table values can reduce electrical durability below the IEC 60947-4-1
+figures (critical current) — at 5.8/9.7 A vs the 20 A table value the
+contact durability, like the measured K1/K2/K3 opening behaviour (§8.5),
+stays a commissioning check. **Verdict: the 3-pole-series arrangement
+covers the 36/60 V duty per the TeSys Deca DC tables; CT-K1-K3/CB-K1-K3
+move to `selected_DC_duty_qualified`.** Documented alternatives if the DC
+duty were inadequate (contingency only, not triggered): a DC-rated
+contactor (e.g., a Schneider DC switching series identity to be selected
+from the current catalogue), or a semiconductor disconnect with a series
+mechanical isolation contact — both require a change record and a repeat
+of this calculation.
+
+**24 V branch coordination inputs (2026-09-16).** The Siemens
+6EP3332-6SB00-0AY0 official datasheet is now archived
+(`siemens-6ep3332-6sb00-0ay0-datasheet.pdf`): output 24 V/2.5 A adjustable
+22.2–26.4 V, overload capability 150 % (3.75 A) typical for 200 ms,
+short-circuit constant-current limit 3.2 A, mains buffering 40 ms (at
+Vin 187 V), inrush limit 52 A / I²t ≤3 A²s, 89.6 % efficiency / 7 W loss,
+derating 2 %/K above 55 °C. The 2 A 5×20 XPS-output link and the TB24-01
+distribution sit inside the 3.2 A constant-current ceiling; prospective
+fault coordination remains a commissioning measurement.
 
 ### 11.2 Regeneration and discharge (calculated, assumptions stated)
 
@@ -472,7 +506,13 @@ Equivalence reasoning: the DF2CN02 2 A gG 10×38 link and the 522620 2 A T
 T characteristic is the IEC 60127 counterpart of the gG overload class, and
 the 250 V DC link voltage exceeds the 24 V DC circuit with a wide margin.
 The 10×38 holder is no longer required and the `HOLD-FUSE-HOLDER` rows are
-removed. The identity change is recorded in
+removed. The Schneider DIN-rail 10×38 holder identity is nevertheless now
+confirmed from the archived TeSys catalogue (pages B4/4, B4/10–11):
+**DF101** (1 pole, Ith 32 A, Ui 690 V, IP20, 17.5 mm wide on 35 mm DIN
+rail, padlockable; family DF101N/DF102/DF103, LED variants
+DF101V…DF103NV). It is recorded as the confirmed catalogue identity for
+the ledger gate (row CB-FUSE-HOLDER, superseded, not procured) and is not
+reintroduced: the design keeps the priced 5×20 solution above. The identity change is recorded in
 [selected-controls.csv](../bom/selected-controls.csv),
 [selected-cabinet-wiring.csv](../bom/selected-cabinet-wiring.csv) and
 [sourcing-evidence.csv](../bom/sourcing-evidence.csv). Prospective
@@ -546,8 +586,10 @@ Closed from the desk: branch current sizing, regen non-issue with numbers,
 discharge estimate + bleed proposal, XPS fuse correction (2 A) and its
 5×20 holder closure, the AC incoming identity (iC60N 2P C10 + iID 2P 25 A
 30 mA), the DC branch-protection decision, wiring schedule, PE sizing,
-enclosure thermal margin. Left open by nature: LC1D12BD DC duty
-(manufacturer enquiry), the unpriced incoming MCB (confirm at purchase),
+enclosure thermal margin. Left open by nature: the measured K1/K2/K3 DC
+switching behavior and contact durability (the catalogue duty is qualified
+in §11.1; the critical-current note and §8.5 measurements remain),
+the unpriced incoming MCB (confirm at purchase),
 measured bus decay, prospective fault and stop-time measurements,
 risk-assessment sign-off, and the physical build itself (§10 holds 1–8
 remain).
