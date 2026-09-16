@@ -73,6 +73,11 @@ comparison boundaries.
 | TR-W01 | SKF MB 2 (×8) | GBP 2.15 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/mb2-skf) |
 | MC-B03 | SKF 6204-2Z/C3 (×2, payoff spindle) | GBP 8.68 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/6204-2z-c3-skf) |
 | CB-PS24 | Siemens LOGO!POWER 6EP3332-6SB00-0AY0, 24 V 2.5 A (item 103609) | EUR 68.60 ex VAT (page RRP 80.60); in stock, dispatch next working day | [automation24.com/logo-power-supply](https://www.automation24.com/logo-power-supply) |
+| TH-C01 | Rittal SK 3303.500 cooler, 230 V 0.55 kW | EUR 1,669.00 incl VAT; 14 in stock | [conrad.com](https://www.conrad.com/en/p/rittal-sk-3303-500-cooler-230-v-0-55-kw-w-x-h-x-d-280-x-550-x-210-mm-1-pc-s-2200714.html) |
+| CB-TB24-01/02/03, CB-TB-S | Phoenix Contact PT 2,5 terminals 3209510 (grey) / 3209523 (blue) | EUR 1.29 each incl VAT; 2794/604 in stock | [3209510](https://www.conrad.com/en/p/phoenix-contact-3209510-continuity-5-2-mm-quick-connect-grey-1-pc-s-733311.html) · [3209523](https://www.conrad.com/en/p/phoenix-contact-3209523-continuity-5-2-mm-quick-connect-blue-1-pc-s-733325.html) |
+| CB-TB-M1-M3 | Phoenix Contact UT 4 3044131 | EUR 2.29 each incl VAT; 289 in stock | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3044131-continuity-8-2-mm-screws-grey-1-pc-s-744402.html) |
+| CB-TB-DL | Phoenix Contact 3046032 fuse serial terminal (5×20) | EUR 7.99 incl VAT; 34 in stock | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3046032-fuse-serial-terminal-6-2-mm-screws-black-1-pc-s-744510.html) |
+| CB-ENC-ENTRY | LAPP Skintop MS-M 20 EMC 53112532 brass gland | EUR 17.99 each incl VAT; 52 in stock | [conrad.com](https://www.conrad.com/en/p/lapp-53112532-cable-gland-emc-m20-brass-brass-1-pc-s-1601941.html) |
 | TR-RR01 alt. | Simply Bearings d1400-012, 12 mm external circlip (DIN471-class) | GBP 0.85 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/d1400-012) |
 
 Quality-equivalent same-designation alternatives were observed on the same

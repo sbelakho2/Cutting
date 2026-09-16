@@ -31,6 +31,12 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | 6EP3332-6SB00-0AY0 | 1 | EUR 68.60 | [automation24.com](https://www.automation24.com/logo-power-supply) item 103609 |
 | Raspberry Pi Pico 2 | 1 | USD 5.00 | recorded |
 | Circlip Ø12 (DIN471-class) | 8 | GBP 0.85 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/d1400-012) |
+| Rittal SK 3303.500 cooler | 1 | EUR 1,669.00 | [conrad.com](https://www.conrad.com/en/p/rittal-sk-3303-500-cooler-230-v-0-55-kw-w-x-h-x-d-280-x-550-x-210-mm-1-pc-s-2200714.html) |
+| PT 2,5 3209510 (grey) | 12+8 | EUR 1.29 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3209510-continuity-5-2-mm-quick-connect-grey-1-pc-s-733311.html) |
+| PT 2,5 3209523 (blue) | 12+4 | EUR 1.29 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3209523-continuity-5-2-mm-quick-connect-blue-1-pc-s-733325.html) |
+| UT 4 3044131 | 12 | EUR 2.29 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3044131-continuity-8-2-mm-screws-grey-1-pc-s-744402.html) |
+| 3046032 fuse serial terminal (5×20) | 1 | EUR 7.99 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3046032-fuse-serial-terminal-6-2-mm-screws-black-1-pc-s-744510.html) |
+| Lapp Skintop MS-M 20 EMC 53112532 | 2 | EUR 17.99 | [conrad.com](https://www.conrad.com/en/p/lapp-53112532-cable-gland-emc-m20-brass-brass-1-pc-s-1601941.html) |
 
 ## Open — click and take the cheapest in-stock offer
 
@@ -45,9 +51,9 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | LE-350-36 | 1 | [stepperonline.com](https://www.omc-stepperonline.com/350w-36v-9-7a-115-230v-switching-power-supply-stepper-motor-cnc-router-kits-le-350-36) |
 | SEEGER A12 (or the GBP 0.85 alternative above) | 8 | SEEGER-ORBIS distributor |
 | DF2CN2 + DF2CA-class holder | 1+1 | [se.com](https://www.se.com/ww/en/product/DF2CN2/) · distributor |
-| Phoenix PT 2,5 (3209510/3209523), UT 4 (3044131), UT 4-PE | per layout | [phoenixcontact.com](https://www.phoenixcontact.com/en-pc/products/terminal-block-pt-25-3209510) · distributor |
-| Wago 282-364 | 1 | [wago.com](https://www.wago.com/global/rail-mounted-terminal-blocks/p/282-364) · distributor |
-| Lapp Skintop MS-M 20×1.5 EMC | 2 | [lapp.com](https://www.lapp.com/) · distributor |
+| Phoenix UT 4-PE + PE rail | per layout | [phoenixcontact.com](https://www.phoenixcontact.com/) · distributor (confirm 3044128) |
+| Wago 282-364 | — | replaced by Phoenix 3046032 above (5×20 instead of 10×38) |
+| Lapp Skintop MS-M 20 EMC | — | priced above (Conrad) |
 | Rittal AE enclosure ≥800×600×210 | 1 | [rittal.com](https://www.rittal.com/) · distributor |
 | H07V-K 0.75/1.0/1.5 mm² + ferrules | set | local electrical wholesaler |
 | ISO4762/7092/4032, DIN913/929, ISO8734 fasteners | per BOM | Bossard / Würth / local |
