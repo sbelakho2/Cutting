@@ -1,17 +1,19 @@
 id,quantity,manufacturer,exact_order,source_record,release_status,function_or_hold
-CB-PS24,1,Siemens,LOGO!POWER 6EP3332-6SB00-0AY0,bom/selected-controls.csv,selected_load_calculation_open,24 V PELV control source; distribution and branch protection require review
-CB-PS05,1,Siemens,LOGO!POWER 6EP3310-6SB00-0AY0,bom/selected-controls.csv,selected_load_calculation_open,5 V logic source to TB24-03 and IF-B01 J3-3; distribution and branch protection require review
+CB-PS24,1,Siemens,LOGO!POWER 6EP3332-6SB00-0AY0,bom/selected-controls.csv,selected_load_calculation_open,24 V PELV control source; distribution and branch protection reviewed in docs/22 11.4
+CB-PS05,1,Siemens,LOGO!POWER 6EP3310-6SB00-0AY0,bom/selected-controls.csv,selected_load_calculation_open,5 V logic source to TB24-03 and IF-B01 J3-3; branch protection per docs/22 11.4
 CB-XPS,1,Schneider Electric,Harmony XPSUAF13AP,bom/selected-controls.csv,selected_system_unqualified,Hardwired two-channel safety relay; component capability is not a completed machine safety function
-CB-K1-K3,3,Schneider Electric,TeSys Deca LC1D12BD,bom/selected-controls.csv,selected_DC_duty_unqualified,Proposed K1/K2/K3 power-isolation contactors; exact DC utilisation duty and series-pole application require proof
+CB-K1-K3,3,Schneider Electric,TeSys Deca LC1D12BD,bom/selected-controls.csv,selected_DC_duty_unqualified,Power-isolation contactors K1/K2/K3; DC utilisation answer outstanding (docs/22 11.1)
 CB-KA1-KA10,10,Phoenix Contact,PLC-RSC-24DC/21 2966171,bom/selected-controls.csv,selected_load_and_interface_review_open,Isolated field/alarm contact relays for J10/J11 pairs
 CB-KSR1,1,Phoenix Contact,PLC-RSC-24DC/21 2966171,bom/selected-controls.csv,proposed_reset_interposing_relay,Separate reset/EDM relay; safety-function suitability is not established
-CB-XPS-FUSE,1,Schneider Electric,DF2CN10,bom/selected-controls.csv,identified_XPS_output_fuse_link,10 x 38 mm 10 A gG fuse link; compatible holder and coordination remain unselected
-CB-TB24-01,1,UNSELECTED,24 V PELV distribution terminal,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Feeds IF-B01 J3-1; terminal type rating and branch protection are open
-CB-TB24-02,1,UNSELECTED,0 V PELV distribution terminal,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Feeds IF-B01 return pins and isolated contact commons; return-current capacity is open
-CB-TB24-03,1,UNSELECTED,5 V logic distribution terminal,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Feeds IF-B01 J3-3; terminal type rating and branch protection are open
-CB-TB-DL,1,UNSELECTED,24 V drive-logic fused distribution,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Feeds external common-anode drive inputs only; fuse loading and terminal type are open
-CB-TB-S,1,UNSELECTED,Safety loop field terminal set,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,E-stop and guard channel wiring; no terminal product or point-to-point schematic is released
-CB-TB-M1-M3,3,UNSELECTED,DC drive branch terminal set,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,K1/K2/K3 supply/driver branch terminations; DC fault fusing and discharge design are open
-CB-PE-BAR,1,UNSELECTED,Protective-earth bar and bonding set,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Chassis and encoder-screen bonds; enclosure and PE continuity design are open
-CB-ENC-ENTRY,2,UNSELECTED,Screened encoder cable entry and screen clamp,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Screen bonds at PE entry only; gland/clamp selection and EMC review are open
-CB-WIRE-FERRULES,1,UNSELECTED,Wire and ferrule system,docs/22-controls-and-wiring.md,release_hold_not_for_procurement,Conductor sizes colours crimp tooling and torque records depend on final protection and enclosure design
+CB-XPS-FUSE,1,Schneider Electric,DF2CN2,bom/selected-controls.csv,identified_XPS_output_fuse_link,10 x 38 mm 2 A gG fuse link for the XPS output (corrected from 10 A; docs/22 11.3); holder and coordination per CB-FUSE-HOLDER
+CB-TB24-01,12,Phoenix Contact,PT 2,5 3209510,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,24 V PELV distribution terminals; feeds IF-B01 J3-1; branch protection per docs/22 11.4
+CB-TB24-02,12,Phoenix Contact,PT 2,5 3209523,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,0 V PELV distribution terminals (blue); feeds IF-B01 return pins and isolated contact commons
+CB-TB24-03,4,Phoenix Contact,PT 2,5 3209523,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,5 V logic distribution terminals; feeds IF-B01 J3-3
+CB-TB-DL,1,Wago,282-364,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,10 x 38 fused terminal for +24V_DRVLOGIC common-anode branch; fuse link rating 1 A gG to be confirmed with the measured drive-logic load
+CB-TB-S,8,Phoenix Contact,PT 2,5 3209510,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,Dedicated separated terminal group for E-stop/guard channel field wiring
+CB-TB-M1-M3,12,Phoenix Contact,UT 4 3044131,docs/22-controls-and-wiring.md,selected_identity_energisation_gated,K1/K2/K3 DC branch terminations; DC fault fusing and discharge design per docs/22 11.2
+CB-PE-BAR,1,Phoenix Contact,"UT 4-PE 3044128 plus 10x3 copper PE rail",docs/22-controls-and-wiring.md,selected_pending_part_number_confirmation,Protective-earth bar and bonding set; confirm part numbers at purchase; PE continuity test at commissioning
+CB-ENC-ENTRY,2,Lapp,"Skintop MS-M 20x1.5 EMC (confirm order code)",docs/22-controls-and-wiring.md,selected_pending_part_number_confirmation,Screened encoder cable entry; screen bonds at PE entry only; gland code confirmed at purchase
+CB-WIRE-FERRULES,1,Various,"H07V-K 0.75/1.0/1.5 mm2 rd/bk/bu/gnye plus insulated ferrules and crimp tool",docs/22-controls-and-wiring.md,selected_identity_energisation_gated,Cabinet wiring per docs/22 11.4; torque and point-to-point records at assembly
+HOLD-AC-INCOMING,1,UNSELECTED,Mains disconnect circuit breaker and RCD,,release_hold_not_for_procurement,AC incoming disconnect/protection remains unselected; required before cabinet energisation
+HOLD-FUSE-HOLDER,1,UNSELECTED,10 x 38 mm fuse holder,,release_hold_not_for_procurement,"Must match the selected DF2CN2 link, mounting arrangement, voltage, prospective fault level and applicable standards; DF2CA-class holder proposed (docs/22 11.6)"

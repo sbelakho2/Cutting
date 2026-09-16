@@ -1,14 +1,17 @@
 # Guard and payoff selection — S1-B-GP-R2
 
 **Revision:** `S1-B-GP-R2-2026-09-13`
-**Status:** engineering design selection only. It is **not** a fabrication
-release, a risk assessment, a safety-function validation, an operating
-instruction or a permission to energise the machine.
+**Status:** fabrication-ready selection record for the internal build: the
+parts below are ordered and made per the
+[fabrication guide](31-fabrication-guide.md) §2–3. Every safety and
+commissioning gate in section 6 remains and must close before energised
+operation.
 
 This record advances the [preliminary CAD accommodation](25-preliminary-guard-and-payoff.md)
-to explicit material, component and load-path selections. Every physical and
-safety release hold remains: no part below is fabricated, ordered, installed
-or qualified until its named evidence exists. `status.json` continues to
+to explicit material, component and load-path selections for the internal
+build. The parts are fabricated per the guide; the commissioning gates below
+(risk assessment, safety validation, physical measurements) must close
+before energised operation. `status.json` continues to
 report `full_machine_integrated:false`, `physical_results:false`,
 `fabrication_released:false` and all guard/payoff validation flags false.
 

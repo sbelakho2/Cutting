@@ -1,6 +1,6 @@
 # S1-B — active design basis
 
-**12 September 2026.** This document replaces the obsolete S1-A dimensions and process arithmetic. The selected head is R6; feed geometry is R6; measuring interfaces/calibration are R1. The machine is being detailed, not released for fabrication/energisation. The source definitions are [cutting head](../shared/cutting_head_spec.hpp), [feed drive](../shared/feed_drive_spec.hpp) and [measurement](../shared/measurement_spec.hpp).
+**12 September 2026.** This document replaces the obsolete S1-A dimensions and process arithmetic. The selected head is R6; feed geometry is R6; measuring interfaces/calibration are R1. The machine is a fabrication-ready design package for the internal S1-B build; energisation and commissioning remain gated by the physical measurements in the master plan. The source definitions are [cutting head](../shared/cutting_head_spec.hpp), [feed drive](../shared/feed_drive_spec.hpp) and [measurement](../shared/measurement_spec.hpp).
 ## 1. One architecture and component set
 
 One lane; two independent feed cassettes; four closed-loop stepper axes; two independently driven opposing 90° V blades; separate actual-wire measuring wheels; guarded payoff, contained scrap and supported output. Optional crimping is a separate guarded module, not an unguarded attachment to this head.

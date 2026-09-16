@@ -1,7 +1,9 @@
 # Controls and cabinet electrical design input — S1-B
 
 **Revision:** `S1-B-CTRL-CAB-R2-2026-09-13`  
-**Status:** **engineering design input only — not released for fabrication, energisation, production, or personnel-safety use.**
+**Status:** **fabrication-ready design input for the internal cabinet build.**
+Energisation, commissioning and any personnel-safety use remain gated by
+section 10 and the measured evidence listed there.
 
 This document records the intended hardwired control and safety topology for
 one S1-B machine. It is a controlled design input for schematic capture,
@@ -359,8 +361,9 @@ named physical/manufacturer step):
 8. completion of the blank physical machine qualification records.
 
 Until every applicable hold is formally closed with evidence, this document
-must be read as a cautious design baseline rather than permission to build or
-energise the machine.
+is the build-and-verify baseline: assemble the cabinet per
+[docs/23](23-cabinet-electrical-assembly.md), then close the energisation
+gates before applying power.
 
 ## 11. Electrical calculation package (2026-09-15)
 

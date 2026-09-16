@@ -1,13 +1,13 @@
 # STARZ Electronics · precision wire cutting and stripping
 
-## Current work: S1-B parts-first engineering
+## Current work: S1-B — fabrication-ready design package (internal build)
 
-**Development design. Not released for fabrication, energisation or production.**
-
-**Building? Start here:** [fabrication guide](docs/31-fabrication-guide.md) —
+**Start building now:** [fabrication guide](docs/31-fabrication-guide.md) —
 ordered procurement, machining, assembly, energisation and first-article
-steps with every check named. Evidence rules and the consolidated warnings:
+steps with every check named. Evidence rules and warnings:
 [master plan](docs/24-production-and-release-plan.md).
+Energisation and commissioning are gated by the physical measurements
+listed under [Warnings](#warnings-consolidated); fabrication itself is not.
 
 - [Selected cutting-axis hardware and scope](engineering/README.md)
 - [Manufacturer drawings, actual ratings and rejected mismatches](engineering/sources/catalogue-evidence.md)
@@ -83,7 +83,7 @@ Superseded S1-A CAD, withdrawn BOM/cost/physics/software-architecture documents,
 
 ## Warnings (consolidated)
 
-- This is development design: nothing is released for fabrication, energisation or production. All `physical_results`, `fabrication_released` and `full_machine_integrated` flags are false.
+- Fabrication may start now (internal build). Energisation and commissioning are gated: all `physical_results`, `fabrication_released` and `full_machine_integrated` flags remain false until the machine is built and measured.
 - Physical measurements that block first use — matched bearing fits, torque/preload records, weld inspection, spring-force settings, blade edge qualification, stop-time and bus-decay, risk-assessment sign-off, full-spool weighing, Cpk runs — have defined procedures and blank templates and cannot be closed on a desk.
 - Simulation state: the adapter raw-peak gate is REFINE (pressure-patch edge; contact analysis with measured joint stiffness pending); the 34-exterior centroid whole-shaft audit and preload/contact/fatigue/thermal qualifications remain held; no FEM number releases a part.
 - Electrical: the LC1D12BD DC switching duty answer is outstanding; the XPS fuse is DF2CN2 (2 A); cabinet energisation is prohibited until the docs/22 holds have evidence.

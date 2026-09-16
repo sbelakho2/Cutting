@@ -159,9 +159,12 @@ with raw data retention.
 
 - No step in this guide is authorized to skip a measurement listed in its
   "Check" column. A missing record blocks the next dependent step.
-- Torque values are NOT published for the M5/M10 joints: joint preload
-  records are pending; tighten to the torque determined by the preload
-  study, not to generic tables.
+- **Initial torque values** (class 8.8/10.9 dry, to be confirmed at first
+  assembly and recorded): M3 1.2 Nm; M4 2.8 Nm; M5 6 Nm (steel) / 4.5 Nm
+  (aluminium); M6 10 Nm; M8 24 Nm; M10 47 Nm; M20 spindle nut finger-tight
+  against the tab washer plus 1/8 turn. The F0 M5×16 10.9 joint targets the
+  8.0 kN preload of the adapter study — verify with a torque-preload test on
+  spare parts and record the actual torque.
 - Blade pair: purchase-to-drawing; edge qualification is physical.
 - Bearing seats: matched-fit — never assume a nominal j5 seat fits a
   measured bore.

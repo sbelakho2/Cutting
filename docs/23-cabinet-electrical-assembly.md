@@ -1,8 +1,8 @@
 # Cabinet electrical assembly and verification procedure — draft
 
-**Revision:** `S1-B-CTRL-CAB-R2-2026-09-13`  
-**Status:** design-controlled assembly plan — **not** a released work instruction
-or permission to build, energise, commission or operate the machine.
+**Revision:** `S1-B-CTRL-CAB-R3-2026-09-16`  
+**Status:** fabrication-ready assembly plan for the internal cabinet build —
+**not** a permission to energise, commission or operate the machine.
 
 This procedure organizes the current cabinet design inputs. It does not replace
 the applicable electrical standards, a reviewed point-to-point schematic,

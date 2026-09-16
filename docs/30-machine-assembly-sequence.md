@@ -1,10 +1,11 @@
 # Machine assembly sequence and interface-fit record — S1-B-ASSY
 
 **Revision:** `S1-B-ASSY-R1-2026-09-15`
-**Status:** desk assembly plan from the checked CAD and source records. It is
-**not** a physical build record: every physical check (torque, measured fit,
-weld inspection, first movement) remains open and is routed to the blank
-[inspection templates](inspection/). No step below is claimed as performed.
+**Status:** the assembly plan for the internal build; the step-by-step
+fabrication path is the [fabrication guide](31-fabrication-guide.md). Every
+physical check (torque, measured fit, weld inspection, first movement) is
+performed and recorded during the build; until then no step is claimed as
+performed.
 
 The geometric basis is the 507-occurrence mechanism R3 CAD whose code checks
 verify, at both wire diameters: valid solids for all nine groups, zero common

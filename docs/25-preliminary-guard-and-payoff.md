@@ -1,9 +1,10 @@
 # Preliminary guard and payoff CAD accommodation — S1-B
 
 **Revision:** `S1-B-GP-CAD-R1-2026-09-13`  
-**Status:** static CAD accommodation only. It is **not** a guard design, risk
-assessment, fabrication drawing, safety-function validation, operating
-instruction or permission to energise the machine.
+**Status:** static CAD accommodation, superseded for fabrication by the
+[R2 selection record](26-guard-and-payoff-selection.md) and the
+[fabrication guide](31-fabrication-guide.md). Not a guard design or a risk
+assessment.
 
 **R2 supersedes the accommodation state:** the
 [guard/payoff selection record](26-guard-and-payoff-selection.md) adds explicit

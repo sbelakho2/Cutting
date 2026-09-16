@@ -1,8 +1,10 @@
 # Master production and release plan — S1-B
 
-**Revision:** `S1-B-PROD-R2-2026-09-16`
-**Status:** source-controlled build plan only. It is **not** an authority to
-fabricate, energise, commission, operate, certify or sell the machine.
+**Revision:** `S1-B-PROD-R3-2026-09-16`
+**Status:** source-controlled build plan only. It authorises the internal
+fabrication build; energisation, commissioning and operation remain gated
+by the evidence rules below and the consolidated
+[warnings](#10-warnings-and-holds-consolidated).
 
 **To build the machine, start at the [fabrication guide](31-fabrication-guide.md)**
 and return here for the evidence rules, gate table and warnings. A work
