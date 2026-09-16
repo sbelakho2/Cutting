@@ -47,6 +47,7 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | Kübler Perambulator measuring wheel (family reference) | ref | EUR 395.00 | [conrad.com](https://www.conrad.com/en/p/kubler-group-perambulator-1-pc-s-05-2400-0040-1000-5045-125696.html) |
 | CL57T-class driver fallback (Amazon.de market) | ref | EUR 189.10 | [amazon.de](https://www.amazon.de/dp/B0HJ23YQVQ) |
 | 350 W 36 V supply fallback (Amazon.de market) | ref | EUR 77.04 | [amazon.de](https://www.amazon.de/dp/B0HDN818SJ) |
+| LAPP H07V-K 1.5 mm² (100 m reels, red/bk/bu/gnye) | 4 reels | EUR 0.37–0.44/m | [conrad.com](https://www.conrad.com/en/search?search=H07V-K%201.5) |
 
 ## Open — click and take the cheapest in-stock offer
 
