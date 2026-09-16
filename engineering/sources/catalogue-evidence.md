@@ -357,6 +357,16 @@ GBP 4.98. Both observed 2026-09-13.
   observed 2026-09-16. Free/un-sprung diameter 11 mm; the selected TR-RR01
   remains the SEEGER A12 identity — using this part requires an approved
   change record and the groove-fit check of the audit record.
+- **Fuse-link family observation (2026-09-16):** Conrad lists the whole
+  Schneider 10×38 range: DF2CN02 (2 A) EUR 55.99/10, the DF2CA family
+  (EUR 55.99–63.99/10) and the DF2BA family, including DF2BA0200 (2 A)
+  at EUR 49.99/10
+  ([page](https://www.conrad.com/en/p/schneider-electric-df2ba0200-fuse-10-pc-s-2935281.html))
+  — a 10 % cheaper same-class 2 A 10×38 link alternative. The DF2FA family
+  (22×58 links, EUR 154.99–214.99/10) is a different size class. The
+  DIN-rail fuse BASE for 10×38 links is not listed at Conrad; its exact
+  identity is to be confirmed from the current Schneider GS/DF2 accessory
+  catalogue.
 - **Priced encoder alternatives (observed 2026-09-16, automation24):**
   the selected Autonics E40S6-1024-6-L-5 has no observed public price.
   Automation24 lists two in-stock ifm magnetic 1024 PPR Ø6 mm shaft
