@@ -4,7 +4,7 @@
   "run_complete": true,
   "analytical_checks": 17,
   "failed_checks": 2,
-  "fem_failed_or_unconverged_checks": 1,
+  "fem_failed_or_unconverged_checks": 2,
   "finite_elements_run": true,
   "finite_elements_scope": "adapter",
   "full_machine_modelled": false,

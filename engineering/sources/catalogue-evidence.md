@@ -248,8 +248,9 @@ The following records were checked 2026-09-13. They establish catalogue facts fo
 
 ### XPS output fuse link
 
-- [Schneider DF2CN10 product record](https://www.se.com/ww/en/product/DF2CN10/).
-- DF2CN10 is a Schneider NFC/Tesys GS cylindrical fuse **link**, not a fuse holder: 10 × 38 mm, gG, 500 VAC, 10 A, without striker. A holder and its mounting, fault-duty and coordination evidence are deliberately unselected.
+- [Schneider DF2CN2 product record](https://www.se.com/ww/en/product/DF2CN2/) (identity corrected from DF2CN10 on 2026-09-15, see below).
+- DF2CN2 is a Schneider NFC/Tesys GS cylindrical fuse **link**, not a fuse holder: 10 × 38 mm, gG, 500 VAC, 2 A, without striker. A holder and its mounting, fault-duty and coordination evidence are deliberately unselected.
+- **2026-09-15 correction:** the archived XPSUAF13AP datasheet rates the relay safety outputs 5 A DC-1 / 3 A DC-13 at 24 V DC, and the XPS output load is the two LC1D12BD coils (≈0.45 A). A 10 A gG link could not protect 5 A contacts between 5–10 A; DF2CN2 (2 A gG) is the corrected selection recorded in [docs/22 §11.3](../../docs/22-controls-and-wiring.md).
 - `C10G` is an Eaton Bussmann low-voltage cylindrical-fuse series. It must not be attributed to Mersen, and it is not the selected Schneider fuse link.
 
 ### IF-B01 logical source and TPL COM rail
@@ -334,3 +335,14 @@ GBP 4.98. Both observed 2026-09-13.
   The 2026-09-13 Simply Bearings and Automation24 observations above were
   read directly from live pages; earlier automation24/DigiKey/MISUMI records
   in this repository retain their original dates and remain separate.
+## H003 adapter FEM — preloaded elastic-foundation model (2026-09-15)
+
+This section supersedes the FEM summary inside the R6-fasteners bullet above; the fastener/geometry facts there are unchanged, while the ideal-clamp FEM numbers (18.8267 MPa, 14.7581%) are replaced by the preloaded-joint run below.
+
+- Model class: **linear elastic-foundation (Winkler) support with explicit preload pressure**. It is not a contact, preload-loss or friction solve; no measured joint stiffness exists for this custom H003-to-F0 joint.
+- Preload: **4 × F0 = 8.0 kN** per ISO4762 M5×16 class 10.9 screw, 60% of the 13.35 kN ISO 898 proof load (A_s = 14.2 mm², R_p0.2 = 940 MPa). This is a **required-preload screen, not a torque prediction**: the HIWIN M5 6.0 Nm table entry is explicitly not evidence for this custom joint.
+- Preload application: uniform pressure over the counterbore-floor washer seats r ∈ [2.75, 4.5] mm (Ø5.5 hole edge to ISO7092 washer OD 9 mm), pushing the adapter against the stage.
+- Foundation stiffness: normal **kn = 50,538.5 N/mm³** per unit area, from the elastic half-space stiffness of one rigid annular punch 2·E·b/(1−ν²) = 2014.41 MN/m per seat (E = 205 GPa, ν = 0.29, b = 4.5 mm) spread over the 39.86 mm² seat annulus; tangential **kt = kn/2.67** (documented steel-interface shear-to-normal rule, unmeasured).
+- Results (finest 111,349 nodes, supernodal CHOLMOD direct solver, 150,000-node cap unchanged): peak 219.489 MPa; displacement 0.00863849 mm; displacement refinement 2.15931% (PASS 3%); raw peak refinement 16.9981% (**REFINE** 5%); peak vs yield/3 = 219.489 vs 216.667 MPa (**FAIL**, local seat compression inside the 640.7 MPa Lamé bound).
+- Foundation-stiffness sensitivity ×0.5 / ×2 on the identical finest mesh: peak 219.07 → 220.08 MPa (+0.46%); displacement 0.01262 → 0.00667 mm. The raw-peak hold is an ideal uniform-pressure patch-edge artifact, not a spring-calibration uncertainty.
+- What remains: a true contact analysis with a measured joint stiffness, or a resolved seat pressure profile; both are outside desk-available evidence. The gate stays REFINE.

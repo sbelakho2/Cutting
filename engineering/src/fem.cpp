@@ -338,11 +338,12 @@ std::vector<DistributedElasticResult> solveDistributedElasticCases(
             for(int j=0;j<4;++j)ue.segment<3>(3*j)=u.segment<3>(3*t[static_cast<std::size_t>(j)]);
             result.stress_pa.emplace_back(D*e.b*ue);
         }
-        results.push_back(std::move(result));
+    results.push_back(std::move(result));
     }
     return results;
 }
-std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial mat,const Constraints& boundary,
+std::vector<ElasticResult> solveElasticCasesImpl(const TetMesh& mesh,ElasticMaterial mat,const Constraints& boundary,
+                           const std::vector<FoundationPatch>& foundations,
                            const std::vector<std::vector<LoadPatch>>& loadCases,int modeCount,const Eigen::Vector3d& bodyAcceleration) {
     check(std::isfinite(mat.young_pa)&&mat.young_pa>0&&mat.poisson>-1&&mat.poisson<0.5&&
         std::isfinite(mat.density_kg_m3)&&mat.density_kg_m3>0,"Invalid elastic material");
@@ -375,9 +376,34 @@ std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial
     }
     Eigen::SparseMatrix<double> k(ndof,ndof); k.setFromTriplets(entries.begin(),entries.end());
     entries.clear(); entries.shrink_to_fit();
+    // Elastic-foundation springs: per-unit-area stiffness distributed over the
+    // selected boundary faces as nodal diagonal springs (area/3 tributary, the
+    // same face loop convention as the load patches). Faces are tested by
+    // centroid; the spring DOFs remain free and enter the reduced system.
+    const auto faces=boundaryFaces(mesh);
+    Eigen::VectorXd springStiffness=Eigen::VectorXd::Zero(ndof);
+    if(!foundations.empty()) {
+        for(const auto& f:faces) {
+            const auto& a=mesh.nodes_mm[static_cast<std::size_t>(f[0])];
+            const auto& b=mesh.nodes_mm[static_cast<std::size_t>(f[1])];
+            const auto& c=mesh.nodes_mm[static_cast<std::size_t>(f[2])];
+            for(const auto& foundation:foundations) if(foundation.select((a+b+c)/3)) {
+                check(foundation.stiffness_pa_per_m.allFinite()&&(foundation.stiffness_pa_per_m.array()>=0).all()&&
+                      foundation.stiffness_pa_per_m.norm()>0,"Invalid foundation spring stiffness");
+                const double areaM2=(b-a).cross(c-a).norm()/2*1e-6;
+                for(int id:f) for(int d=0;d<3;++d) {
+                    const double kv=areaM2/3*foundation.stiffness_pa_per_m[static_cast<std::size_t>(d)];
+                    if(kv<=0) continue;
+                    springStiffness[3*id+d]+=kv; k.coeffRef(3*id+d,3*id+d)+=kv;
+                }
+                break;
+            }
+        }
+        check(springStiffness.norm()>0,"Foundation patches selected no boundary area");
+    }
     std::vector<int> freeIndex(static_cast<std::size_t>(ndof),-1), global;
     for(int i=0;i<count;++i) {
-        const auto fixed=boundary(mesh.nodes_mm[static_cast<std::size_t>(i)]);
+        const auto fixed=boundary?boundary(mesh.nodes_mm[static_cast<std::size_t>(i)]):Constraint{};
         for(int a=0;a<3;++a) {
             const int g=3*i+a;
             if(fixed[static_cast<std::size_t>(a)]) {
@@ -387,7 +413,7 @@ std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial
         }
     }
     const int nf=static_cast<int>(global.size());
-    check(nf>0 && nf<ndof,"Model requires both free and constrained degrees of freedom");
+    check(nf>0 && (nf<ndof||!foundations.empty()),"Model requires prescribed or elastic-foundation supports");
     Eigen::VectorXd mf(nf);
     for(int i=0;i<nf;++i) mf[i]=mass[global[static_cast<std::size_t>(i)]];
     std::vector<Eigen::Triplet<double>> reduced;
@@ -396,9 +422,31 @@ std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial
         if(rowFree>=0 && colFree>=0) reduced.emplace_back(rowFree,colFree,it.value());
     }
     Eigen::SparseMatrix<double> kf(nf,nf); kf.setFromTriplets(reduced.begin(),reduced.end()); reduced.clear(); reduced.shrink_to_fit();
-    Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> solver; solver.compute(kf);
-    check(solver.info()==Eigen::Success && solver.vectorD().minCoeff()>0,"Unstable/unconstrained or indefinite stiffness matrix");
-    const auto faces=boundaryFaces(mesh);
+    Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> solverLDLT;
+    Eigen::CholmodSupernodalLLT<Eigen::SparseMatrix<double>> solverLLT;
+    const bool supernodal=!foundations.empty();
+    if(supernodal) {
+        // The elastic-foundation path keeps every DOF free, so the reduced
+        // system is the full nodal system. It uses the supernodal CHOLMOD
+        // direct solver already validated on the distributed path; both
+        // backends are direct solvers and the 150000-node cap, the
+        // equilibrium checks and the result schema are unchanged.
+        solverLLT.cholmod().nmethods=1;solverLLT.cholmod().method[0].ordering=CHOLMOD_METIS;
+        solverLLT.compute(kf);
+        check(solverLLT.info()==Eigen::Success&&solverLLT.cholmod().status==CHOLMOD_OK,"Unstable/unconstrained foundation stiffness matrix");
+    } else {
+        solverLDLT.compute(kf);
+        check(solverLDLT.info()==Eigen::Success && solverLDLT.vectorD().minCoeff()>0,"Unstable/unconstrained or indefinite stiffness matrix");
+    }
+    const auto solveSystem=[&](const auto& b,auto& x) {
+        if(supernodal) {
+            x=solverLLT.solve(b);
+            check(solverLLT.info()==Eigen::Success&&x.allFinite(),"Elastic solve failed");
+        } else {
+            x=solverLDLT.solve(b);
+            check(solverLDLT.info()==Eigen::Success&&x.allFinite(),"Elastic solve failed");
+        }
+    };
     std::vector<ElasticResult> results;
     for(const auto& loads:loadCases) {
     ElasticResult result; result.volume_m3=totalVolume;
@@ -441,8 +489,7 @@ std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial
     Eigen::VectorXd rhs(nf);
     const Eigen::VectorXd lifted=force-k*u;
     for(int i=0;i<nf;++i) rhs[i]=lifted[global[static_cast<std::size_t>(i)]];
-    const Eigen::VectorXd uf=solver.solve(rhs);
-    check(solver.info()==Eigen::Success && uf.allFinite(),"Elastic solve failed");
+    Eigen::VectorXd uf; solveSystem(rhs,uf);
     result.free_residual_relative=(kf*uf-rhs).norm()/std::max(1.,rhs.norm());
     check(result.free_residual_relative<1e-7,"Equilibrium residual exceeds tolerance");
     for(int i=0;i<nf;++i) u[global[static_cast<std::size_t>(i)]]=uf[i];
@@ -453,9 +500,14 @@ std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial
         result.max_displacement_m=std::max(result.max_displacement_m,v.norm());
         const Eigen::Vector3d f=force.segment<3>(3*i),x=mesh.nodes_mm[static_cast<std::size_t>(i)]*1e-3;
         Eigen::Vector3d r=reaction.segment<3>(3*i);
-        // Reactions belong only to prescribed DOFs. Including the free-DOF
+        // Reactions belong only to prescribed DOFs and to elastic-foundation
+        // springs (-k*u on the spring DOFs). Including the remaining free-DOF
         // residual here would make the global balance largely tautological.
-        for(int axis=0;axis<3;++axis) if(freeIndex[static_cast<std::size_t>(3*i+axis)]>=0) r[axis]=0;
+        for(int axis=0;axis<3;++axis) {
+            const int g=3*i+axis;
+            if(freeIndex[static_cast<std::size_t>(g)]>=0)
+                r[axis]=springStiffness[static_cast<std::size_t>(g)]>0?-springStiffness[static_cast<std::size_t>(g)]*u[static_cast<std::size_t>(g)]:0.;
+        }
         result.total_load_n+=f; result.total_reaction_n+=r;
         result.total_load_moment_nm+=x.cross(f); result.total_reaction_moment_nm+=x.cross(r);
         totalMoment+=x.cross(f+r); forceNorm+=f.norm(); momentNorm+=x.cross(f).norm();
@@ -492,7 +544,8 @@ std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial
         };
         orthogonalise(basis);
         for(int iter=0;iter<50;++iter) {
-            basis=solver.solve((basis.array().colwise()*mf.array()).matrix());
+            Eigen::MatrixXd next; solveSystem((basis.array().colwise()*mf.array()).matrix(),next);
+            basis=next;
             orthogonalise(basis);
         }
         const Eigen::MatrixXd small=basis.transpose()*kf*basis;
@@ -510,6 +563,15 @@ std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial
     results.push_back(std::move(result));
     }
     return results;
+}
+std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial mat,const Constraints& boundary,
+                           const std::vector<std::vector<LoadPatch>>& loadCases,int modeCount,const Eigen::Vector3d& bodyAcceleration) {
+    return solveElasticCasesImpl(mesh,mat,boundary,{},loadCases,modeCount,bodyAcceleration);
+}
+std::vector<ElasticResult> solveElasticFoundationCases(const TetMesh& mesh,ElasticMaterial mat,
+                           const std::vector<FoundationPatch>& foundations,
+                           const std::vector<std::vector<LoadPatch>>& loadCases,int modeCount,const Eigen::Vector3d& bodyAcceleration) {
+    return solveElasticCasesImpl(mesh,mat,{},foundations,loadCases,modeCount,bodyAcceleration);
 }
 ElasticResult solveElastic(const TetMesh& mesh,ElasticMaterial mat,const Constraints& boundary,
                            const std::vector<LoadPatch>& loads,int modeCount,const Eigen::Vector3d& bodyAcceleration) {

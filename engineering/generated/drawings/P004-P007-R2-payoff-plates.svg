@@ -1,0 +1,56 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='420mm' height='297mm' viewBox='0 0 420 297'>
+<defs><marker id='arrow' markerWidth='5' markerHeight='5' refX='2.5' refY='2.5' orient='auto-start-reverse'><path d='M5 0 L0 2.5 L5 5' fill='none' stroke='#111' stroke-width='.5'/></marker></defs>
+<style>text{font-family:DejaVu Sans,Arial,sans-serif;fill:#111}.edge{fill:none;stroke:#111;stroke-width:.35}.dim{fill:none;stroke:#444;stroke-width:.18}.centre{fill:none;stroke:#888;stroke-width:.16;stroke-dasharray:4 1 1 1}</style>
+<rect width='420' height='297' fill='white'/><rect class='edge' x='8' y='8' width='404' height='281'/>
+<text x='14' y='20' font-size='7'>STARZ ELECTRONICS</text>
+<text x='14' y='28' font-size='4.5'>P004/P005/P006 — PAYOFF POSTS AND BRAKE DISC / R2</text>
+<text x='250' y='18' font-size='4'>ENGINEERING DRAWING — RELEASE HOLD</text>
+<text x='250' y='25' font-size='3'>Units mm · A3 · Do not scale dimensions</text>
+<rect class='edge' x='40' y='55' width='70' height='18'/>
+<circle class='edge' cx='85' cy='105' r='23.5'/>
+<circle class='centre' cx='85' cy='105' r='10.25'/>
+<circle class='dim' cx='85' cy='105' r='11.25'/>
+<line class='centre' x1='26' y1='105' x2='144' y2='105'/>
+<line class='centre' x1='85' y1='38' x2='85' y2='168'/>
+<line class='dim' x1='40' y1='78' x2='40' y2='94'/>
+<line class='dim' x1='110' y1='78' x2='110' y2='94'/>
+<path class='dim' marker-start='url(#arrow)' marker-end='url(#arrow)' d='M40 92 H110'/>
+<text x='63' y='90.6' font-size='3.1'>70.00 ±0.20</text>
+<line class='dim' x1='61.5' y1='40' x2='61.5' y2='34'/>
+<line class='dim' x1='108.5' y1='40' x2='108.5' y2='34'/>
+<path class='dim' marker-start='url(#arrow)' marker-end='url(#arrow)' d='M61.5 32 H108.5'/>
+<text x='73' y='30.6' font-size='3.1'>Ø47 H7 +0.025/0</text>
+<text x='17' y='180' font-size='3.1'>POST (2×, MIRRORED): 70 × 18 plate;bearing pocket Ø47 H7 ×14 deep</text>
+<text x='17' y='187' font-size='3.1'>from the spool-side face;spindle bore Ø20.5 +0.2/0 through.</text>
+<text x='17' y='194' font-size='3.1'>Pocket and bore share the datum axis (X−650,Z112 machine coords).</text>
+<text x='17' y='201' font-size='3.1'>Z span −845…+320;welded to P003 base all around;grind top face flat.</text>
+<text x='17' y='208' font-size='3.1'>Material S235JR;laser/waterjet + bore on mill;deburr without chamfering the pocket.</text>
+<circle class='edge' cx='210' cy='105' r='90'/>
+<circle class='centre' cx='210' cy='105' r='10'/>
+<line class='centre' x1='115' y1='105' x2='305' y2='105'/>
+<line class='centre' x1='210' y1='10' x2='210' y2='200'/>
+<line class='dim' x1='120' y1='204' x2='120' y2='220'/>
+<line class='dim' x1='300' y1='204' x2='300' y2='220'/>
+<path class='dim' marker-start='url(#arrow)' marker-end='url(#arrow)' d='M120 218 H300'/>
+<text x='198' y='216.6' font-size='3.1'>Ø180 ±0.5</text>
+<text x='258' y='60' font-size='3.1'>BRAKE DISC (1×): Ø180 × 6, bore Ø20 H7</text>
+<text x='258' y='68' font-size='3.1'>+0.021/0 on the spindle, keyway 6 JS9 ×</text>
+<text x='258' y='76' font-size='3.1'>2.8 deep (DIN6885-A key) and one M6×8</text>
+<text x='258' y='84' font-size='3.1'>ISO4029 cup-point setscrew over the key.</text>
+<text x='258' y='92' font-size='3.1'>Faces ground flat, parallel ≤0.05, Ra1.6.</text>
+<text x='258' y='100' font-size='3.1'>Material S235JR;blank laser-cut, finish-turned.</text>
+<text x='258' y='116' font-size='3.1'>Caliper bracket P007 is a plain S235JR</text>
+<text x='258' y='124' font-size='3.1'>bracket per docs/26 §3 (pads/spring</text>
+<text x='258' y='132' font-size='3.1'>purchase-to-requirement);no machining</text>
+<text x='258' y='140' font-size='3.1'>tolerances are released on this sheet.</text>
+<line class='edge' x1='8' y1='222' x2='412' y2='222'/>
+<text x='14' y='231' font-size='3.1'>PROCESS: cut blanks;mill pockets/bore to the common datum;weld posts to base with a fixture holding both posts</text>
+<text x='14' y='239' font-size='3.1'>coaxial;stress-relieve;re-check pocket positions after welding.INSPECT: pocket Ø47 H7, coaxiality of the</text>
+<text x='14' y='247' font-size='3.1'>two posts ≤0.1 after welding;disc bore and faces.ASSEMBLY: press 6204 bearings;insert spindle.</text>
+<line class='edge' x1='8' y1='264' x2='412' y2='264'/>
+<line class='edge' x1='235' y1='264' x2='235' y2='289'/>
+<text x='14' y='274' font-size='4'>PARTS P004 · P005 · P006 (P007 reference)</text>
+<text x='14' y='282' font-size='3.2'>S1-B-MECH-R3-2026-09-13</text>
+<text x='241' y='274' font-size='3'>SCALE1:1 / DIMENSION RECORD</text>
+<text x='241' y='282' font-size='3'>RELEASE HOLD: weld quality and load validation;not fabricated</text>
+</svg>

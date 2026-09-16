@@ -1,4 +1,4 @@
 check,value,limit,result
-adapter_displacement_refinement,0.00306163,0.03,PASS
-adapter_peak_stress_refinement,0.147581,0.05,REFINE
-adapter_peak_stress_Pa,1.88267e+07,2.16667e+08,PASS_SCOPED
+adapter_displacement_refinement,0.0215931,0.03,PASS
+adapter_peak_stress_refinement,0.169981,0.05,REFINE
+adapter_peak_stress_Pa,2.19489e+08,2.16667e+08,FAIL

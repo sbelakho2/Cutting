@@ -1,6 +1,7 @@
 #include "shared/cutting_head_spec.hpp"
 #include "shared/feed_drive_spec.hpp"
 #include "shared/measurement_spec.hpp"
+#include "shared/mechanism_spec.hpp"
 #include <QGuiApplication>
 #include <QPainter>
 #include <QPdfWriter>
@@ -19,6 +20,7 @@
 namespace fs=std::filesystem;
 namespace d=starz::head::design;
 namespace c=starz::head::catalogue;
+namespace md=starz::mechanism::design;
 namespace {
 void text(std::ostream& s,double x,double y,const std::string& value,double size=3.1) {
     s<<"<text x='"<<x<<"' y='"<<y<<"' font-size='"<<size<<"'>"<<value<<"</text>\n";
@@ -356,11 +358,166 @@ void encoderPlate(const fs::path& out) {
           <<drawing.rdbuf()<<"</body></html>";
     if(!drawing||!review)throw std::runtime_error("Encoder plate review output failed");
 }
+void payoffSpindle(const fs::path& out) {
+    const auto path=out/"P002-R2-payoff-spindle.svg";std::ofstream s(path);
+    s<<std::setprecision(10);begin(s,"P002 — PAYOFF SPINDLE / R2 · SELECTED DESIGN,NOT FABRICATED");
+    const double sx=60,sy=150;
+    line(s,sx-2,sy,sx+330,sy,"centre");
+    s<<"<rect class='edge' x='"<<sx<<"' y='"<<sy-10<<"' width='330' height='20'/>\n";
+    line(s,sx,sy-10,sx+25,sy-10);line(s,sx,sy+10,sx+25,sy+10);
+    line(s,sx+305,sy-10,sx+330,sy-10);line(s,sx+305,sy+10,sx+330,sy+10);
+    for(double x:{sx+25,sx+305}){line(s,x,sy-8,x,sy+8);}
+    line(s,sx+25,sy-10,sx+25,sy-8);line(s,sx+305,sy-10,sx+305,sy-8);
+    line(s,sx+25,sy+10,sx+25,sy+8);line(s,sx+305,sy+10,sx+305,sy+8);
+    text(s,sx+28,sy-13,"M20×1.5-6g");text(s,sx+280,sy-13,"M20×1.5-6g");
+    text(s,sx+70,sy+19,"Ø20 h6 GROUND FULL LENGTH BETWEEN THREADS");
+    dimension(s,sx,sx+330,sy+40,sy+52,"660.00 ±0.20");
+    dimension(s,sx,sx+25,sy+40,sy+64,"25.00");
+    dimension(s,sx+305,sx+330,sy+40,sy+64,"25.00");
+    line(s,sx+25,sy-28,sx+25,sy+8,"dim");line(s,sx+305,sy-28,sx+305,sy+8,"dim");
+    text(s,sx+26,sy-31,"BEARING SEAT ZONE Ø20 h6 (6204-2Z/C3 ×2, posts P004/P005)");
+    text(s,sx,sy+80,"DATUM A = SPINDLE AXIS · radial runout ≤0.010 between seats;cylindricity ≤0.004 on seats");
+    text(s,sx,sy+88,"DATUM B = left seat centreline at Y=−279.5 (machine coords);seats spanY=−289…−271 andY=+271…+289");
+    text(s,250,60,"Material C45 (EN 1.0503),ground stock");
+    text(s,250,68,"Surface finish Ra0.8 on Ø20, Ra1.6 elsewhere");
+    text(s,250,76,"Both ends chamfer C0.5;no centre hole specified");
+    text(s,250,84,"Hardness: as-supplied;no heat treatment");
+    text(s,250,100,"Interface: spool P001 rides on Ø20 through");
+    text(s,250,108,"two Ø20.5 flange bores;brake disc P006");
+    text(s,250,116,"sits on Ø20 outboard of the right post.");
+    text(s,250,124,"Retention:2 × M20×1.5 nut (KM-class)");
+    text(s,250,132,"with tab washer, supplier-selected;");
+    text(s,250,140,"threads are NOT modeled in the CAD.");
+    line(s,8,222,412,222);
+    text(s,14,231,"PROCESS: centreless-grind Ø20 h6;single-point the M20×1.5 ends from the ground diameter;deburr.");
+    text(s,14,239,"INSPECT: length660;Ø20 actual within h6;seat runout/cylindricity;thread gauging;visual for grinding burns.");
+    text(s,14,247,"ASSEMBLY: fit 6204 bearings into P004/P005 pockets;insert spindle through spool bores and bearings;");
+    text(s,14,255,"clamp P006 and nut M20×1.5 outboard. Match-mark bearing-to-post and nut-to-shaft after first fit.");
+    line(s,8,264,412,264);line(s,235,264,235,289);
+    text(s,14,274,"PART P002 · PAYOFF SPINDLE",4);
+    text(s,14,282,std::string(starz::mechanism::revision),3.2);
+    text(s,241,274,"SCALE1:2 / SINGLE SELECTED DIMENSION RECORD",3);
+    text(s,241,282,"RELEASE HOLD: load validation (docs/26 §4/§6);not fabricated",3);
+    s<<"</svg>\n";s.close();if(!s)throw std::runtime_error("Payoff spindle SVG failed");
+    QSvgRenderer renderer(QString::fromStdString(path.string()));if(!renderer.isValid())throw std::runtime_error("Payoff spindle SVG invalid");
+    QPdfWriter pdf(QString::fromStdString((out/"P002-R2-payoff-spindle.pdf").string()));
+    pdf.setPageSize(QPageSize(QPageSize::A3));pdf.setPageOrientation(QPageLayout::Landscape);pdf.setPageMargins(QMarginsF(0,0,0,0));pdf.setResolution(300);
+    pdf.setTitle("STARZ P002 R2 payoff spindle — dimension record,release hold");
+    QPainter painter(&pdf);if(!painter.isActive())throw std::runtime_error("Payoff spindle PDF failed");
+    renderer.render(&painter,QRectF(0,0,pdf.width(),pdf.height()));painter.end();
+    std::ifstream drawing(path);std::ofstream review(out/"payoff-spindle-review.html");
+    review<<"<!doctype html><html lang='en'><meta charset='utf-8'><title>STARZ P002 drawing review</title>"
+          <<"<style>body{margin:24px;background:#e5e7eb;font-family:Arial,sans-serif}svg{width:100%;height:auto;background:white}</style>"
+          <<"<body><h1>P002 R2 payoff spindle</h1><p><a href='P002-R2-payoff-spindle.pdf'>A3 vector PDF</a> · Engineering release hold</p>"
+          <<drawing.rdbuf()<<"</body></html>";
+    if(!drawing||!review)throw std::runtime_error("Payoff spindle review output failed");
+}
+void payoffPlates(const fs::path& out) {
+    const auto path=out/"P004-P007-R2-payoff-plates.svg";std::ofstream s(path);
+    s<<std::setprecision(10);begin(s,"P004/P005/P006 — PAYOFF POSTS AND BRAKE DISC / R2");
+    const double x=85,y=105;
+    s<<"<rect class='edge' x='40' y='55' width='70' height='18'/>\n";
+    circle(s,x,y,23.5);circle(s,x,y,10.25,"centre");circle(s,x,y,11.25,"dim");
+    line(s,26,y,144,y,"centre");line(s,x,38,x,168,"centre");
+    dimension(s,40,110,78,92,"70.00 ±0.20");
+    dimension(s,x-23.5,x+23.5,40,32,"Ø47 H7 +0.025/0");
+    text(s,17,180,"POST (2×, MIRRORED): 70 × 18 plate;bearing pocket Ø47 H7 ×14 deep");
+    text(s,17,187,"from the spool-side face;spindle bore Ø20.5 +0.2/0 through.");
+    text(s,17,194,"Pocket and bore share the datum axis (X−650,Z112 machine coords).");
+    text(s,17,201,"Z span −845…+320;welded to P003 base all around;grind top face flat.");
+    text(s,17,208,"Material S235JR;laser/waterjet + bore on mill;deburr without chamfering the pocket.");
+    const double sx=210,cy=105;
+    circle(s,sx,cy,90);circle(s,sx,cy,10,"centre");
+    line(s,sx-95,cy,sx+95,cy,"centre");line(s,sx,cy-95,sx,cy+95,"centre");
+    dimension(s,sx-90,sx+90,204,218,"Ø180 ±0.5");
+    text(s,258,60,"BRAKE DISC (1×): Ø180 × 6, bore Ø20 H7");
+    text(s,258,68,"+0.021/0 on the spindle, keyway 6 JS9 ×");
+    text(s,258,76,"2.8 deep (DIN6885-A key) and one M6×8");
+    text(s,258,84,"ISO4029 cup-point setscrew over the key.");
+    text(s,258,92,"Faces ground flat, parallel ≤0.05, Ra1.6.");
+    text(s,258,100,"Material S235JR;blank laser-cut, finish-turned.");
+    text(s,258,116,"Caliper bracket P007 is a plain S235JR");
+    text(s,258,124,"bracket per docs/26 §3 (pads/spring");
+    text(s,258,132,"purchase-to-requirement);no machining");
+    text(s,258,140,"tolerances are released on this sheet.");
+    line(s,8,222,412,222);
+    text(s,14,231,"PROCESS: cut blanks;mill pockets/bore to the common datum;weld posts to base with a fixture holding both posts");
+    text(s,14,239,"coaxial;stress-relieve;re-check pocket positions after welding.INSPECT: pocket Ø47 H7, coaxiality of the");
+    text(s,14,247,"two posts ≤0.1 after welding;disc bore and faces.ASSEMBLY: press 6204 bearings;insert spindle.");
+    line(s,8,264,412,264);line(s,235,264,235,289);
+    text(s,14,274,"PARTS P004 · P005 · P006 (P007 reference)",4);
+    text(s,14,282,std::string(starz::mechanism::revision),3.2);
+    text(s,241,274,"SCALE1:1 / DIMENSION RECORD",3);
+    text(s,241,282,"RELEASE HOLD: weld quality and load validation;not fabricated",3);
+    s<<"</svg>\n";s.close();if(!s)throw std::runtime_error("Payoff plates SVG failed");
+    QSvgRenderer renderer(QString::fromStdString(path.string()));if(!renderer.isValid())throw std::runtime_error("Payoff plates SVG invalid");
+    QPdfWriter pdf(QString::fromStdString((out/"P004-P007-R2-payoff-plates.pdf").string()));
+    pdf.setPageSize(QPageSize(QPageSize::A3));pdf.setPageOrientation(QPageLayout::Landscape);pdf.setPageMargins(QMarginsF(0,0,0,0));pdf.setResolution(300);
+    pdf.setTitle("STARZ P004/P005/P006 R2 payoff plates — dimension record,release hold");
+    QPainter painter(&pdf);if(!painter.isActive())throw std::runtime_error("Payoff plates PDF failed");
+    renderer.render(&painter,QRectF(0,0,pdf.width(),pdf.height()));painter.end();
+    std::ifstream drawing(path);std::ofstream review(out/"payoff-plates-review.html");
+    review<<"<!doctype html><html lang='en'><meta charset='utf-8'><title>STARZ P004-P007 drawing review</title>"
+          <<"<style>body{margin:24px;background:#e5e7eb;font-family:Arial,sans-serif}svg{width:100%;height:auto;background:white}</style>"
+          <<"<body><h1>P004/P005/P006 R2 payoff plates</h1><p><a href='P004-P007-R2-payoff-plates.pdf'>A3 vector PDF</a> · Engineering release hold</p>"
+          <<drawing.rdbuf()<<"</body></html>";
+    if(!drawing||!review)throw std::runtime_error("Payoff plates review output failed");
+}
+void guardPanels(const fs::path& out) {
+    const auto path=out/"G101-G106-R2-guard-panels.svg";std::ofstream s(path);
+    s<<std::setprecision(10);begin(s,"G101–G106 — GUARD PANELS AND DOOR / R2");
+    const double x=100,y=120;
+    s<<"<rect class='edge' x='40' y='60' width='110' height='120'/>\n";
+    circle(s,x,y,15);
+    text(s,x-15,y-22,"Ø30 WIRE");
+    text(s,x-15,y-16,"PASS-THROUGH");
+    dimension(s,40,150,184,198,"LEFT/RIGHT SIDE: 690 × 315 × 2, APERTURE Ø30 AT X±(345..347), Y0, Z112");
+    text(s,17,210,"Side/rear/roof panels: DC01 2 mm, powder-coat RAL7035,edges deburred, radiused C2 on");
+    text(s,17,217,"exposed corners. Rear 690 × 315 × 2;roof 690 × 1250 × 2. Mounting:M6×12 8.8 at ≤200 pitch");
+    text(s,17,224,"into rivet nuts;pass-through edge guarded with split grommet (purchase-to-requirement).");
+    text(s,258,60,"FRONT DOOR (G105): clear polycarbonate 5 mm,");
+    text(s,258,68,"690 × 315, in a 20×20×2 S235JR tube frame;");
+    text(s,258,76,"door weight ≈ panel 1.2 kg/m² × 0.217 m²");
+    text(s,258,84,"+ frame;two hinges rated ≥15 kg total,");
+    text(s,258,92,"zinc-plated (purchase-to-requirement);");
+    text(s,258,100,"ACF-1 actuator mounted to the door,");
+    text(s,258,108,"SLC body on the G106 jamb plate.");
+    text(s,258,124,"LOCK PLATE (G106): S235JR 5 mm, 60 × 55,");
+    text(s,258,132,"welded to the door jamb;body pocket");
+    text(s,258,140,"30×192×44 +0.5 clearance per CAD;the SLC");
+    text(s,258,148,"drilling pattern REQUIRES the Bernstein");
+    text(s,258,156,"mounting drawing — do not drill from the");
+    text(s,258,164,"envelope (docs/26 §2).");
+    line(s,8,222,412,222);
+    text(s,14,231,"PROCESS: laser/brake;powder-coat after bending;mount rivet nuts;glaze door with mechanical fixing + seal.");
+    text(s,14,239,"INSPECT: panel flatness, coating, aperture position, door weight, hinge alignment, actuator/lock alignment by");
+    text(s,14,247,"physical fit. ASSEMBLY: hang door, verify 0.5 mm CAD clearance class and locking travel physically.");
+    line(s,8,264,412,264);line(s,235,264,235,289);
+    text(s,14,274,"PARTS G101–G106 · GUARD SET",4);
+    text(s,14,282,std::string(starz::mechanism::revision),3.2);
+    text(s,241,274,"DIMENSION RECORD",3);
+    text(s,241,282,"RELEASE HOLD: risk assessment,safety distances,aperture;not fabricated",3);
+    s<<"</svg>\n";s.close();if(!s)throw std::runtime_error("Guard panels SVG failed");
+    QSvgRenderer renderer(QString::fromStdString(path.string()));if(!renderer.isValid())throw std::runtime_error("Guard panels SVG invalid");
+    QPdfWriter pdf(QString::fromStdString((out/"G101-G106-R2-guard-panels.pdf").string()));
+    pdf.setPageSize(QPageSize(QPageSize::A3));pdf.setPageOrientation(QPageLayout::Landscape);pdf.setPageMargins(QMarginsF(0,0,0,0));pdf.setResolution(300);
+    pdf.setTitle("STARZ G101-G106 R2 guard panels — dimension record,release hold");
+    QPainter painter(&pdf);if(!painter.isActive())throw std::runtime_error("Guard panels PDF failed");
+    renderer.render(&painter,QRectF(0,0,pdf.width(),pdf.height()));painter.end();
+    std::ifstream drawing(path);std::ofstream review(out/"guard-panels-review.html");
+    review<<"<!doctype html><html lang='en'><meta charset='utf-8'><title>STARZ G101-G106 drawing review</title>"
+          <<"<style>body{margin:24px;background:#e5e7eb;font-family:Arial,sans-serif}svg{width:100%;height:auto;background:white}</style>"
+          <<"<body><h1>G101-G106 R2 guard panels</h1><p><a href='G101-G106-R2-guard-panels.pdf'>A3 vector PDF</a> · Engineering release hold</p>"
+          <<drawing.rdbuf()<<"</body></html>";
+    if(!drawing||!review)throw std::runtime_error("Guard panels review output failed");
+}
 }
 int main(int argc,char** argv) try {
     QGuiApplication app(argc,argv);
     if(argc!=3||std::string(argv[1])!="--out")throw std::invalid_argument("Use --out output_directory");
-    const fs::path out=argv[2];fs::create_directories(out);adapter(out);shaft(out);shaftDetails(out);encoderPlate(out);
-    std::cout<<"H003 R6,F101 R6(two sheets) andM201 R1 A3 dimensioned SVG/vector PDFs generated\n";
+    const fs::path out=argv[2];fs::create_directories(out);
+    adapter(out);shaft(out);shaftDetails(out);encoderPlate(out);
+    payoffSpindle(out);payoffPlates(out);guardPanels(out);
+    std::cout<<"H003 R6,F101 R6(two sheets),M201 R1,P002 R2,P004-P007 R2 andG101-G106 R2 A3 dimensioned SVG/vector PDFs generated\n";
     return 0;
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}

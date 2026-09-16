@@ -335,18 +335,24 @@ and must never be used on the assembled machine.
 
 ## 10. Release holds
 
-The following remain open and prevent electrical release or energisation:
+The following remain open and prevent electrical release or energisation
+(items marked * now have their desk part closed in §11 and need only the
+named physical/manufacturer step):
 
 1. IF-B01 electrical/mechanical review of the current placed/routed draft;
   fabricator confirmation for its panel, stack-up, footprint and assembly
   constraints; bare-board inspection, assembly and recorded fixture evidence;
 2. confirmed `LC1D12BD` DC utilisation/rated switching duty for the exact
-   36/60 V three-series-pole loads, plus measured switching behavior;
-3. DC branch fuses, holders, wire ampacity, short-circuit coordination,
-   inrush, regenerated-energy limitation and bus-discharge design;
+   36/60 V three-series-pole loads, plus measured switching behavior
+   (desk part done — §11.1 — awaiting the manufacturer datasheet answer);
+3. DC branch fuses, holders, short-circuit coordination and inrush
+   measurement (wire ampacity, regen and discharge desk parts done — §11.2/
+   §11.4 —; the branch fuse identities and the measured decay remain);
 4. AC incoming disconnect/protection, enclosure, terminal-block system, cable
-   glands, PE bonding, cooling/airflow and applicable local-regulation design;
-5. final E1/E2 guard-release-permission circuit and risk assessment;
+   glands, PE bonding and applicable local-regulation design (enclosure
+   thermal budget calculated — §11.5 —; identities proposed — §11.6 —);
+5. final E1/E2 guard-release-permission circuit and risk assessment
+   (bleed-resistor proposal recorded — §11.2 —);
 6. full safety-function validation, including fault injection, stop time and
    contactor/bus decay measurements on assembled hardware;
 7. actual IF-B01, USB, encoder, field I/O, contactor and driver commissioning;
@@ -356,37 +362,118 @@ Until every applicable hold is formally closed with evidence, this document
 must be read as a cautious design baseline rather than permission to build or
 energise the machine.
 
-## 11. Cabinet identity proposal (procurement intent, not selections)
+## 11. Electrical calculation package (2026-09-15)
 
-The following exact identities are proposed to close the `UNSELECTED` cabinet
-rows. They are procurement intent only: each requires direct catalogue-page
-verification, the electrical protection/schematic review of section 10 and an
-approved change record before it becomes a selected identity. None is
-purchased or priced here.
+Desk-completed calculations from the archived datasheets. Section 10 holds
+that depend on physical measurement or manufacturer enquiry remain and are
+named at the end of each subsection.
 
-| Hold row | Proposed identity | Manufacturer part | Function | Remaining review |
-|---|---|---|---|---|
-| CB-TB24-01 / CB-TB24-02 | Phoenix Contact PT 2,5 feed-through terminal, grey, 0.2–2.5 mm² | 3209510 | 24 V PELV distribution and 0 V common | Branch protection, return-current capacity, 24 V load calculation |
-| CB-TB24-03 | Phoenix Contact PT 2,5 feed-through terminal, blue | 3209523 | 5 V logic distribution | 5 V branch protection and voltage-drop check |
-| CB-TB-DL | Fused terminal for the drive-logic common-anode branch | Wago 282-364 (10×38) or Phoenix UT 4-HESI — identity to be confirmed against the live catalogue | separately fused +24V_DRVLOGIC | Drive-logic load sum, fuse rating selection |
-| CB-XPS-FUSE holder | Schneider DF2CA DIN-rail 10×38 holder (identity to be confirmed) | DF2CA | Holds the DF2CN10 gG link | Prospective-fault level, DC coordination, physical fit |
-| CB-TB-S | Safety-loop field terminations using PT 2,5 or UT 2,5 terminals in a dedicated red/separated group | — | E-stop and guard channel wiring | Cross-wire fault review per section 3 |
-| CB-TB-M1-M3 | UT 4 terminals, one 4-terminal group per DC branch | Phoenix UT 4 3044131 | K1/K2/K3 DC branch terminations | DC current rating, wire ampacity, discharge design |
-| CB-PE-BAR | Copper PE bar with 10×3 mm busbar on insulated supports, M6 bonds | — | Chassis, screens, supply PE | PE continuity test plan, conductor sizing |
-| CB-ENC-ENTRY | 2 × metric M20 metal cable glands with EMC shield contact (Lapp Skintop MS-M or Pflitsch blueglobe equivalent, identity to be confirmed) | — | Encoder cable entry with screen bond to PE bar | EMC review, gland plate position |
-| CB-WIRE-FERRULES | H07V-K 0.75/1.5/2.5 mm² wiring (black/red/blue/green-yellow per circuit) with insulated ferrules and a crimp tool | — | Cabinet wiring | Wire-size calculation against final protection, torque records |
-| HOLD-TERMINALS-PE-ENCLOSURE | Rittal AE-series wall-mount enclosure, ≥ 800×600×210 mm, steel, single door, mounting plate | size to be confirmed from the 750×400 mm IF-B01 board plus K1–K3, three PSUs, XPS and terminal layout | Cabinet | Thermal load sum, door/plate layout, PE bonding, cooling |
+### 11.1 Branch ratings
 
-The three motor supplies carry a combined 1050 W of rated DC output power
-(2 × 350 W at 60 V, 1 × 350 W at 36 V); their actual heat dissipation depends
-on operating load and efficiency and is unmeasured. The 280 W cooler (TH-C01)
-rating and any conduction margin therefore do not establish the enclosure
-thermal design, which remains a calculated gate, not a completed calculation.
-AC incoming disconnect, branch circuit breakers and RCD remain unselected and
-are not inferred by this proposal.
+| Branch | Contactors | Supply | Rated current |
+|---|---|---|---|
+| 60 V motion #1 / #2 | K1 / K2 (LC1D12BD, 3 poles in series) | LE-350-60 | 5.8 A nameplate |
+| 36 V motion | K3 (LC1D12BD, 3 poles in series) | LE-350-36 | 9.7 A nameplate |
+| 24 V control | protected through TB24-01 | 6EP3332 | ≈2 A maximum (relays, logic, HMI) |
 
-Direct verification notes 2026-09-13: phoenixcontact.com, se.com and
-wago.com blocked automated retrieval from this environment; the part numbers
-above are catalogue identities to be verified on live pages before selection,
-and no price is observed for any row in this table. This does not weaken the
-section 10 holds.
+The nameplate currents are design maxima; actual branch current is a
+commissioning measurement. The 24 V control load total is the sum of the
+two contactor coils (2 × 5.4 W = 0.45 A), the XPSUAF, IF-B01 and HMI — the
+exact total is verified against the final schematic before fusing.
+
+**DC switching duty of K1–K3 — unresolved manufacturer enquiry.** The
+LC1D12BD datasheet is not archived in this repository and se.com blocks
+automated retrieval (2026-09-13/15). Required from Schneider before any
+release: DC utilization data for three main poles in series at 36/60 V,
+branch currents 5.8/9.7 A, load time constant (driver input capacitance ≈
+hundreds of µF plus cable inductance — to be stated in the enquiry),
+switching frequency and breaking duty. Until that data exists, the rows
+stay `selected_DC_duty_unqualified`. Documented alternatives if the DC duty
+is inadequate: a DC-rated contactor (e.g., a Schneider DC switching series
+identity to be selected from the current catalogue), or a semiconductor
+disconnect with a series mechanical isolation contact — both require a
+change record and a repeat of this calculation.
+
+### 11.2 Regeneration and discharge (calculated, assumptions stated)
+
+- Worst-case kinetic energy per stop: feed motor rotor inertia 1080 g·cm²
+  (archived 24HS40 datasheet) at 25 rad/s (500 mm/s on the Ø40 roller) gives
+  ≈0.034 J; 1 m of 4.5 mm wire at 0.5 m/s adds ≈0.016 J; head axes
+  (34E1K-85 rotor, 12.5 mm/s on a 10 mm lead) are ≈0.01 J. Total ≤0.1 J per
+  stop against ≥0.18 J stored in 100 µF of bus capacitance at 60 V: the
+  drives' deceleration energy is absorbed by the bus and the LE-350 overload
+  protection (self-recovery, archived datasheet). **Regeneration is not a
+  design driver.**
+- Bus discharge after contactor open: with an assumed 500 µF total bus
+  (PSU output + two driver inputs + decoupling — verify at receipt) and a
+  conservative 20 mA quiescent draw, the bus falls below 42 V in ≈0.45 s.
+  This is an estimate, not a guarantee: the E1/E2 release-permission timing
+  must be based on a measured decay curve on assembled hardware. A fixed
+  bleed resistor (e.g., 2.2 kΩ 5 W per branch, τ≈1.1 s) is proposed for
+  determinism and is part of the §10 hold 5 design.
+
+### 11.3 XPS output fuse — corrected sizing
+
+XPSUAF13AP relay outputs are rated **5 A DC-1 / 3 A DC-13 at 24 V DC**
+(archived datasheet). The XPS output load is the two contactor coils
+(≈0.45 A total). A 10 A gG link (DF2CN10) cannot protect 5 A contacts
+between 5–10 A and is therefore **too large**. Corrected selection:
+**Schneider DF2CN2, 2 A gG 10×38** — clears overloads above 2 A while
+carrying the ≈0.5 A (plus coil surge) load without nuisance opening.
+The identity change DF2CN10 → DF2CN2 is recorded in
+[selected-controls.csv](../bom/selected-controls.csv) and
+[sourcing-evidence.csv](../bom/sourcing-evidence.csv); the holder identity
+remains the DF2CA-class 10×38 DIN-rail holder subject to catalogue
+confirmation. Prospective short-circuit coordination with the 24 V supply
+current limiting is verified at commissioning (physical).
+
+### 11.4 Wiring schedule (calculated)
+
+| Circuit | Current | Conductor | Basis |
+|---|---|---|---|
+| 60 V branches K1/K2 | 5.8 A | H07V-K 1.0 mm² (19 A @30 °C, derated ≥14 A bundled) | IEC 60204-1 ampacity tables |
+| 36 V branch K3 | 9.7 A | H07V-K 1.5 mm² (24 A @30 °C, derated ≥17 A) | same |
+| 24 V control | ≤2 A | H07V-K 0.75 mm² | same |
+| Mains 230 V | 1050 W/230 V = 4.6 A | H07V-K 1.5 mm² | same |
+| PE conductors | — | equal to phase (1.5 mm² minimum); equipment PE bonds M6, ≤0.1 Ω continuity target | IEC 60204-1 §8 |
+
+### 11.5 Enclosure thermal budget (calculated)
+
+- Three supplies at full rated output: 350 W / 0.895 = 391 W input each,
+  i.e. ≈41 W loss each → **≈123 W** total (efficiency ≥89.5 % from the
+  archived LE-350 datasheets).
+- Add contactor coils 10.8 W, XPS ≈3 W, IF-B01 ≈5 W, misc ≈10 W →
+  **≈152 W** total internal dissipation.
+- TH-C01 (Rittal SK3303.500) is rated 280 W at L35: calculated margin
+  ≈128 W. The thermal budget passes on paper; a temperature mapping at
+  maximum duty is a commissioning measurement (physical) and the L50
+  derating must be checked against the installation ambient.
+
+### 11.6 Cabinet identities (proposal retained, verification notes)
+
+Proposed identities (procurement intent, not selections): Phoenix Contact
+PT 2,5 feed-through terminals 3209510 (grey) / 3209523 (blue) for the
+24 V/5 V distribution; Phoenix UT 4 3044131 per DC branch termination;
+a fused 10×38 terminal (Wago 282-364 or Phoenix UT 4-HESI, identity to be
+confirmed) for `+24V_DRVLOGIC`; a DF2CA-class 10×38 DIN-rail holder for the
+DF2CN2 link; a dedicated separated terminal group for the safety loop;
+a copper PE bar with M6 bonds; 2 × M20 EMC metal cable glands (Lapp Skintop
+MS-M or Pflitsch blueglobe, identity to be confirmed); H07V-K 0.75/1.0/1.5
+mm² with insulated ferrules; a Rittal AE wall-mount enclosure ≥800×600×210
+to be size-confirmed from the 750×400 mm IF-B01 board plus K1–K3, three
+PSUs, XPS and terminal layout. Maker pages (phoenixcontact.com, wago.com,
+se.com) block automated retrieval and no live-page price could be observed
+for these identities; they are exact catalogue part numbers to be confirmed
+on a live distributor page at purchase. Until then the rows stay
+`UNSELECTED` release holds. This is the desk ceiling for those rows, not an
+unresolved engineering question: the exact confirm-and-purchase step is
+defined.
+
+### 11.7 What this package closes vs leaves open
+
+Closed from the desk: branch current sizing, regen non-issue with numbers,
+discharge estimate + bleed proposal, XPS fuse correction (2 A), wiring
+schedule, PE sizing, enclosure thermal margin. Left open by nature:
+LC1D12BD DC duty (manufacturer enquiry), measured bus decay, prospective
+fault and stop-time measurements, risk-assessment sign-off, and the
+physical build itself (§10 holds 1–8 remain).

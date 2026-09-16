@@ -75,10 +75,29 @@ comparison boundaries.
 Quality-equivalent same-designation alternatives were observed on the same
 page family (FAG, KOYO); they are recorded in
 [catalogue evidence](../engineering/sources/catalogue-evidence.md) and
-require an approved change record before any substitution. HIWIN axis,
-R+W coupling, Kübler wheel, Autonics encoder and Rittal cooler public prices
-remain unobserved; a distributor quotation is the required next evidence for
-those lines.
+require an approved change record before any substitution.
+
+### 2.2 Quotation register for lines without a public price (2026-09-15)
+
+No reachable public retail price exists for the following lines; each has an
+exact quotation request defined so no procurement line is left without its
+next step. All requests must record part number, quantity, unit price,
+currency, freight/duty terms, lead time and validity.
+
+| BOM rows | Exact request | Decision basis |
+|---|---|---|
+| TR-AX01 | HIWIN KK8610P340A1F0, article 10.00026, ×2; request from two independent HIWIN distributors (e.g., regional HIWIN sales office and a second authorized distributor); also request the KK86 accessories needed (none selected beyond the axis) | Compare against the R1/R2 architecture cost and lead time; keep the axis unsubstituted unless a change record approves |
+| TR-CP01 | R+W MK2/100/50/10/12 ×2 and MK2/100/50/8/14 ×2 (exact ordering codes per [catalogue evidence](../engineering/sources/catalogue-evidence.md) and archived [ordering page](../engineering/sources/rw-mk2-ordering.png)); rw-couplings.com shop reached but prices are not server-rendered; request from R+W or a distributor | Hub bore pairs and lengths must match the motor flats and shaft diameters; no substitute without a change record |
+| ME-W01 | Kübler measuring wheel 8.0000.3123.0006 ×2 | Compare any distributor offer against the alternative of keeping the archived wheel; the 100±0.1 mm circumference claim stays unverified until receipt |
+| ME-E01 | Autonics E40S6-1024-6-L-5 ×2 | Request from an Autonics distributor; no public price was observed |
+| TH-C01 | Rittal SK3303.500 ×1 | Request from a Rittal distributor; confirm the 230 V 50 Hz variant |
+| TR-D01 | STEPPERONLINE CL57T-V41 ×2 | Direct shop price visible to a human; record it at purchase time (site blocks automated retrieval) |
+| TR-P01 | STEPPERONLINE LE-350-36 ×1 | Same as above |
+| TR-RR01 | SEEGER A12 DIN471 ×8 | Any SEEGER-ORBIS distributor; the archived catalogue governs geometry |
+| Standard fasteners (all TR-FB*/TR-FW*/TR-FD*/ME-FB*/ME-FW* rows) | ISO4762/7092/8734 class-specified, purchase from a traceable industrial fastener supplier | Commodity purchase-to-requirement; record certificate and lot at receipt |
+
+Every row above remains a `HOLD-`/unpriced line until its quotation and
+incoming inspection are recorded; none may be substituted silently.
 
 ## 3. Mechanical fabrication and inspection
 
@@ -197,11 +216,11 @@ traceable evidence.
 
 | Area | Current source result | Required closure before relying on it for release |
 |---|---|---|
-| Feed-shaft FEM | Whole-shaft trends exist; torus-focused four-mesh reruns leave 13 gmsh / 10 Netgen regional/geometry holds (was 16 / 12): M15-relief and roller key-root/shoulder 5% last-change gates persist at the 150000-node cap | Preserve raw-peak criteria and node cap; use a physically justified model/refinement and retain the result |
-| Adapter FEM | Support/load boundary re-justified (stage-side washer/bolt-seat annuli, actual motor-flange bearing footprint) and re-run; displacement refinement passes; raw peak14.7581% at the ideal washer-OD seat edge remains **REFINE** — improved, still held | Define and justify support/loading boundary, then repeat the raw-peak study — boundary step done; the raw peak is an ideal-clamp seat-edge singularity that grows under peak-region refinement, so a contact/preload support model is the remaining justified step |
+| Feed-shaft FEM | Torus-focused four-mesh reruns left 13 gmsh / 10 Netgen regional holds; the [regional submodel record](28-feed-shaft-submodel-record.md) then converges all eleven regional rows (roller shoulder, M15 relief, roller key root, pulley key/MB2 slot; working+fault; both optimizers) between 0.02% and 4.0% last-change at 0.02→0.01/0.0175 mm sector roots (≤150000 nodes/window) with exact global displacement transfer and Pilkey Kt cross-checks where applicable; M15 peak documented as a real bounded slot-wall∩groove corner | The four-mesh raw-peak rows are preserved unaltered; the 34-exterior same-surface centroid whole-shaft audit and the physical preload/contact/fatigue qualifications remain |
+| Adapter FEM | Preloaded elastic-foundation support model re-run: 4×8.0kN F0 preload pressure on the counterbore-floor washer seats r∈[2.75,4.5]mm plus a Winkler foundation on the stage-side seat annuli (kn=50,538.5N/mm³ half-space calibration, kt=kn/2.67), supernodal CHOLMOD, unchanged6/4/2.8/2/1.4/1.0mm series plus the isolated pair; displacement refinement2.15931% passes3%; raw peak16.9981% remains **REFINE** against5%; peak219.489MPa fails the yield/3 screen (local preload seat compression, inside the640.7MPa Lamé bound); stiffness sensitivity×0.5/×2 moves the peak+0.46% | The ideal-clamp singularity is removed, but the raw peak now sits at the counterbore-floor washer-OD pressure-patch edge and still grows182.11→219.49MPa under peak-region refinement; a true contact analysis with measured joint stiffness (or a resolved seat pressure profile) is the remaining justified step |
 | Bearings, joints and thermal behavior | Analytical geometry and nominal fits are present | Measure/justify preload, contact, housing compliance and thermal field for the actual build |
 | Guard/payoff | [R2 selections](26-guard-and-payoff-selection.md) exist for panels, door, spool, spindle, bearings and friction brake; R2 CAD source changes and physical validation are pending | Complete risk assessment, Bernstein mounting evidence, load/runaway measurement, physical build and validation |
-| Electrical/safety | Logical topology and source checks only | Close protection, DC switching, discharge, PE, enclosure, EMC and safety-function evidence |
+| Electrical/safety | Logical topology, source checks, branch/wiring/regen/discharge/thermal calculations and the corrected XPS fuse selection ([docs/22 §11](22-controls-and-wiring.md)); LC1D12BD DC duty awaits the manufacturer answer; protection, PE, enclosure identities proposed | Close protection, DC switching confirmation, discharge measurement, PE, enclosure, EMC and safety-function evidence |
 | Process qualification | Procedure and fail-closed tool exist; all repository templates are blank | Execute controlled physical tests and retain raw records |
 
 No row in this table may be closed by relaxing a numerical acceptance criterion,

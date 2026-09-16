@@ -143,6 +143,11 @@ Using the blank
 6. PC door impact verification and door hardware inspection;
 7. dimensioned A3 drawing sheets for the P001–P007 and G101–G106 parts and a
    released weld/assembly procedure for the spool, posts, base and door frame.
+   (R2 sheets produced 2026-09-15:
+   [P002 spindle](../engineering/generated/drawings/P002-R2-payoff-spindle.pdf),
+   [P004–P007 plates](../engineering/generated/drawings/P004-P007-R2-payoff-plates.pdf),
+   [G101–G106 panels](../engineering/generated/drawings/G101-G106-R2-guard-panels.pdf);
+   the weld/assembly procedure and physical inspection remain open.)
 
 Nothing in this record may be read as closing any of those gates.
 

@@ -1,0 +1,43 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='420mm' height='297mm' viewBox='0 0 420 297'>
+<defs><marker id='arrow' markerWidth='5' markerHeight='5' refX='2.5' refY='2.5' orient='auto-start-reverse'><path d='M5 0 L0 2.5 L5 5' fill='none' stroke='#111' stroke-width='.5'/></marker></defs>
+<style>text{font-family:DejaVu Sans,Arial,sans-serif;fill:#111}.edge{fill:none;stroke:#111;stroke-width:.35}.dim{fill:none;stroke:#444;stroke-width:.18}.centre{fill:none;stroke:#888;stroke-width:.16;stroke-dasharray:4 1 1 1}</style>
+<rect width='420' height='297' fill='white'/><rect class='edge' x='8' y='8' width='404' height='281'/>
+<text x='14' y='20' font-size='7'>STARZ ELECTRONICS</text>
+<text x='14' y='28' font-size='4.5'>G101–G106 — GUARD PANELS AND DOOR / R2</text>
+<text x='250' y='18' font-size='4'>ENGINEERING DRAWING — RELEASE HOLD</text>
+<text x='250' y='25' font-size='3'>Units mm · A3 · Do not scale dimensions</text>
+<rect class='edge' x='40' y='60' width='110' height='120'/>
+<circle class='edge' cx='100' cy='120' r='15'/>
+<text x='85' y='98' font-size='3.1'>Ø30 WIRE</text>
+<text x='85' y='104' font-size='3.1'>PASS-THROUGH</text>
+<line class='dim' x1='40' y1='184' x2='40' y2='200'/>
+<line class='dim' x1='150' y1='184' x2='150' y2='200'/>
+<path class='dim' marker-start='url(#arrow)' marker-end='url(#arrow)' d='M40 198 H150'/>
+<text x='83' y='196.6' font-size='3.1'>LEFT/RIGHT SIDE: 690 × 315 × 2, APERTURE Ø30 AT X±(345..347), Y0, Z112</text>
+<text x='17' y='210' font-size='3.1'>Side/rear/roof panels: DC01 2 mm, powder-coat RAL7035,edges deburred, radiused C2 on</text>
+<text x='17' y='217' font-size='3.1'>exposed corners. Rear 690 × 315 × 2;roof 690 × 1250 × 2. Mounting:M6×12 8.8 at ≤200 pitch</text>
+<text x='17' y='224' font-size='3.1'>into rivet nuts;pass-through edge guarded with split grommet (purchase-to-requirement).</text>
+<text x='258' y='60' font-size='3.1'>FRONT DOOR (G105): clear polycarbonate 5 mm,</text>
+<text x='258' y='68' font-size='3.1'>690 × 315, in a 20×20×2 S235JR tube frame;</text>
+<text x='258' y='76' font-size='3.1'>door weight ≈ panel 1.2 kg/m² × 0.217 m²</text>
+<text x='258' y='84' font-size='3.1'>+ frame;two hinges rated ≥15 kg total,</text>
+<text x='258' y='92' font-size='3.1'>zinc-plated (purchase-to-requirement);</text>
+<text x='258' y='100' font-size='3.1'>ACF-1 actuator mounted to the door,</text>
+<text x='258' y='108' font-size='3.1'>SLC body on the G106 jamb plate.</text>
+<text x='258' y='124' font-size='3.1'>LOCK PLATE (G106): S235JR 5 mm, 60 × 55,</text>
+<text x='258' y='132' font-size='3.1'>welded to the door jamb;body pocket</text>
+<text x='258' y='140' font-size='3.1'>30×192×44 +0.5 clearance per CAD;the SLC</text>
+<text x='258' y='148' font-size='3.1'>drilling pattern REQUIRES the Bernstein</text>
+<text x='258' y='156' font-size='3.1'>mounting drawing — do not drill from the</text>
+<text x='258' y='164' font-size='3.1'>envelope (docs/26 §2).</text>
+<line class='edge' x1='8' y1='222' x2='412' y2='222'/>
+<text x='14' y='231' font-size='3.1'>PROCESS: laser/brake;powder-coat after bending;mount rivet nuts;glaze door with mechanical fixing + seal.</text>
+<text x='14' y='239' font-size='3.1'>INSPECT: panel flatness, coating, aperture position, door weight, hinge alignment, actuator/lock alignment by</text>
+<text x='14' y='247' font-size='3.1'>physical fit. ASSEMBLY: hang door, verify 0.5 mm CAD clearance class and locking travel physically.</text>
+<line class='edge' x1='8' y1='264' x2='412' y2='264'/>
+<line class='edge' x1='235' y1='264' x2='235' y2='289'/>
+<text x='14' y='274' font-size='4'>PARTS G101–G106 · GUARD SET</text>
+<text x='14' y='282' font-size='3.2'>S1-B-MECH-R3-2026-09-13</text>
+<text x='241' y='274' font-size='3'>DIMENSION RECORD</text>
+<text x='241' y='282' font-size='3'>RELEASE HOLD: risk assessment,safety distances,aperture;not fabricated</text>
+</svg>

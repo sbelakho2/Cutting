@@ -149,6 +149,18 @@ add_test(NAME feed_fem_boundary_optimizer_gate COMMAND "${CMAKE_COMMAND}"
   "-DANALYSIS_EXE=$<TARGET_FILE:starz_feed_fem_analysis>" "-DOUTPUT_DIR=${CMAKE_CURRENT_BINARY_DIR}/boundary-fem-gate"
   -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/feed_fem_boundary_gate.cmake")
 set_tests_properties(feed_fem_boundary_optimizer_gate PROPERTIES TIMEOUT 1000)
+add_library(starz_feed_submodel src/feed_submodel.cpp)
+target_link_libraries(starz_feed_submodel PUBLIC starz_feed_fem starz_feed_geometry starz_mesh_io PRIVATE LibXml2::LibXml2 SuiteSparse::CHOLMOD)
+add_executable(starz_feed_submodel_analysis src/feed_submodel_analysis.cpp)
+target_link_libraries(starz_feed_submodel_analysis PRIVATE starz_feed_submodel)
+add_executable(starz_feed_submodel_profile src/feed_submodel_profile.cpp)
+target_link_libraries(starz_feed_submodel_profile PRIVATE starz_feed_submodel starz_feed_fem)
+add_executable(test_feed_submodel tests/test_feed_submodel.cpp)
+target_link_libraries(test_feed_submodel PRIVATE starz_feed_submodel starz_engineering_models starz_feed_geometry starz_mesh_io)
+add_test(NAME feed_submodel_benchmarks COMMAND test_feed_submodel "${CMAKE_CURRENT_BINARY_DIR}/submodel-test")
+set_tests_properties(feed_submodel_benchmarks PROPERTIES TIMEOUT 900)
+add_test(NAME feed_submodel_reject_invalid_requests COMMAND starz_feed_submodel_analysis)
+set_tests_properties(feed_submodel_reject_invalid_requests PROPERTIES WILL_FAIL TRUE)
 add_executable(starz_feed_fem_geometry_audit src/feed_fem_geometry_audit.cpp)
 target_link_libraries(starz_feed_fem_geometry_audit PRIVATE starz_feed_fem starz_feed_geometry)
 add_test(NAME feed_peak_CAD_geometry_audit COMMAND "${CMAKE_COMMAND}"

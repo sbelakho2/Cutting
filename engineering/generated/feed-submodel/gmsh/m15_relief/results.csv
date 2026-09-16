@@ -1,0 +1,3 @@
+root_mm,mode,nodes,tets,case,sampled_vm_MPa,phase_upper_MPa,peak_x_mm,peak_S_mm,peak_z_mm,phase_deg,CAD_state
+0.02,sector,61286,266285,working,60.5168798821,63.7179054371,-2.05544966036,72.7149451969,6.41507012145,142.5,inside
+0.01,sector,140345,582484,working,59.2913333532,62.4701571632,-2.06748502013,72.6857941892,6.42004676918,142.5,inside

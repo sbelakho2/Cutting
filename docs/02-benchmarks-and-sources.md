@@ -29,9 +29,29 @@ At 1 m, ±(0.2% + 1 mm) evaluates to **±3 mm**. The S1 length goal ±0.70 mm wo
 | Actual length feedback | Two Kübler wheel / Autonics encoder modules with M201 plate, spring arm and 626 counter-roller integrated in CAD; calibration data synthetic; [qualification tool](20-physical-qualification.md) exists but **no measurement has been taken** |
 | Programmable grip pressure, belt clamping, ACD, AIC, vision, crimping, stacking, marking | **Not implemented**; none is claimed |
 | Controls | RP2350 target source includes PIO, watchdog and control-layer supervision; the retained legacy host reference returns `NotCommissioned`. Neither has physical hardware or safety-function validation. |
-| Payoff, guards, cabinet, wiring, safety relay | Initial logical cabinet design input exists in [controls and wiring](22-controls-and-wiring.md), plus [preliminary static guard/payoff accommodation](25-preliminary-guard-and-payoff.md); no released cabinet, guard/payoff design, assembly or qualification exists |
+| Payoff, guards, cabinet, wiring, safety relay | [Guard/payoff R2 selections](26-guard-and-payoff-selection.md) (panels, door, spool, spindle, 6204 pockets, brake), [assembly sequence](30-machine-assembly-sequence.md), [audit](28-physical-contradiction-audit.md) and the [electrical calculation package](22-controls-and-wiring.md); no released cabinet, fabricated guard/payoff or qualification exists |
 
 No Komax parity, throughput, endurance or accuracy claim is made or supported by the repository. The published Komax length figure is a manufacturer specification; the S1 ±0.70 mm/1 m figure is a design target that has never been measured on hardware.
+
+### S1-B cycle-time budget (design arithmetic only, 2026-09-15)
+
+A desk cycle budget from the source motion limits ([machine_spec](../shared/machine_spec.hpp): feed 500 mm/s at 1.5 m/s²; strip 80 mm/s at 0.4 m/s²; blade 12.5 mm/s at 300 mm/s²; blade open-apex 8 mm + 0.2 mm overlap stroke ≈ 8.2 mm each way; ejection 230 mm):
+
+| Phase | L=100 mm | L=1000 mm |
+|---|---|---|
+| Feed (trapezoid/triangular) | 0.516 s | 2.000 s |
+| Blade close+cut+open (8.2 mm × 2 at 12.5 mm/s) | 1.312 s | 1.312 s |
+| Strip 3 mm | 0.173 s | 0.173 s |
+| Ejection/comm budget | 0.150 s | 0.150 s |
+| Sequential cycle | 2.15 s (≈28/min) | 3.64 s (≈16.5/min) |
+| Overlapped (blade concurrent with next feed, process-qualification-gated) | 1.64 s (≈37/min) | 2.32 s (≈26/min) |
+
+This is arithmetic from configured limits, not a measured cycle, an OEE or a
+throughput claim. It also exposes that the blade stroke dominates short-wire
+cycle time: raising `blade_speed_mm_s` above 12.5 mm/s is the main design
+lever and requires requalification of the cut axes, blade pair and edge
+quality. No Cpk, MTBF, availability or endurance number exists or is
+estimated here.
 
 Q1250 [S11] publishes a 24 × 16 mm field of view, 0.13–6 mm² wire range and up to 18 mm strip. Usable detection region is smaller. Its options inspect visible defects; no universal hidden-nick detection accuracy is published. Q1240 [S12] publishes output impact ≤1% above 200 mm and up to 4% at 60–200 mm; do not transfer those figures to another inspection model.
 

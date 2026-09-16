@@ -30,6 +30,18 @@ struct TetMesh {
     std::optional<MeshGeometryAudit> geometry_audit;
 };
 struct ElasticMaterial { double young_pa, poisson, density_kg_m3; };
+struct FoundationPatch {
+    // Winkler elastic-foundation support: per-unit-area spring stiffness
+    // (N/m^3, i.e. N/m per m^2 of seat) along each global direction, applied
+    // over the boundary faces selected by `select` (face-centroid test, the
+    // same convention as the load patches). Each selected face contributes
+    // area/3 times the per-unit-area stiffness to the diagonal of its three
+    // nodes. Spring DOFs stay free; their reactions enter the reported force
+    // and moment balances. This replaces fixed-node constraints; it is a
+    // linear foundation, not a contact or friction solve.
+    std::function<bool(const Eigen::Vector3d& centroid_mm)> select;
+    Eigen::Vector3d stiffness_pa_per_m=Eigen::Vector3d::Zero();
+};
 using Constraint=std::array<std::optional<double>,3>; // Prescribed displacement in metres.
 using Constraints=std::function<Constraint(const Eigen::Vector3d& point_mm)>;
 struct LoadPatch {
@@ -86,6 +98,14 @@ std::vector<DistributedElasticResult> solveDistributedElasticCases(
 std::vector<ElasticResult> solveElasticCases(const TetMesh& mesh,ElasticMaterial material,const Constraints& constraints,
                            const std::vector<std::vector<LoadPatch>>& load_cases,int modes=0,
                            const Eigen::Vector3d& body_acceleration_m_s2=Eigen::Vector3d::Zero());
+// Same assembly/solve with elastic-foundation supports instead of prescribed
+// node constraints. No node is eliminated; the foundation stiffness keeps the
+// system positive definite. The 150000-node direct-solver cap, the equilibrium
+// checks and the result schema are unchanged.
+std::vector<ElasticResult> solveElasticFoundationCases(
+    const TetMesh& mesh,ElasticMaterial material,const std::vector<FoundationPatch>& foundations,
+    const std::vector<std::vector<LoadPatch>>& load_cases,int modes=0,
+    const Eigen::Vector3d& body_acceleration_m_s2=Eigen::Vector3d::Zero());
 ElasticResult solveElastic(const TetMesh& mesh,ElasticMaterial material,const Constraints& constraints,
                            const std::vector<LoadPatch>& loads,int modes=0,
                            const Eigen::Vector3d& body_acceleration_m_s2=Eigen::Vector3d::Zero());
