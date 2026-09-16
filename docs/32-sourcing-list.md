@@ -42,6 +42,9 @@ already verified are shown; blank = take the cheapest in-stock offer.
 | M5×16 DIN 912 A2-70 socket screws, 50 pcs | 1 box | EUR 13.99 | [conrad.com](https://www.conrad.com/en/p/swg-9451667-allen-screws-m5-16-mm-hex-socket-allen-din-912-stainless-steel-a2-50-pc-s-1205329.html) (general hardware; the F0 motor/stage joints need class 10.9 — buy 10.9 separately) |
 | Schneider DF2CN02 fuse link (2 A gG 10×38) | 10 pcs | EUR 55.99 | [conrad.com](https://www.conrad.com/en/p/schneider-electric-df2cn02-fuse-holder-inset-10-pc-s-2935313.html) |
 | Phoenix UT 4-PE 3044128 (PE terminal, green-yellow) | 1 | EUR 4.79 | [conrad.com](https://www.conrad.com/en/p/phoenix-contact-3044128-triple-port-pg-terminal-6-2-mm-screws-green-yellow-1-pc-s-744462.html) |
+| Schneider DF2BA0200 fuse link (2 A gG 10×38, cheaper class) | 10 pcs | EUR 49.99 | [conrad.com](https://www.conrad.com/en/p/schneider-electric-df2ba0200-fuse-10-pc-s-2935281.html) |
+| Kübler encoder beam coupling 8.0000.1102.1008 (Ø10/Ø8) | ref | EUR 43.99 | [conrad.com](https://www.conrad.com/en/p/kubler-group-8-0000-1102-1008-beam-coupling-rotary-encoder-1102-1-pc-s-198995.html) |
+| Kübler Perambulator measuring wheel (family reference) | ref | EUR 395.00 | [conrad.com](https://www.conrad.com/en/p/kubler-group-perambulator-1-pc-s-05-2400-0040-1000-5045-125696.html) |
 
 ## Open — click and take the cheapest in-stock offer
 

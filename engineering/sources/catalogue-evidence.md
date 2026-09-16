@@ -367,6 +367,16 @@ GBP 4.98. Both observed 2026-09-13.
   DIN-rail fuse BASE for 10×38 links is not listed at Conrad; its exact
   identity is to be confirmed from the current Schneider GS/DF2 accessory
   catalogue.
+- **Kübler observations (2026-09-16, Conrad):** (a) Kübler measuring-wheel
+  accessory "Perambulator" 05.2400.0040.1000.5045
+  ([page](https://www.conrad.com/en/p/kubler-group-perambulator-1-pc-s-05-2400-0040-1000-5045-125696.html))
+  EUR 395.00 incl VAT, "available soon" — a different wheel to the
+  selected 8.0000.3123.0006, showing the Kübler wheel family price class.
+  (b) Kübler beam couplings for rotary encoders, e.g. 8.0000.1102.1008
+  (Ø10/Ø8)
+  ([page](https://www.conrad.com/en/p/kubler-group-8-0000-1102-1008-beam-coupling-rotary-encoder-1102-1-pc-s-198995.html))
+  EUR 43.99 incl VAT, in stock — encoder-coupling class reference; these
+  are not power couplings and do not substitute the R+W MK2 lines.
 - **Priced encoder alternatives (observed 2026-09-16, automation24):**
   the selected Autonics E40S6-1024-6-L-5 has no observed public price.
   Automation24 lists two in-stock ifm magnetic 1024 PPR Ø6 mm shaft
