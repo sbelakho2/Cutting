@@ -44,6 +44,8 @@ with every verified price and clickable source:
 - [Machine assembly sequence and interface-fit register](docs/30-machine-assembly-sequence.md)
 - [Physical contradiction audit](docs/28-physical-contradiction-audit.md)
 - [Gate ledger — every open gate, category and closure action](docs/33-gate-ledger.md)
+- [Purchase enquiries — ready-to-send letters for every external line](docs/35-purchase-enquiries.md)
+- [Commissioning runbook — 11 phases, 69 steps closing every physical gate](docs/36-commissioning-runbook.md)
 - [Weld and assembly procedures (payoff and guard)](docs/34-weld-and-assembly-procedures.md)
 - [Master production and release plan](docs/24-production-and-release-plan.md): stepwise procurement, fabrication, assembly, inspection, commissioning and first-article gates; templates remain blank until actual work is performed.
 - [Auditable sourcing evidence](bom/sourcing-evidence.csv): direct public-page observations and exact-SKU comparison boundaries; no delivered-cost claim without equivalent quotations. Added 2026-09-13: LC1D12BD EUR70.40 (Automation24), SKF bearing/retention GBP prices (Simply Bearings), with FAG/KOYO quality-equivalent comparisons in [catalogue evidence](engineering/sources/catalogue-evidence.md).
