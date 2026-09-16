@@ -342,6 +342,15 @@ GBP 4.98. Both observed 2026-09-13.
   matching KK8610P340A1F0"; subsequent automated Farnell queries were
   rate-limited. Alibaba, eBay, TME, RS and Mouser block automated retrieval;
   no price from those channels is claimed.
+- **Made-in-China search (live, 2026-09-16): no listing exists for the
+  genuine HIWIN KK8610P340A1F0.** The only 340 mm-stroke KK86-class listing
+  is a clone, HZMotion TKK8610C-340A1F0
+  ([page](https://hzmotion.en.made-in-china.com/product/BpSrFNDcGvhK/China-Hzmotion-Original-Factory-Tkk8610c-340A1f0-Tkk-Low-Profile-Aluminum-Base-Kk-Type-Linear-Actuator-CNC-Machine-Linear-Motion.html))
+  at US$800–2,500 FOB (a non-committal range), plus 940 mm-stroke clones
+  (Canmeng KK86D20C/D10C, US$50–200). Clones are not selected: they are a
+  different precision class than the genuine HIWIN axis and require a
+  change record plus a full repeat of every affected check if ever
+  considered. The genuine axis stays on the distributor-quotation route.
 - **Circlip observation:** Simply Bearings lists a quality-equivalent
   DIN471-class 12 mm external circlip, code `d1400-012`
   ([page](https://www.simplybearings.co.uk/products/d1400-012)), GBP 0.85,
