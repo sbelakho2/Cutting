@@ -532,3 +532,45 @@ Detailed record: [electrical-documents-findings.md](electrical-documents-finding
   24 V/2.5 A, overload 150 % (3.75 A) typ. 200 ms, short-circuit
   constant-current 3.2 A, mains buffering 40 ms, inrush limit 52 A / I²t
   ≤3 A²s — inputs for the 24 V branch coordination (docs/22 §11.1).
+
+## Bearing-contact-thermal desk studies — model facts and stated constants (2026-09-16)
+
+This section documents the facts and stated assumptions used by the
+[bearing-contact-thermal studies](../generated/bearing-contact-thermal/report.md)
+([source](../src/bearing_contact_thermal.cpp)); the full results and
+verdicts live in the study report and status.json. Nothing here is a
+measured result.
+
+- **Record values used (authoritative):** F101 front seat matched 15j5,
+  3–6 µm diametral interference (guard-banded measured acceptance
+  3.5–5.5 µm, docs/12:36); F112 front bore Ø32.008–32.019 mm (CAD
+  32.0135) against the 6002-2Z/C3 OD 32.000 (0/−0.009 per the SKF record)
+  → an 8–28 µm diametral clearance (minimum thermal residual 2.432 µm per
+  the 256-corner record). The housing fit is a clearance, not an
+  interference; the record governs over any class shorthand.
+- **Materials (handbook values, certificates govern):** 42CrMo4+QT
+  E 205 GPa, ν 0.29, minimum yield 650 MPa (docs/12:17); hardened 100Cr6
+  bearing ring E 210 GPa, ν 0.30, ≈1700 MPa yield; 6082-T6 E 70 GPa,
+  ν 0.33, ≈260 MPa Rp0.2.
+- **Geometry idealisations (stated):** 6002 inner-ring OD Ø19.74 and
+  outer-ring ID Ø27.26 are nominal model stand-ins (not catalogue facts);
+  the meshed surfaces are separated by stated stand-ins (shaft seat
+  Ø14.995, ring bore Ø15.2, housing bore Ø32.3, rings inset 0.1 mm
+  axially) so the near-coincident conforming surfaces survive the gmsh
+  OCC import heal; the fits are applied as pressures/data, not geometry.
+- **Study 1 model:** shrink fit solved as a Lamé resolved pressure
+  (24 radial sectors, the collar_contact resolved-pressure pattern) with a
+  stated 35 N/µm balls+bore radial chain stiffness (sensitivity ×0.5/×2);
+  radial load 310 N = the recorded front-bearing peak resultant
+  (feed-analysis); single-material solve stated (stresses in uniform
+  regions are E-independent).
+- **Study 2 model:** 30 W standstill motor holding loss (24HS40 5.0 A/phase,
+  0.60 Ω/phase → 2·5²·0.6 = 30 W, docs/28 §2.5) applied uniformly on the
+  Ø14 pulley-seat surface; 42CrMo4 k = 42.7 W/mK; still-air convection
+  h = 10 W/m²K, ambient/housing 25 °C; front bearing seat as a stated
+  2800 W/m²K effective conduction path (series chain: press contact
+  ≈8000 W/m²K → 3.4 W/K, balls+grease ≈2 W/K at standstill, grease-filled
+  5 µm ring/bore gap ≈27 W/K → ≈1.2 W/K over the 424 mm² seat; stated
+  sensitivity 1000/8000 W/m²K); roller surfaces pinned at 25 °C; rear cut
+  face insulated (upper bound). The S5M belt thermal break (docs/28 §2.5)
+  means the applied 30 W is an upper bound, not a measured input.

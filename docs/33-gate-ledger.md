@@ -34,7 +34,7 @@ steps attached to each gate remain mandatory.
 | 7 | Guard/payoff weld & assembly procedure | docs/26 §6.7; docs/34 | CLOSED-DESK (physical inspection remains) | Procedures drafted with fixtures, processes and criteria: post-to-base coaxial weld (gauge-pin fixture, coaxiality ≤0.1), spool hub weld (runout ≤1.0), jamb/door-frame weld + glazing (docs/34) | Physical weld inspection and first-article checks (docs/26 §6.3, docs/20) |
 | 8 | True helical-thread roots (M5 blind hole, M15) | feed-fem holds "true_threads_verified:false"; docs/15:124; docs/12:60 | PHYSICAL-ONLY | FEM uses nominal thread envelopes; not qualified | Machining QA per docs/12 (M5 depth/tip record docs/14, thread gauge) plus thread inspection at receipt; no FEM number releases the thread |
 | 9 | Final edge breaks 0.05–0.10 mm | feed-fem; docs/12 | PHYSICAL-ONLY | Deburr practice specified; not measured | Deburr without raised lips and inspect per docs/12:127 + build record |
-| 10 | Bearing/housing compliance, preload, thermal field | docs/24 §9 "Bearings, joints and thermal behavior"; bearing-fit (`thermal_field_verified:false`); docs/12:68 | PHYSICAL-ONLY | 256-corner fit envelope passes conditionally (min 1.28 µm); thermal field unverified | Measure/justify preload, contact, housing compliance and the seat temperature field on the actual build; apply the conduction calc in engineering/generated/bearing-fit/report.md; instrumented cold-start/hot-run test |
+| 10 | Bearing/housing compliance, preload, thermal field | docs/24 §9 "Bearings, joints and thermal behavior"; bearing-fit (`thermal_field_verified:false`); docs/12:68 | PHYSICAL-ONLY — desk parts (housing compliance + thermal field) **CLOSED 2026-09-16** (ledger §2.5) | 256-corner fit envelope passes conditionally (min 1.28 µm); new [bearing-contact-thermal study](../engineering/generated/bearing-contact-thermal/report.md): the 6 µm matched interference resolves to 17.65 MPa on the seat (seat vm 22.73 vs 650 MPa, ring 82.26 vs ≈1700 MPa); the record's F112 bore is a clearance fit, so the housing carries no fit pressure (bore-wall 0.98 MPa under the resolved 310 N); housing compliance changes the seat stress ≤3.9 MPa absolute (a rigid-boundary artifact) — not material; the 30 W standstill thermal FEM gives a 29.66 K front-seat rise vs the record's 20 K shaft-above-housing envelope → **not met at the central stated seat conductance** (sensitivity 15.5–51.7 K) | Remaining physical: measure/justify preload, contact and the seat temperature field on the actual build; instrumented cold-start/hot-run test (docs/12:38); record the motor-case temperature at rated hold (docs/28 §2.5) |
 | 11 | Rotating fatigue qualification | feed-fem (`fatigue_verified:false`); docs/15:124; docs/24 §9 | PHYSICAL-ONLY | No fatigue life established | Physical fatigue test on the actual shaft/build (docs/15 requirement); nothing desk-side substitutes |
 | 12 | ±60 N roller-force envelope / pressure, friction, jam | docs/verification/feed-shaft-fem.md:116; docs/24 §9 | PHYSICAL-ONLY | 5 Nm at r=20 mm could mean 250 N tangential — torque alone does not prove the force limit | Physical pressure/friction/jam qualification on the assembled cassette + docs/20 nip/wheel force records |
 | 13 | Blade pair T001 | docs/24 §4.4; head (`tooling_qualified:false`) | EXTERNAL-INQUIRY + PHYSICAL-ONLY | Purchase-to-drawing; edge-unqualified; no blade pair procured | Specialist manufacture quote to the drawing; loaded clearance verification before installation; edge qualification (docs/24 §4.4) |
@@ -128,12 +128,62 @@ retention/torque connection, not a clamping joint). Record the applied
 torque in the build record at assembly; the supplier's value governs if
 provided.
 
+### 2.5 Bearing/housing compliance and thermal field — desk parts (gate 10)
+
+[Study](../engineering/generated/bearing-contact-thermal/report.md),
+[status](../engineering/generated/bearing-contact-thermal/status.json),
+[source](../engineering/src/bearing_contact_thermal.cpp),
+[header](../engineering/include/bearing_contact_thermal.hpp),
+[test](../engineering/tests/test_bearing_contact_thermal.cpp) (CTests
+`bearing_contact_thermal_benchmarks`, `bearing_contact_thermal_report`).
+Local linear FEM (OCC solid → STEP → gmsh, 22,407 / 8,914 nodes, ≤150,000
+cap; resolved-pressure contact in the collar_contact.cpp pattern; scalar
+steady-state conduction solve).
+
+**Study 1 (housing compliance, PASS):** the Ø15 seat + 6002 rings + F112
+block are meshed with stated surface stand-ins (Ø14.995 seat, Ø15.2
+ring-bore, Ø32.3 bore) so the near-coincident conforming surfaces stay
+separable for the resolved-pressure patches; the 6 µm matched interference
+(record window 3–6 µm, worst case) is applied as a Lamé resolved pressure
+(24 radial sectors) with a stated 35 N/µm balls+bore chain support
+(sensitivity ×0.5/×2). The fit record's housing value is an **8–28 µm
+diametral clearance** (F112 bore 32.008–32.019 vs 6002 OD 32.000/−0.009;
+minimum thermal residual 2.432 µm) — there is **no housing interference in
+the record** (the task reading "K6-class housing interference" conflicts
+with the record's +8/+19 µm bore; the record governs), so the housing
+carries 0 MPa fit pressure. Numbers: seat contact pressure 17.65 MPa; seat
+peak vm 22.73 vs 650 MPa (42CrMo4+QT); ring peak vm 82.26 vs ≈1700 MPa
+(hardened 100Cr6); housing bore-wall peak vm 0.98 vs 260 MPa (6082-T6)
+under the resolved 310 N front-bearing resultant. The compliant chain
+changes the load-induced seat stress by 91.9 % relative to the four-mesh
+rigid-boundary peak (4.28 → 0.35 MPa), but only **3.9 MPa absolute** — the
+seat stress is dominated by the shrink fit, not by housing compliance.
+
+**Study 2 (thermal field, HOLD):** steady-state conduction FEM of the F101
+front half (S31.5–113): 30 W standstill motor holding loss (24HS40
+2·5²·0.6, docs/28 §2.5) applied uniformly on the Ø14 pulley-seat surface,
+k = 42.7 W/mK, h = 10 W/m²K still-air convection on exposed surfaces,
+front bearing seat as a stated 2800 W/m²K conduction path to the 25 °C
+housing (series chain ≈1.2 W/K), roller surfaces pinned at 25 °C, rear cut
+face insulated (upper bound: all 30 W flows forward). Front-seat rise
+**29.66 K (max) / 19.98 K (mean)** vs the fit record's explicit 20 K
+shaft-above-housing envelope → **not met** at the central stated
+conductance (sensitivity 15.5 / 51.7 K at 8000 / 1000 W/m²K). The desk FEM
+does not robustly demonstrate the envelope for the prescribed worst-case
+bound; the instrumented cold-start/hot-run test (docs/12:38) and the
+measured motor-case temperature remain the required closure. The S5M belt
+thermal break and the rear-half conduction path are stated mitigations,
+not used to relax the number. `thermal_field_verified` stays false.
+
 ## 3. Counts
 
 - DESK-CLOSABLE rows: 8 (gates 1, 3–7, 22, 44). Desk part now closed and
   recorded in §2: 6 (gates 1, 3, 4, 5, 6, 44); in progress in parallel
   workstreams: 1 (gate 22); open desk item requiring a released procedure
-  document: 1 (gate 7).
+  document: 1 (gate 7). In addition, the desk parts of the PHYSICAL-ONLY
+  gate 10 (housing compliance + thermal field) are closed and recorded in
+  §2.5; gate 10 remains PHYSICAL-ONLY because its remaining action is the
+  physical build measurement and instrumented test.
 - PHYSICAL-ONLY rows: 19 (gates 2, 8–12, 14, 16–18, 23–29, 42, 43).
 - EXTERNAL-INQUIRY rows: 17 (gates 13, 15, 19, 20, 21, 30–41).
 - Mixed rows counted by their governing remaining action: gates 2, 13, 21

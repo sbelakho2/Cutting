@@ -25,7 +25,7 @@ inline constexpr std::uint32_t counts_per_revolution=4*pulses_per_revolution;
 inline constexpr double encoder_body_od_mm=40,encoder_body_length_mm=31;
 inline constexpr double encoder_pilot_od_mm=20,encoder_pilot_minus_mm=0.02;
 inline constexpr double encoder_pilot_length_mm=5,encoder_shaft_length_mm=15;
-inline constexpr double encoder_shaft_min_mm=5.985,encoder_shaft_max_mm=5.990;
+inline constexpr double encoder_shaft_min_mm=5.984,encoder_shaft_max_mm=5.996;
 inline constexpr double encoder_flat_across_mm=5,encoder_flat_length_mm=10;
 inline constexpr double encoder_mount_pcd_mm=30,encoder_mount_thread_depth_mm=5;
 inline constexpr double encoder_starting_torque_nm=0.00392,encoder_inertia_kg_m2=4e-6;

@@ -1,6 +1,6 @@
 id,description,volume_mm3,xmin_mm,ymin_mm,zmin_mm,xmax_mm,ymax_mm,zmax_mm
 ME-W01,"Kuebler No123 dimensioned external/bore/thread envelope",7841.07987988,-15.915,-1e-07,-15.915,15.915,14.5000001,15.915
-ME-E01,"Autonics E40S6 dimensioned body/pilot/shaft/face envelope",40812.4841923,-20,-31,-20,20,20,20
+ME-E01,"Autonics E40S6 dimensioned body/pilot/shaft/face envelope",40812.7187256,-20,-31,-20,20,20,20
 ME-C01,"Autonics supplied6mm coupling envelope;flexure interior not provided",3136.80505359,-7.5000001,-1e-07,-7.5000001,7.50000012616,22.0000001,7.5000001
 ME-B01,"SKF626-2Z outer/bore/width interface;no raceway internals",1531.52641863,-9.5,0,-9.5,9.5,6,9.5
 M201,"STARZ encoder plate46x46x6",10244.3744966,-23,-2.22886533394e-15,-23,23,6,23

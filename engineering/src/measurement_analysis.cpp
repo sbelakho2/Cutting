@@ -129,7 +129,7 @@ int main(int argc,char** argv)try {
         <<"The rubber section/bond thickness and edge chamfers are not dimensioned. No such dimensions are invented in the interface model.\n\n"
         <<"Autonics **"<<c::encoder<<"**: body31 mm behind mounting face, pilot5 mm in front, shaft15 mm beyond pilot. "
         <<"The tip is **20 mm from the mounting face**, not15 mm. Shaft diameter5.985–5.990 mm; single flat5 mm across, last10 mm long; "
-        <<"pilot19.98–20.00 mm;3×M3×0.5 on PCD30,5 mm deep. Original public CAD viewer links a shared800/75PPR/24V family model; "
+        <<"pilot19.979–20.000 mm;3×M3×0.5 on PCD30,5 mm deep. Original public CAD viewer links a shared800/75PPR/24V family model; "
         <<"it is not relabelled as the selected1024PPR/5V unit.\n\n"
         <<"## Uncalibrated length and bearing gates\n\nThe factory circumference alone gives **1.0 mm error per commanded metre**. "
         <<"Adding the previous0.2 runout,0.05 quantisation,0.15 tension and0.25 slip allocations gives **1.65 mm**, not the earlier1.15 mm. "

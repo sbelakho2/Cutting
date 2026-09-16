@@ -10,8 +10,8 @@ One module upstream and one downstream. Each retains **Kübler 8.0000.3123.0006*
 | Wheel OD/tread/overall width | Ø31.83 (±0.025), 9.5, 14.5 mm | Same drawing |
 | Wheel bore/hub | Ø6 H7; Ø16.5 hub; Ø9 end land, 0.75 long | Same drawing |
 | Wheel screw | **M4×6 ISO4029**, centre 2.5 from hub end | No.123 callout; four openings depicted, screw quantity not separately stated |
-| Encoder body and pilot | Ø40×31 rearward from mounting face; Ø19.98–20.00×5 forward | [Autonics drawing](../engineering/sources/autonics-e40-drawing.png) |
-| Encoder shaft | Ø5.985–5.990; 15 beyond pilot; **tip20 from mounting face** | Same drawing |
+| Encoder body and pilot | Ø40×31 rearward from mounting face; Ø19.979–20.000×5 (2025 datasheet) forward | [Autonics drawing](../engineering/sources/autonics-e40-drawing.png) |
+| Encoder shaft | Ø5.984–5.996 (2025 datasheet); 15 beyond pilot; **tip20 from mounting face** | Same drawing |
 | Encoder flat | One flat, 5 across; last10 mm of shaft | Same drawing; not two opposing flats |
 | Encoder fixings | Three M3×0.5, 5 deep, PCD30, 120° apart | Same drawing |
 | Supplied coupling | Ø15×22; Ø6.0–6.1 bores; four M3 screws 2.8 from ends | Same drawing; hub depth/flexure interior/torque not dimensioned |

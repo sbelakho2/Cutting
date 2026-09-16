@@ -330,7 +330,7 @@ void encoderPlate(const fs::path& out) {
     text(s,258,153,"3 ×ISO7092 M3,3.2×6×0.5,200HV");
     text(s,258,164,"Nominal encoder thread engagement3.5");
     text(s,258,171,"Nominal thread-bottom clearance1.5");
-    text(s,258,182,"Encoder pilot19.98–20.00 ×5 long");
+    text(s,258,182,"Encoder pilot19.979–20.000 ×5 long");
     text(s,258,189,"Diametral pilot clearance0.040–0.080");
     text(s,258,200,"Encoder tip20 from A,not15");
     text(s,258,207,"Final mounting torque/support still open");
