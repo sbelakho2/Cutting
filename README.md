@@ -5,9 +5,9 @@
 **Start building now:** [fabrication guide](docs/31-fabrication-guide.md) —
 ordered procurement, machining, assembly, energisation and first-article
 steps with every check named. Evidence rules and warnings:
-[master plan](docs/24-production-and-release-plan.md).
-Energisation and commissioning are gated by the physical measurements
-listed under [Warnings](#warnings-consolidated); fabrication itself is not.
+[master plan](docs/24-production-and-release-plan.md). One-page buying list
+with every verified price and clickable source:
+[sourcing list](docs/32-sourcing-list.md).
 
 - [Selected cutting-axis hardware and scope](engineering/README.md)
 - [Manufacturer drawings, actual ratings and rejected mismatches](engineering/sources/catalogue-evidence.md)

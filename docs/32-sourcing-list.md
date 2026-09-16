@@ -1,0 +1,62 @@
+# Sourcing list — every purchased line with a ready search link
+
+**Revision:** `S1-B-SRC-2026-09-16`
+
+Open the links and record the price + link in `bom/selected-*.csv`. Prices
+already verified are shown; blank = take the cheapest in-stock offer.
+
+## Priced (verified, recorded in the BOMs)
+
+| Item | Qty | Price | Link |
+|---|---|---|---|
+| 24HS40-5004D-E1000 | 2 | USD 36.87 | stepperonline.com (recorded) |
+| CL86T-V41 kit (34E1K-85) | 2 | USD 130.77 | stepperonline.com (recorded) |
+| LE-350-60 | 2 | USD 17.88 | stepperonline.com (recorded) |
+| SKF 6001-2Z/C3 | 8 | GBP 6.32 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/6001-2z-c3-skf) |
+| SKF 6002-2Z/C3 | 8 | GBP 6.91 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/6002-2z-c3-skf) |
+| SKF 626-2Z | 10 | GBP 4.49 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/626-2z-skf) |
+| SKF 6204-2Z/C3 | 2 | GBP 8.68 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/6204-2z-c3-skf) |
+| SKF KM 2 | 8 | GBP 7.90 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/km2-skf) |
+| SKF MB 2 | 8 | GBP 2.15 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/mb2-skf) |
+| UMCL40-10-20-MC | 8 | EUR 19.50 | uk.misumi-ec.com (recorded) |
+| HTPA20S5M250-A-N14 | 4 | EUR 39.87 | uk.misumi-ec.com (recorded) |
+| HTBN225S5M-250 | 2 | EUR 25.24 | uk.misumi-ec.com (recorded) |
+| LHFRW12 | 4 | EUR 14.58 | uk.misumi-ec.com (recorded) |
+| PSFJ12-240 | 4 | EUR 11.70 | uk.misumi-ec.com (recorded) |
+| SWU17-60 / SWU10.5-35 | 2 / 1 | EUR 3.53 / 1.80 | uk.misumi-ec.com (recorded) |
+| XPSUAF13AP | 1 | EUR 133.50 | [automation24.com](https://www.automation24.com/safety-relay-schneider-electric-harmony-xpsuaf13ap) |
+| 3SU1851-0NB00-2AC2 | 1 | EUR 110.70 | automation24.com (recorded) |
+| SLC-F-024-20/20-R4 + ACF-1 | 1+1 | EUR 143.50 + 17.90 | automation24.com (recorded) |
+| LC1D12BD | 3 | EUR 70.40 | [automation24.com](https://www.automation24.com/main-contactor-schneider-electric-tesys-lc1d12bd) |
+| 6EP3332-6SB00-0AY0 | 1 | EUR 68.60 | [automation24.com](https://www.automation24.com/logo-power-supply) item 103609 |
+| Raspberry Pi Pico 2 | 1 | USD 5.00 | recorded |
+| Circlip Ø12 (DIN471-class) | 8 | GBP 0.85 | [simplybearings.co.uk](https://www.simplybearings.co.uk/products/d1400-012) |
+
+## Open — click and take the cheapest in-stock offer
+
+| Item | Qty | Where to click |
+|---|---|---|
+| KK8610P340A1F0 | 2 | [Alibaba](https://www.alibaba.com/trade/search?SearchText=KK8610P340A1F0) · [Made-in-China](https://www.made-in-china.com/multi-search/KK8610P340A1F0/F1/1.html) · regional HIWIN office RFQ |
+| R+W MK2/100/50/8/14 and 10/12 | 2+2 | [rw-couplings.com shop](https://www.rw-couplings.com/) (MK2 series) · distributor RFQ |
+| Kübler 8.0000.3123.0006 | 2 | [Kübler shop](https://kuebler.com/shop) · distributor RFQ |
+| Autonics E40S6-1024-6-L-5 | 2 | [Alibaba](https://www.alibaba.com/trade/search?SearchText=E40S6-1024-6-L-5) · Autonics distributor RFQ |
+| Rittal SK3303.500 | 1 | [Rittal shop](https://www.rittal.com/) · distributor RFQ |
+| CL57T-V41 | 2 | [stepperonline.com](https://www.omc-stepperonline.com/closed-loop-stepper-driver-v4-1-0-8-0a-24-48vdc-for-nema-17-23-24-stepper-motor-cl57t-v41) |
+| LE-350-36 | 1 | [stepperonline.com](https://www.omc-stepperonline.com/350w-36v-9-7a-115-230v-switching-power-supply-stepper-motor-cnc-router-kits-le-350-36) |
+| SEEGER A12 (or the GBP 0.85 alternative above) | 8 | SEEGER-ORBIS distributor |
+| DF2CN2 + DF2CA-class holder | 1+1 | [se.com](https://www.se.com/ww/en/product/DF2CN2/) · distributor |
+| Phoenix PT 2,5 (3209510/3209523), UT 4 (3044131), UT 4-PE | per layout | [phoenixcontact.com](https://www.phoenixcontact.com/en-pc/products/terminal-block-pt-25-3209510) · distributor |
+| Wago 282-364 | 1 | [wago.com](https://www.wago.com/global/rail-mounted-terminal-blocks/p/282-364) · distributor |
+| Lapp Skintop MS-M 20×1.5 EMC | 2 | [lapp.com](https://www.lapp.com/) · distributor |
+| Rittal AE enclosure ≥800×600×210 | 1 | [rittal.com](https://www.rittal.com/) · distributor |
+| H07V-K 0.75/1.0/1.5 mm² + ferrules | set | local electrical wholesaler |
+| ISO4762/7092/4032, DIN913/929, ISO8734 fasteners | per BOM | Bossard / Würth / local |
+| Raspberry Pi Pico 2, AM26LV32EIDR, TPL7407LDR | per BOM | [LCSC](https://www.lcsc.com/search?q=TPL7407LDR) · [Raspberry Pi](https://www.raspberrypi.com/products/raspberry-pi-pico-2/) |
+
+## Delivery to Tunisia (sous-douane), USD
+
+Send the full list with quantities to the sous-douane forwarder for one
+consolidated DDU quote (unit USD, seller terms, freight, forwarder handling,
+destination charges, customs, lead time). Compare against direct DHL/FedEx
+economy offers from the clickable shops above. Record each offer in the
+build record before ordering.
