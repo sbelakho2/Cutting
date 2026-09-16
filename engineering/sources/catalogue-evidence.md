@@ -385,6 +385,13 @@ GBP 4.98. Both observed 2026-09-13.
   STEPPERONLINE shop pricing recorded in the BOM, confirming the direct
   shop as the cheapest observed source for CL57T-V41 and LE-350-36;
   these Amazon offers are recorded as fallback market evidence.
+- **Encoder measuring-wheel market class (2026-09-16, Amazon.de):** generic
+  aluminium/rubber encoder wheels with 200/300/360 mm circumference and
+  6/8/10 mm bores list at EUR 79.49 per 2 pcs
+  ([page](https://www.amazon.de/dp/B0CSFSCCTT)); no 100 mm-circumference
+  wheel exists on the marketplace and the exact Kübler 8.0000.3123.0006
+  is not listed on Amazon.de — the Kübler distributor route remains the
+  only source for the selected 100±0.1 mm wheel.
 - **Priced encoder alternatives (observed 2026-09-16, automation24):**
   the selected Autonics E40S6-1024-6-L-5 has no observed public price.
   Automation24 lists two in-stock ifm magnetic 1024 PPR Ø6 mm shaft
