@@ -103,6 +103,16 @@ currency, freight/duty terms, lead time and validity.
 Every row above remains a `HOLD-`/unpriced line until its quotation and
 incoming inspection are recorded; none may be substituted silently.
 
+**Tunisia sous-douane delivery step (2026-09-16):** send the complete
+quotation-register line list (exact SKUs + quantities above) as one RFQ to
+the sous-douane freight forwarder and to two distributors that ship to
+Tunisia. Require each offer to quote: unit USD price, currency and payment
+terms, EXW/FOB seller terms, freight to the forwarder's consolidation point,
+forwarder handling, air/sea freight, destination charges and customs terms
+(DDU sous-douane), lead time and validity. No public page provides this
+pricing; only that RFQ can establish it. Record the offers in the build
+record before placing orders.
+
 ## 3. Mechanical fabrication and inspection
 
 1. Begin with material certification and blank identification. Machine only

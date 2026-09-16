@@ -335,6 +335,23 @@ GBP 4.98. Both observed 2026-09-13.
   The 2026-09-13 Simply Bearings and Automation24 observations above were
   read directly from live pages; earlier automation24/DigiKey/MISUMI records
   in this repository retain their original dates and remain separate.
+
+### Observed absence and additions, 2026-09-16
+
+- Farnell UK search (live, 2026-09-16) returns "couldn't find any products
+  matching KK8610P340A1F0"; subsequent automated Farnell queries were
+  rate-limited. Alibaba, eBay, TME, RS and Mouser block automated retrieval;
+  no price from those channels is claimed.
+- **Circlip observation:** Simply Bearings lists a quality-equivalent
+  DIN471-class 12 mm external circlip, code `d1400-012`
+  ([page](https://www.simplybearings.co.uk/products/d1400-012)), GBP 0.85,
+  observed 2026-09-16. Free/un-sprung diameter 11 mm; the selected TR-RR01
+  remains the SEEGER A12 identity — using this part requires an approved
+  change record and the groove-fit check of the audit record.
+- No public catalogue page publishes a delivered-to-Tunisia (sous-douane)
+  USD price for any line; that pricing only exists as a freight-forwarder /
+  broker quotation. The consolidated RFQ step for that quotation is
+  defined in the master plan §2.2.
 ## H003 adapter FEM — preloaded elastic-foundation model (2026-09-15)
 
 This section supersedes the FEM summary inside the R6-fasteners bullet above; the fastener/geometry facts there are unchanged, while the ideal-clamp FEM numbers (18.8267 MPa, 14.7581%) are replaced by the preloaded-joint run below.
