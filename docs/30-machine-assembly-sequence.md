@@ -193,7 +193,7 @@ record before the assembly step that consumes it — the blank
 [incoming-inspection template](inspection/incoming-inspection-template.csv)
 governs. No fit in this table has been physically confirmed.
 
-## 4. What still cannot be closed from a desk
+## 4. Warnings and holds
 
 Torque/preload records, matched bearing measurement, weld inspection,
 flatness/runout measurements, spring-force settings, belt tension, blade

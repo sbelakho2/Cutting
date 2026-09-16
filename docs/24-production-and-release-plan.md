@@ -1,16 +1,15 @@
 # Master production and release plan — S1-B
 
-**Revision:** `S1-B-PROD-R1-2026-09-13`  
+**Revision:** `S1-B-PROD-R2-2026-09-16`
 **Status:** source-controlled build plan only. It is **not** an authority to
 fabricate, energise, commission, operate, certify or sell the machine.
 
-This plan gives one simple, evidence-driven order for converting the S1-B
-source package into a future build. It joins the selected BOM records,
-generated CAD, inspection templates and qualification procedure without
-turning any source check into a physical acceptance result. A work package is
-closed only when its named evidence is complete, reviewed and has a recorded
-disposition. A blank record, a simulated result or a supplier web page is a
-hold—not a pass.
+**To build the machine, start at the [fabrication guide](31-fabrication-guide.md)**
+and return here for the evidence rules, gate table and warnings. A work
+package is closed only when its named evidence is complete, reviewed and has
+a recorded disposition. Warnings are consolidated in
+[section 10](#10-warnings-and-holds-consolidated); the body below is the
+execution path.
 
 ## 1. Configuration baseline and build record
 
@@ -132,11 +131,8 @@ still applicable to the proposed use.
    alignment or torque evidence.
 3. The [guard/payoff selection record](26-guard-and-payoff-selection.md) adds
    explicit R2 material and component selections on top of the
-   [preliminary static accommodation](25-preliminary-guard-and-payoff.md).
-   Actual guard material, manufacturer mounting evidence, fasteners, wire
-   spool, spindle/brake, retained energy and access route remain physically
-   unvalidated before fabrication. Do not claim a safe guard from a
-   clearance calculation.
+   [preliminary static accommodation](25-preliminary-guard-and-payoff.md);
+   build steps are in the [fabrication guide](31-fabrication-guide.md) §3.7–3.8.
 4. No blade pair is procured or qualified by this plan. `T001` remains
    purchase-to-drawing and requires specialist manufacture plus loaded
    clearance verification before installation.
@@ -225,3 +221,35 @@ traceable evidence.
 
 No row in this table may be closed by relaxing a numerical acceptance criterion,
 deleting failed raw data or relabelling source outputs as measured results.
+
+## 10. Warnings and holds (consolidated)
+
+All remaining warnings, honesty boundaries and physical holds in one place:
+
+1. **Source checks are not physical results.** A blank record, a simulated
+   result or a supplier web page is a hold—not a pass. A `HOLD-` or
+   `UNSELECTED` row is not an order line.
+2. **Landed cost.** No such landed-cost comparison exists in this revision;
+   the §2.1 register lists merchandise observations only, and §2.2 lists
+   the quotation requests for unpriced lines.
+3. **Safety functions.** IF-B01, firmware, USB, `GP15`, PIO abort and
+   watchdog features are diagnostic/control measures, not safety functions;
+   only the hardwired contactor/XPS path is the safety function, and it is
+   unvalidated.
+4. **Electrical.** Cabinet energisation is prohibited until every docs/22
+   §10 hold has evidence; the LC1D12BD DC duty answer is outstanding; the
+   XPS fuse is DF2CN2 (2 A), never 10 A.
+5. **Fabrication.** Torque values are not published for M5/M10 joints
+   (preload study pending); bearing seats are matched to measured bores;
+   the blade pair is purchase-to-drawing and edge-unqualified.
+6. **Simulation state.** Adapter raw-peak gate is REFINE (pressure-patch
+   edge; contact analysis with measured joint stiffness pending); the
+   34-exterior centroid whole-shaft audit and all preload/contact/fatigue/
+   thermal qualifications remain held; no FEM number releases a part.
+7. **Guard and payoff.** Risk assessment, Bernstein mounting evidence,
+   full-spool weighing (≤30 kg until re-checked), spindle deflection and
+   runaway/brake behaviour require physical measurement; the 30 mm apertures
+   pass the desk distance calculation but require risk-assessment sign-off.
+8. **Release.** `physical_results`, `fabrication_released`,
+   `full_machine_integrated` remain false everywhere; this plan is
+   source-controlled build guidance only.
