@@ -19,8 +19,8 @@ inline constexpr double feed_near_mm = 90.0;
 inline constexpr double feed_far_mm = 140.0;
 inline constexpr double roller_diameter_mm = 40.0;
 inline constexpr double wheel_circumference_mm = 200.0; // ifm E60137 nominal 200 mm, not calibration!
-inline constexpr std::int32_t encoder_counts_rev = 4096; // 1024 PPR, quadrature x4.
-inline constexpr std::int32_t nominal_encoder_nm_count = 48828;
+inline constexpr std::int32_t encoder_counts_rev = 8192; // 2048 PPR via IO-Link (docs/13 step 9), quadrature x4.
+inline constexpr std::int32_t nominal_encoder_nm_count = 24414; // 200 mm / 8192 counts = 24414.0625 nm/count.
 inline constexpr std::int32_t min_length_um = 200000;
 inline constexpr std::int32_t max_length_um = 3000000;
 inline constexpr std::int32_t min_strip_um = 3000;

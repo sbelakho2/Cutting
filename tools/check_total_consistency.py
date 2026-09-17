@@ -4,9 +4,9 @@
 Covers the 2026-09-16 substitutions (ifm RU3100 encoder, ifm E60137 200 mm
 measuring wheel, DIN 471 rings, 5x20 fuses) end to end:
 
-1. Cross-spec constant consistency of the 200 mm wheel remap and a repo-wide
-   sweep for stale 100 mm-era constants (40960 / 24414 / 0.024414 / old wheel
-   diameter claims).
+1. Cross-spec constant consistency of the 200 mm wheel remap (2048 PPR via
+   IO-Link since 2026-09-17) and a repo-wide sweep for stale 1024 PPR-era
+   constants (20480 / 48828 / 0.048828).
 2. CAD-vs-datasheet: ifm RU3100 and E60137 published facts vs
    shared/measurement_spec.hpp, the measurement/mechanism manifests and the
    published check status (wheel, encoder, coupling, M201/M203, fork/lug).
@@ -91,7 +91,12 @@ def spec_constant(text: str, name: str) -> float:
 # ----------------------------------------------------------------------------
 # 1. Cross-spec constant consistency (200 mm wheel remap)
 # ----------------------------------------------------------------------------
-STALE_TOKENS = ("40960", "24414", "0.024414")
+# 1024 PPR-era constants superseded by the 2048 PPR IO-Link setting. The bare
+# numeric tokens are word-bounded so scientific-notation floats in generated
+# CSVs (e.g. 1.87848828397e-21, 99.2048015071) do not false-positive.
+STALE_TOKENS = (("0.048828", r"0\.048828"),
+                ("48828", r"(?<![\w.])48828(?![\w.])"),
+                ("20480", r"(?<![\w.])20480(?![\w.])"))
 HISTORICAL_CONTEXT = ("was", "before", "supersed", "replaced", "instead of",
                       "halves", "restores", "→", "substitut", "resolved",
                       "no longer", "previous", "previously")
@@ -130,12 +135,12 @@ def stale_constant_sweep() -> None:
             low = line.lower()
             if "nominal_encoder_nm_count" in line:   # definition itself checked below
                 continue
-            for token in STALE_TOKENS:
-                if token not in line:
+            for label, pattern in STALE_TOKENS:
+                if not re.search(pattern, line):
                     continue
                 if any(word in low for word in HISTORICAL_CONTEXT):
                     continue
-                fail(f"{rel}:{number} still carries the 100 mm-era constant {token}")
+                fail(f"{rel}:{number} still carries the 1024 PPR-era constant {label}")
     for path, tokens in ((MACH_SPEC, ("100 mm",)), (MEAS_SPEC, ("31.83 mm",))):
         for token in tokens:
             for number, line in enumerate(read(path).splitlines(), start=1):
@@ -153,18 +158,18 @@ def check_spec_constants() -> None:
     nm_count = spec_constant(machine, "nominal_encoder_nm_count")
     if circumference != 200.0:
         fail(f"machine_spec wheel_circumference_mm is {circumference}, expected 200")
-    if counts_rev != 4096.0:
-        fail(f"machine_spec encoder_counts_rev is {counts_rev}, expected 4096")
-    if nm_count != 48828.0:
-        fail(f"machine_spec nominal_encoder_nm_count is {nm_count}, expected 48828")
-    exact_nm = 200.0 / 4096.0 * 1e6            # 48828.125 nm/count
+    if counts_rev != 8192.0:
+        fail(f"machine_spec encoder_counts_rev is {counts_rev}, expected 8192")
+    if nm_count != 24414.0:
+        fail(f"machine_spec nominal_encoder_nm_count is {nm_count}, expected 24414")
+    exact_nm = 200.0 / 8192.0 * 1e6            # 24414.0625 nm/count
     if abs(nm_count - exact_nm) > 1.0:
-        fail(f"machine_spec nm/count {nm_count} does not round 200 mm/4096 counts ({exact_nm})")
+        fail(f"machine_spec nm/count {nm_count} does not round 200 mm/8192 counts ({exact_nm})")
     counts_per_metre = spec_constant(controls, "nominal_counts_per_metre")
-    if counts_per_metre != 20480.0:
-        fail(f"controls_spec nominal_counts_per_metre is {counts_per_metre}, expected 20480")
-    if "nominal_um_per_count" not in controls or "48.828" not in controls:
-        fail("controls_spec lost the 48.828 um/count nominal scale")
+    if counts_per_metre != 40960.0:
+        fail(f"controls_spec nominal_counts_per_metre is {counts_per_metre}, expected 40960")
+    if "nominal_um_per_count" not in controls or "24.414" not in controls:
+        fail("controls_spec lost the 24.414 um/count nominal scale")
     if abs(counts_per_metre * circumference / counts_rev - 1000.0) > 1e-6:
         fail("controls counts-per-metre does not give exactly 1000 mm with the 200 mm wheel")
     m_circumference = spec_constant(measurement, "circumference_mm")
@@ -174,8 +179,8 @@ def check_spec_constants() -> None:
         fail(f"measurement_spec circumference_mm is {m_circumference}, expected 200")
     if abs(wheel_od - 200.0 / 3.141592653589793) > 0.005:
         fail(f"measurement_spec wheel_od_mm {wheel_od} != 200/pi ({200.0/3.141592653589793:.4f})")
-    if pulses != 1024.0 or 4 * pulses != counts_rev:
-        fail("measurement_spec PPR does not give 4096 quadrature counts")
+    if pulses != 2048.0 or 4 * pulses != counts_rev:
+        fail("measurement_spec PPR does not give 8192 quadrature counts")
     lug_min = spec_constant(mechanism, "lug_z_min")
     lug_max = spec_constant(mechanism, "lug_z_max")
     if abs(lug_min - 219.915) > 1e-6 or abs(lug_max - 231.915) > 1e-6:
@@ -184,11 +189,11 @@ def check_spec_constants() -> None:
         fail("mechanism_spec lug rise is not the 15.915 mm wheel-radius increase")
     # docs/01 and docs/13 must carry the remapped values.
     docs01 = read(DOCS01)
-    for needle in ("0.048828125 mm/count", "10240", "200 mm wheel circumference (ifm E60137)"):
+    for needle in ("0.0244140625 mm/count", "20480", "200 mm wheel circumference (ifm E60137)"):
         if needle not in docs01:
             fail(f"docs/01-design-basis.md lacks the remapped statement '{needle}'")
     docs13 = read(DOCS13)
-    for needle in ("20480 counts per metre", "0.048828125 mm/count", "Ø63.66", "200 mm"):
+    for needle in ("40960 counts per metre", "0.0244140625 mm/count", "Ø63.66", "200 mm"):
         if needle not in docs13:
             fail(f"docs/13 lacks the remapped value '{needle}'")
 

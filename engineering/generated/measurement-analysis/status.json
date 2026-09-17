@@ -4,7 +4,7 @@
   "input_data_kind":"synthetic_benchmark",
   "source_checks":5,
   "unresolved_source_checks":2,
-  "validation_observations":392,
+  "validation_observations":784,
   "validation_residual_failures":0,
   "physical_calibration_qualified":false,
   "hardware_capture_integrated":false,

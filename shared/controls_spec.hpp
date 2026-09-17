@@ -36,7 +36,9 @@ inline constexpr std::uint8_t feed_right_pul  = 6, feed_right_dir  = 7;
 // Measuring encoders ifm RU3100 (TTL/HTL push-pull, 4.75-30 VDC): the
 // 2026-09-16 substitution from the Autonics 5 V RS-422 line driver keeps the
 // A/B capture pins. Reviewed 2026-09-16: the encoder must be parameterised
-// to TTL mode via IO-Link (factory setting is HTL 50 mA); its single-ended
+// to TTL mode via IO-Link (factory setting is HTL 50 mA) and, 2026-09-17,
+// to 2048 PPR (factory 1024, programmable 1...10000) per docs/13 step 9;
+// its single-ended
 // A/B outputs drive the AM26LV32EIDR + inputs while the - inputs sit on a
 // 2.5 V mid-bias, and the four 120 ohm RS-422 terminators are not fitted.
 // Wiring note in docs/22 §6/§7.
@@ -105,12 +107,12 @@ inline constexpr std::uint32_t dir_setup_us = 5;   // >= 2 us required by the dr
 
 // ------------------------------------------------------- measuring encoders
 namespace enc {
-inline constexpr std::int32_t counts_per_rev = spec::encoder_counts_rev;              // 4096 (x4 decode)
+inline constexpr std::int32_t counts_per_rev = spec::encoder_counts_rev;              // 8192 (x4 decode)
 inline constexpr double nominal_wheel_circumference_mm = spec::wheel_circumference_mm; // 200 mm ifm E60137 nominal, uncalibrated
-inline constexpr double nominal_um_per_count = nominal_wheel_circumference_mm * 1000.0 / counts_per_rev; // 48.828
+inline constexpr double nominal_um_per_count = nominal_wheel_circumference_mm * 1000.0 / counts_per_rev; // 24.414
 // Calibration scale is stored as counts per metre in flash and set by the CLI
 // after the docs/20 length record; nominal value until a physical calibration exists.
-inline constexpr std::int32_t nominal_counts_per_metre = 20480;
+inline constexpr std::int32_t nominal_counts_per_metre = 40960;
 inline constexpr std::int32_t max_slip_um = 1500;  // encoder vs commanded disagreement that trips a fault.
 }
 

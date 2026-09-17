@@ -35,10 +35,13 @@ inline constexpr std::string_view encoder="RU3100";
 // practice - confirm the centering feature at receipt). 4.75...30 VDC,
 // HTL/TTL push-pull, factory 1024 PPR, 1000 kHz switching frequency,
 // 12000 rpm, starting torque <= 0.01 Nm, M12 5-pole radial/axial connector.
-// Resolution is programmable 1...10000 via IO-Link; 1024 factory is used so
-// no commissioning is required. Selected at automation24 item 102717,
+// Resolution is programmable 1...10000 via IO-Link. 2026-09-17: the encoder
+// is parameterised to 2048 PPR via IO-Link (docs/13 step 9, docs/42) so the
+// 200 mm wheel count spacing halves from the 1024 factory value to
+// 0.024414 mm/count; this IS a commissioning step, not a factory state.
+// Selected at automation24 item 102717,
 // EUR 186.40 ex VAT, in stock, dispatch next working day.
-inline constexpr std::uint32_t pulses_per_revolution=1024;
+inline constexpr std::uint32_t pulses_per_revolution=2048;
 inline constexpr std::uint32_t counts_per_revolution=4*pulses_per_revolution;
 inline constexpr double encoder_body_od_mm=58.6,encoder_body_length_mm=63.5;
 inline constexpr double encoder_shaft_length_mm=10;

@@ -18,11 +18,13 @@ resolved, [findings](../engineering/sources/measurement-replacement-findings.md)
   had no public price; both were replaced with priced, in-stock automation24
   equivalents: **ifm E60137** (EUR 57.00 ex VAT, item 102756) and **ifm
   RU3100** (EUR 186.40 ex VAT, item 102717).
-- The E60137 is a **200 mm** circumference wheel (Ø63.66): the length
-  resolution halves from 0.024414 to **0.048828 mm/count** at the 1024 PPR /
-  ×4 quadrature factory setting. The RU3100 resolution is IO-Link
-  programmable 1…10000 PPR; if finer resolution is ever required, 2048 PPR
-  restores 0.024414 mm/count with no mechanical change.
+- The E60137 is a **200 mm** circumference wheel (Ø63.66): at the RU3100
+  1024 PPR factory setting the count spacing was **0.048828 mm/count**.
+  **2026-09-17:** the RU3100 is parameterised to **2048 PPR via IO-Link**
+  (programmable 1…10000), halving the spacing back to **0.024414 mm/count**
+  (8192 quadrature counts/rev) with no mechanical change — the setting step
+  is §5 step 9 and the recomputed error budget is
+  [docs/42](42-process-dynamics-r2.md).
 - The RU3100 shaft is **10 mm long** (Autonics 15 + 5 pilot): the plate
   stays at Y70 and the coupling moved from Y44 to **Y48** so the shaft still
   reaches the coupling clamp; the encoder tip is **10 mm from the mounting
@@ -37,7 +39,7 @@ resolved, [findings](../engineering/sources/measurement-replacement-findings.md)
 | Encoder body | **Ø58.6 × 63.5 mm** rearward from mounting face | [ifm RU3100 datasheet](../engineering/sources/ifm-ru3100-datasheet.pdf) |
 | Encoder shaft | **Ø6 × 10 mm**, no flat; tip **10 mm from the mounting face** | Same datasheet (63.5 = 53.5 body + 10 shaft) |
 | Encoder fixing | Synchro flange: **3×M4×0.7, 6 mm deep, PCD42**; flange OD 58.6; drawing labels no pilot | Same datasheet drawing (labels Ø42 and Ø58.6 only) |
-| Encoder electrics | 4.75–30 VDC, HTL/TTL push-pull, factory 1024 PPR, 1000 kHz, 12000 rpm, ≤0.01 Nm starting torque, M12 5-pole | Same datasheet |
+| Encoder electrics | 4.75–30 VDC, HTL/TTL push-pull, factory 1024 PPR set to **2048 PPR via IO-Link** (2026-09-17), 1000 kHz, 12000 rpm, ≤0.01 Nm starting torque, M12 5-pole | Same datasheet |
 | Supplied coupling | Ø15×22; Ø6.0–6.1 bores; four M3 screws 2.8 from ends | Same drawing; hub depth/flexure interior/torque not dimensioned |
 | Bearing | 6×19×6; C2340 N; C0 950 N; CN2–13 µm unmounted | [SKF record](../engineering/sources/skf-626-2z.pdf) and [clearance table](../engineering/sources/skf-dgbb-clearance-selected.csv) |
 
@@ -83,9 +85,9 @@ This completes the **face-plate geometry**, not the measuring shaft/pressure mec
 
 ## 3. Corrected source-based calculations
 
-- Nominal x4 resolution:200/4096 = **0.048828125 mm/count** (was0.0244140625 with the 100 mm wheel). Resolution is not length accuracy.
-- At500 mm/s and the assumed minimum199.8 mm circumference (0.1% proportional; ifm publishes none): approximately150.1502 rpm,2562.5626 A/B cycles/s and10250.2503 quadrature edges/s. The encoder's1000 kHz limit is an A/B pulse-frequency rating, not the MCU input limit.
-- Factory scale alone can produce **1.0 mm error per commanded metre** (assumed ±0.2 mm on200 mm), exceeding the whole±0.70 mm target. Adding the previous0.2 runout,0.05 quantisation,0.15 tension and0.25 slip allocations gives **1.65 mm**, not1.15. Those other terms are allocations, not measured physical bounds.
+- Nominal x4 resolution:200/8192 = **0.0244140625 mm/count** (was0.048828125 at the 1024 PPR factory setting). Resolution is not length accuracy.
+- At500 mm/s and the assumed minimum199.8 mm circumference (0.1% proportional; ifm publishes none): approximately150.1502 rpm,5125.1251 A/B cycles/s and20500.5005 quadrature edges/s. The encoder's1000 kHz limit is an A/B pulse-frequency rating, not the MCU input limit.
+- Factory scale alone can produce **1.0 mm error per commanded metre** (assumed ±0.2 mm on200 mm), exceeding the whole±0.70 mm target. Adding the previous0.2 runout,0.025 quantisation,0.15 tension and0.25 slip allocations gives **1.625 mm**, not1.15. Those other terms are allocations, not measured physical bounds.
 - Free-wheel circumference/OD tolerances do not establish loaded rolling radius. Do not add both as independent scale uncertainties or assume rubber thermal expansion equals aluminium expansion.
 - With CN clearance2 µm and10 K inner/outer ring difference, SKF's thermal equation consumes1.5 µm. The remaining **0.5 µm precedes any press-fit loss**. The measurement bearing fits/thermal field remain an explicit design task; the feed rotor's j5/C3 match is not copied onto these CN bearings.
 
@@ -95,13 +97,13 @@ This completes the **face-plate geometry**, not the measuring shaft/pressure mec
 
 [C++ model](../engineering/include/measurement_models.hpp), [implementation](../engineering/src/measurement_models.cpp), [tests](../engineering/tests/test_measurement_models.cpp).
 
-For signed unwrapped count $n$, split it by **floor division** into whole turns $q$ and phase $r$, with $0\le r<4096$. The mapping is $x(n)=qC+p(r)$, where $p$ is strictly increasing, $p(0)=0$ and $p(4096)=C$. Distance is the difference of these terms, not a floating-point subtraction of two enormous absolute positions. Negative travel and phase-boundary reversals use the same mapping. $C$ is the calibrated circumference; the factory nominal is now **200 mm** per turn, so the nominal scale is 20480 counts per metre (was 40960).
+For signed unwrapped count $n$, split it by **floor division** into whole turns $q$ and phase $r$, with $0\le r<8192$. The mapping is $x(n)=qC+p(r)$, where $p$ is strictly increasing, $p(0)=0$ and $p(8192)=C$. Distance is the difference of these terms, not a floating-point subtraction of two enormous absolute positions. Negative travel and phase-boundary reversals use the same mapping. $C$ is the calibrated circumference; the factory nominal is now **200 mm** per turn at 2048 PPR, so the nominal scale is 40960 counts per metre (was 20480 at the 1024 PPR factory setting).
 
-The selected fitting grid has32 intervals of128 counts. Weighted least squares uses supplied reference uncertainties. Rank-deficient data, including complete-turn-only observations, cannot determine the phase map and are rejected. Nonmonotone solutions are rejected instead of clipped. The map loader accepts strictly increasing variable knot counts; the fitter emits the fixed32-interval grid.
+The selected fitting grid has32 intervals of256 counts. Weighted least squares uses supplied reference uncertainties. Rank-deficient data, including complete-turn-only observations, cannot determine the phase map and are rejected. Nonmonotone solutions are rejected instead of clipped. The map loader accepts strictly increasing variable knot counts; the fitter emits the fixed32-interval grid.
 
 CSV formats:
 
-- Map header: `count,travel_mm`; start0,0; end4096,C; all intermediate counts/travel strictly increasing and finite.
+- Map header: `count,travel_mm`; start0,0; end8192,C; all intermediate counts/travel strictly increasing and finite.
 - Observation header: `from_count,to_count,reference_mm,reference_uncertainty_mm`; signed64-bit unwrapped counts, signed reference distance and nonnegative absolute uncertainty. Fitting requires strictly positive uncertainty.
 - No trailing junk, extra/missing columns, blank rows, NaN, infinity, duplicate knots or out-of-range integer conversion is accepted. CRLF is accepted.
 
@@ -114,11 +116,11 @@ The `starz_measurement_analysis` executable accepts `--report`; an optional `--f
 1. Finish and inspect the bearing-supported wheel, pressure mechanism and guide path. Assign wheel, shaft, encoder and mounting identifiers. Record wire manufacturer/lot, conductor area, OD, contact force, tension, temperature, direction and speed.
 2. Use a traceable independent displacement reference. Record its uncertainty and whether it is a bounded error or an expanded statistical uncertainty with stated coverage. A nominal ruler length is not an adequate uncertainty record.
 3. Latch the same electrical Z-index/AB-state reference used during calibration. Capture unwrapped quadrature counts and reference displacement synchronously. No synthetic feedback or post-hoc count reset is permitted.
-4. Acquire multiple turns and partial-turn spans covering every128-count interval in both directions. Include multiple starting phases and the200,500,1000 and3000 mm operating spans. Record fitting observations separately from later verification acquisitions.
+4. Acquire multiple turns and partial-turn spans covering every256-count interval in both directions. Include multiple starting phases and the200,500,1000 and3000 mm operating spans. Record fitting observations separately from later verification acquisitions.
 5. Fit the phase map. Complete-turn-only fitting must fail; it estimates scale but leaves phase shape unobservable.
 6. Verify on separately acquired, held-out observations, including reversals and repeated starts/stops. For each record require $|x_\text{predicted}-x_\text{reference}|+U_\text{reference}\le0.025\text{ mm}+0.0001|x_\text{reference}|$. This is a **chosen metrology allocation**, not a claim that any physical wheel has passed it or that total finished-wire error is within target.
 7. Check every wire/contact/temperature/speed condition intended for one recipe; do not extrapolate a calibration to other pressure, tension, material, wear or thermal states. Inspect direction-dependent hysteresis separately; one reversible map cannot conceal it.
 8. Bind the accepted record to the assembly identifiers, Z phase, recipe and qualified operating range. Replacing/moving a wheel, encoder or coupling; losing index/count integrity; abnormal wheel disagreement; or operating outside that range invalidates it.
-9. Commission the actual hardware capture, line receivers, timestamping and settling logic before using this model for motion. The retained legacy reference firmware has `NotCommissioned`, disabled hardware outputs,750000 µs heartbeat and no automatic restart; this is not a claim about the separate, unqualified RP2350 target. **J8/J9 receiver review CLOSED 2026-09-16:** the RU3100 must be parameterised to **TTL mode** (IO-Link; the factory setting is HTL 50 mA); its single-ended A/B outputs drive the AM26LV32EIDR + inputs with the − inputs tied to a 2.5 V mid-bias, and the four 120 Ω RS-422 terminators are replaced by the bias network (IF-B01 board change). The TTL swing stays inside the AM26LV32E −7…+7 V common-mode range (docs/22 §6/§7, hardware/if-b01/README).
+9. Commission the actual hardware capture, line receivers, timestamping and settling logic before using this model for motion. The retained legacy reference firmware has `NotCommissioned`, disabled hardware outputs,750000 µs heartbeat and no automatic restart; this is not a claim about the separate, unqualified RP2350 target. **J8/J9 receiver review CLOSED 2026-09-16:** the RU3100 must be parameterised to **TTL mode** (IO-Link; the factory setting is HTL 50 mA); its single-ended A/B outputs drive the AM26LV32EIDR + inputs with the − inputs tied to a 2.5 V mid-bias, and the four 120 Ω RS-422 terminators are replaced by the bias network (IF-B01 board change). The TTL swing stays inside the AM26LV32E −7…+7 V common-mode range (docs/22 §6/§7, hardware/if-b01/README). **Resolution setting 2026-09-17:** via the same IO-Link master, set the RU3100 resolution parameter to **2048 PPR** (factory 1024, programmable 1…10000); this halves the count spacing from0.048828125 to **0.0244140625 mm/count** (8192 x4 counts/rev, 40960 nominal counts/m) and halves the quantisation error-budget allocation to0.025 mm ([docs/42 §1](42-process-dynamics-r2.md)). Do this together with the TTL parameterisation at encoder commissioning, before any calibration capture; re-verify both settings by IO-Link readback and record them with the module identifier.
 
 The synthetic first-harmonic example has a rigorously checked interpolation bound of approximately0.000964 mm for a distance with two endpoint errors. Arbitrary lobing, rubber indentation, slip and time-varying contact do **not** inherit that bound. The final complete length/strip budget must also include wire extension, cutting/holding displacement, contact/slip, guide path, temperature, quantisation and reference uncertainty without double counting.

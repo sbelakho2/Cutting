@@ -1,6 +1,6 @@
 check,value,limit,unit,result,basis
 encoder_speed_factory_min_circumference,150.15015015,12000,rpm,PASS_SCOPED,"199.8mm assumed minimum circumference;500mm/s;not loaded circumference"
-encoder_A_B_frequency,2562.56256256,1000000,Hz,PASS_SCOPED,"1024A/B_cycles_per_revolution_factory;ifm1000kHz_switching_frequency;do_not_compare_x4_edges_as_A/B_pulses"
-nominal_count_spacing,0.048828125,0.05,mm,PASS_SCOPED,"200mm wheel halves the resolution vs the 100mm wheel;0.05mm quantisation allocation still covers half-count0.0244"
+encoder_A_B_frequency,5125.12512513,1000000,Hz,PASS_SCOPED,"2048A/B_cycles_per_revolution_IO-Link_setting;ifm1000kHz_switching_frequency;do_not_compare_x4_edges_as_A/B_pulses"
+nominal_count_spacing,0.0244140625,0.025,mm,PASS_SCOPED,"2048PPR halves the count spacing;0.025mm quantisation allocation covers half-count0.0122"
 factory_scale_error_1m,1,0.7,mm,FAIL,"Assumed200plusminus0.2mm;ifm publishes no tolerance;factory_scale_alone_exceeds_entire1m_target"
 CN_10K_ring_clearance_before_fit,0.5,1,um,FAIL,"SourceCNminimum2um;steel12um/m/K;no_interference_loss_yet;thermal_and_fits_unresolved"

@@ -53,7 +53,7 @@ steps attached to each gate remain mandatory.
 | 26 | First article + energisation gate | docs/24 §8.1 | PHYSICAL-ONLY | Template blank | Complete inspection/first-article-and-energisation-gate-template.csv with actual evidence and reviewer disposition — runbook step [P10-6](36-commissioning-runbook.md) |
 | 27 | Fabrication/incoming/build-record evidence | docs/24 §1–§3 | PHYSICAL-ONLY | All templates blank; source checks ≠ physical results | Execute inspection/production-build-record-template.csv and inspection/incoming-inspection-template.csv per work package; run tools/check_production_records.py etc. — runbook steps [P0-1…P0-7, P2-1…P2-6, P3-1…P3-4, P4-1…P4-7, P10-8](36-commissioning-runbook.md) |
 | 28 | Measuring module physical support/torque + fabrication | engineering/README measuring paragraph; docs/13 | PHYSICAL-ONLY | M201 source and interfaces exist; "physical support/torque, fabrication and qualification evidence remain open" | Fabricate and measure per docs/13 + mechanism manifest; wheel contact force 6–19 N record (docs/20) — runbook steps [P2-6, P6-5](36-commissioning-runbook.md) |
-| 29 | Measurement calibration: factory accuracy (1.65 mm budget) + 626 CN thermal screen | measurement-analysis (`unresolved_source_checks:2`, `physical_calibration_qualified:false`); README:60; engineering/README:93–94 | PHYSICAL-ONLY — desk error-budget half **CLOSED 2026-09-16** ([docs/37](37-system-dynamics.md) §3, ledger §2.7) | 392 synthetic observations, 0 residual failures (numerical only); 626 CN leaves 0.5 µm with 10 K ΔT — not accepted with full js5 interference; docs/37 full-chain budget: 1.65 mm/m uncalibrated FAIL, ≈0.80 mm/m calibrated-at-allocations still FAIL vs ±0.70 mm/m → the process terms (slip 0.25, tension 0.15, 15–30 °C) must be demonstrated by the 30-piece cells, not re-budgeted | Traceable calibration of the ifm E60137 200 mm circumference claim + actual index reference; separate 626 thermal/matching design or substitution; `--require-factory-accuracy` fails until then — runbook steps [P1-5, P6-7](36-commissioning-runbook.md) |
+| 29 | Measurement calibration: factory accuracy (1.65 mm budget) + 626 CN thermal screen | measurement-analysis (`unresolved_source_checks:2`, `physical_calibration_qualified:false`); README:60; engineering/README:93–94 | PHYSICAL-ONLY — desk error-budget half **CLOSED 2026-09-16** ([docs/37](37-system-dynamics.md) §3, ledger §2.7; recomputed at the 2048 PPR encoder setting 2026-09-17 in [docs/42](42-process-dynamics-r2.md)) | 784 synthetic observations, 0 residual failures (numerical only); 626 CN leaves 0.5 µm with 10 K ΔT — not accepted with full js5 interference; docs/37 full-chain budget (R2 at 2048 PPR): 1.625 mm/m uncalibrated FAIL, ≈0.79 mm/m calibrated-at-allocations still FAIL vs ±0.70 mm/m — the 2048 PPR setting halves quantisation (0.0122 mm half-count, 0.025 mm allocation) but the process terms (slip 0.25, tension 0.15, 15–30 °C) still dominate and must be demonstrated by the 30-piece cells, not re-budgeted | Traceable calibration of the ifm E60137 200 mm circumference claim + actual index reference; separate 626 thermal/matching design or substitution; `--require-factory-accuracy` fails until then — runbook steps [P1-5, P6-7](36-commissioning-runbook.md) |
 | 30 (axis) | R+W coupling interior clearance verification | docs/verification/feed-r6.md:46 | EXTERNAL-INQUIRY | "Original coupling interior clearance has not been verified from supplier CAD". 2026-09-16 re-fetch of the June-2026 MK2 datasheet (byte-identical to rw-mk2-datasheet-2026.pdf, SHA256 f6c663d7…; see mechanical-documents-findings.md §2) still does not dimension the bellows interior | Send letter [L2](35-purchase-enquiries.md) requesting the MK2/100/50/8/14 interior clearance CAD/data; verify interior clearance before hub installation |
 | 31 | HIWIN KK8610P340A1F0 quote (article 10.00026, ×2) | docs/24 §2.2 | EXTERNAL-INQUIRY — **CLOSED 2026-09-16 (priced P→C substitution adopted)** | 31-channel search found no public price; 2026-09-16: current HIWIN catalogue PS-11-1-EN-2605-K (2026-05-22) archived as hiwin-kk86-catalogue-2026.pdf confirms 340/440, lead 10, P class and the input shaft Ø8 h7 / 18 mm exposed; then the MISUMI VN catalogue API (api.vn.misumi-ec.com/api/v1/partNumber/search, seriesCode 221005545419, applicationId from the VN runtime config) returned the live shelf price of the genuine C-grade sibling **KK8610C-340A1-F0**: VND 21,146,653/unit (USD 824.72 converted, 2026-09-16), 23–99 days, caution "temporarily NOT available — ask MISUMI for next ship date". C-grade accuracy analysis: axial play 0.02 mm, expected repeatability ≈±0.01 mm — ~4× inside the ±0.20 mm strip target and the length is wheel-measured, so the P→C switch needs no CAD change; identical carriage/F0/Ø8 h7/340-440 mm interfaces. BOM AX-01 updated | Letter L1 resolved 2026-09-16 — no enquiry needed. Confirm the ship date at order time and verify C grade, lead 10 and the Ø8 h7 shaft at incoming inspection. Record in [axis-replacement-findings](../engineering/sources/axis-replacement-findings.md) |
 | 32 | R+W MK2/100/50 quotes (10/12 ×2, 8/14 ×2) | docs/24 §2.2; engineering/sources/sourcing-findings-rw.md; engineering/sources/coupling-ring-replacement-findings.md | EXTERNAL-INQUIRY | Exact bores have no live price (23 channels; ebmia exact-bore searches re-run 2026-09-16 — still empty); live class anchor MK2/100/50/10/14 EUR 99.43 net/pc (ebmia.pl, 7–14 days) and 8/21,4 PLN 340.53 net (24 h); OD 40 × L 50 × hub 16 dims verified. 2026-09-16 replacement check: priced ebmia jaw couplings SBK19-8/14 (PLN 261.69–265.31 net) and SBK19-10/12 (PLN 217.85–221.47 net), D40 × L66, 32 Nm ≥ 8.5 Nm (torque PASS) were REJECTED: 0.5° backlash = 14 µm at 10 mm lead = 56% of the 25 µm positioning budget and 4.6× the ±3 µm repeatability, not closed by the motor-shaft encoder, plus L66/11 mm-hub geometry vs the 49–50 mm/16 mm stack; BKL3/10/12 bellows (PLN 130.38 gross, 24 h) is an undersized class (OD 25/L 32/hub 10); Conrad 403, automation24 404 | Send letter [L2](35-purchase-enquiries.md) with the ebmia order instruction (made-to-bore quote items at the class price; R+W direct fallback); confirm OD 40 × L 50 × hub 16; no substitute without a change record |
@@ -69,6 +69,7 @@ steps attached to each gate remain mandatory.
 | 42 | Guard/payoff physical validation flags | mechanism status.json (`guard_door_kinematics_validated:false`, `guard_safety_function_validated:false`, `payoff_selection_complete:false`, `payoff_rotation_validated:false`) | PHYSICAL-ONLY | R2 CAD/checks pass; flags remain false | Physical build and validation per docs/26 §6 (rows 14–17 above) — runbook steps [P7-1…P7-4, P8-1…P8-6](36-commissioning-runbook.md) |
 | 43 | Full-machine integration flags | mechanism/layout/head/feed-cassette status.json (`full_machine_integrated:false`, `fabrication_released:false`, `physical_results:false`) | PHYSICAL-ONLY | 504-occurrence R4 source exists; cabinet/safety not modelled | Assemble per docs/30/docs/31 and record; no flag flips without physical evidence — runbook steps [P0–P9, P10-7](36-commissioning-runbook.md) |
 | 44 | Feed-shaft regional stress release | feed-fem/feed-fem-torus status (`numerical_gates_passed:false`); docs/24 §9 | DESK-CLOSABLE — desk part closed by docs/26+28 (submodel record) + gate 3 | All eleven regional rows converge 0.02–4.0% at ≤150 k nodes with Pilkey cross-checks (docs/28 §5); 13 gmsh/10 Netgen four-mesh rows preserved unaltered; centroid gates now PASS_SCOPED (gate 3) | Residual: `continuous_CAD_containment_verified:false` — the whole-shaft containment audit is now executed and reported (gate 3: 32 exterior / 0 on-boundary of 1,125,721 centroids, 2026-09-16); no fabrication release from FEM alone (docs/24 §10.6) |
+| 45 | Resonance and structural audit (excitation inventory, mode separation, frame static check) | docs/40; docs/37 §2/§4; docs/39 §4 | PHYSICAL-ONLY — desk part **CLOSED 2026-09-17** (ledger §2.8) | Desk study [docs/40](40-resonance-and-structural-audit.md): 13 excitation families (tooth-pass 100/200/300 Hz; feed electrical 199 Hz, detent 796 Hz, step train 7.96 kHz; blade screw 2.5 Hz, ball-pass 75–100 Hz, detent 500 Hz; driver PWM unpublished — 20–50 kHz stated class band; mains 50 Hz cabinet-only); structural modes (frame sway 19–38 Hz, rail/bed composite 82–123 Hz, bed cross-span 245–368 Hz, cut-axis plate 98–352 Hz, F101 1.75/5.8 kHz, payoff 13.6–39.9 Hz, belt 378 Hz). Flagged <2× margins: bed mode vs tooth-pass 2×/3× and feed electrical (1.2–1.9×); cut-axis plate vs ball-pass/detent (1.4×); belt 3rd harmonic (1.26×, amplitude-weighted PASS). Fixes evaluated: belt tension rejected (pinned by slack-strand margin, +2.6% only), microstep documented-not-applied (no spec change), **elastomeric feet selected**, bed–rail damping pad (M10×40) and H005 rib conditional. Frame static: internal loop ≈20 µm < 0.05 mm target PASS ≈2.5×; 158 µm common-mode sway safe (2.3 MPa vs 235) and cut-irrelevant (wire referenced to the same bed) | Physical remainder: impact-test verification of the bed/rail/cut-axis-plate modes at commissioning — runbook step [P3-5](36-commissioning-runbook.md); blade-edge stiffness stays gate 13 |
 
 ## 2. Desk closures recorded in this ledger
 
@@ -243,12 +244,64 @@ physical edge qualification (gate 13) is the gate.
   acceptance load, not a drive demand. Holder H004 deflection ≈4 µm;
   blade-edge stiffness is a purchase-drawing requirement (gate 13).
 - **Measuring-chain budget (gate 29 desk half):** 1.65 mm/m uncalibrated
-  (FAIL), ≈0.80 mm/m calibrated-at-allocations (FAIL vs ±0.70 mm/m) — the
-  constant process allocations (slip 0.25, tension 0.15 mm) dominate short
-  lengths and must be demonstrated, not re-budgeted.
+  (FAIL), ≈0.80 mm/m calibrated-at-allocations (FAIL vs ±0.70 mm/m) in the R1
+  record; the 2026-09-17 2048 PPR encoder setting recomputes these to
+  **1.625 mm/m uncalibrated and ≈0.79 mm/m calibrated-at-allocations**
+  ([docs/42](42-process-dynamics-r2.md) §1) — the quantisation allocation
+  halves to 0.025 mm, but the constant process allocations (slip 0.25,
+  tension 0.15 mm) still dominate short lengths and must be demonstrated,
+  not re-budgeted.
 - **Payoff/feed guidance:** nip traction 2·μ·N = 40–90 N per nip
   (μ 0.4–0.6 stated), 80–180 N two-nip; payoff brake 5–20 N; wire accel
-  demand 0.83 N.
+  demand 0.83 N. R2 adds the full-spool dynamics and the brake setting table
+  ([docs/42](42-process-dynamics-r2.md) §4): spool accel demand 22.5 N at
+  30 kg/1.5 m/s², max allowed brake torque 7.3–10.9 Nm by spool mass, and
+  the E-stop coast/guard-travel bound (§3 there).
+- **R2 process-dynamics record ([docs/42](42-process-dynamics-r2.md),
+  2026-09-17):** closed-loop stepper step response modelled at a stated
+  25 Hz position-loop bandwidth (settling ≈28 ms, overshoot ≈0.15 %,
+  feed tracking lag ≈0.06 mm at 1.5 m/s²); worst-case E-stop from 500 mm/s
+  at the 2.58 Nm factored envelope stops in 1.05 mm / 4.2 ms with a 254.5 N
+  belt strand peak; contactor-open coast bounds are 93–324 mm and require
+  the payoff brake ≥≈6.5 N to stay inside the guard travel. All numbers are
+  desk models with stated assumptions; the physical gates they feed (12, 14,
+  16, 23, 29) are unchanged.
+
+### 2.8 Resonance and structural audit — desk part (gate 45)
+
+[docs/40](40-resonance-and-structural-audit.md). Desk study; nothing releases
+fabrication.
+
+- **Excitation inventory:** belt tooth-pass 100 Hz (2×/3×: 200/300 Hz) at
+  500 mm/s; feed-motor electrical 50×f_rev = 199 Hz, detent ripple 4×
+  electrical = 796 Hz, step train 2000×f_rev = 7.96 kHz (f_rev = 3.979 rev/s
+  = 238.7 rpm; the working brief's "25 rev/s" corrected to 25 rad/s); blade
+  screw 2.5 Hz at 150 rpm, ball-pass 75–100 Hz (30–40 balls stated), 34E1K
+  electrical 125 Hz / detent 500 Hz, command 1250 Hz; driver PWM not
+  published in the archived CL57T/CL86T datasheets (20–50 kHz stated class
+  band); mains 50 Hz cabinet-only; wheel 2.5 Hz; spool 0.40 Hz.
+- **Structural modes (formulas stated in docs/40 §2):** frame sway 19–38 Hz
+  (4×12EI/L³, 150 kg top mass); rail/bed composite 82–123 Hz
+  ((π/2L²)√(EI/μ)); bed cross-span 245–368 Hz ((π/2L²)√(D/(ρh))); cut-axis
+  plate 98–352 Hz (loaded by the ≈16 kg carriage); F101 1.75 kHz roller
+  overhang / 5.8 kHz pulley span (Rayleigh/Dunkerley); payoff spindle
+  13.6–39.9 Hz; belt 378 Hz (docs/37).
+- **Separation (target ≥2×):** PASS — sway ≥7.6×, F101 ≥4.5×, payoff ≥34×,
+  screw whirl 17.3×. **FLAG:** bed mode vs tooth-pass 2×/3× and the 199 Hz
+  electrical line (1.2–1.9×); cut-axis plate vs ball-pass 75–100 Hz and
+  500 Hz detent (1.4×); belt 3rd harmonic 1.26× (amplitude-weighted PASS).
+  Fixes selected: elastomeric feet + commissioning impact test (mandatory);
+  bed–rail damping pad with M10×40 and an H005 stiffening rib are
+  pre-approved contingencies (not CAD changes yet); belt stays at 190 N;
+  microstep change documented, not applied.
+- **Frame static (1200 N blade):** leg sway 141 µm, rail composite 13.4 µm,
+  holder 4 µm → ≈158 µm common-mode; the balanced opposed-blade cut and the
+  bed-referenced wire loop reduce the cut-point-relative deflection to
+  ≈20 µm < 0.05 mm target (PASS ≈2.5×); leg stress 2.3 MPa vs 235 MPa
+  (≈100×). Blade-edge stiffness remains gate 13.
+- **Physical remainder:** impact-test verification (runbook P3-5) — bed mode
+  ≥2× from the 199/200/300 Hz lines and cut-axis plate ≥2× from 500 Hz at
+  the commissioning feed, recorded in the build record.
 
 ## 3. Counts
 
@@ -257,18 +310,20 @@ physical edge qualification (gate 13) is the gate.
   workstreams: 1 (gate 22); open desk item requiring a released procedure
   document: 1 (gate 7). In addition, the desk parts of the PHYSICAL-ONLY
   gates 10 (housing compliance + thermal field, §2.5), 11 (fatigue S-N,
-  §2.6) and 11/12/29 (whole-machine dynamics, belt dynamics and
-  measuring-chain error budget, §2.7) are closed and recorded; all remain
+  §2.6), 11/12/29 (whole-machine dynamics, belt dynamics and
+  measuring-chain error budget, §2.7) and 45 (resonance and structural
+  audit, §2.8) are closed and recorded; all remain
   PHYSICAL-ONLY because their remaining actions are the physical build
   measurements, instrumented tests and traceable calibration.
-- PHYSICAL-ONLY rows: 19 (gates 2, 8–12, 14, 16–18, 23–29, 42, 43).
+- PHYSICAL-ONLY rows: 20 (gates 2, 8–12, 14, 16–18, 23–29, 42, 43, 45).
 - EXTERNAL-INQUIRY rows: 17 (gates 13, 15, 19, 20, 21, 30–41).
 - Mixed rows counted by their governing remaining action: gates 2, 13, 21
   and 41 count as PHYSICAL-ONLY/EXTERNAL-INQUIRY as listed above.
-- Total open rows: 44. CLOSED rows: 0 (no gate is fully closed — every
+- Total open rows: 45. CLOSED rows: 0 (no gate is fully closed — every
   closed desk part retains its physical/enquiry step).
 
 Every row above keeps the original acceptance criteria unchanged; no raw
 failed data was deleted and no gate was closed by relaxing a number.
 
 - 2026-09-17: cut-axis gates (HIWIN price/enquiry rows 30–37 axis lines, L1) RESOLVED by the custom-axis design [docs/39](39-custom-cut-axis.md): components priced (US$8–13 + US$5–10 FOB lines), interfaces reproduce the KK86 envelope (CAD/FEM unchanged), physics verified; HIWIN eBay/MISUMI leads retained as fallbacks. Physical remainder: run-in and repeatability record (docs/39 §5).
+- 2026-09-17: resonance and structural audit [docs/40](40-resonance-and-structural-audit.md) desk part CLOSED (ledger §2.8, gate 45): excitation inventory, mode separation and frame static check complete; flagged margins (bed 245–368 Hz vs 199/200/300 Hz lines; cut-axis plate vs ball-pass/detent) get elastomeric feet + the mandatory commissioning impact test (runbook P3-5), with the bed–rail damping pad (M10×40) and H005 rib as pre-approved contingencies.

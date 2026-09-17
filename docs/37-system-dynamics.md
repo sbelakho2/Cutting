@@ -1,6 +1,14 @@
 # 37 — Whole-machine dynamics and error-budget simulation — S1-B
 
 **Revision:** `S1-B-DYN-R1-2026-09-16`
+
+**R2 pointer (2026-09-17):** the RU3100 encoder is now parameterised to
+**2048 PPR via IO-Link** ([docs/13 §5 step 9](../docs/13-measuring-interfaces-and-calibration.md));
+the §3 error-budget, drive step-response, E-stop and payoff/feed numbers are
+recomputed in [docs/42](42-process-dynamics-r2.md), which supersedes §1/§3/§5
+numbers below where they differ. The §3 resolution line and the quantisation
+row below are marked accordingly.
+
 **Status:** desk calculation record. Every number below is derived from the
 repository constants ([machine_spec](../shared/machine_spec.hpp),
 [feed_drive_spec](../shared/feed_drive_spec.hpp),
@@ -139,9 +147,11 @@ no tooth jump at the fault envelope. Belt length tolerance ±0.41 mm maps to
 
 ## 3. Measuring-chain error budget
 
-Per [measurement_spec](../shared/measurement_spec.hpp) (post-substitution:
+Per [measurement_spec](../shared/measurement_spec.hpp) (R1 numbers; the
+2026-09-17 2048 PPR setting supersedes them — see [docs/42](42-process-dynamics-r2.md)):
 200 mm E60137 wheel, 1024 PPR RU3100 → 4096 counts/rev,
-**0.048828 mm/count**). Target: ±(0.2 mm + 0.05 %) of commanded length
+**0.048828 mm/count** (superseded by 0.024414 mm/count at 2048 PPR).
+Target: ±(0.2 mm + 0.05 %) of commanded length
 ([docs/20](../docs/20-physical-qualification.md)) = **±0.30 mm at 200 mm**,
 **±0.70 mm at 1000 mm** (the ±0.70 mm/m acceptance).
 
@@ -149,7 +159,7 @@ Per [measurement_spec](../shared/measurement_spec.hpp) (post-substitution:
 |---|---|---|
 | Wheel factory circumference | ±1.0 mm | ±0.2 mm on 200 mm = 0.1 %; **assumed** — ifm publishes no tolerance (`measurement_spec.hpp` placeholder) |
 | Calibration procedure | +0.025 mm + 0.01 % (=0.125 mm at 1 m) | Chosen metrology allocation; traceable reference, 32×128-count phase map, held-out verification ([docs/13 §4–5](../docs/13-measuring-interfaces-and-calibration.md)) |
-| Quantisation | ±0.024 mm | Half-count, 0.048828/2 (0.05 mm allocation retained) |
+| Quantisation | ±0.024 mm (R1) | Half-count, 0.048828/2, superseded: at 2048 PPR the half-count is 0.0122 mm and the allocation halves to 0.025 mm ([docs/42 §1](42-process-dynamics-r2.md)) |
 | Encoder edge jitter | ±0.02 mm | ifm publishes no jitter; stated assumption ≤ ±1° electrical + ±1 µs capture timing at 10250 edges/s (500 mm/s); non-accumulating |
 | Wheel slip at 6–19 N force | 0.25 mm allocation | Traction μ·F_c ≈ 0.5 × 19 = 9.5 N vs demand ≈ 0.5 N (bearing/encoder drag 0.31 N + 0.10 N accel) → 6–20× margin; the 0.25 mm is the retained qualification allocation, not a measured slip |
 | Temperature 15–30 °C | ≈0.23 mm | Al wheel core 23e-6/K × 10 K; PU tread and indentation effects are **unquantified** and flagged; wire Cu 17e-6/K cancels (feed and measure at the same temperature) |
@@ -276,7 +286,7 @@ the new check it still requires.
 |---|---|---|
 | Feed torque margin | 1.03 Nm peak vs 2.6–3.1 Nm assumed curve (2.5–3.0×); 1.01–1.20× if the 2.5 factor is applied to the motor | PASS with flagged curve-digitisation condition; motor is the binding element, belt is not (4.36×) |
 | Belt first natural frequency | 378 Hz vs 100 Hz tooth-passing (3.8× separation) | PASS |
-| Error budget total | 1.65 mm/m uncalibrated, ≈0.80 mm/m calibrated-at-allocations, vs ±0.70 mm/m | FAIL on desk; calibration necessary, process terms must be demonstrated physically |
+| Error budget total | 1.65 mm/m uncalibrated, ≈0.80 mm/m calibrated-at-allocations, vs ±0.70 mm/m (R1; R2 at 2048 PPR: 1.625 / ≈0.79 mm/m, [docs/42](42-process-dynamics-r2.md)) | FAIL on desk; calibration necessary, process terms must be demonstrated physically |
 | Blade force | ≈700–1200 N (guillotine bound 2.15–2.62 kN × wedge factor) | PASS: stage cap 1578 N, motor 3381 N (0.8× curve) |
 | Blade deflection | holder ≈4 µm, plain blade plate ≈300 µm vs 20 µm face gap | Blade stiffness is a purchase-drawing requirement (gate 13) |
 | Blade life | 10⁵–10⁶ strokes order of magnitude (Cu) | Planning number only; unqualified tooling |

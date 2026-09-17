@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
         comm->send_home();
         comm->send_solenoid_door();
         comm->send_solenoid_air(80);
-        comm->send_calibration(48828);
+        comm->send_calibration(24414);
         comm->send_job_resume();
         CHECK(denied == 7);
         CHECK(!comm->is_connected());

@@ -53,7 +53,7 @@ Eigen::VectorXd phaseBasis(std::uint32_t phase) {
 WheelCalibration::WheelCalibration(std::vector<WheelCalibrationKnot> knots):knots_(std::move(knots)) {
     if(knots_.size()<2||knots_.size()>c::counts_per_revolution+1||knots_.front().count!=0||
        knots_.front().travel_mm!=0||knots_.back().count!=c::counts_per_revolution)
-        throw std::invalid_argument("Calibration must span count0 to4096 from travel0");
+        throw std::invalid_argument("Calibration must span count0 to the counts-per-revolution end from travel0");
     min_pitch_=std::numeric_limits<double>::infinity();
     for(std::size_t i=0;i<knots_.size();++i) {
         if(!std::isfinite(knots_[i].travel_mm))throw std::invalid_argument("Nonfinite calibration travel");
@@ -79,7 +79,8 @@ double WheelCalibration::phaseTravel(std::uint32_t phase) const {
 double WheelCalibration::distanceMm(std::int64_t from_count,std::int64_t to_count) const {
     const auto a=splitCount(from_count),b=splitCount(to_count);
     // Do not subtract raw int64 counters or two huge absolute floating-point
-    // positions. For fixed N4096 the quotient difference always fits int64.
+    // positions. For the fixed counts-per-revolution N the quotient
+    // difference always fits int64.
     static_assert(c::counts_per_revolution>=4);
     const auto turns=b.turns-a.turns;
     const long double travel=static_cast<long double>(turns)*circumferenceMm()+
