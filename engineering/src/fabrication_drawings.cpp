@@ -521,13 +521,61 @@ void guardPanels(const fs::path& out) {
           <<drawing.rdbuf()<<"</body></html>";
     if(!drawing||!review)throw std::runtime_error("Guard panels review output failed");
 }
+void axisPlates(const fs::path& out) {
+    const auto path=out/"H005-H006-R1-axis-plates.svg";std::ofstream s(path);
+    s<<std::setprecision(10);begin(s,"H005/H006 — CUSTOM CUT-AXIS PLATES / R1");
+    const double x=100,y=150;
+    s<<"<rect class='edge' x='40' y='60' width='100' height='180'/>\n";
+    line(s,40,y-70,140,y-70);line(s,40,y+70,140,y+70);
+    for(double lx:{60.,80.,100.,120.}){circle(s,lx,y-70,3.3);circle(s,lx,y+70,3.3);}
+    text(s,17,35,"H005 BASE PLATE 6082-T6: 86 x 440 x 20;two HGR20 rail seats");
+    text(s,17,42,"milled flat 0.02/300,60 mm pitch M5;BK12 land at the fixed end,");
+    text(s,17,49,"BF12 land at the distal end;6x Ø6.6 base grid 46/100 to H001/H002.");
+    text(s,17,56,"Deburr;no hard anodise on the rail seats.");
+    const double cx=300,cy=120;
+    s<<"<rect class='edge' x='260' y='70' width='80' height='100'/>\n";
+    circle(s,cx,cy,49.97/2);
+    const double fqp=35/std::sqrt(2.0);
+    for(double px:{-fqp,fqp})for(double pz:{-fqp,fqp})circle(s,cx+px,cy+pz,2.5);
+    for(double px:{-23.,23.})for(double pz:{-23.,23.})circle(s,cx+px,cy+pz,2.5);
+    text(s,243,60,"H006 CARRIAGE PLATE 6082-T6: pad 60x75 at 46 mm height;");
+    text(s,243,67,"Ø49.97 F0 register, 4x M5 on PCD70, 4x M6 on 46x46;");
+    text(s,243,74,"DSG16h nut pocket on the underside; 4x HGH20CA lands.");
+    text(s,243,81,"Top face flat 0.02; F0 register perpendicular 0.02.");
+    text(s,243,95,"Contract: reproduce the KK86 carriage interface exactly");
+    text(s,243,102,"(docs/39 §2) so H003 and the adapter FEM stay valid.");
+    text(s,243,109,"Screw end Ø8 h7 x18 exposed; Ø46 service cavity.");
+    line(s,8,222,412,222);
+    text(s,14,231,"PROCESS: plate stock, mill both faces, drill/tap patterns from the fixture; register bore in the same setup.");
+    text(s,14,239,"INSPECT: flatness, hole positions ±0.05, register Ø49.97, M5/M6 tapping depth, nut-pocket depth.");
+    text(s,14,247,"ASSEMBLY: rails to H005, blocks to H006, nut housing in pocket, screw through BK12/BF12; run-in 1 h;");
+    text(s,14,255,"re-measure preload and repeatability ±0.02 over 194 mm (DTI); record in the build record.");
+    line(s,8,264,412,264);line(s,235,264,235,289);
+    text(s,14,274,"PARTS H005 · H006 · CUSTOM CUT AXIS (docs/39)",4);
+    text(s,14,282,std::string(starz::mechanism::revision),3.2);
+    text(s,241,274,"DIMENSION RECORD",3);
+    text(s,241,282,"RELEASE HOLD: physical run-in and repeatability record",3);
+    s<<"</svg>\n";s.close();if(!s)throw std::runtime_error("Axis plates SVG failed");
+    QSvgRenderer renderer(QString::fromStdString(path.string()));if(!renderer.isValid())throw std::runtime_error("Axis plates SVG invalid");
+    QPdfWriter pdf(QString::fromStdString((out/"H005-H006-R1-axis-plates.pdf").string()));
+    pdf.setPageSize(QPageSize(QPageSize::A3));pdf.setPageOrientation(QPageLayout::Landscape);pdf.setPageMargins(QMarginsF(0,0,0,0));pdf.setResolution(300);
+    pdf.setTitle("STARZ H005/H006 R1 axis plates — dimension record,release hold");
+    QPainter painter(&pdf);if(!painter.isActive())throw std::runtime_error("Axis plates PDF failed");
+    renderer.render(&painter,QRectF(0,0,pdf.width(),pdf.height()));painter.end();
+    std::ifstream drawing(path);std::ofstream review(out/"axis-plates-review.html");
+    review<<"<!doctype html><html lang='en'><meta charset='utf-8'><title>STARZ H005/H006 drawing review</title>"
+          <<"<style>body{margin:24px;background:#e5e7eb;font-family:Arial,sans-serif}svg{width:100%;height:auto;background:white}</style>"
+          <<"<body><h1>H005/H006 R1 axis plates</h1><p><a href='H005-H006-R1-axis-plates.pdf'>A3 vector PDF</a> · Engineering release hold</p>"
+          <<drawing.rdbuf()<<"</body></html>";
+    if(!drawing||!review)throw std::runtime_error("Axis plates review output failed");
+}
 }
 int main(int argc,char** argv) try {
     QGuiApplication app(argc,argv);
     if(argc!=3||std::string(argv[1])!="--out")throw std::invalid_argument("Use --out output_directory");
     const fs::path out=argv[2];fs::create_directories(out);
     adapter(out);shaft(out);shaftDetails(out);encoderPlate(out);
-    payoffSpindle(out);payoffPlates(out);guardPanels(out);
-    std::cout<<"H003 R6,F101 R6(two sheets),M201 R2,P002 R2,P004-P007 R2 andG101-G106 R2 A3 dimensioned SVG/vector PDFs generated\n";
+    payoffSpindle(out);payoffPlates(out);guardPanels(out);axisPlates(out);
+    std::cout<<"H003 R6,F101 R6(two sheets),M201 R2,P002 R2,P004-P007 R2,G101-G106 R2 andH005-H006 R1 A3 dimensioned SVG/vector PDFs generated\n";
     return 0;
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}

@@ -9,7 +9,12 @@ namespace starz::head {
 inline constexpr char revision[] = "S1-B-KK86-R6-2026-09-12";
 struct TorquePoint { double rpm, nm; };
 namespace catalogue {
-inline constexpr char stage[] = "HIWIN KK8610P340A1F0 / 10.00026";
+// Custom S1-B cut axis (docs/39): HGR20 rails + SFU1605 C7 ballscrew +
+// BK12/BF12 supports on H005/H006 6082 plates; the carriage plate
+// reproduces the KK86 interface so the CAD envelope constants are reused
+// unchanged. Interface envelope values below are the required envelope the
+// custom axis must reproduce; lead stays 10 mm for 100 pulses/mm.
+inline constexpr char stage[] = "Custom S1-B cut axis HGR20/SFU1605-C7 (docs/39)";
 inline constexpr double rail_length = 340, stage_length = 440, rail_width = 86;
 inline constexpr double carriage_height = 46, screw_height = 32, lead = 10;
 inline constexpr double useful_travel = 194, travel_reserve = 8;

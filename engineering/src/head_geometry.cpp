@@ -173,7 +173,7 @@ std::vector<HeadPart> headAssembly(double closure) {
         riser=cut(riser,cyl(3.3,22,x,y,19));
     }
     add("H002","Stage riser /20mm clearance for true NEMA34 body",riser,false);
-    add("AX01-R","HIWIN KK86 rail external envelope",rail,true);
+    add("AX01-R","Custom-axis HGR20 rail pair external envelope (docs/39)",rail,true);
     auto fixed=box(-42.5,d::stage_front_y,40,85,87,63);
     fixed=cut(fixed,cyl(23,66,0,d::stage_front_y-1,72,true));
     fixed=cut(fixed,cyl(25,3.5,0,d::stage_front_y,72,true));
@@ -182,14 +182,14 @@ std::vector<HeadPart> headAssembly(double closure) {
         fixed=cut(fixed,cyl(2.5,10,x,d::stage_front_y,72+z,true)); // M5 nominal-major cosmetic thread.
     // Catalogue coupling service opening; unmeasured corner radii not represented.
     fixed=cut(fixed,box(-25,d::stage_front_y+14,72,50,50,40));
-    add("AX01-F","HIWIN fixed end / Ø46 coupling clearance",fixed,true);
-    add("AX01-D","HIWIN distal13mm end envelope",box(-43,d::rail_end_y,40,86,13,32),true);
-    add("AX01-S","HIWIN actual Ø8 x18 exposed input shaft",
+    add("AX01-F","Custom-axis BK12 fixed-end envelope / Ø46 coupling clearance (docs/39)",fixed,true);
+    add("AX01-D","Custom-axis BF12 distal-end envelope",box(-43,d::rail_end_y,40,86,13,32),true);
+    add("AX01-S","Custom-axis screw Ø8 x18 exposed input end (docs/39)",
         cyl(4,c::exposed_shaft,0,d::stage_front_y+d::stage_shaft_tip,72,true),true);
     auto carriage=box(-30,d::carriage_open_y-58,59,60,116,27);
     for(double x : {-23.,23.}) for(double y : {-23.,23.})
         carriage=cut(carriage,cyl(2.5,12,x,d::carriage_open_y+y,74));
-    add("AX01-C","HIWIN carriage external envelope / M6 46mm grid",carriage,true,true);
+    add("AX01-C","Custom-axis H006 carriage envelope / M6 46mm grid (docs/39)",carriage,true,true);
     add("H003","15mm motor adapter / full hub tolerance stack / M5 motor fixings",
         translate(adapterShape(),0,d::stage_front_y,72),false);
     add("DR01-M","34E1K-85 / original supplier STEP; removable shaft key removed",

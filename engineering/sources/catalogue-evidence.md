@@ -437,6 +437,27 @@ GBP 4.98. Both observed 2026-09-13.
   is not listed on Amazon.de — the Kübler distributor route remains the
   only source for the selected 100±0.1 mm wheel.
 
+### Custom cut-axis component observations, 2026-09-17
+
+The cut axis is now the custom S1-B design ([docs/39](../../docs/39-custom-cut-axis.md))
+built from individually priced components (all read live 2026-09-17,
+made-in-china, MOQ 1, FOB):
+
+- HGR20 400 mm rail + 2× HGH20CA block set, US$8.00–13.00/set —
+  [Taiyin listing](https://taiyin6666.en.made-in-china.com/product/ztLrHCpjCsci/China-Hgr20-High-Accuracy-High-Qualit-Linear-Guide-Rail-Set-Hgr20-400mm-Hg20-Linear-Rail-and-Block.html);
+  HGH20HA blocks US$5.40–6.10 (HXH Bearing).
+- SFU1605 C7 500 mm rolled ballscrew + flange nut + DSG16h housing +
+  BK12/BF12 supports (end-machined option), US$5.00–10.00/set —
+  [ALM listing](https://autolinearmotion.en.made-in-china.com/product/PtaYZwvVEukB/China-Sfu1605-500mm-600mm-800mm-C7-with-End-Machined-1605-Ball-Nut-Housing-Bk-Bf12-End-Support-Coupler-Rolled-Ball-Screw.html);
+  Sair kits US$7–12 including BF12 seats; DSG16h housings US$5–10.
+- Block/nut/screw ratings are supplier-stated and must be verified at
+  receipt (HGR20 dynamic ≈11.4 kN/block class, SFU1605 dynamic ≈7.1 kN);
+  the design margins use these class values (docs/39 §4).
+- The genuine HIWIN leads stay as fallbacks: eBay item 406408632737
+  (KK8610P-340, US$450 snippet, page 403) and MISUMI VN detail
+  221005545419 (KK8610C-340A1-F0, VND 21,146,653 / USD 824.72, priced
+  2026-09-16).
+
 ### Dedicated channel searches, 2026-09-16 (agent findings files)
 
 Two dedicated multi-channel searches are archived with every attempt
