@@ -556,11 +556,18 @@ remain commissioning measurements (§10 hold 3).
   i.e. ≈41 W loss each → **≈123 W** total (efficiency ≥89.5 % from the
   archived LE-350 datasheets).
 - Add contactor coils 10.8 W, XPS ≈3 W, IF-B01 ≈5 W, misc ≈10 W →
-  **≈152 W** total internal dissipation.
-- TH-C01 (Rittal SK3303.500) is rated 280 W at L35: calculated margin
-  ≈128 W. The thermal budget passes on paper; a temperature mapping at
-  maximum duty is a commissioning measurement (physical) and the L50
-  derating must be checked against the installation ambient.
+  **≈152 W** total internal dissipation at FULL rated load (never occurs
+  simultaneously in the duty cycle).
+- **Realistic-duty case:** at 30 cuts/min with intermittent 500 mm/s feed
+  and 12.5 mm/s blade motion, the three supplies run at a small fraction
+  of rating (feed ≈260 W mechanical worst, blade ≈40 W, duty <30 %):
+  dissipation ≈60–90 W → internal rise ≈4–6 K at 30 °C room →
+  **internal ≈34–36 °C** — below the archived CL57T 40 °C reliable-work
+  limit (CL57T-V41 datasheet: operating 0–40 °C).
+- Safeguards: set the TH-C01 cooler thermostat to hold the internal
+  temperature ≤38 °C; the P9 thermal mapping in
+  [docs/36](36-commissioning-runbook.md) measures the actual duty
+  temperatures and must confirm ≤40 °C before sustained production.
 
 ### 11.6 Cabinet identities (proposal retained, verification notes)
 

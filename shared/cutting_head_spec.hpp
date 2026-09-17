@@ -68,7 +68,7 @@ inline constexpr double rail_start_y = stage_front_y + 87;
 inline constexpr double rail_end_y = stage_distal_y - 13;
 inline constexpr double carriage_open_y = -102;
 inline constexpr double blade_open_apex = 8, blade_cut_travel = 4.1, blade_limit = 4.2;
-inline constexpr double blade_face_gap = 0.020, blade_thickness = 3;
+inline constexpr double blade_face_gap = 0.020, blade_thickness = 3; // face gap is an ADJUSTED-AT-ASSEMBLY target (shim/lap per docs/36 P8), not a plain-plate machining tolerance
 inline constexpr double adapter_thickness = 15, adapter_width = 100;
 inline constexpr double adapter_thickness_tolerance = 0.02;
 inline constexpr double adapter_motor_pilot_diameter = 73.10, adapter_motor_pilot_depth = 2.10;
