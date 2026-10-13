@@ -69,13 +69,13 @@ Evaluation evaluate(double d,double carrier_p,double arm_p,bool shift_bushing,bo
         part.shape=BRepBuilderAPI_Transform(part.shape,shift,true).Shape();
     }
     const Group left_mech=rotated(right_mech,"LEFT_");right_mech=prefixed(right_mech,"RIGHT_");
-    const Group measuring=prefixed(se::measuringModuleGroup(d,ap),"MM_"),frame=prefixed(se::frameGroup(),"FR_");
+    const Group measuring=prefixed(se::measuringModuleGroup(d,ap),"MM_"),measuring2=prefixed(se::secondMeasuringModule(d,ap,-385.0),"MM2_"),frame=prefixed(se::frameGroup(),"FR_");
     const Group guard=prefixed(se::guardGroup(block_guard_wire_passage),"GD_"),payoff=prefixed(se::payoffGroup(),"PO_");
-    for(const Group* g:std::initializer_list<const Group*>{&right_mech,&left_mech,&measuring,&frame,&guard,&payoff})se::checkMechanismSolids(*g);
-    const Group* groups[]={&head,&right_cassette,&left_cassette,&right_mech,&left_mech,&measuring,&frame,&guard,&payoff};
-    const char* names[]={"head","right cassette","left cassette","right mechanism","left mechanism","measuring","frame","guard","payoff"};
-    for(int i=3;i<9;++i)se::checkNoInterference(*groups[i],*groups[i],names[i]);
-    for(int i=0;i<9;++i)for(int j=std::max(i+1,3);j<9;++j) {
+    for(const Group* g:std::initializer_list<const Group*>{&right_mech,&left_mech,&measuring,&measuring2,&frame,&guard,&payoff})se::checkMechanismSolids(*g);
+    const Group* groups[]={&head,&right_cassette,&left_cassette,&right_mech,&left_mech,&measuring,&measuring2,&frame,&guard,&payoff};
+    const char* names[]={"head","right cassette","left cassette","right mechanism","left mechanism","measuring","measuring2","frame","guard","payoff"};
+    for(int i=3;i<10;++i)se::checkNoInterference(*groups[i],*groups[i],names[i]);
+    for(int i=0;i<10;++i)for(int j=std::max(i+1,3);j<10;++j) {
         const std::string label=std::string(names[i])+"/"+names[j];
         se::checkNoInterference(*groups[i],*groups[j],label.c_str());
     }
@@ -108,7 +108,7 @@ Evaluation evaluate(double d,double carrier_p,double arm_p,bool shift_bushing,bo
     const auto wire=BRepPrimAPI_MakeCylinder(gp_Ax2(gp_Pnt(md::payoff_wire_x_min,0,fd::wire_axis_z),gp_Dir(1,0,0)),d/2,
         md::payoff_wire_x_max-md::payoff_wire_x_min).Shape();
     double wire_common=0;const auto wb=se::bounds(wire);
-    for(const Group* g:std::initializer_list<const Group*>{&right_mech,&left_mech,&measuring,&frame,&guard,&payoff})for(const auto& q:*g){
+    for(const Group* g:std::initializer_list<const Group*>{&right_mech,&left_mech,&measuring,&measuring2,&frame,&guard,&payoff})for(const auto& q:*g){
         const auto qb=se::bounds(q.shape);
         if(qb.zmax<=wb.zmin||qb.zmin>=wb.zmax||qb.ymax<=wb.ymin||qb.ymin>=wb.ymax)continue;
         BRepAlgoAPI_Common c(wire,q.shape);c.Build();if(!c.IsDone())throw std::runtime_error("Wire boolean failed");
@@ -130,7 +130,7 @@ Evaluation evaluate(double d,double carrier_p,double arm_p,bool shift_bushing,bo
         for(const Group* g:groups)for(const auto& part:*g){
             builder.Add(compound,part.shape);const auto b=se::bounds(part.shape);
             manifest<<part.id<<",\""<<part.description<<"\","<<(part.purchased?1:0)<<','<<b.xmin<<','<<b.ymin<<','<<b.zmin<<','<<b.xmax<<','<<b.ymax<<','<<b.zmax<<','<<se::volume(part.shape)<<'\n';
-            if(g==&right_mech||g==&left_mech||g==&measuring||g==&frame||g==&guard||g==&payoff){auto& e=bom[part.description];++e.first;e.second=part.purchased;}}
+            if(g==&right_mech||g==&left_mech||g==&measuring||g==&measuring2||g==&frame||g==&guard||g==&payoff){auto& e=bom[part.description];++e.first;e.second=part.purchased;}}
         std::ofstream bomfile(out/"mechanism-bom.csv");bomfile<<"description,quantity,purchased\n";
         for(const auto& [k,v]:bom)bomfile<<'"'<<k<<"\","<<v.first<<','<<(v.second?1:0)<<'\n';
         manifest.close();bomfile.close();
@@ -142,7 +142,7 @@ Evaluation evaluate(double d,double carrier_p,double arm_p,bool shift_bushing,bo
               <<"  \"carried_mass_estimate_kg\":"<<mass<<",\n  \"carrier_adjuster_protrusion_mm\":"<<p<<",\n  \"carrier_spring_length_mm\":"<<cs.spring_length_mm<<",\n  \"carrier_spring_force_n\":"<<cs.spring_force_n<<",\n  \"nip_preload_per_nip_n\":"<<cs.nip_force_n<<",\n"
               <<"  \"arm_adjuster_protrusion_mm\":"<<ap<<",\n  \"arm_spring_length_mm\":"<<as.spring_length_mm<<",\n  \"wheel_contact_force_n\":"<<as.wheel_force_n<<",\n"
               <<"  \"minimum_moving_head_to_mechanism_X_gap_mm\":"<<gap<<",\n  \"wire_envelope_common_mm3\":"<<wire_common<<",\n"
-              <<"  \"scope\":\"head,two cassettes,two pressure carriers,two wire guides,measuring module (one of two;the mirror is not modeled),bed,welded frame,R2 guard/payoff selections with 6204 bearing pockets;cabinet and safety functions not modelled\",\n"
+              <<"  \"scope\":\"head,two cassettes,two pressure carriers,two wire guides,two measuring modules (upstream stock station at X-205 and second stock station at X-385 (outside the guard; continuous stock contact; payoff shifted 60 mm outboard);contact/redundancy analysis in engineering/sources/second-module-position-analysis.md),bed,welded frame,R2 guard/payoff selections with 6204 bearing pockets;cabinet and safety functions not modelled\",\n"
               <<"  \"cross_subsystem_static_intersections_checked\":true,\n  \"external_wire_route_checked\":true,\n  \"guard_door_kinematics_validated\":false,\n  \"guard_safety_function_validated\":false,\n  \"payoff_selection_complete\":false,\n  \"payoff_rotation_validated\":false,\n  \"step_readback\":true,\n  \"frame_integrated\":true,\n  \"full_machine_integrated\":false,\n  \"physical_results\":false,\n  \"fabrication_released\":false\n}\n";
         status.close();
         if(!status)throw std::runtime_error("Mechanism status output failed");

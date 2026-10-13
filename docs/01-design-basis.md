@@ -6,7 +6,7 @@
 One lane; two independent feed cassettes; four closed-loop stepper axes; two independently driven opposing 90° V blades; separate actual-wire measuring wheels; guarded payoff, contained scrap and supported output. Optional crimping is a separate guarded module, not an unguarded attachment to this head.
 | Subsystem | Selected hardware |
 |---|---|
-| Each cutting axis | HIWINKK8610C-340A1-F0,34E1K-85,CL86T-V41,R+WMK2/100/50/8/14 |
+| Each cutting axis | Custom S1-B cut axis (docs/39): HGR20 rails + SFU1610-class C7 screw, 10 mm lead, 1000 pulses/rev driver, 100 pulses/mm; 34E1K-85, CL86T-V41, R+W MK2/100/50/8/14; HIWIN KK8610 leads are fallback purchase leads only |
 | Cutting power | 2×LE-350-60, one isolated 60V branch per drive; not paralleled |
 | Each feed cassette | 24HS40-5004D-E1000,CL57T-V41,R+WMK2/100/50/10/12; two driven lower/two passive upper rollers |
 | Feed transmission | HTPA20S5M250-A-N14×2,HTBN225S5M-250×1 per cassette |
@@ -37,6 +37,14 @@ Embedded and host software are **Rust, C or C++ only**; current replacement mode
 | Feed structural envelopes | 1 N m running, 2.5 reversing service factor; separate 5 N m fault; belt 480 N radial; roller ±60 N in both planes |
 | Room/cabinet | 40°C room design case; selected drives limit 40°C; active cooling/overtemperature integration required |
 | Mains | Selected supplies/cooler 230V 50Hz; site protection, PE and wiring still must be completed |
+
+**Qualification subset note (audit F32/F41).** The initial qualification
+subset is **200–1000 mm at 15–30 °C**. It is exactly that subset: passing it
+does not qualify 3000 mm lengths or any hotter environment by implication,
+and every matrix/guide citation must label it as a subset. The full declared
+envelope (200–3000 mm and the stated room case) requires its own
+qualification cells, or an approved requirement change that explicitly
+narrows the advertised envelope.
 
 No live wire, solid copper, aluminium, steel, shielded/multicore/coax, silicone, PTFE/XLPE or high-voltage processing is qualified by these selections. No production pieces/hour or endurance claim is inferred from motor resolution. The legacy controller in [software/firmware/firmware_controller.cpp](../software/firmware/firmware_controller.cpp) rejects job start with `NotCommissioned`. The separate production-controller source in [software/machine/](../software/machine/) implements retained jobs and panel start logic for the Pico 2 target, but it has no assembled-machine, safety-function or process-qualification evidence.
 ## 3. Coordinates and interfaces

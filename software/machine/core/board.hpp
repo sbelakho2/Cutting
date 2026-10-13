@@ -32,12 +32,12 @@ public:
 
     // Board-specific causes that must leave a reset controller faulted. The
     // RP2350 board reports a watchdog reset here; host simulations default to 0.
-    virtual std::uint16_t boot_faults() { return 0; }
+    virtual FaultBits boot_faults() { return 0; }
 
     // Asynchronous board faults. The RP2350 implementation latches an input
     // safety-loop edge in its GPIO ISR and PIO RX FIFO overflow here, so a
     // transient cannot be missed between 1 kHz controller samples.
-    virtual std::uint16_t latched_faults() { return 0; }
+    virtual FaultBits latched_faults() { return 0; }
     // Called only after the core has confirmed healthy field inputs during an
     // explicit RESET acknowledgement. Returns false if hardware cannot clear.
     virtual bool clear_latched_faults() { return true; }

@@ -271,8 +271,8 @@ def check_cad_vs_datasheet() -> None:
         fail("mechanism status.json measurement_revision does not match measurement_spec")
     if mech_status.get("wheel_contact_force_n") != 10:
         fail(f"mechanism status.json wheel_contact_force_n is {mech_status.get('wheel_contact_force_n')!r}, expected 10")
-    if mech_status.get("occurrences") != 504:
-        fail(f"mechanism status.json occurrences is {mech_status.get('occurrences')!r}, expected 504")
+    if mech_status.get("occurrences") != 550:
+        fail(f"mechanism status.json occurrences is {mech_status.get('occurrences')!r}, expected 550")
     if mech_status.get("external_wire_route_checked") is not True:
         fail("mechanism status.json lost the external wire-route check flag")
     if mech_status.get("cross_subsystem_static_intersections_checked") is not True:

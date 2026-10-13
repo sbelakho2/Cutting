@@ -8,13 +8,14 @@
 ; stalls on an RX FIFO overflow; board.cpp checks the sticky PIO RXSTALL flag
 ; and latches `fault::encoder_overflow`, rather than silently dropping edges.
 ;
-; The initial AB sample is supplied as a low two-bit TX word by
-; quadrature_program_init(). Thereafter the machine has no TX traffic.
+; The initial AB state is loaded into X by the CPU with a forced `set x, imm`
+; (pio_sm_exec) before the state machine is enabled. The program itself uses no
+; TX path at all: the FIFOs are joined RX-only, so any PULL/TX word would block
+; forever. The first loop sample compares against that forced X value, so the
+; current AB state is never reported as a spurious transition.
 
 .program quadrature
 .wrap_target
-    pull block              ; initial state from CPU, packed in bits 1:0
-    out x, 2                ; x = last AB state
 sample:
     mov isr, null
     in pins, 2              ; current packed AB -> ISR[1:0]
@@ -36,11 +37,11 @@ static inline void quadrature_program_init(PIO pio, uint sm, uint offset, uint p
     pio_sm_config c = quadrature_program_get_default_config(offset);
     sm_config_set_in_pins(&c, pin_a);
     sm_config_set_in_shift(&c, false, false, 32);  // AB occupies ISR bits 1:0
-    sm_config_set_out_shift(&c, true, false, 32);  // initial AB comes from OSR bits 1:0
     sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX); // 8 ordered state transitions
     pio_sm_init(pio, sm, offset, &c);
     const uint32_t initial = (gpio_get(pin_a) ? 1u : 0u) | (gpio_get(pin_a + 1u) ? 2u : 0u);
-    pio_sm_put_blocking(pio, sm, initial);
+    // No pio_sm_put_blocking(): the joined RX FIFO has no usable TX side.
+    pio_sm_exec(pio, sm, pio_encode_set(pio_x, initial));
     pio_sm_set_enabled(pio, sm, true);
 }
 %}

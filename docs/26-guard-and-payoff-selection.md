@@ -93,6 +93,16 @@ Spindle retention: 2 × M20×1.5 lock nuts with tab washer (KM-class, purchase
 with the nut to supplier spec) and 2 × shaft collars; exact identities are
 purchase-to-requirement, not claimed catalogue SKUs.
 
+**Torque path (audit F18, resolved 2026-10-13):** the spool does not simply
+float on the spindle. P008, a keyed drive boss (C45, Ø54.6 × 12, 20 H7 bore
+with 6 JS9 keyseat), is welded to the left flange inside the hub tube and
+keyed to the spindle. Brake torque therefore flows caliper → disc → spindle
+key → P008 → left flange → spool. The right flange keeps its Ø20.5 pilot
+bore. The brake is only effective with P008 fitted; the assembly step is in
+docs/34 §1. The whole payoff assembly sits **60 mm further outboard than R1**
+(spool centre X = −710) to clear the second measuring station at X = −385
+(see engineering/sources/second-module-position-analysis.md).
+
 The brake is a friction tension brake, not a safety brake: it holds light
 tension against spool rotation during payout and is adjustable by the M8
 adjuster. It provides **no** guaranteed stop, no holding-brake function and

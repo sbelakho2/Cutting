@@ -104,6 +104,10 @@ TopoDS_Shape holderShape() {
     // Keep the main backbone centred on the screw/load line; machine the blade
     // seat only at the nose. The former full-length one-sided arm was eccentric.
     s=cut(s,box(d::blade_seat_x,d::blade_pocket_y,3,40,30,46));
+    // Backing slot behind the blade seat (audit F22): carries the H007
+    // backing plate that the blade shims against, so the cut reaction
+    // never loads the blade in bending.
+    s=cut(s,box(d::blade_seat_x-8.5,d::blade_pocket_y,3.5,8,30,45));
     TopTools_IndexedMapOfShape edges; TopExp::MapShapes(s,TopAbs_EDGE,edges);
     BRepFilletAPI_MakeFillet fillet(s); bool selected=false;
     for(int i=1;i<=edges.Extent();++i) {
@@ -221,6 +225,12 @@ std::vector<HeadPart> headAssembly(double closure) {
     add("CP01","R+W MK2/100/50/8/14 interference envelope",cp,true);
     add("H004","42CrMo4+QT single-piece blade holder",
         translate(holderShape(),0,d::carriage_open_y,d::carriage_z),false,true);
+    // H007 backing plate inside the H004 blade pocket: the blade is shimmed
+    // against it at assembly, so the 20 um face gap is set by the backing
+    // (audit F22) and the 1200 N cut reaction is carried by the plate, not
+    // by blade flexure. 0.5 mm nominal shim gap behind the blade.
+    add("H007","42CrMo4+QT blade backing plate 30x46x8;shimmed blade seat;carries the 1200 N blade reaction;face gap set at assembly (docs/34)",
+        translate(box(d::blade_seat_x-8.5,d::blade_pocket_y+0.5,3.5,8,29,45),0,d::carriage_open_y,d::carriage_z),false,true);
     add("T001","Ground V tooling purchase-to-drawing / qualification hold",
         translate(knife(),0,-4,d::wire_z),true,true);
     for(int side=0;side<2;++side) for(const auto& p:one) {

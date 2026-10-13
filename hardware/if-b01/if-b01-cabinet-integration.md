@@ -46,8 +46,8 @@ Every J10/J11 input is an isolated dry-contact closure to its adjacent
 
 | IF-B01 connection | Cabinet endpoint | Required boundary |
 |---|---|---|
-| J8 | left ifm RU3100 encoder (REVIEWED 2026-09-16: TTL mode via IO-Link required; factory setting HTL) | `+5V` = M12-1 UB, `0V` = M12-3 GND, A → J8-3, B → J8-5; A−/B− (J8-4/J8-6) are the receiver mid-bias points; Z (M12-4) insulated. |
-| J9 | right ifm RU3100 encoder (REVIEWED 2026-09-16: TTL mode via IO-Link required; factory setting HTL) | `+5V` = M12-1 UB, `0V` = M12-3 GND, A → J9-3, B → J9-5; A−/B− (J9-4/J9-6) are the receiver mid-bias points; Z (M12-4) insulated. |
+| J8 | left ifm RU3100 encoder (TTL mode via IO-Link required; 2048 PPR set via IO-Link; factory setting HTL 1024 PPR) | `+5V` = M12-1 UB, `0V` = M12-3 GND, A = M12-2 → J8-3, B = M12-5 → J8-5; J8-4/J8-6 are the on-board 2.5 V receiver mid-bias nodes (R38/R39/R40/R41, C14/C15) and must not receive any encoder wire; Z/IO-Link (M12-4) insulated. |
+| J9 | right ifm RU3100 encoder (TTL mode via IO-Link required; 2048 PPR set via IO-Link; factory setting HTL 1024 PPR) | `+5V` = M12-1 UB, `0V` = M12-3 GND, A = M12-2 → J9-3, B = M12-5 → J9-5; J9-4/J9-6 are the on-board 2.5 V receiver mid-bias nodes (R42/R43/R44/R45, C16/C17) and must not receive any encoder wire; Z/IO-Link (M12-4) insulated. |
 | J8/J9 cable screen | PE-BAR at entry | Bond the screen at the cabinet PE entry, never to IF-B01 `0V_PELV`. |
 | J12-1 | PB01 green LED cathode | Anode uses separately protected `+24V_PELV`; `GP22` controls the low side. |
 | J12-2 | PB02 red LED cathode | Anode uses separately protected `+24V_PELV`; `GP26` controls the low side. |
@@ -60,9 +60,32 @@ Every J10/J11 input is an isolated dry-contact closure to its adjacent
    only after its human electrical/mechanical and fabricator reviews are recorded.
 2. The XPS, K1/K2/K3, E-stop and guard contacts remain hardwired functions;
    KA4/`GP15`, IF-B01 and firmware are diagnostic only.
-3. Do not authorise guard unlocking. The E1/E2 release-permission circuit is
-   deliberately unresolved pending the safety and energy evidence named in
-   the cabinet design input.
-4. Before power, record actual terminal product, wire/cable identity, crimp and
+3. **Guard-release-permission chain (desk part 2026-10-13, docs/22 §11.8).**
+   The E1/E2 release coil is driven only through the dedicated chain below; the
+   K1–K3 built-in mirror NC contacts stay exclusively in the XPS `Y1`/`Y2`
+   monitored-start (EDM) chain and are **not** reused. The release chain uses the
+   second, distinct NC contacts added as one Schneider `LADN02` 2-NC auxiliary
+   block on each LC1D12BD (DC-coil LC1D09…D38 accept exactly one front block;
+   a 1-contact LADN01 is not offered for them). Terminal-level definition:
+
+   | Element | Terminal definition | Notes |
+   |---|---|---|
+   | Protected release branch | `+24V_PELV → CB-R2-LINK (1 A T 5×20) → TB-S group` | separate 1 A branch, not the XPS output fuse |
+   | PB04 release request | `TB-S → PB04 NO (11-14) → K1 LADN02 NC-A` | momentary hold-to-release, panel button |
+   | Contact monitor chain | `K1 LADN02 NC-A → K2 LADN02 NC-A → K3 LADN02 NC-A → T2 A1` (each contact's second terminal in series; second NC of each block left unwired) | block terminal numbers per the fitted block marking; record at the wiring review |
+   | T2 on-delay | `T2 A1/A2 = 24 V / 0 V`; output NO `15-18` in the R2 coil path | set to the **measured** bus-decay time + ≥1 s (desk estimate ≈3 s with the 2.2 kΩ 5 W bleeds) |
+   | R2 | `T2 15-18 → R2 A1`; `R2 A2 → 0 V`; R2 NO `11-14` → E1; E2 → 0 V | Phoenix `PLC-RSC-24DC/21` (identity CT-RC01) |
+   | E1/E2 | Bernstein SLC lock coil | existing guard device; spring-retained lock on power loss |
+
+   A welded contactor main pole keeps that contactor's LADN02 NC block open and
+   blocks release; a welded LADN02 contact is a documented single-channel fault
+   that the risk assessment must accept or escalate (proof test required). All
+   bus-decay, timer-setting and fault-injection measurements remain physical
+   holds (docs/22 §10 hold 5).
+4. Do not authorise guard unlocking from this schedule alone: the chain above is
+   a desk design with the physical verification and risk assessment still open.
+   Until they close, access after a trip remains a controlled lockout/tagout
+   procedure.
+5. Before power, record actual terminal product, wire/cable identity, crimp and
    torque method, continuity/separation/PE results, protection coordination and
    device settings. No blank, expected or simulated result is acceptance evidence.

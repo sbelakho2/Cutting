@@ -20,11 +20,16 @@ inline constexpr double carriage_height = 46, screw_height = 32, lead = 10;
 inline constexpr double useful_travel = 194, travel_reserve = 8;
 inline constexpr double carriage_width = 60, carriage_pad_length = 75, carriage_total_length = 116;
 inline constexpr double mounting_pitch = 46, input_diameter = 8, exposed_shaft = 18;
-inline constexpr double cavity_diameter = 46, stage_mass_kg = 5.7;
-inline constexpr double screw_dynamic_n = 7144, screw_static_n = 12642;
-inline constexpr double guide_dynamic_n = 31458, guide_static_n = 50764;
-inline constexpr double moment_roll_nm = 1507, moment_pitch_nm = 622, moment_yaw_nm = 622;
-inline constexpr double bearing_static_n = 9240, bearing_max_n = 6320;
+inline constexpr double cavity_diameter = 46, stage_mass_kg = 8.0; // custom-axis assembly estimate (H005/H006 plates + rails + blocks + screw + supports); weigh the built axis and update
+// Custom-axis component ratings: SUPPLIER-STATED class values to verify at
+// receipt (SFU1610-class C7 screw; 4x HGH20CA blocks). The ORIGINAL
+// acceptance loads (working_thrust_n / proof_load_n) remain the requirement.
+inline constexpr double custom_screw_dynamic_n = 7600, custom_screw_static_n = 15200;
+inline constexpr double custom_guide_dynamic_n = 45600, custom_guide_static_n = 70000;
+// Custom-axis guide-block moment ratings: SUPPLIER-STATED HGH20CA class values, verify at receipt against the selected block datasheet.
+inline constexpr double custom_block_moment_roll_nm = 34, custom_block_moment_pitch_nm = 27, custom_block_moment_yaw_nm = 27;
+// Custom-axis BK12 fixed-end support axial rating: SUPPLIER-STATED class value, verify at receipt.
+inline constexpr double custom_fixed_end_max_n = 4900;
 inline constexpr double start_torque_nm = 0.150, max_speed_mm_s = 740;
 inline constexpr double repeatability_mm = 0.003, positioning_mm = 0.025;
 inline constexpr char motor[] = "STEPPERONLINE 34E1K-85";

@@ -183,7 +183,9 @@ void restart_encoder(EncoderCapture& encoder) {
     pio0->fdebug = debug_bit;
     pio_sm_exec(pio0, encoder.sm, pio_encode_jmp(encoder_program_offset));
     encoder.last_ab = read_ab(encoder.a_pin);
-    pio_sm_put_blocking(pio0, encoder.sm, encoder.last_ab);
+    // RX-joined FIFO: initialize the sampler X register with a forced set
+    // instruction; a TX put would block because the TX side is joined away.
+    pio_sm_exec(pio0, encoder.sm, pio_encode_set(pio_x, encoder.last_ab));
     encoder.count = 0;
     encoder.healthy = true;
     pio_sm_set_enabled(pio0, encoder.sm, true);

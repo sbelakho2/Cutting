@@ -17,6 +17,7 @@ struct ArmSetting { double arm_top_z, spring_length_mm, spring_force_n, adjuster
 ArmSetting armSetting(double wire_diameter_mm,double adjuster_protrusion_mm);
 double nominalArmProtrusion();
 std::vector<HeadPart> measuringModuleGroup(double wire_diameter_mm,double adjuster_protrusion_mm);
+std::vector<HeadPart> secondMeasuringModule(double wire_diameter_mm,double adjuster_protrusion_mm,double at_x_mm);
 std::vector<HeadPart> frameGroup();
 // Static, preliminary enclosure/guard accommodation only. `block_wire_passage`
 // intentionally removes the pass-throughs for the negative route test.

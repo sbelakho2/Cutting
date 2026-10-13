@@ -9,6 +9,11 @@ recomputed in [docs/42](42-process-dynamics-r2.md), which supersedes §1/§3/§5
 numbers below where they differ. The §3 resolution line and the quantisation
 row below are marked accordingly.
 
+**Corrections 2026-10-13 (audit F20/F21/F30):** §2 tooth-pass 79.6 Hz and
+modal caveats; §3 tension allocation conditional on \|ΔT\| ≤ 8.25 N;
+§5 driven-contact traction model (80–180 N / 1.8× withdrawn); §6 row 8
+directly-coupled motor heat path.
+
 **Status:** desk calculation record. Every number below is derived from the
 repository constants ([machine_spec](../shared/machine_spec.hpp),
 [feed_drive_spec](../shared/feed_drive_spec.hpp),
@@ -130,13 +135,19 @@ f₁ = (1/2L)·√(T/μ), L = 62.5 mm span (equal pulleys), μ = 85 g/m
 | **190 N (target)** | **378 Hz** |
 | 200 N (acceptance max) | 388 Hz |
 
-Worst step excitation: 500 mm/s feed / 5 mm pitch = **100 Hz tooth-passing
-fundamental**, trapezoid harmonics at 200/300 Hz. Separation of the first
-belt mode from the fundamental is **3.8×** and the first three mesh harmonics
-stay below f₁. Verdict: **PASS** for the string model; belt bending
-stiffness raises f₁ further. Measure the strand frequency at commissioning
-(the 1.000 mm-deflection/14.5 N method of [docs/12](../docs/12-feed-cartridge-fabrication.md)
-sets the same quantity).
+Worst step excitation: the belt runs on 20-tooth pulleys on the Ø40 roller;
+at 500 mm/s the roller turns 3.979 rev/s, so the **tooth-pass fundamental is
+20 × 3.979 = 79.6 Hz** — not 500 mm/s ÷ 5 mm = 100 Hz, because the belt
+pitch line runs at π×31.83 mm × 3.979 rev/s = 397.9 mm/s, below the roller
+surface speed — with trapezoid harmonics at **159.2 / 238.7 Hz**. Separation
+of the first belt mode (378 Hz) from the fundamental is **4.75×**; the first
+four mesh harmonics (79.6 / 159.2 / 238.7 / 318.3 Hz) stay below f₁ and the
+5th (397.9 Hz) is above it. The string model is a screening estimate: it
+ignores belt bending/transverse stiffness (raises f₁) and pulley rotary
+inertia contributions (lowers it), and it carries no measured modal mass —
+measure the strand at commissioning (the 1.000 mm-deflection/14.5 N method
+of [docs/12](../docs/12-feed-cartridge-fabrication.md) sets the same
+quantity) with an analysis bandwidth ≥2 kHz.
 
 Tension requirement: initial 180–200 N, target 190 N, manufacturer maximum
 initial tension 221 N ([misumi-belt-installation](../engineering/sources/misumi-belt-installation.pdf)
@@ -164,7 +175,7 @@ Target: ±(0.2 mm + 0.05 %) of commanded length
 | Wheel slip at 6–19 N force | 0.25 mm allocation | Traction μ·F_c ≈ 0.5 × 19 = 9.5 N vs demand ≈ 0.5 N (bearing/encoder drag 0.31 N + 0.10 N accel) → 6–20× margin; the 0.25 mm is the retained qualification allocation, not a measured slip |
 | Temperature 15–30 °C | ≈0.23 mm | Al wheel core 23e-6/K × 10 K; PU tread and indentation effects are **unquantified** and flagged; wire Cu 17e-6/K cancels (feed and measure at the same temperature) |
 | Runout/TIR 0.2 mm | 0.2 mm uncalibrated | Calibration maps the first harmonic (synthetic bound 0.001 mm); arbitrary lobing does not inherit that bound |
-| Wire tension/extension | 0.15 mm allocation | Recipe-controlled term |
+| Wire tension/extension | 0.15 mm allocation, **conditional on \|ΔT\| ≤ 8.25 N** | corrected: the 44 N worst-case tension gives ≈0.8 mm/m on 0.5 mm² Cu (E = 110 GPa, 0.0182 mm/N/m) — see [docs/42 §1.4](42-process-dynamics-r2.md); the allocation is not a bound |
 
 Worst-case sums:
 
@@ -178,11 +189,17 @@ term, but no desk number can close the ±0.70 mm/m acceptance — the residual
 is held by process terms (wheel force 6–19 N, tension, 15–30 °C, direction)
 that only the 30-piece qualification cells ([docs/20](../docs/20-physical-qualification.md),
 gate 25) and the physical calibration (gate 29) can demonstrate. The
-short-length target (±0.30 mm at 200 mm) is dominated by the constant
-allocations (slip 0.25 + tension 0.15); these must be reduced by evidence,
-not re-budgeted on paper. The 626 CN bearing 0.5 µm/10 K clearance residue
-([docs/13 §3](../docs/13-measuring-interfaces-and-calibration.md)) remains an
-open bearing-design item, not yet included in this sum.
+tension allocation is additionally **conditional**: the corrected payoff/feed
+analysis ([docs/42 §1.4](42-process-dynamics-r2.md)) shows a 44 N tension
+excursion alone is 0.8 mm/m on 0.5 mm² Cu, so the 0.15 mm row holds only for
+\|ΔT\| ≤ 8.25 N and the acceptance requirement stays ±(0.20 mm + 0.05 %)
+until tension control and metrology close it. The short-length target
+(±0.30 mm at 200 mm) is dominated by the constant allocations (slip 0.25 +
+tension 0.15); these must be reduced by evidence, not re-budgeted on paper.
+The 626 CN bearing 0.5 µm/10 K clearance residue
+([docs/13 §3](../docs/13-measuring-interfaces-and-calibration.md)) and the
+directly-coupled motor heat path (docs/28 §2.5) remain open bearing-design
+work, not included in this sum.
 
 ## 4. Blade mechanics
 
@@ -212,27 +229,39 @@ edge-qualified (gate 13).
 
 ## 5. Payoff/feed interplay — wire tension bounds
 
-Roller traction: μ (PU tread on Cu/PVC) ≈ **0.4–0.6** (stated tribology
-handbook range for polyurethane on metals/plastics, dry). Per nip (wire
-between two rollers, both faces gripping): F_pull = 2·μ·N_nip:
+Roller traction — **driven-contact model** (corrects the R1 doubled model):
+only the driven lower rollers transmit tangential force; each upper roller
+is a reaction/drag element, so the capacity is μ·(N1 + N2), with N1 + N2 the
+summed driven preloads:
 
-| Nip preload | μ = 0.4 | μ = 0.6 |
-|---|---|---|
-| 50 N | 40 N | 60 N |
-| 75 N | 60 N | 90 N |
+| Nip preload (each) | N1 + N2 | μ = 0.4 | μ = 0.6 |
+|---|---|---|---|
+| 50 N | 100 N | **40 N** | 60 N |
+| 60 N | 120 N | **48 N** | 72 N |
+| 75 N | 150 N | **60 N** | 90 N |
 
-Two nips in series give ≈ **80–180 N** worst-case traction capacity (linear
-sum; verify by pull test — nip sharing is not guaranteed). Wire acceleration
-demand is trivial: 0.553 kg × 1.5 m/s² = **0.83 N**. Payoff brake guidance:
-set light tension **5–20 N** (keeps the strand taut, ≪ 25 % of traction
-capacity, leaves ≥ 50–100 N headroom for strip forces, and stays far below
-the upstream measuring-wheel traction ≈ 3–9.5 N at μ·(6–19 N)). The brake is
-a friction tension brake, not a safety brake
+These are pre-loss bounds. The R1 claim of 80–180 N (and the derived 1.8×
+margin) counted both faces of each nip and is **withdrawn**. The 44 N
+full-spool demand ([docs/42 §4.1](42-process-dynamics-r2.md)) exceeds the
+40 N minimum-preload bound and is 92 % of the 60 N-preload bound before any
+loss: the full-spool 1.5 m/s² start is not available at the 50 N floor and
+is marginal at 60 N. The required recipe limit or the buffered-payoff design
+change is defined in [docs/42 §4.4](42-process-dynamics-r2.md). Wire
+acceleration demand itself is trivial: 0.553 kg × 1.5 m/s² = **0.83 N**.
+
+Payoff brake guidance: **5–20 N back-tension is a tension target, not a
+fixed torque** — the required brake torque is tension × radius, i.e.
+1.0–4.0 Nm only at the 0.2 m full radius and 0.15–0.6 Nm at the 0.03 m core
+(radius-band table in [docs/42 §4.3](42-process-dynamics-r2.md)); a
+constant-torque setting is unsafe across the radius range (1 Nm at the core
+is 33.3 N). The brake is a friction tension brake, not a safety brake
 ([docs/26 §3](../docs/26-guard-and-payoff-selection.md)); brake adjustment
 trials and runaway/overspeed measurement are commissioning steps
-([docs/26 §6.3](../docs/26-guard-and-payoff-selection.md)). Hard bound:
-brake tension + strip force + accel force must stay below the nip traction at
-μ = 0.4; verify with the creep/pull test in the physical qualification.
+([docs/26 §6.3](../docs/26-guard-and-payoff-selection.md)). Reversal slack
+take-up is required — a friction brake cannot take back wire
+([docs/42 §4.4](42-process-dynamics-r2.md)). Hard bound: brake tension +
+strip force + accel force must stay below the corrected driven-contact
+traction; verify with the creep/pull test in the physical qualification.
 
 ## 6. Thermal / EMC / robustness watchlist
 
@@ -248,7 +277,7 @@ the new check it still requires.
 | 5 | Backfeed / reversal error | Signed floor-division mapping with Z-index phase reference, reversal-tested ([docs/13 §4](../docs/13-measuring-interfaces-and-calibration.md)) | Direction-dependent hysteresis inspection per recipe (docs/13 step 7); backfeed must not exceed the 25 mm tail budget |
 | 6 | EMI on measuring chain | Shielded encoder cables, screen bonding at PE bar, 2 × M20 EMC glands (docs/22) | **Open**: J8/J9 receiver/termination review for RU3100 TTL/HTL (written for RS-422 AM26LV32, not re-approved); EMC assessment of built cabinet (gate 41, P5-9) |
 | 7 | Heartbeat / control loss | 750 ms `HeartbeatLost`; 750 µs timeout in `machine_spec.hpp` | Fault-injection validation (gate 23, P5-4/P5-7) |
-| 8 | Motor overheat at hold | 30 W standstill loss; belt thermal break; documented HOLD: seat ΔT 29.66 K vs 20 K envelope | Motor-case temperature at rated hold (docs/28 §2.5, P1-1…P1-5, P9-1…P9-3) |
+| 8 | Motor overheat at hold | 30 W standstill loss; the motor is **directly coupled** to the driven roller shaft through the MK2 coupling (no belt isolation on that path — only the idler shaft is belt-isolated); documented HOLD: seat ΔT 29.66 K vs 20 K envelope | Heat-path model per shaft role and motor-case temperature at rated hold (docs/28 §2.5, P1-1…P1-5, P9-1…P9-3) — **REQUIRED DESIGN WORK, not closed** |
 | 9 | Payoff runaway/backlash | Friction brake only (no guaranteed stop) | Runaway/overspeed measurement (docs/26 §6.3, P7-1…P7-4); spool ≤ 30 kg weighed |
 | 10 | Length cell out of tolerance | Calibration model + fail-closed qualification tool | 30-piece cells, Cpk ≥ 1.33, gauge U ≤ 0.05 mm/1.0 N (docs/20, gate 25, P10-1…P10-5) |
 | 11 | Guard/E-stop breach | XPS relay, K1–K3 NC chain, guard channels, `Estop`/`GuardOpen` faults | Stop-time and bus-decay measurement, risk assessment sign-off (gates 14/23, P5-4, P8-2) |
@@ -277,20 +306,33 @@ the new check it still requires.
 11. Blade deflection uses a plain 3 mm plate model; the real blade is a
     purchase-to-drawing wedge and may be stiffer.
 12. String model for belt f₁ ignores bending stiffness (raises f₁) — the
-    computed value is therefore conservative.
-13. Two-nip traction summed linearly; nip load sharing must be verified.
+    computed value is therefore conservative; it also carries no measured
+    modal mass or pulley rotary inertia. The commissioning measurement
+    (bandwidth ≥2 kHz) is the arbiter.
+13. Driven-contact traction model: only the driven lower rollers transmit
+    (capacity μ·(N1 + N2)); upper rollers are reaction/drag. Linear nip
+    load sharing is an assumption to verify (gate 12). The R1
+    doubled 2·μ·N model is withdrawn.
+14. Spool flange inertia 0.1184 kg·m² (R2 spool geometry, stated) and the
+    annular wire winding of docs/42 §4.3; the empty-spool core case (197 N
+    at 1.5 m/s²) is the governing worst case.
+15. Feed belt tooth-pass = pulley teeth × speed = 79.6 Hz at 500 mm/s
+    (corrected 2026-10-13; the R1 "500 mm/s ÷ 5 mm = 100 Hz" used the roller
+    surface speed instead of the belt pitch-line speed).
+16. Buffered/powered payoff and reversal slack take-up are required design
+    work (docs/42 §4.4); the passive radius-band brake table is interim.
 
 ## 8. Verdict summary
 
 | Item | Key number | Verdict |
 |---|---|---|
 | Feed torque margin | 1.03 Nm peak vs 2.6–3.1 Nm assumed curve (2.5–3.0×); 1.01–1.20× if the 2.5 factor is applied to the motor | PASS with flagged curve-digitisation condition; motor is the binding element, belt is not (4.36×) |
-| Belt first natural frequency | 378 Hz vs 100 Hz tooth-passing (3.8× separation) | PASS |
-| Error budget total | 1.65 mm/m uncalibrated, ≈0.80 mm/m calibrated-at-allocations, vs ±0.70 mm/m (R1; R2 at 2048 PPR: 1.625 / ≈0.79 mm/m, [docs/42](42-process-dynamics-r2.md)) | FAIL on desk; calibration necessary, process terms must be demonstrated physically |
+| Belt first natural frequency | 378 Hz vs **79.6 Hz tooth-passing (4.75× separation; harmonics 159.2/238.7 Hz below f₁)** | PASS |
+| Error budget total | 1.65 mm/m uncalibrated, ≈0.80 mm/m calibrated-at-allocations, vs ±0.70 mm/m (R1; R2 at 2048 PPR: 1.625 / ≈0.79 mm/m, [docs/42](42-process-dynamics-r2.md)); tension allocation conditional on \|ΔT\| ≤ 8.25 N | FAIL on desk; calibration necessary, process terms must be demonstrated physically; requirement stays ±(0.20+0.05 %) |
 | Blade force | ≈700–1200 N (guillotine bound 2.15–2.62 kN × wedge factor) | PASS: stage cap 1578 N, motor 3381 N (0.8× curve) |
 | Blade deflection | holder ≈4 µm, plain blade plate ≈300 µm vs 20 µm face gap | Blade stiffness is a purchase-drawing requirement (gate 13) |
 | Blade life | 10⁵–10⁶ strokes order of magnitude (Cu) | Planning number only; unqualified tooling |
-| Payoff/feed tension | traction 80–180 N, brake setting 5–20 N, accel demand 0.83 N | Guidance issued; physical pull/runaway tests required |
+| Payoff/feed tension | driven-contact traction **40/48/60 N** at 50/60/75 N preload; 44 N full-spool demand exceeds the 40 N minimum bound; brake target 5–20 N is radius-dependent (1.0–4.0 Nm only at r = 0.2 m) | Withdrawn 80–180 N/1.8× claim; buffered payoff + reversal slack take-up are required (docs/42 §4.4); physical pull/runaway tests required |
 
 No repository gate is closed by this document alone; the desk halves it
 supplies are recorded in the [gate ledger](../docs/33-gate-ledger.md) §2.6.

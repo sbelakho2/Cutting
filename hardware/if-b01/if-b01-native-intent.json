@@ -5,6 +5,10 @@
     "C11",
     "C12",
     "C13",
+    "C14",
+    "C15",
+    "C16",
+    "C17",
     "C2",
     "C3",
     "C4",
@@ -42,7 +46,6 @@
     "MH2",
     "MH3",
     "MH4",
-    "R1",
     "R10",
     "R11",
     "R12",
@@ -53,7 +56,6 @@
     "R17",
     "R18",
     "R19",
-    "R2",
     "R20",
     "R21",
     "R22",
@@ -64,7 +66,6 @@
     "R27",
     "R28",
     "R29",
-    "R3",
     "R30",
     "R31",
     "R32",
@@ -73,13 +74,23 @@
     "R35",
     "R36",
     "R37",
-    "R4",
+    "R38",
+    "R39",
+    "R40",
+    "R41",
+    "R42",
+    "R43",
+    "R44",
+    "R45",
     "R5",
     "R6",
     "R7",
     "R8",
     "R9",
     "TP1",
+    "TP10",
+    "TP11",
+    "TP12",
     "TP2",
     "TP3",
     "TP4",
@@ -87,6 +98,7 @@
     "TP6",
     "TP7",
     "TP8",
+    "TP9",
     "U1",
     "U2",
     "U3"
@@ -97,6 +109,10 @@
     "C11",
     "C12",
     "C13",
+    "C14",
+    "C15",
+    "C16",
+    "C17",
     "C2",
     "C3",
     "C4",
@@ -144,7 +160,6 @@
     "P7",
     "P8",
     "P9",
-    "R1",
     "R10",
     "R11",
     "R12",
@@ -155,7 +170,6 @@
     "R17",
     "R18",
     "R19",
-    "R2",
     "R20",
     "R21",
     "R22",
@@ -166,7 +180,6 @@
     "R27",
     "R28",
     "R29",
-    "R3",
     "R30",
     "R31",
     "R32",
@@ -175,13 +188,23 @@
     "R35",
     "R36",
     "R37",
-    "R4",
+    "R38",
+    "R39",
+    "R40",
+    "R41",
+    "R42",
+    "R43",
+    "R44",
+    "R45",
     "R5",
     "R6",
     "R7",
     "R8",
     "R9",
     "TP1",
+    "TP10",
+    "TP11",
+    "TP12",
     "TP2",
     "TP3",
     "TP4",
@@ -189,6 +212,7 @@
     "TP6",
     "TP7",
     "TP8",
+    "TP9",
     "U1",
     "U2",
     "U3"
@@ -199,6 +223,10 @@
     "C11": "GRM188R71C103KA01D",
     "C12": "GRM188R71C103KA01D",
     "C13": "GRM188R71C103KA01D",
+    "C14": "GRM188R71C104KA01D",
+    "C15": "GRM188R71C104KA01D",
+    "C16": "GRM188R71C104KA01D",
+    "C17": "GRM188R71C104KA01D",
     "C2": "GRM188R71H104KA93D",
     "C3": "GRM188R71H104KA93D",
     "C4": "GRM188R71C103KA01D",
@@ -217,9 +245,9 @@
     "D7": "BZX384-C3V6",
     "D8": "BZX384-C3V6",
     "D9": "BZX384-C3V6",
-    "F1": "MF-R050",
-    "F2": "MF-R050",
-    "F3": "MF-R050",
+    "F1": "MF-MSMF050/60X",
+    "F2": "MF-MSMF050/16X",
+    "F3": "MF-MSMF050/16X",
     "J1": "SSQ-120-23-G-S",
     "J10": "1759114",
     "J11": "1759091",
@@ -246,7 +274,6 @@
     "P7": "1757233",
     "P8": "1757259",
     "P9": "1757259",
-    "R1": "RC1206FR-07120RL",
     "R10": "RC0603FR-071KL",
     "R11": "RC0603FR-071KL",
     "R12": "RC0603FR-071KL",
@@ -257,7 +284,6 @@
     "R17": "RC0603FR-071KL",
     "R18": "RC0603FR-0710KL",
     "R19": "RC0603FR-0710KL",
-    "R2": "RC1206FR-07120RL",
     "R20": "RC0603FR-0710KL",
     "R21": "RC0603FR-0710KL",
     "R22": "RC0603FR-0710KL",
@@ -268,7 +294,6 @@
     "R27": "RC0603FR-0710KL",
     "R28": "RC0603FR-0747KL",
     "R29": "RC0603FR-0747KL",
-    "R3": "RC1206FR-07120RL",
     "R30": "RC0603FR-0747KL",
     "R31": "RC0603FR-0747KL",
     "R32": "RC0603FR-0747KL",
@@ -277,13 +302,23 @@
     "R35": "RC0603FR-0747KL",
     "R36": "RC0603FR-0747KL",
     "R37": "RC0603FR-0747KL",
-    "R4": "RC1206FR-07120RL",
+    "R38": "RC0603FR-0710KL",
+    "R39": "RC0603FR-0710KL",
+    "R40": "RC0603FR-0710KL",
+    "R41": "RC0603FR-0710KL",
+    "R42": "RC0603FR-0710KL",
+    "R43": "RC0603FR-0710KL",
+    "R44": "RC0603FR-0710KL",
+    "R45": "RC0603FR-0710KL",
     "R5": "RC0603FR-07100KL",
     "R6": "RC0603FR-071KL",
     "R7": "RC0603FR-071KL",
     "R8": "RC0603FR-071KL",
     "R9": "RC0603FR-071KL",
     "TP1": "5000",
+    "TP10": "5000",
+    "TP11": "5000",
+    "TP12": "5000",
     "TP2": "5000",
     "TP3": "5000",
     "TP4": "5000",
@@ -291,6 +326,7 @@
     "TP6": "5000",
     "TP7": "5000",
     "TP8": "5000",
+    "TP9": "5000",
     "U1": "AM26LV32EIDR",
     "U2": "TPL7407LDR",
     "U3": "TPL7407LDR"
@@ -314,6 +350,22 @@
     },
     "C13": {
       "1": "GP21",
+      "2": "0V_PELV"
+    },
+    "C14": {
+      "1": "L_ENC_A_N",
+      "2": "0V_PELV"
+    },
+    "C15": {
+      "1": "L_ENC_B_N",
+      "2": "0V_PELV"
+    },
+    "C16": {
+      "1": "R_ENC_A_N",
+      "2": "0V_PELV"
+    },
+    "C17": {
+      "1": "R_ENC_B_N",
       "2": "0V_PELV"
     },
     "C2": {
@@ -534,10 +586,6 @@
     "P7": {},
     "P8": {},
     "P9": {},
-    "R1": {
-      "1": "L_ENC_A_P",
-      "2": "L_ENC_A_N"
-    },
     "R10": {
       "1": "GP4",
       "2": "FL_PUL_IN"
@@ -577,10 +625,6 @@
     "R19": {
       "1": "IN_STOP_OK",
       "2": "GP13"
-    },
-    "R2": {
-      "1": "L_ENC_B_P",
-      "2": "L_ENC_B_N"
     },
     "R20": {
       "1": "IN_RESET",
@@ -622,10 +666,6 @@
       "1": "3V3_MCU",
       "2": "GP13"
     },
-    "R3": {
-      "1": "R_ENC_A_P",
-      "2": "R_ENC_A_N"
-    },
     "R30": {
       "1": "3V3_MCU",
       "2": "GP14"
@@ -658,8 +698,36 @@
       "1": "3V3_MCU",
       "2": "GP21"
     },
-    "R4": {
-      "1": "R_ENC_B_P",
+    "R38": {
+      "1": "+5V_ENC_L",
+      "2": "L_ENC_A_N"
+    },
+    "R39": {
+      "1": "0V_PELV",
+      "2": "L_ENC_A_N"
+    },
+    "R40": {
+      "1": "+5V_ENC_L",
+      "2": "L_ENC_B_N"
+    },
+    "R41": {
+      "1": "0V_PELV",
+      "2": "L_ENC_B_N"
+    },
+    "R42": {
+      "1": "+5V_ENC_R",
+      "2": "R_ENC_A_N"
+    },
+    "R43": {
+      "1": "0V_PELV",
+      "2": "R_ENC_A_N"
+    },
+    "R44": {
+      "1": "+5V_ENC_R",
+      "2": "R_ENC_B_N"
+    },
+    "R45": {
+      "1": "0V_PELV",
       "2": "R_ENC_B_N"
     },
     "R5": {
@@ -685,6 +753,15 @@
     "TP1": {
       "1": "+24V_PELV"
     },
+    "TP10": {
+      "1": "L_ENC_B_N"
+    },
+    "TP11": {
+      "1": "R_ENC_A_N"
+    },
+    "TP12": {
+      "1": "R_ENC_B_N"
+    },
     "TP2": {
       "1": "+5V_LOGIC"
     },
@@ -705,6 +782,9 @@
     },
     "TP8": {
       "1": "GP10"
+    },
+    "TP9": {
+      "1": "L_ENC_A_N"
     },
     "U1": {
       "1": "L_ENC_A_N",
@@ -839,10 +919,47 @@
       "6": "R_ENC_B_N"
     }
   },
+  "gpio_pull_configuration_contract": {
+    "clamp": "BZX384-C3V6",
+    "external_pull_up_ohm": 47000,
+    "filter": "10 nF",
+    "gpio_nets": {
+      "GP12": "IN_START",
+      "GP13": "IN_STOP_OK",
+      "GP14": "IN_RESET",
+      "GP15": "IN_SAFETY_OK",
+      "GP16": "IN_HOME_REAR",
+      "GP18": "IN_ALM_BF",
+      "GP19": "IN_ALM_BR",
+      "GP20": "IN_ALM_FL",
+      "GP21": "IN_ALM_FR",
+      "GP27": "IN_HOME_FRONT"
+    },
+    "gpios": [
+      "GP12",
+      "GP13",
+      "GP14",
+      "GP15",
+      "GP16",
+      "GP27",
+      "GP18",
+      "GP19",
+      "GP20",
+      "GP21"
+    ],
+    "marker": "PULL-CONFIG CONTRACT",
+    "nominal_low_v": 0.579,
+    "rail_v_nominal": 3.3,
+    "requirement": "RP2350 internal pull-up/pull-down MUST be disabled in BOTH firmware images on the listed dry-contact/alarm GPIOs; the only pull is the board external 47 kOhm 1 % pull-up to 3V3_MCU.",
+    "series_ohm": 10000,
+    "vil_max_v": 0.8,
+    "worst_case_basis": "3.465 V (+5 %) rail and 46.53 kOhm (-1 %) external pull-up give 0.613 V; 1 uA pin leakage into the 10 kOhm/47 kOhm node adds 8 mV -> 0.621 V < 0.8 V",
+    "worst_case_low_v": 0.621
+  },
   "input_sha256": {
-    "controls_spec.hpp": "4c4766d92612a6064e992aaa1f1c6acd4d177c85bdc6663278ced20b52621044",
-    "if-b01-bom.csv": "178b5a8586eda773ad76eda4915ba158dad4a09a4a7b7ed46930413697d4710e",
-    "if-b01-netlist.csv": "59536e571a21951a235b878bbbaa684268603eb684ca7c4482744861c19467c9"
+    "controls_spec.hpp": "6c88b397bcc9076571eebf4e2bf4ca4a71cfdac79a31723b5be18bd07c2482dd",
+    "if-b01-bom.csv": "66f949b6d3bd20557c4ef5b96dead19b1104cbdd5ea69d38f80ffcb1ca9509fd",
+    "if-b01-netlist.csv": "3377989f5a49fce34dcd737dc78301dfac3051cadea5a980f2ad92f0098dc70d"
   },
   "intentional_no_connects": {
     "J2": [
@@ -862,6 +979,10 @@
     "C11",
     "C12",
     "C13",
+    "C14",
+    "C15",
+    "C16",
+    "C17",
     "C2",
     "C3",
     "C4",
@@ -899,7 +1020,6 @@
     "MH2",
     "MH3",
     "MH4",
-    "R1",
     "R10",
     "R11",
     "R12",
@@ -910,7 +1030,6 @@
     "R17",
     "R18",
     "R19",
-    "R2",
     "R20",
     "R21",
     "R22",
@@ -921,7 +1040,6 @@
     "R27",
     "R28",
     "R29",
-    "R3",
     "R30",
     "R31",
     "R32",
@@ -930,13 +1048,23 @@
     "R35",
     "R36",
     "R37",
-    "R4",
+    "R38",
+    "R39",
+    "R40",
+    "R41",
+    "R42",
+    "R43",
+    "R44",
+    "R45",
     "R5",
     "R6",
     "R7",
     "R8",
     "R9",
     "TP1",
+    "TP10",
+    "TP11",
+    "TP12",
     "TP2",
     "TP3",
     "TP4",
@@ -944,10 +1072,51 @@
     "TP6",
     "TP7",
     "TP8",
+    "TP9",
     "U1",
     "U2",
     "U3"
   ],
+  "pico_socket_evidence": {
+    "detection": "tools/check_if_b01_gpio_mapping.py recomputes the physical Pico pin of every J1/J2 pad from pad coordinates and compares it with the intended pin function",
+    "physical_pin_21_position": "bottom of the right socket row, same Y as physical pin 20",
+    "pin_pitch_mm": 2.54,
+    "row_spacing_mm": 17.78,
+    "row_span_mm": 48.26
+  },
+  "receiver_minus_input_bias": {
+    "channels": {
+      "L_ENC_A_N": {
+        "bottom_resistor": "R39",
+        "filter_capacitor": "C14",
+        "rail": "+5V_ENC_L",
+        "top_resistor": "R38"
+      },
+      "L_ENC_B_N": {
+        "bottom_resistor": "R41",
+        "filter_capacitor": "C15",
+        "rail": "+5V_ENC_L",
+        "top_resistor": "R40"
+      },
+      "R_ENC_A_N": {
+        "bottom_resistor": "R43",
+        "filter_capacitor": "C16",
+        "rail": "+5V_ENC_R",
+        "top_resistor": "R42"
+      },
+      "R_ENC_B_N": {
+        "bottom_resistor": "R45",
+        "filter_capacitor": "C17",
+        "rail": "+5V_ENC_R",
+        "top_resistor": "R44"
+      }
+    },
+    "divider_ohm": 10000,
+    "encoder_mode": "RU3100 single-ended TTL, TTL mode selected via IO-Link",
+    "terminator_state": "R1-R4 120 ohm differential terminators removed; no 120 ohm part exists on the board",
+    "thevenin_ohm": 5000,
+    "unloaded_bias_v": 2.5
+  },
   "release_holds": [
     "This source is a placed/routed draft; actual connector fit, fabricator stack-up and human layout review remain incomplete.",
     "A clean source DRC cannot replace fabrication inspection or physical board verification.",
@@ -962,6 +1131,10 @@
     "C11",
     "C12",
     "C13",
+    "C14",
+    "C15",
+    "C16",
+    "C17",
     "C2",
     "C3",
     "C4",
@@ -1009,7 +1182,6 @@
     "P7",
     "P8",
     "P9",
-    "R1",
     "R10",
     "R11",
     "R12",
@@ -1020,7 +1192,6 @@
     "R17",
     "R18",
     "R19",
-    "R2",
     "R20",
     "R21",
     "R22",
@@ -1031,7 +1202,6 @@
     "R27",
     "R28",
     "R29",
-    "R3",
     "R30",
     "R31",
     "R32",
@@ -1040,13 +1210,23 @@
     "R35",
     "R36",
     "R37",
-    "R4",
+    "R38",
+    "R39",
+    "R40",
+    "R41",
+    "R42",
+    "R43",
+    "R44",
+    "R45",
     "R5",
     "R6",
     "R7",
     "R8",
     "R9",
     "TP1",
+    "TP10",
+    "TP11",
+    "TP12",
     "TP2",
     "TP3",
     "TP4",
@@ -1054,6 +1234,7 @@
     "TP6",
     "TP7",
     "TP8",
+    "TP9",
     "U1",
     "U2",
     "U3"

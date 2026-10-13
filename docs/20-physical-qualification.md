@@ -10,11 +10,11 @@ Revision `S1-B-QUAL-R1-2026-09-13`. Tool: `starz_qualification` ([source](../eng
 |---|---|---|
 | Cut length | error ≤ ±(0.05 % + 0.20 mm) of commanded length, i.e. ±0.30 mm at 200 mm and ±0.70 mm at 1000 mm, after subtracting the gauge U(k=2) | ≥30 consecutive pieces per cell; cells at wire OD 1.2 and 4.5 mm × commanded 200 and 1000 mm are mandatory; Cpk ≥ 1.33 per cell |
 | Nip preload, each side | 50–75 N per nip, guard-banded by gauge U | one reading per side at OD 1.2 and 4.5 mm |
-| Measuring-wheel contact force | 6–19 N, guard-banded by gauge U | one reading at OD 1.2 and 4.5 mm |
+| Measuring-wheel contact force | 6–19 N, guard-banded by gauge U | one reading per wheel station (up and down) at OD 1.2 and 4.5 mm |
 | Environment | 15–30 °C recorded for every length sample | — |
 | Gauges | length U(k=2) ≤ 0.05 mm; force U(k=2) ≤ 1.0 N; identities recorded | — |
 
-The ±0.70 mm/1 m figure is the S1 design target from [docs/02](02-benchmarks-and-sources.md). The tool reports PASS only when every mandatory cell and force record is present, in range, and capable. It exits 1 on blank or malformed records, 2 on I/O errors, 3 on a complete but failing data set, and writes `status.json` with `qualification_passed` accordingly. `physical_results` is `true` in `status.json` only for a run whose sample and gauge identities carry no `SYN-` prefix; the report lists every gauge id and input file so the data source is auditable. The repository never contains such a run.
+The ±0.70 mm/1 m figure is the S1 design target from [docs/02](02-benchmarks-and-sources.md). The tool reports PASS only when every mandatory cell and force record is present, in range, and capable. It exits 1 on blank or malformed records, 2 on I/O errors, 3 on a complete but failing data set, and writes `status.json` with `qualification_passed` accordingly. Duplicate sample identities, mixed provenance or missing per-station force records fail the run. `physical_results` is `true` in `status.json` only for a run whose sample and gauge identities carry no `SYN-` prefix; the report lists every gauge id and input file so the data source is auditable. The repository never contains such a run.
 
 ## Electrical and safety prerequisites — separate records required
 
@@ -40,9 +40,9 @@ substitute for the separate hardware safety validation above.
 
 ## Procedure
 
-1. Generate templates: `starz_qualification --template <dir>` writes `length-records-template.csv` (120 blank rows: 30 per mandatory cell) and `force-records-template.csv` (6 rows).
+1. Generate templates: `starz_qualification --template <dir>` writes `length-records-template.csv` (120 blank rows: 30 per mandatory cell) and `force-records-template.csv` (12 rows: NIP_L_NEAR, NIP_L_FAR, NIP_R_NEAR, NIP_R_FAR, WHEEL_UP, WHEEL_DOWN at each OD).
 2. Set the machine for the wire under test: fit the F206 insert for that OD, set the carrier adjuster AJ01 to the protrusion printed in `engineering/generated/mechanism/status.json` (`carrier_adjuster_protrusion_mm`), set the arm adjuster AJ02 to `arm_adjuster_protrusion_mm`, and set the counter-roller fork M210 so the 626 roller just touches the wire.
-3. Measure nip preload by lifting each upper cartridge pair with a calibrated force gauge at the roller axis until the wire is released; record `force_n` and the gauge U. Measure the wheel force the same way under the arm hub. Enter the six force rows.
+3. Measure nip preload by lifting each upper cartridge pair with a calibrated force gauge at the roller axis until the wire is released (near and far ends of each of the four nips); record `force_n` and the gauge U. Measure each measuring wheel's contact force under the arm hub, up and down. Enter the twelve force rows. Every sample identity must be unique (reused identities fail) and provenance (machine, build, recipe, calibration, operator, temperature, gauge) is recorded.
 4. Cut 30 pieces at 200 mm and 30 at 1000 mm for each mandatory OD. Measure each piece on a calibrated scale or CMM at recorded temperature; enter every row. Do not discard pieces.
 5. Run `starz_qualification --lengths <csv> --forces <csv> --out <dir>` and archive the output directory with the raw CSVs. A PASS is a property of that machine, that recipe and that day; it does not transfer to other builds.
 

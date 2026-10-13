@@ -2,7 +2,7 @@
   "revision": "S1-B-KK86-R6-2026-09-12",
   "scope": "selected cutting head only",
   "run_complete": true,
-  "occurrences": 55,
+  "occurrences": 57,
   "checked_endpoint_closures_mm": [0,4.2],
   "step_and_stl_readback": true,
   "cutting_motor_models": "original supplier STEP, including cables and connectors; supplied parallel key removed for keyless coupling",

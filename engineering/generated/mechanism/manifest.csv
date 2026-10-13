@@ -25,7 +25,8 @@ HM-W3_F,"ISO7092 M5 200HV motor washer9x5.3x1",1,30.29,-480,32.71,39.29,-479,41.
 HM-B4_F,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",1,30.54,-485,102.54,39.04,-455,111.04,774.598938651
 HM-W4_F,"ISO7092 M5 200HV motor washer9x5.3x1",1,30.29,-480,102.29,39.29,-479,111.29,41.5554168254
 CP01_F,"R+W MK2/100/50/8/14 interference envelope",1,-20,-452,52,20,-402,92,48481.0578302
-H004_F,"42CrMo4+QT single-piece blade holder",0,-35,-139.5,86,35,-17,134,324672.603577
+H004_F,"42CrMo4+QT single-piece blade holder",0,-35,-139.5,86,35,-17,134,316094.274355
+H007_F,"42CrMo4+QT blade backing plate 30x46x8;shimmed blade seat;carries the 1200 N blade reaction;face gap set at assembly (docs/34)",0,-11.51,-41.5,89.5,-3.51,-12.5,134.5,10440
 T001_F,"Ground V tooling purchase-to-drawing / qualification hold",1,-3.01,-34,93,-0.01,15,131,4360.45023334
 H002_R,"Stage riser /20mm clearance for true NEMA34 body",0,-55,20,20,55,375,40,776894.56672
 AX01-R_R,"Custom-axis HGR20 rail pair external envelope (docs/39)",1,-43,28,40,43,368,59,549470.273968
@@ -52,7 +53,8 @@ HM-W3_R,"ISO7092 M5 200HV motor washer9x5.3x1",1,-39.29,479,32.71,-30.29,480,41.
 HM-B4_R,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",1,-39.04,455,102.54,-30.54,485,111.04,774.598938651
 HM-W4_R,"ISO7092 M5 200HV motor washer9x5.3x1",1,-39.29,479,102.29,-30.29,480,111.29,41.5554168254
 CP01_R,"R+W MK2/100/50/8/14 interference envelope",1,-20,402,52,20,452,92,48481.0578302
-H004_R,"42CrMo4+QT single-piece blade holder",0,-35,17,86,35,139.5,134,324672.603577
+H004_R,"42CrMo4+QT single-piece blade holder",0,-35,17,86,35,139.5,134,316094.274355
+H007_R,"42CrMo4+QT blade backing plate 30x46x8;shimmed blade seat;carries the 1200 N blade reaction;face gap set at assembly (docs/34)",0,3.51,12.5,89.5,11.51,41.5,134.5,10440
 T001_R,"Ground V tooling purchase-to-drawing / qualification hold",1,0.01,-15,93,3.01,34,131,4360.45023334
 RIGHT_L1_F101,"42CrMo4+QT rotor;matched j5 bearing seats;nominal-major cosmetic threads",0,66,-108.75,80.25,85,4.25,99.25,14390.4167464
 RIGHT_L1_F102,"6082-T6 rear bearing/base;front module removable for assembly",0,52.5,-89.75,55.75,98.5,-16.75,108.75,61980.8968531
@@ -459,6 +461,49 @@ MM_FB305-2,"ISO4762 M5x25 class8.8 fork clamp screw;vertical slot",1,-223,1.75,8
 MM_M210,"6082-T6 counter-roller fork18x19x28;slot6.4;4mm vertical adjustment",0,-216,-9.5,80.25,-198,9.5,108.25,5038.04479314
 MM_DW04,"ISO8734 dowel6m6x22 counter-roller pin",1,-207.995,-9.5,97.255,-202.005,9.5,103.245,535.423128208
 MM_RB03,"SKF 626-2Z counter roller;outer ring is the running surface",1,-214.5,-3,90.75,-195.5,3,109.75,1531.52641863
+MM2_MW01,"E60137 measuring wheel catalogue envelope",1,-416.83,-4.7500001,114.25,-353.17,9.7500001,177.91,30519.2505979
+MM2_M202,"C45 measuring shaft6h6 L57.75;collar7.5x2.25;bearing seats6j5",0,-388.75,-5.75,142.33,-381.25,52,149.83,1663.40109271
+MM2_MB01,"SKF 626-2Z external interface",1,-394.5,12,136.58,-375.5,18,155.58,1531.52641863
+MM2_MB02,"SKF 626-2Z external interface",1,-394.5,30,136.58,-375.5,36,155.58,1531.52641863
+MM2_M203,"6082-T6 measuring bearing housing46x46x59.5;626 seats K6;coupling window",0,-408,10.5,123.08,-362,70,169.08,99085.3338981
+MM2_CP01,"Supplied6/6 flexible coupling15x22 interference envelope",1,-392.5000001,47.9999999,138.5799999,-377.499999874,70.0000001,153.5800001,3136.80505359
+MM2_ME-E01,"ifm RU3100 synchro-flange body/shaft/flange catalogue envelope;not original OEM CAD",1,-414.3,66,116.78,-355.7,139.5,175.38,171317.691869
+MM2_M201,"6082-T6 encoder mounting plate60x60x6;shaft axisY",0,-415,70,116.08,-355,76,176.08,14715.5840764
+MM2_ME-S1,"ISO4762 M4x12 class8.8;nominal6.0mm encoder flange engagement",1,-388.5,66,163.58,-381.5,82,170.58,303.230292836
+MM2_ME-S2,"ISO4762 M4x12 class8.8;nominal6.0mm encoder flange engagement",1,-406.686533479,66,132.08,-399.686533479,82,139.08,303.230292836
+MM2_ME-S3,"ISO4762 M4x12 class8.8;nominal6.0mm encoder flange engagement",1,-370.313466521,66,132.08,-363.313466521,82,139.08,303.230292836
+MM2_FB301-1,"ISO4762 M4x6 class8.8 encoder plate support screw",1,-406.5,66,124.58,-399.5,76,131.58,228.584166431
+MM2_FB301-2,"ISO4762 M4x6 class8.8 encoder plate support screw",1,-406.5,66,160.58,-399.5,76,167.58,228.584166431
+MM2_FB301-3,"ISO4762 M4x6 class8.8 encoder plate support screw",1,-370.5,66,124.58,-363.5,76,131.58,228.584166431
+MM2_FB301-4,"ISO4762 M4x6 class8.8 encoder plate support screw",1,-370.5,66,160.58,-363.5,76,167.58,228.584166431
+MM2_FB302-1,"ISO4762 M5x16 class8.8 arm-to-housing screw",1,-402.25,23.75,160.08,-393.75,32.25,181.08,595.376104312
+MM2_FB302-2,"ISO4762 M5x16 class8.8 arm-to-housing screw",1,-402.25,47.75,160.08,-393.75,56.25,181.08,595.376104312
+MM2_FB302-3,"ISO4762 M5x16 class8.8 arm-to-housing screw",1,-376.25,23.75,160.08,-367.75,32.25,181.08,595.376104312
+MM2_FB302-4,"ISO4762 M5x16 class8.8 arm-to-housing screw",1,-376.25,47.75,160.08,-367.75,56.25,181.08,595.376104312
+MM2_M204,"6082-T6 pivot arm100x40x12;hub30;626 seats K6",0,-463,20,160.08,-362,60,190.08,49231.2590391
+MM2_AB01,"SKF 626-2Z pivot bearing external interface",1,-455.5,20,165.58,-436.5,26,184.58,1531.52641863
+MM2_AB02,"SKF 626-2Z pivot bearing external interface",1,-455.5,54,165.58,-436.5,60,184.58,1531.52641863
+MM2_DW02,"ISO8734 dowel6m6x70 pivot pin",1,-448.995,10,172.085,-443.005,80,178.075,1972.61152498
+MM2_FB303-1,"ISO4762 M8x25 class8.8 bracket-to-bed screw",1,-484.5,-14.5,-21,-471.5,-1.5,12,2312.22004702
+MM2_FB303-2,"ISO4762 M8x25 class8.8 bracket-to-bed screw",1,-484.5,81.5,-21,-471.5,94.5,12,2312.22004702
+MM2_FB303-3,"ISO4762 M8x25 class8.8 bracket-to-bed screw",1,-429.5,-14.5,-21,-416.5,-1.5,12,2312.22004702
+MM2_FB303-4,"ISO4762 M8x25 class8.8 bracket-to-bed screw",1,-429.5,81.5,-21,-416.5,94.5,12,2312.22004702
+MM2_M206,"6082-T6 measuring bracket;base71x112x12;slotted column40x70;adjuster lug",0,-486,-16,0,-412,96,231.915,584862.25901
+MM2_DW03,"ISO8734 dowel6m6x20 arm spring locator",1,-423.995,37.005,173.08,-418.005,42.995,193.08,563.60329285
+MM2_SP02,"SWU10.5-35 flat-wire compression spring D10.5 d6 L35 3.27N/mm;installed envelope",1,-426.25,34.75,181.08,-415.75,45.25,208.6182263,1605.91407266
+MM2_M209,"C45 arm spring cap14x5;spigot5.8x6;recess7x1.5",0,-428,33,202.6182263,-414,47,213.6182263,870.48820042
+MM2_AJ02,"DIN913 M6x25 45H flat-point contact-force adjuster",1,-423.99,37.01,212.1182263,-418.01,42.99,237.1182263,702.153812059
+MM2_NT02,"ISO4032 M6 class8 lock nut;hex envelope",1,-426.77,34.23,231.915,-415.23,45.77,237.115,396.855660107
+MM2_FB304-1,"ISO4762 M6x20 class8.8 roller column screw",1,-411,-21,-16,-401,-11,10,1032.96194769
+MM2_FB304-2,"ISO4762 M6x20 class8.8 roller column screw",1,-411,11,-16,-401,21,10,1032.96194769
+MM2_FB304-3,"ISO4762 M6x20 class8.8 roller column screw",1,-391,-21,-16,-381,-11,10,1032.96194769
+MM2_FB304-4,"ISO4762 M6x20 class8.8 roller column screw",1,-391,11,-16,-381,21,10,1032.96194769
+MM2_M207,"6082-T6 counter-roller column;base36x48x10;column16x20x90",0,-414,-24,0,-378,24,100,42712.2126754
+MM2_FB305-1,"ISO4762 M5x25 class8.8 fork clamp screw;vertical slot",1,-403,-10.25,85.75,-373,-1.75,94.25,770.679801815
+MM2_FB305-2,"ISO4762 M5x25 class8.8 fork clamp screw;vertical slot",1,-403,1.75,85.75,-373,10.25,94.25,770.679801815
+MM2_M210,"6082-T6 counter-roller fork18x19x28;slot6.4;4mm vertical adjustment",0,-396,-9.5,80.25,-378,9.5,108.25,5038.04479314
+MM2_DW04,"ISO8734 dowel6m6x22 counter-roller pin",1,-387.995,-9.5,97.255,-382.005,9.5,103.245,535.423128208
+MM2_RB03,"SKF 626-2Z counter roller;outer ring is the running surface",1,-394.5,-3,90.75,-375.5,3,109.75,1531.52641863
 FR_F301,"EN AW-6082 T651 tooling plate bed640x1120x25;tapped H001/F201/M206/M207 patterns",0,-320,-560,-25,320,560,0,17861509.828
 FR_F302-1,"S235JR square tube60x60x3 L1080 long rail;M10 weld nuts under top wall",0,-280,-540,-85,-220,540,-25,737579.601867
 FR_F302-2,"S235JR square tube60x60x3 L1080 long rail;M10 weld nuts under top wall",0,220,-540,-85,280,540,-25,737579.601867
@@ -496,10 +541,11 @@ GD_G105,"R2 selected 5mm polycarbonate closed front door;actuator aperture only;
 GD_G106,"R2 selected S235JR 5mm guard-lock mounting plate;body pocket only;SLC drilling pattern requires manufacturer drawing",0,-345,-690,40,-285,-635,270,462841.5
 GD_G107,"Bernstein SLC-F-024-20/20-R4 30x192x44 catalogue envelope;static fit only",1,-330,-684.5,55.5,-300,-640.5,247.5,253440
 GD_G108,"Bernstein ACF-1 60x40x52.6 catalogue envelope;static fit only",1,-344.5,-624.5,130,-284.5,-571.9,170,126240
-PO_P001,"R2 selected welded payoff spool OD400x160;3mm S235JR flanges with 20.5 bores;60x2.5 ERW hub;not load-qualified",0,-850,-80,-88,-450,83,312,822903.674593
-PO_P002,"R2 selected C45 20h6 payoff spindle L660;M20x1.5 ends not modeled;bearing pockets in P004/P005",0,-660,-330,102,-640,330,122,207345.115137
-PO_P003,"R2 selected S235JR payoff base 430x560x8;4x13 anchor holes;selected not load-qualified",0,-900,-280,-853,-470,280,-845,1926400
-PO_P004,"R2 selected S235JR 18mm left payoff post;47H7 6204 pocket and 20.5 spindle bore;weld and load path not validated",0,-685,-289,-845,-615,-271,320,1442290.52209
-PO_P005,"R2 selected S235JR 18mm right payoff post;47H7 6204 pocket and 20.5 spindle bore;weld and load path not validated",0,-685,271,-845,-615,289,320,1442290.52209
-PO_P006,"R2 selected S235JR brake disc 180x6;20H7 bore;keyway and setscrew are fabrication details;friction brake not safety brake",0,-740,295,22,-560,301,202,150788.90001
-PO_P007,"R2 selected brake caliper bracket envelope;pads and SWU-class adjuster spring not modeled;tension brake not safety brake",0,-700,308,172,-600,328,212,80000
+PO_P001,"R2 selected welded payoff spool OD400x160;3mm S235JR flanges;left flange carries the welded P008 drive boss;right flange 20.5 pilot bore;60x2.5 ERW hub",0,-910,-80,-88,-510,83,312,822903.674593
+PO_P008,"R2 selected keyed spool drive boss 54.6x12;20H7 bore + 6JS9 keyseat;welded to the left flange inside the hub;transmits brake torque;not load-qualified",0,-737.3,-77,84.7,-682.7,-65,139.3,24323.0890276
+PO_P002,"R2 selected C45 20h6 payoff spindle L660;M20x1.5 ends not modeled;bearing pockets in P004/P005",0,-720,-330,102,-700,330,122,207345.115137
+PO_P003,"R2 selected S235JR payoff base 430x560x8;4x13 anchor holes;selected not load-qualified",0,-960,-280,-853,-530,280,-845,1926400
+PO_P004,"R2 selected S235JR 18mm left payoff post;47H7 6204 pocket and 20.5 spindle bore;weld and load path not validated",0,-745,-289,-845,-675,-271,320,1442290.52209
+PO_P005,"R2 selected S235JR 18mm right payoff post;47H7 6204 pocket and 20.5 spindle bore;weld and load path not validated",0,-745,271,-845,-675,289,320,1442290.52209
+PO_P006,"R2 selected S235JR brake disc 180x6;20H7 bore;keyway and setscrew are fabrication details;friction brake not safety brake",0,-800,295,22,-620,301,202,150788.90001
+PO_P007,"R2 selected brake caliper bracket envelope;pads and SWU-class adjuster spring not modeled;tension brake not safety brake",0,-760,308,172,-660,328,212,80000

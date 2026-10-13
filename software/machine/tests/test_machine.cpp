@@ -1,16 +1,23 @@
 // Machine software host tests: step timing exactness, job validation, homing,
 // production cycle geometry, encoder verification, stop/pause, fault latching,
-// protocol round-trip. Runs with the simulated Board; no hardware involved.
+// protocol round-trip and the external-audit regression scenarios (F05, F07,
+// F08, F09, F11, F12, F33). Runs with the simulated Board; no hardware.
 #include "controller.hpp"
 #include "crc16.hpp"
 #include "protocol.hpp"
 #include "settings_journal.hpp"
 #include "sim_board.hpp"
+#include <algorithm>
 #include <cmath>
+#include <cstddef>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
+#include <limits>
+#include <sstream>
 #include <string>
+#include <vector>
 
 using namespace starz;
 using namespace starz::fw;
@@ -20,6 +27,10 @@ static int failures = 0;
 #define REQUIRE(cond) do { if (!(cond)) { std::printf("FATAL %s:%d: %s\n", __FILE__, __LINE__, #cond); return 1; } } while (0)
 
 namespace {
+
+std::int32_t step_error_budget(double moves) {
+    return static_cast<std::int32_t>(moves * 1000.0 / ctrl::axis::feed_steps_per_mm);
+}
 
 struct Rig {
     sim::SimBoard b;
@@ -33,11 +44,22 @@ struct Rig {
         for (std::uint32_t i = 0; i < max_ms; ++i) { if (c.state() == s) return true; run_ms(1); }
         return c.state() == s;
     }
+    bool run_until_phase(Phase p, std::uint32_t max_ms) {
+        for (std::uint32_t i = 0; i < max_ms; ++i) {
+            if (c.state() == State::Fault) return false;
+            if (c.phase() == p) return true;
+            run_ms(1);
+        }
+        return c.phase() == p;
+    }
     void press(bool Inputs::*btn, std::uint32_t hold_ms) { b.field.*btn = true; run_ms(hold_ms); b.field.*btn = false; run_ms(ctrl::timing::input_debounce_ms + 5); }
     void boot_and_home() {
         run_ms(ctrl::timing::input_debounce_ms + 5);
         press(&Inputs::start, ctrl::timing::start_hold_ms + ctrl::timing::input_debounce_ms + 10);
         run_until(State::Ready, ctrl::timing::homing_timeout_ms + 1000);
+    }
+    bool load_and_approve(const Job& j) {
+        return c.load_job(j) == CommandResult::Accepted && c.approve() == CommandResult::Accepted;
     }
 };
 
@@ -46,6 +68,27 @@ Job good_job() {
     j.length_um = 300000; j.strip_lead_um = 8000; j.strip_tail_um = 6000;
     j.strip_depth_um = 600; j.wire_diameter_um = 2500; j.quantity = 3;
     return j;
+}
+
+Job no_strip_job(std::int32_t length_um = 300000, std::uint32_t quantity = 1) {
+    Job j = good_job();
+    j.length_um = length_um; j.strip_lead_um = 0; j.strip_tail_um = 0; j.strip_depth_um = 0; j.quantity = quantity;
+    return j;
+}
+
+std::string read_text(const std::string& path) {
+    std::ifstream in(path, std::ios::binary);
+    std::ostringstream ss;
+    ss << in.rdbuf();
+    return ss.str();
+}
+
+std::string between(const std::string& text, const std::string& begin, const std::string& end) {
+    const std::size_t a = text.find(begin);
+    if (a == std::string::npos) return {};
+    const std::size_t b = text.find(end, a);
+    if (b == std::string::npos) return {};
+    return text.substr(a, b - a);
 }
 
 // ---------------------------------------------------------------- profile
@@ -168,25 +211,29 @@ int test_cycle() {
     r.boot_and_home();
     REQUIRE(r.c.state() == State::Ready);
     const Job j = good_job();
-    CHECK(r.c.load_job(j) == CommandResult::Accepted);
-    const double feed0 = r.b.feed_true_um[1];
-    r.press(&Inputs::start, 150);
+    REQUIRE(r.load_and_approve(j));
+    CHECK(r.c.start() == CommandResult::Accepted);
     CHECK(r.c.state() == State::Running);
-    REQUIRE(r.run_until(State::Ready, 120000));
+    REQUIRE(r.run_until(State::Ready, 200000));
     const Telemetry t = r.c.telemetry();
     CHECK(t.counters.pieces_done == j.quantity);
+    CHECK(t.counters.pieces_accepted == j.quantity);
     CHECK(t.counters.pieces_scrap == 0);
     CHECK(t.job_loaded); // completed recipe remains available for panel-only repeat batches
+    CHECK(t.approved);   // approval survives the completed batch
     // Blades open at the end, drives still enabled (Ready).
     CHECK(t.blade_um[0] == 0 && t.blade_um[1] == 0);
-    // Right feed net advance = prime clearance + N*(length + ejection) with the
-    // strip pull/push movements cancelling (each move rounds to a whole step).
-    const double expected = spec::stock_clear_um + j.quantity * (static_cast<double>(j.length_um) + ctrl::job::ejection_um);
-    CHECK(std::fabs((r.b.feed_true_um[1] - feed0) - expected) < (1 + 2.0 * j.quantity) * 1000.0 / ctrl::axis::feed_steps_per_mm);
+    // Right feed net advance: prime stock clearance + prime stub ejection plus,
+    // per piece, the L+3 feed, the s2 backfeed, the s2+3 pull and the ejection.
+    const double feed_len = j.length_um + spec::strip_clear_um;
+    const double expected = spec::stock_clear_um + ctrl::job::ejection_um +
+        j.quantity * (feed_len + 3000.0 + ctrl::job::ejection_um);
+    CHECK(std::fabs((r.b.feed_true_um[1] - 0.0) - expected) <= step_error_budget(2.0 + 4.0 * j.quantity));
     // No pulse violated the driver minimum.
     CHECK(r.b.min_half_period_seen >= min_half_period_ticks);
-    // Encoder residual within one count of zero with an ideal roller.
-    CHECK(std::abs(t.counters.worst_residual_um) <= static_cast<std::int32_t>(2 * ctrl::enc::nominal_um_per_count));
+    // Encoder residual within three counts of zero with an ideal roller: two
+    // independent count quantisations plus one accumulated fraction.
+    CHECK(std::abs(t.counters.worst_residual_um) <= static_cast<std::int32_t>(3 * ctrl::enc::nominal_um_per_count));
     CHECK(r.b.stores >= 1); // pieces_total persisted at job end
     return 0;
 }
@@ -194,12 +241,12 @@ int test_cycle() {
 int test_cycle_no_strip_and_correction() {
     Rig r; r.b.slip_ppm[0] = -3000; r.b.slip_ppm[1] = -3000; // roller reads 0.3 % short of command
     r.boot_and_home();
-    Job j = good_job(); j.strip_lead_um = 0; j.strip_tail_um = 0; j.strip_depth_um = 0; j.quantity = 2; j.length_um = 300000; // 0.9 mm short, < max_slip
-    REQUIRE(r.c.load_job(j) == CommandResult::Accepted);
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 2))); // 0.9 mm short, > budget, < max_slip
     r.press(&Inputs::start, 150);
     REQUIRE(r.run_until(State::Ready, 120000));
     const Telemetry t = r.c.telemetry();
     CHECK(t.counters.pieces_done == 2);
+    CHECK(t.counters.pieces_accepted == 2);
     // One corrective move brings the encoder-measured length within the deadband.
     CHECK(std::abs(t.counters.last_residual_um) <= static_cast<std::int32_t>(2 * ctrl::enc::nominal_um_per_count));
     return 0;
@@ -208,7 +255,7 @@ int test_cycle_no_strip_and_correction() {
 int test_slip_fault_and_no_wire() {
     Rig r; r.b.slip_ppm[0] = -20000; // 2 % short -> 6 mm on 300 mm > 1.5 mm
     r.boot_and_home();
-    REQUIRE(r.c.load_job(good_job()) == CommandResult::Accepted);
+    REQUIRE(r.load_and_approve(no_strip_job()));
     r.press(&Inputs::start, 150);
     REQUIRE(r.run_until(State::Fault, 60000));
     CHECK(r.c.faults() & fault::length_slip);
@@ -217,7 +264,7 @@ int test_slip_fault_and_no_wire() {
 
     Rig r2; r2.b.wire_present = false;
     r2.boot_and_home();
-    REQUIRE(r2.c.load_job(good_job()) == CommandResult::Accepted);
+    REQUIRE(r2.load_and_approve(no_strip_job()));
     r2.press(&Inputs::start, 150);
     REQUIRE(r2.run_until(State::Fault, 60000));
     CHECK(r2.c.faults() & fault::no_wire);
@@ -232,9 +279,7 @@ int test_slip_fault_and_no_wire() {
     // masked by averaging their residuals.
     Rig r3; r3.b.slip_ppm[0] = -3000; r3.b.slip_ppm[1] = 3000;
     r3.boot_and_home();
-    Job disagreement = good_job(); disagreement.quantity = 1; disagreement.strip_lead_um = 0;
-    disagreement.strip_tail_um = 0; disagreement.strip_depth_um = 0;
-    REQUIRE(r3.c.load_job(disagreement) == CommandResult::Accepted);
+    REQUIRE(r3.load_and_approve(no_strip_job()));
     r3.press(&Inputs::start, 150);
     REQUIRE(r3.run_until(State::Fault, 60000));
     CHECK(r3.c.faults() & fault::length_slip);
@@ -243,8 +288,8 @@ int test_slip_fault_and_no_wire() {
 
 int test_stop_pause_resume() {
     Rig r; r.boot_and_home();
-    Job j = good_job(); j.quantity = 5; j.length_um = 2000000;
-    REQUIRE(r.c.load_job(j) == CommandResult::Accepted);
+    Job j = no_strip_job(2000000, 5);
+    REQUIRE(r.load_and_approve(j));
     r.press(&Inputs::start, 150);
     r.run_ms(2000); // mid-feed of the first production piece or prime
     CHECK(r.c.state() == State::Running);
@@ -259,16 +304,17 @@ int test_stop_pause_resume() {
     r.b.field.stop_ok = true; r.run_ms(50);
     r.press(&Inputs::start, 150);
     CHECK(r.c.state() == State::Running);
-    REQUIRE(r.run_until(State::Ready, 200000));
+    REQUIRE(r.run_until(State::Ready, 400000));
     const Telemetry t = r.c.telemetry();
     CHECK(t.counters.pieces_done == 5);
+    CHECK(t.counters.pieces_accepted == 5);
     CHECK(t.counters.pieces_scrap == 1);
     return 0;
 }
 
 int test_safety_and_alarm() {
     Rig r; r.boot_and_home();
-    REQUIRE(r.c.load_job(good_job()) == CommandResult::Accepted);
+    REQUIRE(r.load_and_approve(no_strip_job()));
     r.press(&Inputs::start, 150);
     r.run_ms(500);
     r.b.field.safety_ok = false;
@@ -476,6 +522,7 @@ int test_protocol() {
     Telemetry t{};
     REQUIRE(proto::decode_status(reply.payload, reply.len, t));
     CHECK(t.state == State::Ready && t.job_loaded);
+    CHECK(!t.approved); // recipe loaded but not yet approved
     CHECK(t.settings.counts_per_metre[0] == ctrl::enc::nominal_counts_per_metre);
     CHECK(t.job.length_um == good_job().length_um && t.job.strip_lead_um == good_job().strip_lead_um &&
           t.job.strip_tail_um == good_job().strip_tail_um && t.job.strip_depth_um == good_job().strip_depth_um &&
@@ -489,26 +536,33 @@ int test_protocol() {
     malformed_status[1] = static_cast<std::uint8_t>(Phase::Stop) + 1;
     CHECK(!proto::decode_status(malformed_status, proto::status_len, t));
     std::memcpy(malformed_status, reply.payload, sizeof malformed_status);
-    malformed_status[4] |= 0x40; // reserved input bit
+    malformed_status[6] |= 0x40; // reserved input bit (6)
     CHECK(!proto::decode_status(malformed_status, proto::status_len, t));
     std::memcpy(malformed_status, reply.payload, sizeof malformed_status);
-    malformed_status[6] |= 0x10; // reserved output bit
+    malformed_status[8] |= 0x20; // reserved output bit
     CHECK(!proto::decode_status(malformed_status, proto::status_len, t));
     std::memcpy(malformed_status, reply.payload, sizeof malformed_status);
-    malformed_status[7] = 2; // job_loaded must be canonical
+    malformed_status[9] = 2; // job_loaded must be canonical
     CHECK(!proto::decode_status(malformed_status, proto::status_len, t));
     std::memcpy(malformed_status, reply.payload, sizeof malformed_status);
-    proto::put_u32(malformed_status + 96, 0); // loaded recipe cannot have zero quantity
+    proto::put_u32(malformed_status + 102, 0); // loaded recipe cannot have zero quantity
     CHECK(!proto::decode_status(malformed_status, proto::status_len, t));
     Telemetry wide{};
     wide.feed_um[0] = 3000000000ll; wide.feed_um[1] = -3000000000ll;
     wide.encoder_counts[0] = 3000000000ll; wide.encoder_counts[1] = -3000000000ll;
+    wide.faults = fault::part_not_cleared | fault::length_budget;
+    wide.counters.pieces_accepted = 1234;
+    wide.inputs.part_clear = true;
+    wide.approved = true;
     std::uint8_t status[proto::status_len]{};
     proto::encode_status(wide, status);
     Telemetry decoded{};
     REQUIRE(proto::decode_status(status, proto::status_len, decoded));
     CHECK(decoded.feed_um[0] == wide.feed_um[0] && decoded.feed_um[1] == wide.feed_um[1]);
     CHECK(decoded.encoder_counts[0] == wide.encoder_counts[0] && decoded.encoder_counts[1] == wide.encoder_counts[1]);
+    CHECK(decoded.faults == wide.faults);
+    CHECK(decoded.counters.pieces_accepted == wide.counters.pieces_accepted);
+    CHECK(decoded.inputs.part_clear && decoded.approved);
     proto::Frame malformed{}; malformed.msg = proto::Msg::Start; malformed.seq = 8; malformed.len = 1; malformed.payload[0] = 0;
     proto::dispatch(r.c, malformed, reply);
     CHECK(reply.msg == proto::Msg::Nack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::MalformedFrame));
@@ -516,8 +570,489 @@ int test_protocol() {
     malformed.payload[0] = 0; malformed.payload[1] = 2;
     proto::dispatch(r.c, malformed, reply);
     CHECK(reply.msg == proto::Msg::Nack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::InvalidArgument));
+    // Approve/commission/part-clear requests are length-checked and routed.
+    malformed = proto::Frame{}; malformed.msg = proto::Msg::Approve; malformed.seq = 12;
+    proto::dispatch(r.c, malformed, reply);
+    CHECK(reply.msg == proto::Msg::Ack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::Accepted));
+    CHECK(r.c.telemetry().approved);
+    malformed = proto::Frame{}; malformed.msg = proto::Msg::Approve; malformed.seq = 13; malformed.len = 1;
+    proto::dispatch(r.c, malformed, reply);
+    CHECK(reply.msg == proto::Msg::Nack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::MalformedFrame));
+    malformed = proto::Frame{}; malformed.msg = proto::Msg::CommissionAxis; malformed.seq = 14; malformed.len = proto::commission_len;
+    malformed.payload[0] = 4; malformed.payload[1] = 1; // invalid axis
+    proto::dispatch(r.c, malformed, reply);
+    CHECK(reply.msg == proto::Msg::Nack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::InvalidArgument));
+    malformed = proto::Frame{}; malformed.msg = proto::Msg::SetPartClear; malformed.seq = 15; malformed.len = proto::set_part_clear_len;
+    malformed.payload[0] = 1;
+    proto::dispatch(r.c, malformed, reply);
+    CHECK(reply.msg == proto::Msg::Ack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::Accepted));
+    CHECK(r.c.telemetry().settings.part_clear_check == 1);
+    CHECK(!r.c.telemetry().approved); // a production-setting change invalidates approval
     // Wire-level CRC check vector.
     CHECK(crc16(reinterpret_cast<const std::uint8_t*>("123456789"), 9) == 0x29B1);
+    return 0;
+}
+
+// ------------------------------------------------------------------- F05
+// The RX-joined quadrature state machine must never touch the TX path: the
+// initial AB state is loaded with a forced `set x` instead of a blocking put.
+int test_f05_quadrature_init() {
+    const std::string root = STARZ_MACHINE_SOURCE_DIR;
+    const std::string pio = read_text(root + "/rp2350/quadrature.pio");
+    const std::string board = read_text(root + "/rp2350/board_rp2350.cpp");
+    const std::string factory = read_text(root + "/rp2350/factory_test.cpp");
+    REQUIRE(!pio.empty() && !board.empty() && !factory.empty());
+
+    CHECK(pio.find("pio_sm_put_blocking(pio") == std::string::npos);
+    CHECK(pio.find("pull") == std::string::npos);      // no TX word is consumed at all
+    CHECK(pio.find("out ") == std::string::npos);      // no OSR/out path either
+    CHECK(pio.find("pio_encode_set(pio_x") != std::string::npos);
+    CHECK(board.find("pio_sm_put_blocking(pio") == std::string::npos);
+    CHECK(factory.find("pio_sm_put_blocking(pio") == std::string::npos);
+
+    const std::string restart_board = between(board, "void BoardRp2350::restart_encoder_sm", "bool BoardRp2350::load_settings");
+    REQUIRE(!restart_board.empty());
+    CHECK(restart_board.find("pio_sm_put_blocking(pio") == std::string::npos);
+    CHECK(restart_board.find("pio_encode_set(pio_x") != std::string::npos);
+    const std::string restart_factory = between(factory, "void restart_encoder(", "void init_encoders");
+    REQUIRE(!restart_factory.empty());
+    CHECK(restart_factory.find("pio_sm_put_blocking(pio") == std::string::npos);
+    CHECK(restart_factory.find("pio_encode_set(pio_x") != std::string::npos);
+
+    // State-sequencing unit for the sampler logic: sample -> compare with x ->
+    // push only on change, with x initialized to the current AB state (the
+    // `set x` the CPU forces before enabling the state machine).
+    struct Sampler {
+        std::uint8_t x;
+        std::vector<std::uint8_t> pushes;
+        explicit Sampler(std::uint8_t initial) : x(initial) {}
+        void sample(std::uint8_t ab) {
+            const std::uint8_t y = ab;
+            if (x != y) { x = y; pushes.push_back(ab); }
+        }
+    };
+    constexpr std::int8_t delta[16] = {
+         0,  1, -1, 127,
+        -1,  0, 127,  1,
+         1,127,  0, -1,
+       127, -1,  1,  0,
+    };
+    Sampler s(0b11); // current state 11 at init
+    s.sample(0b11);
+    CHECK(s.pushes.empty()); // no spurious push for the sampled state
+    for (int ab : {0b10, 0b00, 0b01, 0b11}) s.sample(static_cast<std::uint8_t>(ab));
+    REQUIRE(s.pushes.size() == 4);
+    std::int64_t count = 0;
+    std::uint8_t last = 0b11;
+    for (std::uint8_t ab : s.pushes) { count += delta[(last << 2) | ab]; last = ab; }
+    CHECK(count == 4); // full positive Gray sequence, one count per transition
+    Sampler illegal(0b00);
+    illegal.sample(0b00);
+    illegal.sample(0b11); // illegal two-bit jump
+    REQUIRE(illegal.pushes.size() == 1);
+    CHECK(delta[(0b00 << 2) | 0b11] == 127);
+    return 0;
+}
+
+// ------------------------------------------------------------------- F07
+// docs/01 §4 wire-body sequencing: lead strip before the length feed, the cut,
+// then the tail strip with stock withdrawal s2+10 and piece backfeed s2. The
+// audit reproduced a 13.949 mm overlap when stock +s1 and piece -s2 moved
+// together; this test asserts the bodies never overlap and the sequence is the
+// documented one for the audit's 8/6 mm job.
+int test_f07_strip_geometry() {
+    Rig r; r.boot_and_home();
+    Job j = good_job(); // 8 mm lead / 6 mm tail
+    REQUIRE(r.load_and_approve(j));
+    REQUIRE(r.c.start() == CommandResult::Accepted);
+
+    bool overlap = false;
+    bool separation_bad = false;
+    bool lead_bad = false;
+    int lead_scores = 0, cut_phases = 0, tail_scores = 0, ejects = 0;
+    std::int32_t lead_tip_at_score = 0;
+    std::int32_t retract_end_tip = 0;
+    double cut_l = 0, cut_r = 0;
+    std::vector<Phase> trace;
+    std::uint32_t ticks = 0;
+    Phase prev = Phase::Idle;
+    while (r.c.state() == State::Running && ticks < 400000) {
+        r.c.tick();
+        const Telemetry t = r.c.telemetry();
+        const bool entered = t.phase != prev;
+        if (t.piece_present && t.stock_tip_um > t.piece_tail_um) overlap = true;
+        if (entered) trace.push_back(t.phase);
+        if (t.phase == Phase::LeadScore) {
+            lead_tip_at_score = t.stock_tip_um;
+            if (t.piece_present || t.stock_tip_um != j.strip_lead_um) lead_bad = true;
+            if (entered) ++lead_scores;
+        }
+        if (t.phase == Phase::LeadRetract) retract_end_tip = t.stock_tip_um;
+        if (t.phase == Phase::Cut && entered) ++cut_phases;
+        if (t.phase == Phase::OpenAfterCut) { cut_l = r.b.feed_true_um[0]; cut_r = r.b.feed_true_um[1]; }
+        if (t.phase == Phase::TailScore) {
+            if (entered) ++tail_scores;
+            // Commanded model positions: stock tip -s2-10, piece tail -s2.
+            if (t.piece_tail_um != -j.strip_tail_um ||
+                t.piece_tail_um - t.stock_tip_um != 10000) separation_bad = true;
+            // Physical simulator positions relative to this cut: the piece tail
+            // must stay at least 10 mm to the right of the stock tip.
+            const double stock_rel = r.b.feed_true_um[0] - cut_l;
+            const double piece_rel = r.b.feed_true_um[1] - cut_r;
+            CHECK(stock_rel <= -j.strip_tail_um - 10000 + 150); // withdrawn s2+10
+            CHECK(piece_rel <= -j.strip_tail_um + 150);         // backfed s2
+            CHECK(piece_rel - stock_rel >= 10000 - 300);
+        }
+        if (t.phase == Phase::Eject && entered) ++ejects;
+        r.b.advance(ctrl::mcu::control_period_us);
+        prev = t.phase;
+        ++ticks;
+    }
+    CHECK(r.c.state() == State::Ready);
+    CHECK(!overlap);                 // the audit's overlap regression
+    CHECK(!separation_bad);          // 10 mm stock/piece separation at the tail score
+    CHECK(!lead_bad);
+    CHECK(lead_scores == 3);
+    CHECK(cut_phases == 4);          // prime sever + one per piece
+    CHECK(tail_scores == 3);
+    CHECK(ejects == 4);              // prime stub + one per piece
+    CHECK(lead_tip_at_score == j.strip_lead_um);
+    CHECK(retract_end_tip == -spec::strip_clear_um); // bare tip X-3
+    const Telemetry t = r.c.telemetry();
+    CHECK(t.counters.pieces_done == j.quantity && t.counters.pieces_accepted == j.quantity);
+
+    // Correct ordering inside every piece pass: the lead score precedes the
+    // cut and the tail score follows it, with the tail withdrawal in between.
+    std::size_t pass = 0;
+    auto find_from = [&trace](std::size_t from, Phase p) {
+        return static_cast<std::size_t>(std::find(trace.begin() + static_cast<std::ptrdiff_t>(from), trace.end(), p) - trace.begin());
+    };
+    while (pass < trace.size()) {
+        const std::size_t lead = find_from(pass, Phase::LeadAdvance);
+        if (lead == trace.size()) break;
+        const std::size_t score = find_from(lead, Phase::LeadScore);
+        const std::size_t feed = find_from(score, Phase::Feed);
+        const std::size_t cut = find_from(feed, Phase::Cut);
+        const std::size_t withdraw = find_from(cut, Phase::TailWithdraw);
+        const std::size_t tscore = find_from(withdraw, Phase::TailScore);
+        CHECK(lead < score && score < feed && feed < cut && cut < withdraw && withdraw < tscore);
+        if (!(lead < score && score < feed && feed < cut && cut < withdraw && withdraw < tscore)) break;
+        pass = tscore + 1;
+    }
+
+    // The wire-body model itself rejects the audited failure classes.
+    CHECK(!wire::bodies_valid(100, -100, true));        // stock +s1 / piece -s2 overlap
+    CHECK(wire::bodies_valid(0, 0, true));              // contact at the cut plane
+    CHECK(wire::bodies_valid(-16000, -6000, true));     // withdrawn separation
+    CHECK(wire::bodies_valid(500, -100, false));        // no piece: unrestricted
+    CHECK(!wire::lead_score_valid(0, 8000, false));     // stock not advanced: wrong end
+    CHECK(!wire::lead_score_valid(8000, 8000, true));   // piece present: wrong end
+    CHECK(wire::lead_score_valid(8000, 8000, false));
+    CHECK(!wire::tail_score_valid(-10000, -6000, 300000, 8000, 6000, true)); // separation < 10 mm
+    CHECK(!wire::tail_score_valid(0, -6000, 300000, 8000, 6000, true));      // stock not withdrawn
+    CHECK(!wire::tail_score_valid(-16000, 0, 300000, 8000, 6000, true));     // piece not backfed
+    CHECK(wire::tail_score_valid(-16000, -6000, 300000, 8000, 6000, true));
+    CHECK(!wire::tail_score_valid(-35000, -25000, 199999, 25000, 25000, true)); // 149.999 mm < 150 mm retained grip
+    CHECK(wire::tail_score_valid(-35000, -25000, 200000, 25000, 25000, true));  // exact docs/01 §4 arithmetic
+    CHECK(!wire::restore_allowed(true, false));         // stock restore before clearance
+    CHECK(wire::restore_allowed(true, true));
+    CHECK(wire::restore_allowed(false, false));         // clearance check disabled
+
+    // Independent lead/tail settings run to completion on their own.
+    Rig l; l.boot_and_home();
+    Job lead_only = good_job(); lead_only.strip_tail_um = 0; lead_only.quantity = 1;
+    REQUIRE(l.load_and_approve(lead_only));
+    l.press(&Inputs::start, 150);
+    REQUIRE(l.run_until(State::Ready, 120000));
+    CHECK(l.c.counters().pieces_done == 1 && l.c.counters().pieces_accepted == 1);
+
+    Rig tail_rig; tail_rig.boot_and_home();
+    Job tail_only = good_job(); tail_only.strip_lead_um = 0; tail_only.quantity = 1;
+    REQUIRE(tail_rig.load_and_approve(tail_only));
+    tail_rig.press(&Inputs::start, 150);
+    REQUIRE(tail_rig.run_until(State::Ready, 120000));
+    CHECK(tail_rig.c.counters().pieces_done == 1 && tail_rig.c.counters().pieces_accepted == 1);
+    return 0;
+}
+
+// ------------------------------------------------------------------- F08
+// strip_travel_um() and validate() must derive the ideal per-jaw closure from
+// blade_open_apex/2 - sqrt(2)*r, with the sever overlap kept explicit.
+int test_f08_strip_closure() {
+    // At an 8 mm open apex the closed-jaw reference is 4.0 mm.
+    CHECK(blade_sever_overlap_um == 100); // 0.2 mm total apex overlap at sever
+    Job j = good_job();
+    // wire 4.0 mm, depth 0.5 mm -> r = 1.5 mm -> closure = 4.0 - sqrt(2)*1.5 = 1.8787 mm
+    j.wire_diameter_um = 4000; j.strip_depth_um = 500;
+    Rig r; r.run_ms(25);
+    REQUIRE(r.c.load_job(j) == CommandResult::Accepted);
+    const std::int32_t expected = static_cast<std::int32_t>(std::llround((4.0 - std::sqrt(2.0) * 1.5) * 1000.0));
+    CHECK(r.c.strip_travel_um() == expected);
+    // The old, incorrect expression used (blade_cut_mm - 0.2) - sqrt(2)*r.
+    const std::int32_t old = static_cast<std::int32_t>(std::llround((4.1 - 0.2 - std::sqrt(2.0) * 1.5) * 1000.0));
+    CHECK(r.c.strip_travel_um() != old);
+    // Exact apex relation: at r = 0 the ideal closure would be the 4.0 mm
+    // half-apex; validate() accepts the deepest legal score and rejects a sever.
+    Job k = good_job(); k.strip_depth_um = (k.wire_diameter_um / 2) - 100; // r = 0.1 mm
+    CHECK(validate(k) == JobError::None);
+    k.strip_depth_um = (k.wire_diameter_um + 1) / 2; // depth*2 >= diameter -> sever
+    CHECK(validate(k) == JobError::Depth);
+    return 0;
+}
+
+// ------------------------------------------------------------------- F09
+// Motion fault thresholds (1.5 mm gross slip) are separate from piece
+// acceptance: after the bounded correction the guarded residual must meet the
+// recipe budget (0.20 mm + 0.05 % L), else fault/quarantine and no count.
+int test_f09_length_budget() {
+    Rig r; r.b.slip_ppm[0] = -2847; r.b.slip_ppm[1] = -2847; // audit repro: 854 um on a 300 mm part
+    r.boot_and_home();
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 1)));
+    r.press(&Inputs::start, 150);
+    REQUIRE(r.run_until_phase(Phase::FeedCorrect, 60000));
+    const std::int32_t residual = std::abs(r.c.counters().last_residual_um);
+    CHECK(residual >= 800 && residual <= 900); // 854 um initial residual
+    // The one bounded correction cannot move the measuring wheel: the frozen
+    // feedback leaves the residual outside the 350 um budget after the recheck.
+    r.b.encoder_freeze[0] = true; r.b.encoder_freeze[1] = true;
+    REQUIRE(r.run_until(State::Fault, 60000));
+    CHECK((r.c.faults() & fault::length_budget) != 0);
+    CHECK(r.c.counters().pieces_done == 0);
+    CHECK(r.c.counters().pieces_accepted == 0); // must not count good
+    CHECK(r.c.counters().pieces_scrap >= 1);    // quarantined
+
+    // Strip/pull motions are verified too: a lead advance whose left measuring
+    // wheel lags beyond the strip budget faults before any score. Only the
+    // stock wheel is disturbed so the (unverified) prime pass is unaffected.
+    Rig s; s.b.slip_ppm[0] = -30000; // 3 %: 240 um on the 8 mm lead advance, > 205 um budget
+    s.boot_and_home();
+    REQUIRE(s.load_and_approve(good_job()));
+    s.press(&Inputs::start, 150);
+    REQUIRE(s.run_until(State::Fault, 120000));
+    CHECK((s.c.faults() & fault::length_budget) != 0);
+    CHECK(s.c.counters().pieces_accepted == 0);
+    return 0;
+}
+
+// ------------------------------------------------------------------- F11
+// Explicit good/scrap semantics: PieceDone increments separately from
+// accepted-pieces; with the clear check enabled a missing present->clear
+// transition must not count good.
+int test_f11_part_clear() {
+    // Check enabled, no clearance transition for the finished piece: the prime
+    // stub is cleared, then the piece is physically done but never accepted.
+    Rig r; r.boot_and_home();
+    REQUIRE(r.c.set_part_clear_check(true) == CommandResult::Accepted);
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 1)));
+    r.press(&Inputs::start, 150);
+    bool prime_cleared = false;
+    bool piece_quarantined = false;
+    for (std::uint32_t i = 0; i < 300000 && r.c.state() != State::Fault; ++i) {
+        r.c.tick(); r.b.advance(ctrl::mcu::control_period_us);
+        if (r.c.phase() == Phase::AwaitClear && !prime_cleared && r.c.counters().pieces_done == 0) {
+            // Let the prime stub show present -> clear so the first piece starts.
+            r.b.field.part_clear = false; r.run_ms(ctrl::timing::input_debounce_ms + 10);
+            r.b.field.part_clear = true;  r.run_ms(ctrl::timing::input_debounce_ms + 10);
+            prime_cleared = true;
+        } else if (r.c.phase() == Phase::AwaitClear && r.c.counters().pieces_done == 1) {
+            piece_quarantined = true; // leave the takeaway clear-free: no transition
+        }
+        if (piece_quarantined && r.c.phase() != Phase::AwaitClear) break;
+    }
+    REQUIRE(r.c.state() == State::Fault);
+    CHECK((r.c.faults() & fault::part_not_cleared) != 0);
+    CHECK(r.c.counters().pieces_done == 1);
+    CHECK(r.c.counters().pieces_accepted == 0);
+    CHECK(r.c.counters().pieces_scrap >= 1);
+
+    // Check enabled, present then clear for every discharge: accepted.
+    Rig r2; r2.boot_and_home();
+    REQUIRE(r2.c.set_part_clear_check(true) == CommandResult::Accepted);
+    REQUIRE(r2.load_and_approve(no_strip_job(300000, 1)));
+    r2.b.field.part_clear = false; // part present at discharge
+    r2.press(&Inputs::start, 150);
+    for (std::uint32_t i = 0; i < 300000 && r2.c.state() != State::Ready; ++i) {
+        r2.c.tick(); r2.b.advance(ctrl::mcu::control_period_us);
+        if (r2.c.phase() == Phase::AwaitClear) {
+            r2.b.field.part_clear = false; r2.run_ms(ctrl::timing::input_debounce_ms + 10); // present
+            r2.b.field.part_clear = true;  r2.run_ms(ctrl::timing::input_debounce_ms + 10); // clear
+            r2.b.field.part_clear = false; // prepare for the next discharge
+        }
+    }
+    REQUIRE(r2.c.state() == State::Ready);
+    CHECK(r2.c.counters().pieces_done == 1);
+    CHECK(r2.c.counters().pieces_accepted == 1);
+    CHECK(r2.c.faults() == 0);
+
+    // Check disabled (default): the finished piece is accepted without a sensor.
+    Rig r3; r3.boot_and_home();
+    REQUIRE(r3.load_and_approve(no_strip_job(300000, 1)));
+    REQUIRE(r3.c.telemetry().settings.part_clear_check == 0);
+    r3.press(&Inputs::start, 150);
+    REQUIRE(r3.run_until(State::Ready, 120000));
+    CHECK(r3.c.counters().pieces_done == 1);
+    CHECK(r3.c.counters().pieces_accepted == 1);
+    return 0;
+}
+
+// ------------------------------------------------------------------- F12
+// Commissioning/recipe approval interlock keyed to calibration, recipe and
+// firmware identity; production start requires it; changes invalidate it.
+int test_f12_approval() {
+    Rig r; r.boot_and_home();
+    Job j = no_strip_job(200000, 1);
+    REQUIRE(r.c.load_job(j) == CommandResult::Accepted);
+    CHECK(!r.c.telemetry().approved);
+    CHECK(r.c.start() == CommandResult::NotApproved); // rejected
+    CHECK(r.c.state() == State::Ready);
+    REQUIRE(r.c.approve() == CommandResult::Accepted);
+    CHECK(r.c.telemetry().approved);
+    CHECK(r.c.start() == CommandResult::Accepted);
+    CHECK(r.c.state() == State::Running);
+    REQUIRE(r.run_until(State::Ready, 120000));
+    CHECK(r.c.telemetry().approved); // persists across a completed batch
+
+    // Calibration change invalidates the approval.
+    CHECK(r.c.set_calibration(42000, 41600) == CommandResult::Accepted);
+    CHECK(!r.c.telemetry().approved);
+    CHECK(r.c.start() == CommandResult::NotApproved);
+
+    // Recipe change invalidates the approval.
+    REQUIRE(r.c.approve() == CommandResult::Accepted);
+    Job other = j; other.length_um = 250000;
+    REQUIRE(r.c.load_job(other) == CommandResult::Accepted);
+    CHECK(!r.c.telemetry().approved);
+    CHECK(r.c.start() == CommandResult::NotApproved);
+
+    // Approval survives a controller re-init (persistent settings record).
+    REQUIRE(r.c.approve() == CommandResult::Accepted);
+    {
+        Controller c2(r.b);
+        c2.init();
+        CHECK(c2.telemetry().approved);
+        CHECK(c2.telemetry().job_loaded);
+    }
+
+    // Firmware identity change: a stored approval keyed to another firmware
+    // revision is not valid.
+    Settings tampered = r.c.telemetry().settings;
+    tampered.approval = Settings::approval_marker;
+    tampered.approval_key = commissioning_identity(tampered, "S1-B-OTHER-FIRMWARE");
+    tampered.crc = crc16(reinterpret_cast<const std::uint8_t*>(&tampered), offsetof(Settings, crc));
+    CHECK(tampered.approval_key != commissioning_identity(tampered));
+    REQUIRE(r.b.store_settings(&tampered, sizeof tampered));
+    Controller c3(r.b);
+    c3.init();
+    CHECK(!c3.telemetry().approved);
+    // Drive the tampered controller to Ready: production start then refuses.
+    for (std::uint32_t i = 0; i < ctrl::timing::input_debounce_ms + 5; ++i) { c3.tick(); r.b.advance(ctrl::mcu::control_period_us); }
+    r.b.field.start = true;
+    for (std::uint32_t i = 0; i < 150; ++i) { c3.tick(); r.b.advance(ctrl::mcu::control_period_us); }
+    r.b.field.start = false;
+    for (std::uint32_t i = 0; i < ctrl::timing::homing_timeout_ms + 1000 && c3.state() != State::Ready; ++i) {
+        c3.tick(); r.b.advance(ctrl::mcu::control_period_us);
+    }
+    REQUIRE(c3.state() == State::Ready);
+    CHECK(c3.start() == CommandResult::NotApproved);
+    return 0;
+}
+
+// ------------------------------------------------------------------- F33
+// Jog arithmetic must be widened (int64) and checked before any range
+// decision: every integer boundary at nonzero blade positions is rejected or
+// accepted exactly, with no signed overflow (run under -fsanitize=undefined).
+int test_f33_jog_overflow() {
+    using lim = std::numeric_limits<std::int32_t>;
+    Rig r; r.boot_and_home();
+    REQUIRE(r.c.jog(ctrl::axis::blade_front, true, 2000, 5000) == CommandResult::Accepted);
+    REQUIRE(r.run_until(State::Ready, 10000));
+    CHECK(r.c.telemetry().blade_um[0] == 2000);
+
+    // The audit's UBSan repro: blade_travel_um() + INT_MAX overflowed int32.
+    CHECK(r.c.jog(ctrl::axis::blade_front, true, lim::max(), 5000) == CommandResult::InvalidArgument);
+    CHECK(r.c.jog(ctrl::axis::blade_front, false, lim::max(), 5000) == CommandResult::InvalidArgument);
+    CHECK(r.c.jog(ctrl::axis::blade_front, true, lim::max() - 2000, 5000) == CommandResult::InvalidArgument);
+    CHECK(r.c.jog(ctrl::axis::blade_front, true, lim::min(), 5000) == CommandResult::InvalidArgument);
+    CHECK(r.c.jog(ctrl::axis::blade_front, true, lim::min() + 1, 5000) == CommandResult::InvalidArgument);
+    CHECK(r.c.state() == State::Ready);
+
+    // Every integer boundary around the blade travel window at 2 mm.
+    CHECK(r.c.jog(ctrl::axis::blade_front, true, 2201, 5000) == CommandResult::InvalidArgument); // 1 past the limit
+    CHECK(r.c.jog(ctrl::axis::blade_front, true, 2200, 5000) == CommandResult::Accepted);        // exactly 4.2 mm
+    REQUIRE(r.run_until(State::Ready, 10000));
+    CHECK(r.c.telemetry().blade_um[0] == 4200);
+    CHECK(r.c.jog(ctrl::axis::blade_front, true, 1, 5000) == CommandResult::InvalidArgument);
+    CHECK(r.c.jog(ctrl::axis::blade_front, false, 4201, 5000) == CommandResult::InvalidArgument);
+    CHECK(r.c.jog(ctrl::axis::blade_front, false, 4200, 5000) == CommandResult::Accepted);        // exactly 0
+    REQUIRE(r.run_until(State::Ready, 10000));
+    CHECK(r.c.telemetry().blade_um[0] == 0);
+    CHECK(r.c.jog(ctrl::axis::blade_front, false, lim::max(), 5000) == CommandResult::InvalidArgument);
+
+    // Feed distances: the documented 1 m ceiling and the int32 edges.
+    CHECK(r.c.jog(ctrl::axis::feed_left, true, lim::max(), 100000) == CommandResult::InvalidArgument);
+    CHECK(r.c.jog(ctrl::axis::feed_left, true, lim::min(), 100000) == CommandResult::InvalidArgument);
+    CHECK(r.c.jog(ctrl::axis::feed_left, true, 1000001, 100000) == CommandResult::InvalidArgument);
+    CHECK(r.c.jog(ctrl::axis::feed_left, true, 1000000, 100000) == CommandResult::Accepted); // boundary accepted
+    CHECK(r.c.stop() == CommandResult::Accepted);
+    REQUIRE(r.run_until(State::Ready, 60000));
+
+    // The same boundary through the protocol dispatch path.
+    proto::Frame req{}; req.msg = proto::Msg::Jog; req.seq = 3; req.len = proto::jog_len;
+    req.payload[0] = static_cast<std::uint8_t>(ctrl::axis::blade_front); req.payload[1] = 1;
+    proto::put_i32(req.payload + 2, lim::max()); proto::put_i32(req.payload + 6, 5000);
+    proto::Frame reply{};
+    proto::dispatch(r.c, req, reply);
+    CHECK(reply.msg == proto::Msg::Nack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::InvalidArgument));
+    return 0;
+}
+
+// F33 polarity: the per-axis/per-wheel sign multipliers are validated by a
+// commissioning move; wrong feedback stores the corrected validated polarity,
+// missing feedback is rejected without changing it.
+int test_f33_polarity() {
+    Rig r; r.run_ms(ctrl::timing::input_debounce_ms + 5);
+    CHECK(r.c.state() == State::Unhomed);
+    r.b.encoder_sign[1] = -1; // right measuring wheel wired inverted
+    CHECK(r.c.commission_axis(ctrl::axis::feed_right, true) == CommandResult::Accepted);
+    REQUIRE(r.run_until(State::Unhomed, 20000));
+    CHECK(r.c.commission_result() == CommandResult::Accepted);
+    CHECK(r.c.telemetry().settings.axis_sign[ctrl::axis::feed_right] == -1); // validated correction
+    // A logical + jog now yields positive logical feedback.
+    const std::int64_t enc_before = r.c.telemetry().encoder_counts[1];
+    REQUIRE(r.c.jog(ctrl::axis::feed_right, true, 2000, 50000) == CommandResult::Accepted);
+    REQUIRE(r.run_until(State::Unhomed, 20000));
+    CHECK(r.c.telemetry().encoder_counts[1] - enc_before > 0);
+
+    // Missing feedback: rejected, stored polarity unchanged.
+    r.b.encoder_freeze[1] = true;
+    CHECK(r.c.commission_axis(ctrl::axis::feed_right, true) == CommandResult::Accepted);
+    REQUIRE(r.run_until(State::Unhomed, 20000));
+    CHECK(r.c.commission_result() == CommandResult::InvalidArgument);
+    CHECK(r.c.telemetry().settings.axis_sign[ctrl::axis::feed_right] == -1);
+    r.b.encoder_freeze[1] = false;
+
+    // Blade axis: no sensor present -> missing feedback, rejected before motion.
+    Rig r2; r2.boot_and_home();
+    r2.b.blade_true_um[0] = 5000;
+    r2.run_ms(ctrl::timing::input_debounce_ms + 5);
+    CHECK(r2.c.commission_axis(ctrl::axis::blade_front, true) == CommandResult::InvalidArgument);
+
+    // Blade axis: on the sensor, logical forward leaves it -> validated +1.
+    r2.b.blade_true_um[0] = 100;
+    r2.run_ms(ctrl::timing::input_debounce_ms + 5);
+    CHECK(r2.c.commission_axis(ctrl::axis::blade_front, true) == CommandResult::Accepted);
+    REQUIRE(r2.run_until(State::Unhomed, 20000));
+    CHECK(r2.c.commission_result() == CommandResult::Accepted);
+    CHECK(r2.c.telemetry().settings.axis_sign[ctrl::axis::blade_front] == 1);
+
+    // Blade axis with an inverted stored sign: the move walks toward the
+    // sensor, so commissioning stores the corrected +1.
+    Rig r3; r3.boot_and_home();
+    REQUIRE(r3.c.set_axis_sign(ctrl::axis::blade_front, -1) == CommandResult::Accepted);
+    CHECK(r3.c.commission_axis(ctrl::axis::blade_front, true) == CommandResult::Accepted);
+    REQUIRE(r3.run_until(State::Unhomed, 20000));
+    CHECK(r3.c.commission_result() == CommandResult::Accepted);
+    CHECK(r3.c.telemetry().settings.axis_sign[ctrl::axis::blade_front] == 1);
     return 0;
 }
 
@@ -530,6 +1065,10 @@ int main(int argc, char** argv) {
         {"correction", test_cycle_no_strip_and_correction}, {"slip", test_slip_fault_and_no_wire},
         {"stop", test_stop_pause_resume}, {"safety", test_safety_and_alarm}, {"board", test_board_fault_latches}, {"jog", test_jog_and_commands},
         {"storage", test_settings_storage_failure}, {"journal", test_settings_journal}, {"protocol", test_protocol},
+        {"f05_quadrature_init", test_f05_quadrature_init}, {"f07_strip_geometry", test_f07_strip_geometry},
+        {"f08_strip_closure", test_f08_strip_closure}, {"f09_length_budget", test_f09_length_budget},
+        {"f11_part_clear", test_f11_part_clear}, {"f12_approval", test_f12_approval},
+        {"f33_jog_overflow", test_f33_jog_overflow}, {"f33_polarity", test_f33_polarity},
     };
     int rc = 0; bool ran = false;
     for (auto& t : tests) if (which == "all" || which == t.name) { ran = true; rc |= t.fn(); }

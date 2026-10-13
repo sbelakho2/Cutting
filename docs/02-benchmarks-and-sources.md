@@ -1,6 +1,6 @@
 # Komax comparison · evidence, not marketing equivalence
 
-Research date **11 September 2026**. This is a feature survey of relevant product families, not a claim to enumerate every Komax product or proprietary detail. Manufacturer specifications are not independently measured here. Source numbers are used in purchasing and validation documents.
+Research date **11 September 2026**. Cycle-budget arithmetic corrected 2026-10-13 (audit F29); 30 cuts/min is an endurance duty, not a rate claim. This is a feature survey of relevant product families, not a claim to enumerate every Komax product or proprietary detail. Manufacturer specifications are not independently measured here. Source numbers are used in purchasing and validation documents.
 
 ## Published comparison
 
@@ -33,25 +33,36 @@ At 1 m, ±(0.2% + 1 mm) evaluates to **±3 mm**. The S1 length goal ±0.70 mm wo
 
 No Komax parity, throughput, endurance or accuracy claim is made or supported by the repository. The published Komax length figure is a manufacturer specification; the S1 ±0.70 mm/1 m figure is a design target that has never been measured on hardware.
 
-### S1-B cycle-time budget (design arithmetic only, 2026-09-15)
+### S1-B cycle-time budget (design arithmetic only, corrected 2026-10-13)
 
-A desk cycle budget from the source motion limits ([machine_spec](../shared/machine_spec.hpp): feed 500 mm/s at 1.5 m/s²; strip 80 mm/s at 0.4 m/s²; blade 12.5 mm/s at 300 mm/s²; blade open-apex 8 mm + 0.2 mm overlap stroke ≈ 8.2 mm each way; ejection 230 mm):
+A desk cycle budget from the source motion limits ([machine_spec](../shared/machine_spec.hpp): feed 500 mm/s at 1.5 m/s²; strip 80 mm/s at 0.4 m/s²; blade 12.5 mm/s at 300 mm/s²; the two opposed jaws each travel 4.1 mm of the 8.2 mm open-apex+overlap sever stroke; ejection 230 mm):
 
-| Phase | L=100 mm | L=1000 mm |
+| Phase | L=200 mm | L=1000 mm |
 |---|---|---|
-| Feed (trapezoid/triangular) | 0.516 s | 2.000 s |
-| Blade close+cut+open (8.2 mm × 2 at 12.5 mm/s) | 1.312 s | 1.312 s |
+| Feed (trapezoid) | 0.733 s | 2.333 s |
+| Blade close+cut+open (4.1 mm per jaw each way at 12.5 mm/s) | 0.739 s | 0.739 s |
 | Strip 3 mm | 0.173 s | 0.173 s |
-| Ejection/comm budget | 0.150 s | 0.150 s |
-| Sequential cycle | 2.15 s (≈28/min) | 3.64 s (≈16.5/min) |
-| Overlapped (blade concurrent with next feed, process-qualification-gated) | 1.64 s (≈37/min) | 2.32 s (≈26/min) |
+| Ejection 230 mm (feed-profile move) | 0.793 s | 0.793 s |
+| **Sequential ideal floor** (feed + blade + ejection; excludes strip, sensing, handling) | **2.266 s (≈26.5/min)** | **3.866 s (≈15.5/min)** |
+| Sequential with strip not overlapped | 2.439 s | 4.039 s |
+
+Corrections against the original 2026-09-15 budget: the 1000 mm feed is
+2.333 s (not 2.000 s — the trapezoid cruise is 1.667 s, not 1.333 s); the
+sever stroke moves 4.1 mm per jaw, not 8.2 mm each way, giving 0.739 s
+close+open (not 1.312 s); the 230 mm ejection alone is 0.793 s and cannot be
+covered by the former 0.150 s "ejection/comm" line; and the former 2.15 s /
+3.64 s sequential cycles and 28/min / 16.5/min rates are withdrawn.
+**30 cuts/min is an endurance duty assumption for life calculations
+(docs/38 §1), not a throughput or rate claim** — the sequential ideal floor
+is 26.5/min at 200 mm and 15.5/min at 1000 mm before sensing, handshake or
+handling.
 
 This is arithmetic from configured limits, not a measured cycle, an OEE or a
-throughput claim. It also exposes that the blade stroke dominates short-wire
-cycle time: raising `blade_speed_mm_s` above 12.5 mm/s is the main design
-lever and requires requalification of the cut axes, blade pair and edge
-quality. No Cpk, MTBF, availability or endurance number exists or is
-estimated here.
+throughput claim. It also exposes that the blade stroke and the ejection move
+dominate short-wire cycle time: raising `blade_speed_mm_s` above 12.5 mm/s
+and overlapping the ejection with the next feed are the main design levers
+and require requalification of the cut axes, blade pair and edge quality. No
+Cpk, MTBF, availability or endurance number exists or is estimated here.
 
 Q1250 [S11] publishes a 24 × 16 mm field of view, 0.13–6 mm² wire range and up to 18 mm strip. Usable detection region is smaller. Its options inspect visible defects; no universal hidden-nick detection accuracy is published. Q1240 [S12] publishes output impact ≤1% above 200 mm and up to 4% at 60–200 mm; do not transfer those figures to another inspection model.
 

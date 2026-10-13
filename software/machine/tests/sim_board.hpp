@@ -34,8 +34,8 @@ public:
     void abort_steps(Axis a) override { fifo_[a].clear(); }
     std::int64_t encoder_count(std::uint8_t side) override { return encoder_[side]; }
     bool encoder_healthy(std::uint8_t side) override { return encoder_ok[side]; }
-    std::uint16_t boot_faults() override { return boot_fault_bits; }
-    std::uint16_t latched_faults() override { return runtime_fault_bits; }
+    FaultBits boot_faults() override { return boot_fault_bits; }
+    FaultBits latched_faults() override { return runtime_fault_bits; }
     bool clear_latched_faults() override {
         if (!clear_latches_allowed) return false;
         runtime_fault_bits = 0;
@@ -74,10 +74,13 @@ public:
     double feed_true_um[2] = {0.0, 0.0};
     double sensor_window_um = 200.0;
     double slip_ppm[2] = {0.0, 0.0};                // encoder relative error (positive = encoder reads long)
+    // Encoder wiring polarity and stuck/frozen feedback (commissioning tests).
+    int encoder_sign[2] = {1, 1};
+    bool encoder_freeze[2] = {false, false};
     bool wire_present = true;
     bool encoder_ok[2] = {true, true};
-    std::uint16_t boot_fault_bits = 0;
-    std::uint16_t runtime_fault_bits = 0;
+    FaultBits boot_fault_bits = 0;
+    FaultBits runtime_fault_bits = 0;
     bool clear_latches_allowed = true;
     std::int64_t encoder_[2] = {0, 0};
     double enc_accum_[2] = {0.0, 0.0};
@@ -93,7 +96,7 @@ public:
 
     SimBoard() {
         field = Inputs{};
-        field.start = false; field.stop_ok = true; field.reset = false; field.safety_ok = true;
+        field.start = false; field.stop_ok = true; field.reset = false; field.safety_ok = true; field.part_clear = true;
     }
 
 private:
@@ -119,8 +122,8 @@ private:
             const int side = a == ctrl::axis::feed_right ? 1 : 0;
             const double d = s * 1000.0 / ctrl::axis::feed_steps_per_mm;
             feed_true_um[side] += d;
-            if (!wire_present) return;
-            enc_accum_[side] += d * (1.0 + slip_ppm[side] * 1e-6) * ctrl::enc::nominal_counts_per_metre / 1e6;
+            if (!wire_present || encoder_freeze[side]) return;
+            enc_accum_[side] += d * encoder_sign[side] * (1.0 + slip_ppm[side] * 1e-6) * ctrl::enc::nominal_counts_per_metre / 1e6;
             const double whole = std::trunc(enc_accum_[side]);
             encoder_[side] += static_cast<std::int64_t>(whole);
             enc_accum_[side] -= whole;

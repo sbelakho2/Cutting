@@ -15,7 +15,7 @@ guides, measures its length with a running wheel and an encoder, and cuts it
 with two opposed 90° V blades mounted on a two-axis head inside a locked
 guard. You build the welded steel frame and bed first, then the two feed
 cartridges, the pressure carriers and wire guides, the head and its two axes,
-the measuring module, the payoff stand, the guard set, and finally the
+the two measuring modules, the payoff stand, the guard set, and finally the
 electrical cabinet. Every fit in this manual is measured, never assumed, and
 each check you pass unlocks the next step.
 
@@ -52,7 +52,7 @@ time, so order them before anything else.
 | Item | Exact order | Qty | Price observed |
 |---|---|---|---|
 | Axis rail sets * | AX-R01: HGR20 400 mm rail + 2× HGH20CA block set, [Taiyin on made-in-china](https://taiyin6666.en.made-in-china.com/product/ztLrHCpjCsci/China-Hgr20-High-Accuracy-High-Qualit-Linear-Guide-Rail-Set-Hgr20-400mm-Hg20-Linear-Rail-and-Block.html) | 4 sets (2 per axis) | US$8.00–13.00 FOB/set, MOQ 1 |
-| Axis screw sets * | AX-S01: SFU1605 C7 500 mm rolled ballscrew + flange nut + DSG16h housing + BK12/BF12 supports, end-machined option, [ALM on made-in-china](https://autolinearmotion.en.made-in-china.com/product/PtaYZwvVEukB/China-Sfu1605-500mm-600mm-800mm-C7-with-End-Machined-1605-Ball-Nut-Housing-Bk-Bf12-End-Support-Coupler-Rolled-Ball-Screw.html) | 2 sets (1 per axis) | US$5.00–10.00 FOB, MOQ 1 |
+| Axis screw sets * | AX-S01: **SFU1610-class C7 500 mm rolled ballscrew, 10 mm lead** + flange nut + DSG16h housing + BK12/BF12 supports, end-machined option, [ALM on made-in-china](https://autolinearmotion.en.made-in-china.com/product/PtaYZwvVEukB/China-Sfu1605-500mm-600mm-800mm-C7-with-End-Machined-1605-Ball-Nut-Housing-Bk-Bf12-End-Support-Coupler-Rolled-Ball-Screw.html) — order the 10 mm-lead variant | 2 sets (1 per axis) | US$5.00–10.00 FOB, MOQ 1 |
 | Axis plates | H005/H006, own shop, per the [H005-H006 sheet](../engineering/generated/drawings/H005-H006-R1-axis-plates.pdf) | 1 pair per axis | own shop |
 | R+W coupling * | MK2/100/50/8/14 (head axes: 8 H7 hub on the Ø8 h7 screw end, 14 H7 hub on the motor) | 2 | quotation required |
 | R+W coupling * | MK2/100/50/10/12 (feed axes: motor Ø10 D-flat, shaft Ø12) | 2 | quotation required |
@@ -63,7 +63,7 @@ time, so order them before anything else.
 | 36 V supply | LE-350-36 | 1 | shop price at purchase; equivalent EUR77.04 (Amazon.de B0HDN818SJ) |
 | SKF bearing | 6001-2Z/C3 | 8 | GBP 6.32 |
 | SKF bearing | 6002-2Z/C3 | 8 | GBP 6.91 |
-| SKF bearing | 626-2Z | 4 | GBP 4.49 |
+| SKF bearing | 626-2Z | 10 | GBP 4.49 |
 | SKF bearing | 6204-2Z/C3 | 2 | GBP 8.68 |
 | SKF lock nut / washer | KM 2 / MB 2 | 8 / 8 | GBP 7.90 / 2.15 |
 | SEEGER ring | A12 DIN471 | 8 | quotation |
@@ -73,24 +73,32 @@ time, so order them before anything else.
 | MISUMI bushing | LHFRW12 | 4 | EUR 14.58 |
 | MISUMI post | PSFJ12-240 | 4 | EUR 11.70 |
 | MISUMI spring | SWU17-60 | 2 | EUR 3.53 |
-| MISUMI spring | SWU10.5-35 | 1 | EUR 1.80 |
+| MISUMI spring | SWU10.5-35 | 2 | EUR 1.80 |
 | ifm wheel | E60137 (U:200 N:06) | 2 | automation24 EUR 57.00 ex VAT, in stock |
 | ifm encoder | RU3100 | 2 | automation24 EUR 186.40 ex VAT, in stock |
 | Dormer tap | E412M5 material 7441118 | 1 | per docs/14 |
-| Fasteners | ISO4762 M5×16 (8), M5×25 (8), M4×20 (16), M3×8 (32), M4×12 (6), M4×6 (4), M10×35 (8); ISO7092 M5/M4 washers; ISO8734 3m6×20 (16); DIN929 M10 (8); C45 key 5×5×28 (4) | per list | Wegertseder: M5×16 10.9 50pcs EUR6.19 (2540-034); 3m6×20 dowels 10pcs EUR2.73 (1018-078) |
+| Fasteners | ISO4762 M5×16 (8), M5×25 (8), M4×20 (16), M3×8 (32), M4×12 (6), M4×6 (8 = 4 per measuring module × 2), M10×35 (8); ISO7092 M5/M4 washers; ISO8734 3m6×20 (16); DIN929 M10 (8); C45 key 5×5×28 (4) | per list | Wegertseder: M5×16 10.9 50pcs EUR6.19 (2540-034); 3m6×20 dowels 10pcs EUR2.73 (1018-078) |
 
 The custom axis in this table replaces the HIWIN KK86, per
-[docs/39](39-custom-cut-axis.md). Both axes together cost roughly US$70–115
-each, against USD 824.72 for the priced HIWIN C-grade. Order the screw with
-the end-machined Ø8 h7 × 18 mm option, or machine that end locally. Never
-clamp a raw Ø12 blank in the coupling. If the supplier offers a 10 mm lead
-(SFU1610-class) at the same price, take it, because it keeps the 100
-pulses/mm firmware map unchanged. If you can only get the 5 mm lead, update
-the firmware `steps_per_mm` to 800 and record the choice in the order
-confirmation and the firmware map constant. If the component supply fails,
-the recorded fallback purchase leads are the HIWIN KK8610C-340A1-F0 at USD
+[docs/39](39-custom-cut-axis.md). **One frozen axis configuration (audit
+F13):** 10 mm lead (SFU1610-class) and CL86T-V41 at **1000 pulses/rev**, so
+
+```
+steps/mm = pulses_per_rev / lead_mm = 1000 / 10 = 100 pulses/mm
+```
+
+This matches the firmware source of truth (`pulses_per_revolution = 1000`,
+`lead = 10`, `steps_per_mm = 100` in `shared/cutting_head_spec.hpp`, used via
+`blade_steps_per_mm` in `shared/controls_spec.hpp`/
+`software/machine/core/controller.cpp`); align the docs to the source, never
+the reverse. Do **not** order a 5 mm-lead screw: a different lead or driver
+setting is a change record, not an option. Order the screw with the
+end-machined Ø8 h7 × 18 mm option, or machine that end locally, and never
+clamp a raw Ø12 blank in the coupling. If the component supply fails, the
+recorded fallback purchase leads are the HIWIN KK8610C-340A1-F0 at USD
 824.72 per unit (VND 21,146,653, MISUMI VN, observed 2026-09-16, lead 23–99
-days) and eBay item 406408632737, a genuine P-grade at a US$450 snippet.
+days) and eBay item 406408632737, a genuine P-grade at a US$450 snippet;
+fallback leads do not change the frozen configuration.
 
 Phase B, controls and cabinet. Order this only after §2 of the electrical
 record is accepted.
@@ -103,7 +111,8 @@ record is accepted.
 | Contactor | LC1D12BD | 3 (EUR 70.40 observed) |
 | Fuse terminals + links | Phoenix 3046032 ×5 (XPS output, +24V_DRVLOGIC, 3 drive-logic feeds) + ESKA 522620 2 A T 5×20 ×1 + ESKA 522617 1 A T 5×20 ×4 | EUR 7.99 / 1.49 / 1.49 observed 2026-09-16 |
 | Mains MCB + RCD | Schneider Acti9 iC60N 2P C10 (A9F54210) + iID 2P 25 A 30 mA (A9Z21225) | 1 + 1 (RCD EUR 35.99 observed; MCB price at purchase) |
-| 24 V supply | 6EP3332-7SB00-0AX0 | 1 |
+| 24 V control supply | CT-PS24 (CB-PS24): Siemens LOGO!POWER **6EP3332-6SB00-0AY0**, 24 VDC / 2.5 A PELV | 1 |
+| 5 V logic supply | CT-PS05 (CB-PS05): Siemens LOGO!POWER **6EP3310-6SB00-0AY0**, 5 VDC / 3 A — feeds Pico VSYS and the encoder/interface branches through IF-B01 | 1 |
 | Pico | Raspberry Pi Pico 2 SC1631 | 1 (USD 5.00 observed) |
 | Cooler | Rittal SK3303.500 | 1 (quotation) |
 | Terminals | Phoenix PT 2,5 (3209510 ×n, 3209523 ×n), UT 4 (3044131 ×n) | per layout |
@@ -112,23 +121,58 @@ record is accepted.
 | Glands | 2× M20 EMC metal gland (Lapp/Pflitsch identity confirm) | 2 |
 | Pushbuttons/LED | 3SU1152 pair, 3SU1200 buzzer, IE5338 sensor, PLC-RSC-24DC/21 | per selected-controls.csv |
 
+**Supply identity note (audit F28/F17).** The cabinet has exactly these
+supply identities: **24 V/2.5 A = 6EP3332-6SB00-0AY0** (CT-PS24/CB-PS24) and
+**5 V/3 A = 6EP3310-6SB00-0AY0** (CT-PS05/CB-PS05) — the 5 V unit is the
+correct Siemens identity for Pico `VSYS` and the encoder branches, per the
+manufacturer record and docs/22 §11.4. The earlier wording that treated the
+5 V rail as a "second 24 V PSU feeding an on-board regulator" is
+**superseded**: IF-B01 has no 24→5 V converter, and the phantom
+`6EP3332-7SB00-0AX0` register pairing is removed. Feed-drive supplies are
+separate: 2× LE-350-60 (60 V, PS-01, in the motor kits) and 1× LE-350-36
+(36 V, CT-PS36).
+
 ## 4. Making the parts
 
 Make the parts in this order. Each recipe lists the stock, the operations in
 order, and the check. Machine each part, measure it, record the measurement,
 then move on. A missing record blocks the next dependent step.
 
-**F101 rotor shaft, make 2.** Stock per [docs/12](12-feed-cartridge-fabrication.md).
-Turn the shaft, thread it M15×1, cut the keyseats, cut the A12 grooves, and
-tap the blind M5 hole with the E412M5. Check: matched j5 bearing seats with
-3–6 µm interference to the measured bores, per docs/12 §checks. If the check
-fails, measure the bearing bore again and finish the seat to that measured
-bore, never to the nominal. A seat that comes out loose must be remade, not
-shimmed or glued.
+Quantities below are generated from the authoritative BOMs and manifests —
+never from counting the text of this guide. Source of each count:
 
-**F102–F112, make 2 of each.** Stock and operations per
-[docs/12](12-feed-cartridge-fabrication.md). Mill or turn each part per the
-record. Check: per docs/12.
+| Part / count | Source of the count |
+|---|---|
+| F101 ×8; F102–F109 ×8 each; F110 (keyway op on the 8 purchased rollers); F112 ×8; F111 ×2 | [bom/feed-custom-parts.csv](../bom/feed-custom-parts.csv) `quantity` column |
+| H002 ×2, H003 ×2, H004 ×2, H005 ×2, H006 ×2, H001 ×1, T001 (blade pair) ×1 | [bom/selected-cutting-head.csv](../bom/selected-cutting-head.csv) |
+| 6001-2Z/C3 ×8, 6002-2Z/C3 ×8, KM2 ×8, MB2 ×8, A12 rings ×8, UMCL40 ×8, HTPA20S5M250-A-N14 ×4, HTBN225 ×2, LHFRW12 ×4, PSFJ12 ×4 | [bom/selected-transport-and-cabinet.csv](../bom/selected-transport-and-cabinet.csv) / [selected-mechanism.csv](../bom/selected-mechanism.csv) |
+| 626-2Z ×10 = 5 per module × 2 modules (2 wheel-shaft + 1 counter-roller + 2 pivots) | ME-B01 row, [bom/selected-transport-and-cabinet.csv](../bom/selected-transport-and-cabinet.csv); per-module split in [docs/13](13-measuring-interfaces-and-calibration.md) §1 |
+| SWU17-60 ×2 (1 per cassette); SWU10.5-35 ×2 (1 per measuring module) | MC-P01/MC-P02, [bom/selected-mechanism.csv](../bom/selected-mechanism.csv) |
+| E60137 ×2, RU3100 ×2, M4×12 ME-FB01 ×6 (3 per module) | ME-W01/ME-E01/ME-FB01, [bom/selected-transport-and-cabinet.csv](../bom/selected-transport-and-cabinet.csv) |
+| M201 ×2 | [bom/measurement-custom-parts.csv](../bom/measurement-custom-parts.csv) |
+| M202 ×2, M203 ×2, M204 ×2, M206 ×2, M207 ×2, M209 ×2, M210 ×2 | [bom/mechanism-custom-parts.csv](../bom/mechanism-custom-parts.csv) |
+| F201/F202/F203/F205/F206/F208 ×2 each; F301 ×1; F302/F303 ×2 each; F304/F305 ×4 each; G101–G106 ×1 each; P001–P007 ×1 each | [bom/mechanism-custom-parts.csv](../bom/mechanism-custom-parts.csv) |
+
+(Occurrence geometry for the same counts is published in
+[engineering/generated/feed-cassette/manifest.csv](../engineering/generated/feed-cassette/manifest.csv),
+[head/manifest.csv](../engineering/generated/head/manifest.csv),
+[mechanism/manifest.csv](../engineering/generated/mechanism/manifest.csv) and
+[measurement/manifest.csv](../engineering/generated/measurement/manifest.csv).)
+
+**F101 rotor shaft, make 8** (4 rotors per cassette × 2 cassettes). Stock per
+[docs/12](12-feed-cartridge-fabrication.md). Turn the shaft, thread it M15×1,
+cut the keyseats, cut the A12 grooves, and tap the blind M5 hole with the
+E412M5. Check: matched j5 bearing seats with 3–6 µm interference to the
+measured bores, per docs/12 §checks. If the check fails, measure the bearing
+bore again and finish the seat to that measured bore, never to the nominal. A
+seat that comes out loose must be remade, not shimmed or glued.
+
+**F102–F109 and F112, make 8 of each** (4 per cassette × 2 cassettes). Keep
+the F102/F112 module pair match-machined as documented. **F111 motor plate,
+make 2 only** (1 per cassette — the audit's "eight of most rotor parts" does
+not apply to F111; the source count in bom/feed-custom-parts.csv is 2). Stock
+and operations per [docs/12](12-feed-cartridge-fabrication.md). Mill or turn
+each part per the record. Check: per docs/12.
 
 **H001.** Stock 180×1040×20 tooling plate. Mill it flat and tap the bed
 pattern. Check: flat ≤0.05 over the cassette and head footprints.
@@ -151,14 +195,18 @@ with the 60×75 pad at 46 mm height, the Ø49.97 F0 register, 4×M5 on PCD70,
 4×M6 on 46×46, the DSG16h pocket and the four HGH20CA lands. Check: per
 sheet.
 
-**M201.** Stock 66×66×8. Mill the plate, the seat bore, the 3 PCD42 holes
-and the 4 M4 taps. Check: per the
+**M201, make 2** (one per measuring module). Stock 66×66×8. Mill the plate,
+the seat bore, the 3 PCD42 holes and the 4 M4 taps. Check: per the
 [M201 sheet](../engineering/generated/drawings/M201-R2-encoder-plate.pdf).
 
-**M202–M210.** Stock per the measurement manifest. Mill or turn per the
-record. Check: per [docs/13](13-measuring-interfaces-and-calibration.md).
+**M202–M210, make 2 of each** (M202/M203/M204/M206/M207/M209/M210 — one set
+per measuring module, per the mechanism custom BOM). Stock per the mechanism
+manifest. Mill or turn per the record. Check: per
+[docs/13](13-measuring-interfaces-and-calibration.md).
 
-**F201–F208 and F301–F305.** Stock per the mechanism
+**F201–F208 and F301–F305** at the bom/mechanism-custom-parts.csv counts:
+F201/F202/F203/F205/F206/F208 ×2 each, F301 bed ×1, F302/F303 ×2 each,
+F304/F305 ×4 each. Stock per the mechanism
 [manifest](../engineering/generated/mechanism/manifest.csv). Mill or laser
 cut, then weld the frame. Check: per the manifest.
 
@@ -271,6 +319,16 @@ the H003 sheet axial stack: at least 0.53 mm of hub insertion, at least
 12.58 mm of shaft-end gap, and the bellows never stretched. Then the H004
 blade holders.
 
+**Driver direction settings are part of the build (audit F33).** Each of the
+four drivers has one direction polarity, and the left/right cassettes and
+the two axes face opposite ways. Before first motion, freeze each driver's
+direction DIP/parameter setting (and the CL86T-V41 1000-pulses/rev setting
+from docs/39 §3) in the build record, then prove the machine-coordinate
+signs — stock/piece travel direction and encoder counting sign — per
+[the commissioning runbook](36-commissioning-runbook.md) P6-1/P6-7. Do not
+leave any axis free to be "fixed in software later"; an unproven sign blocks
+the axis.
+
 If you get stuck: if the bellows look stretched, the axial stack is wrong.
 Back the hubs off and set the free-length coupling again, keeping the
 0.53 mm insertion and 12.58 mm end gap before you tighten anything.
@@ -287,21 +345,39 @@ If you get stuck: a belt that walks off the pulley means the two pulley
 planes are not coplanar. Check the keyed pulley faces with a straight edge
 before you blame the belt tension.
 
-### 5.6 Measuring module
+### 5.6 Measuring modules (both — upstream and downstream)
 
-Bolt the M206 bracket and M207 column to the bed at the X−205 side. Press
-the two 626 bearings into M203 (K6 seats), then fit the M202 shaft (6 h6,
-seats 6 j5) with the M204 arm, M209 cap and the SWU10.5-35 spring. Set the
-wheel force into 6–19 N, measured. Fit the ifm E60137 wheel (6 bore on 6h6,
-hub clamp; the hub screw detail is unpublished, confirm at receipt) and the
+The machine has **two measuring modules** (docs/13 §1): one upstream and one
+downstream. Build them as a matched pair; each module is one M201 plate, the
+M202–M210 mechanism set, one ifm E60137 wheel, one ifm RU3100 encoder, the
+supplied coupling and **five 626-2Z bearings** (2 wheel-shaft + 1
+counter-roller + 2 arm pivots = 10 for the machine). One SWU10.5-35 arm
+spring per module (2 total).
+
+For each module: press the 626 counter-roller and pivot bearings into their
+M203/M204 K6 seats, then fit the M202 shaft (6 h6, seats 6 j5) with the M204
+arm, M209 cap and the SWU10.5-35 spring. Set the wheel force into 6–19 N,
+measured, on **each** module. Fit the ifm E60137 wheel (6 bore on 6h6, hub
+clamp; the hub screw detail is unpublished, confirm at receipt) and the
 supplied encoder coupling. The M201 R2 plate holds the ifm RU3100 with its
-flange face on A, 3× M4×12 into the PCD42 taps and 4× M4×6 support screws
-in the M203 counterbores, shaft tip 10 mm from the face. Measure the wheel
+flange face on A, 3× M4×12 into the PCD42 taps and 4× M4×6 support screws in
+the M203 counterbores, shaft tip 10 mm from the face. Measure each wheel's
 runout and circumference: 200 mm is the ifm claim with no published
-tolerance, so measure it and enter the value into the calibration
+tolerance, so measure both wheels and enter the values into the calibration
 (docs/13).
 
-If you get stuck: if the encoder reading jumps, check the wheel runout and
+Bolt the M206 bracket and M207 column to the bed: the upstream module at the
+X−205 station, and the downstream module as the mirror facing the opposite
+direction. **Do not copy the upstream station or drill the downstream bed
+pattern from a mirror guess.** The downstream station position, the wire
+contact intervals and the encoder validity/origin transfer between the two
+wheels are an open integration item (audit F06): build the second module on
+the bench, and install/drill it only against the released second-module
+layout record, which must be compatible with the shortest (200 mm) part and
+the maximum strips. Until then the controller must not demand equal
+whole-feed travel from both wheels.
+
+If you get stuck: if an encoder reading jumps, check the wheel runout and
 the coupling before you touch the firmware. The 200 mm figure is a claim
 until you measure your own wheel.
 
@@ -365,11 +441,12 @@ the routing before anything else.
 ## 7. Powering up (gated — read the warnings first)
 
 Read §9 of this guide, then follow this order: voltages and polarity,
-E-stop channel test, guard channel test, encoder direction, drive enable,
-contactor opening plus bus decay measurement, stop-time measurement, and
-record everything in the FAI template. No E1/E2 guard-release circuit is
-authorized. If any earlier step in this guide is missing its record, do not
-power up.
+E-stop channel test, guard channel test, **per-axis driver direction
+polarity and encoder sign (all four axes, frozen settings recorded)**,
+drive enable, contactor opening plus bus decay measurement, stop-time
+measurement, and record everything in the FAI template. No E1/E2
+guard-release circuit is authorized. If any earlier step in this guide is
+missing its record, do not power up.
 
 If you get stuck: a failed E-stop or guard channel test is a wiring or
 termination fault. Fix it with the power off, using the point-to-point

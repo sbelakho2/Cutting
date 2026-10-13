@@ -20,7 +20,7 @@ struct Record {
     std::uint32_t record_crc;
 };
 
-static_assert(sizeof(Record) == 60, "Journal record layout changed; review target flash allocation");
+static_assert(sizeof(Record) == 76, "Journal record layout changed; review target flash allocation");
 
 inline std::uint32_t record_crc(const Record& record) noexcept {
     return crc16(reinterpret_cast<const std::uint8_t*>(&record), offsetof(Record, record_crc));

@@ -1,6 +1,7 @@
 #include "controller.hpp"
 #include "crc16.hpp"
 #include <cmath>
+#include <cstdlib>
 #include <cstring>
 #include <algorithm>
 
@@ -21,14 +22,60 @@ std::int32_t blade_steps_to_um(std::int64_t steps) {
 std::int64_t feed_steps_to_um(std::int64_t steps) {
     return std::llround(static_cast<double>(steps) * 1000.0 / ctrl::axis::feed_steps_per_mm);
 }
-constexpr std::uint16_t alm_bit(Axis a) { return static_cast<std::uint16_t>(1u << static_cast<unsigned>(a)); }
+constexpr FaultBits alm_bit(Axis a) { return static_cast<FaultBits>(1u << static_cast<unsigned>(a)); }
+
+// ---- process geometry (docs/01 §4, F08) -------------------------------------
+// Ideal opposed-90-degree-V per-jaw closure to the incision circle of radius r:
+//   closure = blade_open_apex/2 - sqrt(2)*r        (4.0 mm at an 8 mm open apex)
+// The sever position stays at the CAD blade_cut_travel, which is the closed-jaw
+// position plus an explicit per-jaw overlap (0.2 mm total apex overlap).
+constexpr double blade_open_half_mm = ctrl::axis::blade_open_mm / 2.0; // 4.0
+static_assert(ctrl::axis::blade_cut_mm > blade_open_half_mm, "sever travel must pass the closed-jaw position");
+static_assert(ctrl::axis::blade_open_mm == head::design::blade_open_apex,
+              "axis::blade_open_mm must stay equal to the CAD blade_open_apex");
+static_assert(ctrl::axis::blade_cut_mm == head::design::blade_cut_travel,
+              "axis::blade_cut_mm must stay equal to the CAD blade_cut_travel");
+constexpr std::int32_t blade_sever_travel_um = static_cast<std::int32_t>(ctrl::axis::blade_cut_mm * 1000.0); // 4100
+static_assert(blade_sever_overlap_um == blade_sever_travel_um - static_cast<std::int32_t>(blade_open_half_mm * 1000.0),
+              "sever overlap must be the explicit per-jaw allowance");
+static_assert(blade_sever_overlap_um == spec::blade_cut_position_um - spec::blade_open_apex_um / 2,
+              "sever overlap must match the shared blade_cut_position_um constant");
+static_assert(blade_sever_travel_um <= static_cast<std::int32_t>(ctrl::axis::blade_limit_mm * 1000.0),
+              "sever travel must stay inside the software blade limit");
+
+// ---- cycle geometry (docs/01 §4, F07) ---------------------------------------
+constexpr std::int32_t strip_clear_um = spec::strip_clear_um;   // 3 mm lead/tail clearance at the bare end
+constexpr std::uint32_t part_clear_timeout_ms = 5000;
+static_assert(wire::separation_um == 10000, "tail-score separation is fixed at 10 mm by docs/01 §4");
+
+// Commissioning polarity move (F33).
+constexpr std::uint32_t commission_feed_move_um = 5000;
+constexpr std::uint32_t commission_blade_move_um = 1000;
+constexpr std::int64_t commission_min_counts = 16; // ~0.4 mm of measuring-wheel feedback
+
+bool signs_valid(const Settings& s) noexcept {
+    for (std::int8_t v : s.axis_sign) if (v != 1 && v != -1) return false;
+    for (std::int8_t v : s.wheel_sign) if (v != 1 && v != -1) return false;
+    return true;
+}
 
 // Deliberately excludes the final CRC word. The Settings layout assertion
-// guarantees this covers the exact persisted 44-byte payload.
+// guarantees this covers the exact persisted payload.
 std::uint32_t settings_crc(const Settings& s) {
     return crc16(reinterpret_cast<const std::uint8_t*>(&s), sizeof(Settings) - sizeof(std::uint32_t));
 }
 } // namespace
+
+std::uint32_t commissioning_identity(const Settings& s, const char* firmware) noexcept {
+    const char* fw = firmware != nullptr ? firmware : "";
+    std::uint16_t hi = crc16(reinterpret_cast<const std::uint8_t*>(&s.counts_per_metre), sizeof s.counts_per_metre);
+    hi = crc16(reinterpret_cast<const std::uint8_t*>(&s.stored_job), sizeof s.stored_job, hi);
+    const std::uint8_t marker = s.stored_job_valid == Settings::stored_job_marker ? 1u : 0u;
+    hi = crc16(&marker, 1, hi);
+    std::uint16_t lo = crc16(reinterpret_cast<const std::uint8_t*>(fw), std::strlen(fw));
+    lo = crc16(reinterpret_cast<const std::uint8_t*>(&s.counts_per_metre), sizeof s.counts_per_metre, lo);
+    return (static_cast<std::uint32_t>(hi) << 16) | static_cast<std::uint32_t>(lo);
+}
 
 // ------------------------------------------------------------------ validate
 JobError validate(const Job& j) noexcept {
@@ -42,11 +89,13 @@ JobError validate(const Job& j) noexcept {
     if (strips) {
         if (j.strip_depth_um < min_strip_depth_um || j.strip_depth_um > max_strip_depth_um) return JobError::Depth;
         if (j.strip_depth_um * 2 >= j.wire_diameter_um) return JobError::Depth; // would sever
-        // 90 deg V blades: apex-to-axis distance a = sqrt(2) * r at the cut radius r.
+        // Ideal per-jaw closure derived from the open apex and the cut radius.
         const double r_mm = (j.wire_diameter_um / 2.0 - j.strip_depth_um) / 1000.0;
-        const double apex_mm = std::sqrt(2.0) * r_mm;
-        const double travel_mm = (ctrl::axis::blade_cut_mm - 0.2) - apex_mm; // 0.2 mm apex overlap at sever
-        if (travel_mm < 0.0 || travel_mm > ctrl::axis::blade_cut_mm) return JobError::Geometry;
+        const double closure_mm = blade_open_half_mm - std::sqrt(2.0) * r_mm;
+        if (closure_mm < 0.0 || closure_mm > ctrl::axis::blade_cut_mm) return JobError::Geometry;
+        // The sever travel is the explicit closed-jaw position plus the sever
+        // overlap; it must stay inside the software travel limit.
+        if (blade_sever_travel_um > static_cast<std::int32_t>(ctrl::axis::blade_limit_mm * 1000.0)) return JobError::Geometry;
     }
     const std::int64_t grip = static_cast<std::int64_t>(feed::design::minimum_insulated_grip_margin * 1000.0);
     if (static_cast<std::int64_t>(j.strip_lead_um) + j.strip_tail_um + grip > j.length_um) return JobError::Geometry;
@@ -77,7 +126,8 @@ void Controller::init() {
     for (auto& a : axis_) a = AxisState{};
     Settings loaded{};
     if (board_.load_settings(&loaded, sizeof loaded) && loaded.magic == Settings{}.magic &&
-        loaded.crc == settings_crc(loaded) && loaded.counts_per_metre[0] > 0 && loaded.counts_per_metre[1] > 0) {
+        loaded.crc == settings_crc(loaded) && loaded.counts_per_metre[0] > 0 && loaded.counts_per_metre[1] > 0 &&
+        signs_valid(loaded) && loaded.part_clear_check <= 1) {
         settings_ = loaded;
         if (settings_.stored_job_valid == Settings::stored_job_marker && validate(settings_.stored_job) == JobError::None) {
             job_ = settings_.stored_job;
@@ -111,9 +161,30 @@ std::int32_t Controller::measured_um(std::uint8_t side, std::int64_t counts_delt
     return static_cast<std::int32_t>(std::llround(static_cast<double>(counts_delta) * 1.0e6 / settings_.counts_per_metre[side]));
 }
 std::int32_t Controller::strip_travel_um() const {
+    // F08: ideal per-jaw closure from the open apex, not from the sever travel.
     const double r_mm = (job_.wire_diameter_um / 2.0 - job_.strip_depth_um) / 1000.0;
-    const double travel_mm = (ctrl::axis::blade_cut_mm - 0.2) - std::sqrt(2.0) * r_mm;
-    return static_cast<std::int32_t>(std::llround(travel_mm * 1000.0));
+    const double closure_mm = blade_open_half_mm - std::sqrt(2.0) * r_mm;
+    return static_cast<std::int32_t>(std::llround(closure_mm * 1000.0));
+}
+std::int32_t Controller::length_budget_um(std::int32_t target_um) const {
+    // Length target from docs/01 §2: +/- (0.20 mm + 0.05 % of the target).
+    const std::int64_t t = target_um < 0 ? -static_cast<std::int64_t>(target_um) : target_um;
+    return static_cast<std::int32_t>(200 + (t * 5 + 9999) / 10000);
+}
+std::int64_t Controller::logical_encoder_counts(std::uint8_t side) const {
+    const std::int64_t raw = board_.encoder_count(side);
+    return settings_.wheel_sign[side] < 0 ? -raw : raw;
+}
+bool Controller::wire_state_valid() const {
+    if (piece_present_) {
+        if (piece_len_um_ <= 0) return false;
+        if (!wire::bodies_valid(stock_tip_um_, piece_tail_um_, piece_present_)) return false; // overlap
+    }
+    return true;
+}
+bool Controller::approved() const noexcept {
+    return settings_.approval == Settings::approval_marker && settings_.approval_key != 0 &&
+           settings_.approval_key == commissioning_identity(settings_);
 }
 
 // --------------------------------------------------------------------- tick
@@ -147,8 +218,12 @@ void Controller::tick() {
             break;
         }
         service_axes();
-        if (all_idle()) { axis_[0].moving = axis_[1].moving = axis_[2].moving = axis_[3].moving = false; set_phase(Phase::Idle); set_state(homed_ ? State::Ready : State::Unhomed); }
-        else if (phase_timed_out(ctrl::timing::move_timeout_ms)) enter_fault(fault::move_timeout);
+        if (all_idle()) {
+            axis_[0].moving = axis_[1].moving = axis_[2].moving = axis_[3].moving = false;
+            if (commissioning_) { finish_commissioning(); break; }
+            set_phase(Phase::Idle);
+            set_state(homed_ ? State::Ready : State::Unhomed);
+        } else if (phase_timed_out(ctrl::timing::move_timeout_ms)) enter_fault(fault::move_timeout);
         break;
     case State::Stopping:
         if (!raw_.safety_ok) break;
@@ -183,6 +258,7 @@ void Controller::sample_inputs() {
     safety_.update(raw_.safety_ok, now_us_, db);
     home_front_.update(raw_.home_front, now_us_, db);
     home_rear_.update(raw_.home_rear, now_us_, db);
+    part_clear_.update(raw_.part_clear, now_us_, db);
     in_ = raw_;
     in_.start = start_.stable && start_.level;
     in_.stop_ok = stop_.stable && stop_.level;
@@ -190,6 +266,7 @@ void Controller::sample_inputs() {
     in_.safety_ok = safety_.stable && safety_.level;
     in_.home_front = home_front_.stable && home_front_.level;
     in_.home_rear = home_rear_.stable && home_rear_.level;
+    in_.part_clear = part_clear_.stable && part_clear_.level;
 }
 
 void Controller::supervise_safety() {
@@ -202,7 +279,7 @@ void Controller::supervise_safety() {
     if (safety_.stable && !safety_.level && state_ != State::Fault) enter_fault(fault::safety_open);
     for (std::uint8_t i = 0; i < ctrl::axis::count; ++i)
         if (raw_.alm[i] && state_ != State::Fault) enter_fault(alm_bit(static_cast<Axis>(i)));
-    const std::uint16_t board_faults = board_.latched_faults();
+    const FaultBits board_faults = board_.latched_faults();
     if (board_faults != 0 && state_ != State::Fault) enter_fault(board_faults);
     for (std::uint8_t i = 0; i < 2; ++i)
         if (!board_.encoder_healthy(i) && state_ != State::Fault) enter_fault(fault::encoder_overflow);
@@ -214,7 +291,7 @@ void Controller::supervise_safety() {
     }
 }
 
-void Controller::enter_fault(std::uint16_t bits) {
+void Controller::enter_fault(FaultBits bits) {
     abort_all();
     out_.drives_disabled = true;
     faults_ |= bits;
@@ -287,7 +364,9 @@ bool Controller::start_move(Axis a, std::int64_t delta_steps, double speed_steps
     spec.steps_per_s2 = accel_steps_s2;
     spec.forward = delta_steps > 0;
     if (!ax.streamer.begin(spec, ctrl::axis::pio_clock_hz, max_run)) return false;
-    board_.set_direction(a, spec.forward);
+    // F33: the commissioned per-axis polarity maps the logical direction onto
+    // the physical DIR line; position tracking stays logical.
+    board_.set_direction(a, spec.forward != (settings_.axis_sign[a] < 0));
     ax.moving = true;
     ax.stall_fault = stall_fault;
     ax.queue_limit = max_run == 1 ? 1 : Board::step_fifo_depth;
@@ -315,6 +394,37 @@ bool Controller::start_feed_move_um(Axis a, std::int32_t delta_um, double speed_
                       accel_mm_s2 * ctrl::axis::feed_steps_per_mm, stall_fault);
 }
 
+void Controller::start_tracked_feed(Axis a, std::int32_t delta_um, double speed_mm_s, double accel_mm_s2, std::uint16_t stall_fault) {
+    const std::uint8_t side = a == ctrl::axis::feed_right ? 1 : 0;
+    tracked_[side].expect_um = delta_um;
+    tracked_[side].encoder_start = logical_encoder_counts(side);
+    tracked_[side].active = true;
+    if (!start_feed_move_um(a, delta_um, speed_mm_s, accel_mm_s2, stall_fault)) enter_fault(fault::internal);
+}
+
+bool Controller::verify_tracked_feed(std::uint8_t side, bool gross_only) {
+    TrackedFeed& t = tracked_[side];
+    if (!t.active) return true;
+    t.active = false;
+    const std::int32_t moved = measured_um(side, logical_encoder_counts(side) - t.encoder_start);
+    const std::int64_t residual = static_cast<std::int64_t>(t.expect_um) - moved;
+    const std::int64_t magnitude = residual < 0 ? -residual : residual;
+    if (magnitude > ctrl::enc::max_slip_um) {
+        enter_fault(fault::length_slip); // gross slip: motion fault threshold
+        return false;
+    }
+    if (!gross_only) {
+        // Strip/pull moves use the same 0.20 mm + 0.05 % budget shape as the
+        // piece length, with the strip tolerance as the base term.
+        const std::int32_t budget = length_budget_um(t.expect_um);
+        if (magnitude > budget) {
+            enter_fault(fault::length_budget); // piece/strip acceptance budget
+            return false;
+        }
+    }
+    return true;
+}
+
 void Controller::service_axes() {
     if (out_.drives_disabled) return;
     for (std::uint8_t i = 0; i < ctrl::axis::count; ++i) {
@@ -330,8 +440,9 @@ void Controller::service_axes() {
         if (!ax.streamer.active() && board_.steps_idle(a)) ax.moving = false;
         if (ax.stall_fault != 0 && ax.moving) {
             const std::int64_t issued_um = feed_steps_to_um(ax.streamer.issued());
-            const std::int64_t enc = board_.encoder_count(a == ctrl::axis::feed_right ? 1 : 0) - ax.encoder_start;
-            const std::int32_t moved_um = std::abs(measured_um(a == ctrl::axis::feed_right ? 1 : 0, enc));
+            const std::uint8_t side = a == ctrl::axis::feed_right ? 1 : 0;
+            const std::int64_t enc = logical_encoder_counts(side) - ax.encoder_start;
+            const std::int32_t moved_um = std::abs(measured_um(side, enc));
             if (issued_um >= 5000 && moved_um < 1000) { enter_fault(ax.stall_fault); return; }
         }
         if (ax.moving && now_us_ - ax.move_start_us > ms_to_us(ctrl::timing::move_timeout_ms)) { enter_fault(fault::move_timeout); return; }
@@ -431,18 +542,73 @@ void Controller::begin_job_run() {
     // begins a fresh batch; restarting from Paused retains its current count.
     if (state_ == State::Ready) counters_ = Counters{};
     priming_ = true;
-    cycle_started_ = false;
     correction_done_ = false;
+    stock_tip_um_ = 0;
+    piece_tail_um_ = 0;
+    piece_len_um_ = 0;
+    piece_present_ = false;
+    stock_restore_um_ = 0;
+    part_present_seen_ = false;
+    part_clear_confirmed_ = false;
     out_.drives_disabled = false;
     drives_enabled_at_us_ = now_us_;
     set_state(State::Running);
     set_phase(Phase::EnableSettle);
 }
 
+void Controller::launch_pass() {
+    if (priming_) {
+        // Prime pass: feed the trimmed stock far enough past the cut plane,
+        // sever the stub and discharge it. It does not count a piece.
+        feed_encoder_start_[0] = logical_encoder_counts(0);
+        feed_encoder_start_[1] = logical_encoder_counts(1);
+        feed_target_um_ = spec::stock_clear_um;
+        if (!start_feed_move_um(ctrl::axis::feed_left, feed_target_um_, ctrl::axis::feed_speed_mm_s,
+                                ctrl::axis::feed_accel_mm_s2, fault::no_wire)) enter_fault(fault::internal);
+        if (!start_feed_move_um(ctrl::axis::feed_right, feed_target_um_, ctrl::axis::feed_speed_mm_s,
+                                ctrl::axis::feed_accel_mm_s2)) enter_fault(fault::internal);
+        stock_tip_um_ += feed_target_um_;
+        set_phase(Phase::Feed);
+        return;
+    }
+    correction_done_ = false;
+    if (job_.strip_lead_um > 0) {
+        // docs/01 §4 step 1: advance the stock by s1 so the score plane sits s1
+        // behind the trimmed tip.
+        start_tracked_feed(ctrl::axis::feed_left, job_.strip_lead_um, ctrl::axis::strip_speed_mm_s, ctrl::axis::strip_accel_mm_s2);
+        stock_tip_um_ += job_.strip_lead_um;
+        set_phase(Phase::LeadAdvance);
+        return;
+    }
+    start_length_feed();
+}
+
+void Controller::start_length_feed() {
+    correction_done_ = false;
+    feed_encoder_start_[0] = logical_encoder_counts(0);
+    feed_encoder_start_[1] = logical_encoder_counts(1);
+    // docs/01 §4 step 2: feed L+3 after a lead strip (the tip is 3 mm behind the
+    // plane after the lead retract), or L when no lead strip is configured.
+    feed_target_um_ = job_.length_um + (job_.strip_lead_um > 0 ? strip_clear_um : 0);
+    if (!start_feed_move_um(ctrl::axis::feed_left, feed_target_um_, ctrl::axis::feed_speed_mm_s,
+                            ctrl::axis::feed_accel_mm_s2, fault::encoder_stalled)) enter_fault(fault::internal);
+    if (!start_feed_move_um(ctrl::axis::feed_right, feed_target_um_, ctrl::axis::feed_speed_mm_s,
+                            ctrl::axis::feed_accel_mm_s2)) enter_fault(fault::internal);
+    stock_tip_um_ += feed_target_um_;
+    set_phase(Phase::Feed);
+}
+
 bool Controller::begin_jog_move() {
     const bool blade = jog_axis_ == ctrl::axis::blade_front || jog_axis_ == ctrl::axis::blade_rear;
     if (blade) {
-        const std::int32_t target = blade_travel_um(jog_axis_) + (jog_forward_ ? jog_distance_um_ : -jog_distance_um_);
+        // F33: widened checked arithmetic before any range decision.
+        const std::int64_t current = blade_travel_um(jog_axis_);
+        const std::int64_t delta = jog_forward_ ? static_cast<std::int64_t>(jog_distance_um_) : -static_cast<std::int64_t>(jog_distance_um_);
+        const std::int64_t target = current + delta;
+        if (target < 0 || target > static_cast<std::int64_t>(ctrl::axis::blade_limit_mm * 1000.0)) {
+            enter_fault(fault::blade_limit);
+            return false;
+        }
         const double speed = std::min(jog_speed_um_s_ / 1000.0, ctrl::axis::blade_speed_mm_s);
         return start_move(jog_axis_, um_to_blade_steps(target) - axis_[jog_axis_].position_steps,
                           speed * ctrl::axis::blade_steps_per_mm,
@@ -456,7 +622,6 @@ bool Controller::begin_jog_move() {
 void Controller::run_cycle() {
     using namespace ctrl;
     const Axis L = axis::feed_left, R = axis::feed_right;
-    const bool strips = job_.strip_lead_um != 0 || job_.strip_tail_um != 0;
     service_axes();
     if (state_ != State::Running) return;
 
@@ -466,130 +631,249 @@ void Controller::run_cycle() {
             if (blade_travel_um(axis::blade_front) != 0 || blade_travel_um(axis::blade_rear) != 0) {
                 start_blade_moves_um(0, axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
                 set_phase(Phase::Open);
-            } else set_phase(Phase::PieceDone); // PieceDone launches the next Feed
+            } else launch_pass();
         }
+        break;
+    case Phase::Open: // blades finished opening before the first pass
+        if (!any_moving()) launch_pass();
         break;
     case Phase::Feed:
         if (!any_moving()) {
-            if (priming_) { set_phase(Phase::Cut); start_blade_moves_um(static_cast<std::int32_t>(axis::blade_cut_mm * 1000), axis::blade_speed_mm_s, axis::blade_accel_mm_s2); }
-            else set_phase(Phase::FeedVerify);
+            if (priming_) { // the prime feed is a threading move, not an accepted piece
+                start_blade_moves_um(blade_sever_travel_um, axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
+                set_phase(Phase::Cut);
+            } else {
+                set_phase(Phase::FeedVerify);
+            }
         }
         break;
     case Phase::FeedVerify: {
+        if (!board_.encoder_healthy(0) || !board_.encoder_healthy(1)) { enter_fault(fault::encoder_invalid); return; }
         const std::int32_t residual[2] = {
-            feed_target_um_ - measured_um(0, board_.encoder_count(0) - feed_encoder_start_[0]),
-            feed_target_um_ - measured_um(1, board_.encoder_count(1) - feed_encoder_start_[1]),
+            feed_target_um_ - measured_um(0, logical_encoder_counts(0) - feed_encoder_start_[0]),
+            feed_target_um_ - measured_um(1, logical_encoder_counts(1) - feed_encoder_start_[1]),
         };
         counters_.last_residual_um = residual[0];
         for (std::int32_t r : residual)
             if (std::abs(r) > std::abs(counters_.worst_residual_um)) counters_.worst_residual_um = r;
+        // Correction deadband and the wheel-disagreement guard allow for two
+        // independent count quantisations plus one accumulated fraction.
         const std::int32_t deadband = static_cast<std::int32_t>(2.0 * enc::nominal_um_per_count);
+        const std::int32_t disagreement_um = static_cast<std::int32_t>(std::ceil(3.0 * enc::nominal_um_per_count));
         if (std::abs(residual[0]) > enc::max_slip_um || std::abs(residual[1]) > enc::max_slip_um ||
-            std::abs(residual[0] - residual[1]) > deadband) {
-            enter_fault(fault::length_slip);
+            std::abs(residual[0] - residual[1]) > disagreement_um) {
+            enter_fault(fault::length_slip); // gross motion threshold
             return;
         }
         const std::int32_t correction = static_cast<std::int32_t>(
             std::llround((static_cast<double>(residual[0]) + residual[1]) / 2.0));
         if (!correction_done_ && std::abs(correction) > deadband) {
             correction_done_ = true;
-            start_feed_move_um(L, correction, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
-            start_feed_move_um(R, correction, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+            // One bounded correction move; gross-verified here so that the
+            // recheck below still applies the recipe acceptance budget.
+            start_tracked_feed(L, correction, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+            start_tracked_feed(R, correction, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+            stock_tip_um_ += correction;
             set_phase(Phase::FeedCorrect);
         } else {
-            start_blade_moves_um(static_cast<std::int32_t>(axis::blade_cut_mm * 1000), axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
+            // Acceptance budget (docs/01 §2): 0.20 mm + 0.05 % of the target.
+            // A piece outside it is quarantined by the fault and never counted.
+            const std::int32_t budget = length_budget_um(feed_target_um_);
+            if (std::abs(residual[0]) > budget || std::abs(residual[1]) > budget) {
+                enter_fault(fault::length_budget);
+                return;
+            }
+            start_blade_moves_um(blade_sever_travel_um, axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
             set_phase(Phase::Cut);
         }
         break;
     }
     case Phase::FeedCorrect:
-        if (!any_moving()) set_phase(Phase::FeedVerify);
+        if (!any_moving()) {
+            if (!verify_tracked_feed(0, true) || !verify_tracked_feed(1, true)) return;
+            set_phase(Phase::FeedVerify);
+        }
         break;
     case Phase::Cut:
         if (!any_moving()) {
+            // Severed: the piece tail and the stock tip both sit on the cut plane.
+            piece_present_ = true;
+            piece_tail_um_ = 0;
+            piece_len_um_ = priming_ ? spec::stock_clear_um : job_.length_um;
+            stock_tip_um_ = 0;
+            if (!wire_state_valid()) { enter_fault(fault::wire_geometry); return; }
             start_blade_moves_um(0, axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
             set_phase(Phase::OpenAfterCut);
         }
         break;
     case Phase::OpenAfterCut:
         if (!any_moving()) {
-            if (!strips) { set_phase(Phase::Eject); if (!priming_) start_feed_move_um(R, job::ejection_um, axis::feed_speed_mm_s, axis::feed_accel_mm_s2); }
-            else {
-                if (job_.strip_lead_um) start_feed_move_um(L, job_.strip_lead_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
-                if (job_.strip_tail_um && !priming_) start_feed_move_um(R, -job_.strip_tail_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
-                set_phase(Phase::StripPosition);
+            if (priming_ || job_.strip_tail_um == 0) {
+                start_tracked_feed(R, job::ejection_um, axis::feed_speed_mm_s, axis::feed_accel_mm_s2);
+                set_phase(Phase::Eject);
+            } else {
+                // docs/01 §4 step 4: withdraw stock s2+10 and backfeed the piece
+                // s2, opening a 10 mm separation before the tail score.
+                const std::int32_t withdraw = job_.strip_tail_um + wire::separation_um;
+                start_tracked_feed(L, -withdraw, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+                start_tracked_feed(R, -job_.strip_tail_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+                stock_tip_um_ -= withdraw;
+                piece_tail_um_ -= job_.strip_tail_um;
+                stock_restore_um_ = withdraw;
+                if (!wire_state_valid()) { enter_fault(fault::wire_geometry); return; }
+                set_phase(Phase::TailWithdraw);
             }
         }
         break;
-    case Phase::StripPosition:
+    case Phase::TailWithdraw:
         if (!any_moving()) {
+            if (!verify_tracked_feed(0, false) || !verify_tracked_feed(1, false)) return;
+            // Reject scoring the wrong end (piece must be at the plane), any
+            // loss of retained grip and any stock/piece overlap (docs/01 §4).
+            if (!wire_state_valid() ||
+                !wire::tail_score_valid(stock_tip_um_, piece_tail_um_, piece_len_um_,
+                                        job_.strip_lead_um, job_.strip_tail_um, piece_present_)) {
+                enter_fault(fault::wire_geometry);
+                return;
+            }
             start_blade_moves_um(strip_travel_um(), axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
-            set_phase(Phase::StripClose);
+            set_phase(Phase::TailScore);
         }
         break;
-    case Phase::StripClose:
+    case Phase::TailScore:
         if (!any_moving()) {
-            if (job_.strip_lead_um) start_feed_move_um(L, -job_.strip_lead_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
-            if (job_.strip_tail_um && !priming_) start_feed_move_um(R, job_.strip_tail_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
-            set_phase(Phase::StripPull);
+            start_tracked_feed(R, job_.strip_tail_um + strip_clear_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+            piece_tail_um_ += job_.strip_tail_um + strip_clear_um;
+            set_phase(Phase::TailPull);
         }
         break;
-    case Phase::StripPull:
+    case Phase::TailPull:
         if (!any_moving()) {
+            if (!verify_tracked_feed(1, false)) return;
             start_blade_moves_um(0, axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
-            set_phase(Phase::Open);
+            set_phase(Phase::TailOpen);
         }
         break;
-    case Phase::Open:
+    case Phase::TailOpen:
         if (!any_moving()) {
-            if (priming_) set_phase(Phase::PieceDone);
-            else { start_feed_move_um(R, job::ejection_um, axis::feed_speed_mm_s, axis::feed_accel_mm_s2); set_phase(Phase::Eject); }
+            start_tracked_feed(R, job::ejection_um, axis::feed_speed_mm_s, axis::feed_accel_mm_s2);
+            set_phase(Phase::Eject);
         }
         break;
     case Phase::Eject:
-        if (!any_moving()) set_phase(Phase::PieceDone);
+        if (!any_moving()) {
+            if (!verify_tracked_feed(1, true)) return; // the part intentionally leaves the nip
+            piece_present_ = false;
+            set_phase(Phase::PieceDone);
+        }
         break;
     case Phase::PieceDone:
-        if (cycle_started_) {
-            if (priming_) priming_ = false;
-            else {
-                ++counters_.pieces_done;
-                ++settings_.pieces_total;
-                if (counters_.pieces_done >= job_.quantity) {
-                    settings_.crc = settings_crc(settings_);
-                    if (!board_.store_settings(&settings_, sizeof settings_)) {
-                        // A completed batch must not silently lose its lifetime-count
-                        // record. Do not classify the already completed part as scrap.
-                        set_state(State::Ready);
-                        enter_fault(fault::internal);
-                        return;
-                    }
-                    beep_until_us_ = now_us_ + ms_to_us(500);
-                    set_phase(Phase::Idle);
-                    set_state(State::Ready);
-                    break;
-                }
-            }
-        }
-        cycle_started_ = true;
-        // Next piece (or the prime feed).
-        correction_done_ = false;
-        feed_encoder_start_[0] = board_.encoder_count(0);
-        feed_encoder_start_[1] = board_.encoder_count(1);
-        if (priming_) {
-            feed_target_um_ = spec::stock_clear_um;
-            start_feed_move_um(L, feed_target_um_, axis::feed_speed_mm_s, axis::feed_accel_mm_s2, fault::no_wire);
-            start_feed_move_um(R, feed_target_um_, axis::feed_speed_mm_s, axis::feed_accel_mm_s2);
+        // PieceDone counts the physical completion; accepted-pieces is a
+        // separate count that requires the discharge clearance when enabled.
+        piece_done_prime_ = priming_;
+        if (!priming_) ++counters_.pieces_done;
+        if (part_clear_check_enabled()) {
+            part_present_seen_ = false;
+            part_clear_confirmed_ = false;
+            clear_started_us_ = now_us_;
+            set_phase(Phase::AwaitClear);
         } else {
-            feed_target_um_ = job_.length_um;
-            start_feed_move_um(L, feed_target_um_, axis::feed_speed_mm_s, axis::feed_accel_mm_s2, fault::encoder_stalled);
-            start_feed_move_um(R, feed_target_um_, axis::feed_speed_mm_s, axis::feed_accel_mm_s2);
+            part_clear_confirmed_ = true;
+            finalize_piece();
         }
-        set_phase(Phase::Feed);
+        break;
+    case Phase::AwaitClear: {
+        const bool clear = part_clear_.stable && part_clear_.level;
+        if (!clear) part_present_seen_ = true; // prior present state
+        if (part_present_seen_ && clear) {
+            part_clear_confirmed_ = true;
+            finalize_piece();
+        } else if (phase_timed_out(part_clear_timeout_ms)) {
+            enter_fault(fault::part_not_cleared); // quarantined: no accepted count
+        }
+        break;
+    }
+    case Phase::RestoreStock:
+        if (!any_moving()) {
+            if (!verify_tracked_feed(0, false)) return;
+            complete_or_launch();
+        }
+        break;
+    case Phase::LeadAdvance:
+        if (!any_moving()) {
+            if (!verify_tracked_feed(0, false)) return;
+            // Reject scoring the wrong end: the stock tip must sit s1 past the
+            // plane and no severed piece may occupy it.
+            if (!wire::lead_score_valid(stock_tip_um_, job_.strip_lead_um, piece_present_)) {
+                enter_fault(fault::wire_geometry);
+                return;
+            }
+            start_blade_moves_um(strip_travel_um(), axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
+            set_phase(Phase::LeadScore);
+        }
+        break;
+    case Phase::LeadScore:
+        if (!any_moving()) {
+            // While the blades retain the slug, retract the stock s1+3; the bare
+            // tip ends 3 mm behind the plane (docs/01 §4 step 1).
+            const std::int32_t retract = job_.strip_lead_um + strip_clear_um;
+            start_tracked_feed(L, -retract, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+            stock_tip_um_ -= retract;
+            set_phase(Phase::LeadRetract);
+        }
+        break;
+    case Phase::LeadRetract:
+        if (!any_moving()) {
+            if (!verify_tracked_feed(0, false)) return;
+            if (!wire_state_valid()) { enter_fault(fault::wire_geometry); return; }
+            start_blade_moves_um(0, axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
+            set_phase(Phase::LeadOpen);
+        }
+        break;
+    case Phase::LeadOpen: // open/clear slug, then the length feed
+        if (!any_moving()) start_length_feed();
         break;
     default:
         enter_fault(fault::internal);
     }
+}
+
+void Controller::finalize_piece() {
+    if (piece_done_prime_) {
+        priming_ = false;
+    } else {
+        // Only here does a completed piece become an accepted piece.
+        ++counters_.pieces_accepted;
+    }
+    if (stock_restore_um_ != 0) {
+        // The stock may only be restored after the takeaway confirmed clearance.
+        if (!wire::restore_allowed(part_clear_check_enabled(), part_clear_confirmed_)) { enter_fault(fault::wire_geometry); return; }
+        const std::int32_t restore = stock_restore_um_;
+        stock_restore_um_ = 0;
+        start_tracked_feed(ctrl::axis::feed_left, restore, ctrl::axis::strip_speed_mm_s, ctrl::axis::strip_accel_mm_s2);
+        stock_tip_um_ += restore;
+        set_phase(Phase::RestoreStock);
+        return;
+    }
+    complete_or_launch();
+}
+
+void Controller::complete_or_launch() {
+    if (!priming_ && counters_.pieces_done >= job_.quantity) {
+        settings_.crc = settings_crc(settings_);
+        if (!board_.store_settings(&settings_, sizeof settings_)) {
+            // A completed batch must not silently lose its lifetime-count
+            // record. Do not classify the already completed part as scrap.
+            set_state(State::Ready);
+            enter_fault(fault::internal);
+            return;
+        }
+        beep_until_us_ = now_us_ + ms_to_us(500);
+        set_phase(Phase::Idle);
+        set_state(State::Ready);
+        return;
+    }
+    launch_pass(); // next piece (or the prime feed)
 }
 
 // ----------------------------------------------------------------- commands
@@ -600,6 +884,9 @@ CommandResult Controller::load_job(const Job& job) {
     Settings updated = settings_;
     updated.stored_job = job;
     updated.stored_job_valid = Settings::stored_job_marker;
+    // A new recipe invalidates any previous commissioning approval.
+    updated.approval = 0;
+    updated.approval_key = 0;
     updated.crc = settings_crc(updated);
     if (!board_.store_settings(&updated, sizeof updated)) return CommandResult::StorageError;
     settings_ = updated;
@@ -614,6 +901,8 @@ CommandResult Controller::clear_job() {
     Settings updated = settings_;
     updated.stored_job = Job{};
     updated.stored_job_valid = 0;
+    updated.approval = 0;
+    updated.approval_key = 0;
     updated.crc = settings_crc(updated);
     if (!board_.store_settings(&updated, sizeof updated)) return CommandResult::StorageError;
     settings_ = updated;
@@ -630,9 +919,12 @@ CommandResult Controller::start() {
     case State::Unhomed: begin_homing(); return CommandResult::Accepted;
     case State::Ready:
         if (!job_loaded_) { beep_until_us_ = now_us_ + ms_to_us(150); return CommandResult::NoJob; }
+        if (!approved()) return CommandResult::NotApproved;
         begin_job_run(); return CommandResult::Accepted;
     case State::Paused:
         if (!homed_) return CommandResult::NotHomed;
+        if (!job_loaded_) return CommandResult::NoJob;
+        if (!approved()) return CommandResult::NotApproved;
         begin_job_run(); return CommandResult::Accepted; // re-primes; partial piece already counted as scrap
     default: return CommandResult::Busy;
     }
@@ -678,12 +970,15 @@ CommandResult Controller::jog(Axis a, bool forward, std::int32_t distance_um, st
     if (state_ == State::Fault) return CommandResult::Faulted;
     if (state_ != State::Unhomed && state_ != State::Ready) return CommandResult::Busy;
     if (!inputs_healthy()) return CommandResult::WrongState;
-    if (a >= ctrl::axis::count || distance_um <= 0 || speed_um_s <= 0) return CommandResult::InvalidArgument;
+    if (static_cast<std::uint8_t>(a) >= ctrl::axis::count || distance_um <= 0 || speed_um_s <= 0) return CommandResult::InvalidArgument;
     const bool blade = a == ctrl::axis::blade_front || a == ctrl::axis::blade_rear;
     if (blade) {
         if (!homed_) return CommandResult::NotHomed;
-        const std::int32_t target = blade_travel_um(a) + (forward ? distance_um : -distance_um);
-        if (target < 0 || target > static_cast<std::int32_t>(ctrl::axis::blade_limit_mm * 1000.0)) return CommandResult::InvalidArgument;
+        // F33: widened checked arithmetic before the range decision; no signed
+        // overflow for any distance/position combination.
+        const std::int64_t target = static_cast<std::int64_t>(blade_travel_um(a)) +
+                                    (forward ? static_cast<std::int64_t>(distance_um) : -static_cast<std::int64_t>(distance_um));
+        if (target < 0 || target > static_cast<std::int64_t>(ctrl::axis::blade_limit_mm * 1000.0)) return CommandResult::InvalidArgument;
     } else {
         if (distance_um > 1000000) return CommandResult::InvalidArgument;
     }
@@ -691,10 +986,106 @@ CommandResult Controller::jog(Axis a, bool forward, std::int32_t distance_um, st
     jog_forward_ = forward;
     jog_distance_um_ = distance_um;
     jog_speed_um_s_ = speed_um_s;
+    commissioning_ = false;
     out_.drives_disabled = false;
     drives_enabled_at_us_ = now_us_;
     set_state(State::Jogging);
     set_phase(Phase::EnableSettle);
+    return CommandResult::Accepted;
+}
+
+CommandResult Controller::commission_axis(Axis a, bool logical_forward) {
+    if (static_cast<std::uint8_t>(a) >= ctrl::axis::count) return CommandResult::InvalidArgument;
+    if (state_ == State::Fault) return CommandResult::Faulted;
+    if (state_ != State::Unhomed && state_ != State::Ready) return CommandResult::Busy;
+    if (!inputs_healthy()) return CommandResult::WrongState;
+    const bool blade = a == ctrl::axis::blade_front || a == ctrl::axis::blade_rear;
+    if (blade) {
+        if (!homed_) return CommandResult::NotHomed;
+        if (!logical_forward) return CommandResult::InvalidArgument; // validate by leaving the open-end sensor
+        const std::int64_t current = blade_travel_um(a);
+        if (current + commission_blade_move_um > static_cast<std::int64_t>(ctrl::axis::blade_limit_mm * 1000.0))
+            return CommandResult::InvalidArgument;
+        const bool sensor = a == ctrl::axis::blade_front ? in_.home_front : in_.home_rear;
+        if (!sensor) return CommandResult::InvalidArgument; // missing feedback: not on the open-end sensor
+        commission_sensor_start_ = true;
+        commission_encoder_start_ = 0;
+    } else {
+        const std::uint8_t side = a == ctrl::axis::feed_right ? 1 : 0;
+        if (!board_.encoder_healthy(side)) return CommandResult::WrongState;
+        commission_encoder_start_ = board_.encoder_count(side);
+        commission_sensor_start_ = false;
+    }
+    commission_axis_ = a;
+    commission_forward_ = logical_forward;
+    commission_result_ = CommandResult::Unsupported; // pending until the move completes
+    commissioning_ = true;
+    jog_axis_ = a;
+    jog_forward_ = logical_forward;
+    jog_distance_um_ = static_cast<std::int32_t>(blade ? commission_blade_move_um : commission_feed_move_um);
+    jog_speed_um_s_ = static_cast<std::int32_t>(ctrl::axis::strip_speed_mm_s * 1000.0);
+    out_.drives_disabled = false;
+    drives_enabled_at_us_ = now_us_;
+    set_state(State::Jogging);
+    set_phase(Phase::EnableSettle);
+    return CommandResult::Accepted;
+}
+
+void Controller::finish_commissioning() {
+    const bool blade = commission_axis_ == ctrl::axis::blade_front || commission_axis_ == ctrl::axis::blade_rear;
+    Settings updated = settings_;
+    CommandResult result = CommandResult::Accepted;
+    if (blade) {
+        const bool sensor_now = commission_axis_ == ctrl::axis::blade_front ? in_.home_front : in_.home_rear;
+        if (!commission_sensor_start_) {
+            result = CommandResult::InvalidArgument; // missing feedback
+        } else if (sensor_now) {
+            // Still on the sensor after moving toward the cut: the axis ran the
+            // wrong way, so store the inverted validated polarity.
+            updated.axis_sign[commission_axis_] = static_cast<std::int8_t>(-updated.axis_sign[commission_axis_]);
+        }
+        homed_ = false; // the commissioning move left the home reference
+    } else {
+        const std::uint8_t side = commission_axis_ == ctrl::axis::feed_right ? 1 : 0;
+        const std::int64_t raw_delta = board_.encoder_count(side) - commission_encoder_start_;
+        const std::int64_t logical_delta = updated.wheel_sign[side] < 0 ? -raw_delta : raw_delta;
+        const std::int64_t magnitude = logical_delta < 0 ? -logical_delta : logical_delta;
+        if (magnitude < commission_min_counts) {
+            result = CommandResult::InvalidArgument; // missing feedback: nothing measurable moved
+        } else if ((logical_delta > 0) != commission_forward_) {
+            updated.axis_sign[commission_axis_] = static_cast<std::int8_t>(-updated.axis_sign[commission_axis_]);
+        }
+    }
+    if (result == CommandResult::Accepted) {
+        updated.crc = settings_crc(updated);
+        if (board_.store_settings(&updated, sizeof updated)) settings_ = updated;
+        else result = CommandResult::StorageError;
+    }
+    commission_result_ = result;
+    commissioning_ = false;
+    set_phase(Phase::Idle);
+    set_state(homed_ ? State::Ready : State::Unhomed);
+}
+
+CommandResult Controller::set_axis_sign(Axis a, std::int8_t sign) {
+    if (static_cast<std::uint8_t>(a) >= ctrl::axis::count || (sign != 1 && sign != -1)) return CommandResult::InvalidArgument;
+    if (state_ == State::Running || state_ == State::Stopping || state_ == State::Homing || state_ == State::Jogging) return CommandResult::Busy;
+    Settings updated = settings_;
+    updated.axis_sign[a] = sign;
+    updated.crc = settings_crc(updated);
+    if (!board_.store_settings(&updated, sizeof updated)) return CommandResult::StorageError;
+    settings_ = updated;
+    return CommandResult::Accepted;
+}
+
+CommandResult Controller::set_wheel_sign(std::uint8_t side, std::int8_t sign) {
+    if (side > 1 || (sign != 1 && sign != -1)) return CommandResult::InvalidArgument;
+    if (state_ == State::Running || state_ == State::Stopping || state_ == State::Homing || state_ == State::Jogging) return CommandResult::Busy;
+    Settings updated = settings_;
+    updated.wheel_sign[side] = sign;
+    updated.crc = settings_crc(updated);
+    if (!board_.store_settings(&updated, sizeof updated)) return CommandResult::StorageError;
+    settings_ = updated;
     return CommandResult::Accepted;
 }
 
@@ -706,6 +1097,37 @@ CommandResult Controller::set_calibration(std::int32_t left_counts_per_metre, st
     Settings updated = settings_;
     updated.counts_per_metre[0] = left_counts_per_metre;
     updated.counts_per_metre[1] = right_counts_per_metre;
+    // Calibration is part of the approval identity: invalidate the old record.
+    updated.approval = 0;
+    updated.approval_key = 0;
+    updated.crc = settings_crc(updated);
+    if (!board_.store_settings(&updated, sizeof updated)) return CommandResult::StorageError;
+    settings_ = updated;
+    return CommandResult::Accepted;
+}
+
+CommandResult Controller::approve() {
+    if (state_ == State::Fault) return CommandResult::Faulted;
+    if (state_ == State::Running || state_ == State::Stopping || state_ == State::Homing || state_ == State::Jogging) return CommandResult::Busy;
+    if (!inputs_healthy()) return CommandResult::WrongState;
+    if (!job_loaded_ || validate(job_) != JobError::None) return CommandResult::NoJob;
+    Settings updated = settings_;
+    updated.stored_job = job_;
+    updated.stored_job_valid = Settings::stored_job_marker;
+    updated.approval_key = commissioning_identity(updated);
+    updated.approval = Settings::approval_marker;
+    updated.crc = settings_crc(updated);
+    if (!board_.store_settings(&updated, sizeof updated)) return CommandResult::StorageError;
+    settings_ = updated;
+    return CommandResult::Accepted;
+}
+
+CommandResult Controller::set_part_clear_check(bool enabled) {
+    if (state_ == State::Running || state_ == State::Stopping || state_ == State::Homing || state_ == State::Jogging) return CommandResult::Busy;
+    Settings updated = settings_;
+    updated.part_clear_check = enabled ? 1 : 0;
+    updated.approval = 0; // a production-setting change requires re-approval
+    updated.approval_key = 0;
     updated.crc = settings_crc(updated);
     if (!board_.store_settings(&updated, sizeof updated)) return CommandResult::StorageError;
     settings_ = updated;
@@ -716,13 +1138,16 @@ Telemetry Controller::telemetry() const {
     Telemetry t{};
     t.state = state_; t.phase = phase_; t.faults = faults_;
     t.inputs = in_; t.outputs = out_;
-    t.job_loaded = job_loaded_; t.job = job_; t.counters = counters_;
+    t.job_loaded = job_loaded_; t.approved = approved(); t.job = job_; t.counters = counters_;
     t.blade_um[0] = blade_travel_um(ctrl::axis::blade_front);
     t.blade_um[1] = blade_travel_um(ctrl::axis::blade_rear);
     t.feed_um[0] = feed_steps_to_um(axis_[ctrl::axis::feed_left].position_steps);
     t.feed_um[1] = feed_steps_to_um(axis_[ctrl::axis::feed_right].position_steps);
-    t.encoder_counts[0] = board_.encoder_count(0);
-    t.encoder_counts[1] = board_.encoder_count(1);
+    t.encoder_counts[0] = logical_encoder_counts(0);
+    t.encoder_counts[1] = logical_encoder_counts(1);
+    t.stock_tip_um = stock_tip_um_;
+    t.piece_tail_um = piece_tail_um_;
+    t.piece_present = piece_present_;
     t.settings = settings_;
     t.uptime_us = now_us_;
     return t;

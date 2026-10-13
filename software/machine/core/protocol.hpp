@@ -1,9 +1,9 @@
 #pragma once
-// STARZ machine host link, revision 5 (screenless machine; the host is an
+// STARZ machine host link, revision 6 (screenless machine; the host is an
 // optional remote panel over USB-CDC and is never required for motion).
 // Frame: A5 5A | msg:u8 | seq:u8 | len:u8 | payload[len] | crc16 (CCITT-FALSE
 // over msg..payload, big-endian on the wire). Multi-byte payload fields are
-// little-endian. The largest frame is the 100-byte STATUS payload.
+// little-endian. The largest frame is the STATUS payload.
 #include <cstddef>
 #include <cstdint>
 #include "types.hpp"
@@ -12,16 +12,16 @@
 namespace starz::fw::proto {
 
 inline constexpr std::uint8_t sync0 = 0xA5, sync1 = 0x5A;
-inline constexpr std::size_t max_payload = 100;
+inline constexpr std::size_t max_payload = 112;
 inline constexpr std::size_t max_frame = 5 + max_payload + 2;
-inline constexpr std::uint8_t protocol_version = 5;
+inline constexpr std::uint8_t protocol_version = 6;
 static_assert(sizeof(ctrl::revision) + 1u <= max_payload); // version byte plus NUL-terminated revision
 
 enum class Msg : std::uint8_t {
     Hello = 0x01, HelloAck = 0x81,
     GetStatus = 0x02, Status = 0x82,
     LoadJob = 0x10, ClearJob = 0x11, Start = 0x12, Stop = 0x13, Reset = 0x14, Home = 0x15,
-    Jog = 0x16, SetCalibration = 0x17,
+    Jog = 0x16, SetCalibration = 0x17, Approve = 0x18, CommissionAxis = 0x19, SetPartClear = 0x1A,
     Ack = 0x90, Nack = 0x91,
 };
 
@@ -29,17 +29,21 @@ enum class Msg : std::uint8_t {
 // strip_depth_um i32, wire_diameter_um i32, quantity u32.
 // Jog payload (10 bytes): axis u8, forward u8, distance_um i32, speed_um_s i32.
 // SetCalibration payload (8 bytes): left i32, right i32.
+// CommissionAxis payload (2 bytes): axis u8, logical_forward u8.
+// SetPartClear payload (1 byte): enable u8 (0/1).
 // Ack payload (1 byte): CommandResult of the request. Nack payload (1 byte): CommandResult.
 // HelloAck payload: version u8, revision string (NUL-terminated, <= 40).
-// Status payload (100 bytes), all little-endian:
-//   state u8, phase u8, faults u16, inputs u16 (bit0 start, 1 stop_ok, 2 reset,
-//   3 safety_ok, 4 home_front, 5 home_rear, 8..11 alm[0..3]), outputs u8
-//   (bit0 green, 1 red, 2 buzzer, 3 drives_disabled), job_loaded u8,
-//   pieces_done u32, pieces_scrap u32, last_residual_um i32, worst_residual_um i32,
-//   blade_um[2] i32, feed_um[2] i64, encoder_counts[2] i64, counts_per_metre[2] i32,
+// Status payload (106 bytes), all little-endian:
+//   state u8, phase u8, faults u32, inputs u16 (bit0 start, 1 stop_ok, 2 reset,
+//   3 safety_ok, 4 home_front, 5 home_rear, 8..11 alm[0..3], 12 part_clear),
+//   outputs u8 (bit0 green, 1 red, 2 buzzer, 3 drives_disabled, 4 approved),
+//   job_loaded u8, pieces_done u32, pieces_accepted u32, pieces_scrap u32,
+//   last_residual_um i32, worst_residual_um i32, blade_um[2] i32,
+//   feed_um[2] i64, encoder_counts[2] i64, counts_per_metre[2] i32,
 //   uptime_ms u32, job: length_um i32, strip_lead_um i32, strip_tail_um i32,
 //   strip_depth_um i32, wire_diameter_um i32, quantity u32.
-inline constexpr std::size_t load_job_len = 24, jog_len = 10, calibration_len = 8, status_len = 100;
+inline constexpr std::size_t load_job_len = 24, jog_len = 10, calibration_len = 8,
+                             commission_len = 2, set_part_clear_len = 1, status_len = 106;
 static_assert(status_len <= max_payload);
 
 struct Frame {

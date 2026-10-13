@@ -105,6 +105,7 @@ def check_custom_parts() -> None:
                 "P005": DRAWINGS / "P004-P007-R2-payoff-plates.pdf",
                 "P006": DRAWINGS / "P004-P007-R2-payoff-plates.pdf",
                 "P007": DRAWINGS / "P004-P007-R2-payoff-plates.pdf",
+                "P008": DRAWINGS / "P004-P007-R2-payoff-plates.pdf",
                 "G101": DRAWINGS / "G101-G106-R2-guard-panels.pdf",
                 "G102": DRAWINGS / "G101-G106-R2-guard-panels.pdf",
                 "G103": DRAWINGS / "G101-G106-R2-guard-panels.pdf",
@@ -140,13 +141,9 @@ def check_purchased_cad_coverage() -> None:
     # CAD quantity vs selected BOM quantity for the covered catalogue rows.
     # The mechanism CAD models ONE representative measuring module of the TWO
     # designed (docs/13): those rows carry a x2 design-intent multiplier.
-    module_scale = {
-        "E60137": 2,
-        "RU3100": 2,
-        "SKF 626-2Z": 2,
-        "Supplied6/6 flexible coupling": 2,
-        "SWU10.5-35": 2,
-    }
+    # Both measuring modules are now modeled in the CAD, so the design-intent
+    # x2 multiplier is retired (audit F06/F34): CAD quantity = BOM quantity.
+    module_scale: dict[str, int] = {}
     for token, (_, bom_id) in PURCHASED_COVERAGE.items():
         bom_qty = int(float(selected_rows[bom_id]["quantity"]))
         expected = cad_qty.get(token, 0) * module_scale.get(token, 1)

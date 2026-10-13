@@ -1,5 +1,8 @@
 # Measuring interfaces and calibration — R2
 
+*Correction 2026-10-13 (audit F21): §3 tension allocation is conditional on
+|ΔT| ≤ 8.25 N — a 44 N tension is ≈0.8 mm/m on 0.5 mm² Cu (docs/42 §1.4).*
+
 ## 1. Selected parts and actual drawing dimensions
 
 One module upstream and one downstream. Each retains **ifm E60137** (measuring
@@ -87,7 +90,7 @@ This completes the **face-plate geometry**, not the measuring shaft/pressure mec
 
 - Nominal x4 resolution:200/8192 = **0.0244140625 mm/count** (was0.048828125 at the 1024 PPR factory setting). Resolution is not length accuracy.
 - At500 mm/s and the assumed minimum199.8 mm circumference (0.1% proportional; ifm publishes none): approximately150.1502 rpm,5125.1251 A/B cycles/s and20500.5005 quadrature edges/s. The encoder's1000 kHz limit is an A/B pulse-frequency rating, not the MCU input limit.
-- Factory scale alone can produce **1.0 mm error per commanded metre** (assumed ±0.2 mm on200 mm), exceeding the whole±0.70 mm target. Adding the previous0.2 runout,0.025 quantisation,0.15 tension and0.25 slip allocations gives **1.625 mm**, not1.15. Those other terms are allocations, not measured physical bounds.
+- Factory scale alone can produce **1.0 mm error per commanded metre** (assumed ±0.2 mm on200 mm), exceeding the whole±0.70 mm target. Adding the previous0.2 runout,0.025 quantisation,0.15 tension and0.25 slip allocations gives **1.625 mm**, not1.15. Those other terms are allocations, not measured physical bounds. The tension allocation is additionally **conditional on |ΔT| ≤ 8.25 N**: the corrected payoff/feed analysis gives a 44 N worst-case tension whose elastic extension alone is ≈0.8 mm/m on 0.5 mm² Cu (E = 110 GPa, 0.0182 mm/N·m) — see [docs/42 §1.4](42-process-dynamics-r2.md); the requirement stays ±(0.20 mm + 0.05 %) until tension control and metrology close it.
 - Free-wheel circumference/OD tolerances do not establish loaded rolling radius. Do not add both as independent scale uncertainties or assume rubber thermal expansion equals aluminium expansion.
 - With CN clearance2 µm and10 K inner/outer ring difference, SKF's thermal equation consumes1.5 µm. The remaining **0.5 µm precedes any press-fit loss**. The measurement bearing fits/thermal field remain an explicit design task; the feed rotor's j5/C3 match is not copied onto these CN bearings.
 

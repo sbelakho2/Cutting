@@ -21,11 +21,11 @@ not part of a safety function during this procedure.
 - Current-limited, isolated 24 VDC PELV bench supply for J3-1/J3-2 and a
   regulated 5 VDC fixture supply for J3-3/J3-4. Start at conservative current
   limits suitable for the fixture and stop on unexpected current or heating.
-- DMM and, where available, oscilloscope or logic probe; a compliant
-  differential RS-422 quadrature source or actual low-voltage encoder fixture;
-  insulated shunts; and 24 V-rated high-value test loads. A 10 kΩ test load is
-  suitable for observing the intended low-side output state without attaching
-  a motor driver.
+- DMM and, where available, oscilloscope or logic probe; a compliant single-ended
+  0/5 V TTL quadrature source (or an actual RU3100 encoder parameterised to TTL
+  mode through its IO-Link interface); insulated shunts; and 24 V-rated
+  high-value test loads. A 10 kΩ test load is suitable for observing the
+  intended low-side output state without attaching a motor driver.
 
 Before power is applied, inspect the actual assembly against the draft
 [component list](if-b01-bom.csv), generator-owned [placement schedule](if-b01-placement.csv),
@@ -84,14 +84,25 @@ the isolated bare-board fixture.
    `INPUTS` and record the raw state. One pair at a time, short each listed
    signal to its paired 0 V terminal, confirm `asserted=1 raw=0`, remove the
    shunt and confirm deassertion. Test J10 pairs 1/2 through 11/12 and J11
-   pairs 1/2 through 7/8. Do not inject 24 V into J10/J11.
-4. **Encoder inputs.** Connect one compliant differential A/B source at a
-   time to J8 and J9 using the exact netlist order. Run `ENC RESET`, drive valid
-   quadrature slowly in one direction, then reverse it. Run `ENC` and record
-   count sign/change and `healthy=1` for both sides. Leave the Z/Z-bar
-   conductors individually insulated; they are not IF-B01 inputs. Investigate
-   invalid transitions or a false count with an open connector; do not declare
-   a fail-safe encoder state without a reviewed circuit test.
+   pairs 1/2 through 7/8. Do not inject 24 V into J10/J11. With each shunt
+   installed, measure the voltage across the matching 10 kΩ series resistor
+   (`R18`–`R27`): it must read ≈0.55–0.65 V (network design value 0.579 V). A
+   reading of 0.8–1.2 V means an RP2350 internal pull is still enabled and the
+   firmware images violate the pull-configuration contract; stop and correct
+   the firmware before treating the input as reliable.
+4. **Encoder inputs.** First record the mid-bias: with no encoder source
+   connected, measure 2.4–2.6 V at `TP9`–`TP12` (`L_ENC_A_N`, `L_ENC_B_N`,
+   `R_ENC_A_N`, `R_ENC_B_N`). Then connect one compliant **single-ended 0/5 V
+   TTL** A/B source at a time to J8 and J9 using the exact netlist order: A to
+   the A+ terminal, B to B+, `0V` to the paired return; the A−/B− terminals
+   are the on-board bias nodes and must receive no external wire. Run
+   `ENC RESET`, drive valid quadrature slowly in one direction, then reverse
+   it. Run `ENC` and record count sign/change and `healthy=1` for both sides.
+   Leave the Z/Z-bar conductors individually insulated; they are not IF-B01
+   inputs. Confirm no 120 Ω differential terminator is fitted (R1–R4 are
+   removed). Investigate invalid transitions or a false count with an open
+   connector; do not declare a fail-safe encoder state without a reviewed
+   circuit test.
 5. **Prepare low-side test loads.** Fit a 10 kΩ load from fixture `+24 V` to
    the named negative output only. Do not connect real lamps, buzzers or motor
    drivers. For the shared enable output, fit the same test load to each of
@@ -151,8 +162,8 @@ than trying to energise them.
 | `if-b01-factory-test.uf2` SHA-256 and Pico identity | |
 | USB/J3 power arrangement and 24 V/5 V supply identities | |
 | Unpowered inspection observations | |
-| J10/J11 input results | |
-| J8/J9 encoder results | |
+| J10/J11 input results, including the measured series-resistor drop under shunt | |
+| J8/J9 encoder mid-bias readings at TP9–TP12 and single-ended A/B results | |
 | Outputs 0–11: observed inactive/active/timeout state | |
 | Safety-shunt abort observation | |
 | Deviations, rework, reviewer and disposition | |

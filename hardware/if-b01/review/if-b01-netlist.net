@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "/Users/sabelakhoua/IdeaProjects/Machines/Cutting/hardware/if-b01/if-b01.kicad_sch")
-		(date "2026-09-13T13:28:14")
+		(date "2026-10-13T11:45:11")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -28,11 +28,11 @@
 				)
 				(comment
 					(number "4")
-					(value "")
+					(value "J8/J9 RU3100: single-ended TTL via IO-Link; A-/B- at a 2.5 V mid-bias (10k/10k 1 %, 100 nF); R1-R4 120 ohm terminators removed")
 				)
 				(comment
 					(number "5")
-					(value "")
+					(value "F1-F3: verified 1812 SMD PTCs MF-MSMF050/60X (24 V branch) and MF-MSMF050/16X (5 V encoder branches)")
 				)
 				(comment
 					(number "6")
@@ -887,6 +887,262 @@
 			)
 		)
 		(comp
+			(ref "C14")
+			(value "100nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "100 nF 16 V X7R bias filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C104KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R bias filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C104KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "0e632d44-ace0-5955-92c2-db845b7b73c4")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C15")
+			(value "100nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "100 nF 16 V X7R bias filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C104KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R bias filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C104KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "768b407d-540c-5c74-b81a-91e03e664e94")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C16")
+			(value "100nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "100 nF 16 V X7R bias filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C104KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R bias filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C104KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b9b53628-5b7a-5933-9039-f220eaa10ea3")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C17")
+			(value "100nF 16V")
+			(footprint "IFB01:C_0603_1608")
+			(description "100 nF 16 V X7R bias filter")
+			(fields
+				(field
+					(name "Manufacturer") "Murata")
+				(field
+					(name "MPN") "GRM188R71C104KA01D")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:C_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "100 nF 16 V X7R bias filter")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "C")
+				(description "Two-terminal capacitor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Murata")
+			)
+			(property
+				(name "MPN")
+				(value "GRM188R71C104KA01D")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "0339bd18-ac83-55a9-b9e1-ce2ec66d454d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
 			(ref "D1")
 			(value "BZX384-C3V6")
 			(footprint "IFB01:SOD_323")
@@ -1528,14 +1784,14 @@
 		)
 		(comp
 			(ref "F1")
-			(value "MF-R050")
+			(value "MF-MSMF050/60X")
 			(footprint "IFB01:PTC_1812")
-			(description "0.50 A hold resettable fuse")
+			(description "0.50 A hold 60 V 1812 SMD resettable PTC; +24V_TPL_COM branch; pads per the Bourns recommended layout (1.68 x 2.95 mm, 3.1 mm gap)")
 			(fields
 				(field
 					(name "Manufacturer") "Bourns")
 				(field
-					(name "MPN") "MF-R050")
+					(name "MPN") "MF-MSMF050/60X")
 				(field
 					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
 				(field
@@ -1544,7 +1800,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "0.50 A hold resettable fuse")
+					(name "Description") "0.50 A hold 60 V 1812 SMD resettable PTC; +24V_TPL_COM branch; pads per the Bourns recommended layout (1.68 x 2.95 mm, 3.1 mm gap)")
 			)
 			(libsource
 				(lib "IFB01")
@@ -1557,7 +1813,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "MF-R050")
+				(value "MF-MSMF050/60X")
 			)
 			(property
 				(name "Design status")
@@ -1592,14 +1848,14 @@
 		)
 		(comp
 			(ref "F2")
-			(value "MF-R050")
+			(value "MF-MSMF050/16X")
 			(footprint "IFB01:PTC_1812")
-			(description "0.50 A hold resettable fuse")
+			(description "0.50 A hold 16 V 1812 SMD resettable PTC; one per encoder 5 V branch; pads per the Bourns recommended layout (1.68 x 2.95 mm, 3.1 mm gap)")
 			(fields
 				(field
 					(name "Manufacturer") "Bourns")
 				(field
-					(name "MPN") "MF-R050")
+					(name "MPN") "MF-MSMF050/16X")
 				(field
 					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
 				(field
@@ -1608,7 +1864,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "0.50 A hold resettable fuse")
+					(name "Description") "0.50 A hold 16 V 1812 SMD resettable PTC; one per encoder 5 V branch; pads per the Bourns recommended layout (1.68 x 2.95 mm, 3.1 mm gap)")
 			)
 			(libsource
 				(lib "IFB01")
@@ -1621,7 +1877,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "MF-R050")
+				(value "MF-MSMF050/16X")
 			)
 			(property
 				(name "Design status")
@@ -1656,14 +1912,14 @@
 		)
 		(comp
 			(ref "F3")
-			(value "MF-R050")
+			(value "MF-MSMF050/16X")
 			(footprint "IFB01:PTC_1812")
-			(description "0.50 A hold resettable fuse")
+			(description "0.50 A hold 16 V 1812 SMD resettable PTC; one per encoder 5 V branch; pads per the Bourns recommended layout (1.68 x 2.95 mm, 3.1 mm gap)")
 			(fields
 				(field
 					(name "Manufacturer") "Bourns")
 				(field
-					(name "MPN") "MF-R050")
+					(name "MPN") "MF-MSMF050/16X")
 				(field
 					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
 				(field
@@ -1672,7 +1928,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "0.50 A hold resettable fuse")
+					(name "Description") "0.50 A hold 16 V 1812 SMD resettable PTC; one per encoder 5 V branch; pads per the Bourns recommended layout (1.68 x 2.95 mm, 3.1 mm gap)")
 			)
 			(libsource
 				(lib "IFB01")
@@ -1685,7 +1941,7 @@
 			)
 			(property
 				(name "MPN")
-				(value "MF-R050")
+				(value "MF-MSMF050/16X")
 			)
 			(property
 				(name "Design status")
@@ -1839,7 +2095,7 @@
 		(comp
 			(ref "J2")
 			(value "Pico 2 SC1631 right socket")
-			(footprint "IFB01:PICO_SOCKET_1X20")
+			(footprint "IFB01:PICO_SOCKET_1X20_RIGHT")
 			(description "Pico 2 right socket row")
 			(fields
 				(field
@@ -1849,7 +2105,7 @@
 				(field
 					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
 				(field
-					(name "Footprint") "IFB01:PICO_SOCKET_1X20")
+					(name "Footprint") "IFB01:PICO_SOCKET_1X20_RIGHT")
 				(field
 					(name "Datasheet")
 				)
@@ -1859,7 +2115,7 @@
 			(libsource
 				(lib "IFB01")
 				(part "PICO2_RIGHT_SOCKET")
-				(description "Pico 2 SC1631 physical pins 21-40 socket row")
+				(description "Pico 2 SC1631 physical pins 21-40 right socket row; pin 1 (GP16) is drawn at the row bottom exactly where physical pin 21 sits")
 			)
 			(property
 				(name "Manufacturer")
@@ -1891,64 +2147,64 @@
 					(name "A")
 					(pins
 						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-						(pin
-							(num "3")
-						)
-						(pin
-							(num "4")
-						)
-						(pin
-							(num "5")
-						)
-						(pin
-							(num "6")
-						)
-						(pin
-							(num "7")
-						)
-						(pin
-							(num "8")
-						)
-						(pin
-							(num "9")
-						)
-						(pin
-							(num "10")
-						)
-						(pin
-							(num "11")
-						)
-						(pin
-							(num "12")
-						)
-						(pin
-							(num "13")
-						)
-						(pin
-							(num "14")
-						)
-						(pin
-							(num "15")
-						)
-						(pin
-							(num "16")
-						)
-						(pin
-							(num "17")
-						)
-						(pin
-							(num "18")
+							(num "20")
 						)
 						(pin
 							(num "19")
 						)
 						(pin
-							(num "20")
+							(num "18")
+						)
+						(pin
+							(num "17")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "15")
+						)
+						(pin
+							(num "14")
+						)
+						(pin
+							(num "13")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "11")
+						)
+						(pin
+							(num "10")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "1")
 						)
 					)
 				)
@@ -2927,262 +3183,6 @@
 				(unit
 					(name "A")
 					(pins)
-				)
-			)
-		)
-		(comp
-			(ref "R1")
-			(value "120R")
-			(footprint "IFB01:R_1206_3216")
-			(description "120 ohm 1 percent RS-422 termination")
-			(fields
-				(field
-					(name "Manufacturer") "Yageo")
-				(field
-					(name "MPN") "RC1206FR-07120RL")
-				(field
-					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
-				(field
-					(name "Footprint") "IFB01:R_1206_3216")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "120 ohm 1 percent RS-422 termination")
-			)
-			(libsource
-				(lib "IFB01")
-				(part "R")
-				(description "Two-terminal resistor")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Yageo")
-			)
-			(property
-				(name "MPN")
-				(value "RC1206FR-07120RL")
-			)
-			(property
-				(name "Design status")
-				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
-			)
-			(property
-				(name "Sheetname")
-				(value "Root")
-			)
-			(property
-				(name "Sheetfile")
-				(value "if-b01.kicad_sch")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "b5f578dc-07e1-5732-b580-a316da34490b")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "R2")
-			(value "120R")
-			(footprint "IFB01:R_1206_3216")
-			(description "120 ohm 1 percent RS-422 termination")
-			(fields
-				(field
-					(name "Manufacturer") "Yageo")
-				(field
-					(name "MPN") "RC1206FR-07120RL")
-				(field
-					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
-				(field
-					(name "Footprint") "IFB01:R_1206_3216")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "120 ohm 1 percent RS-422 termination")
-			)
-			(libsource
-				(lib "IFB01")
-				(part "R")
-				(description "Two-terminal resistor")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Yageo")
-			)
-			(property
-				(name "MPN")
-				(value "RC1206FR-07120RL")
-			)
-			(property
-				(name "Design status")
-				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
-			)
-			(property
-				(name "Sheetname")
-				(value "Root")
-			)
-			(property
-				(name "Sheetfile")
-				(value "if-b01.kicad_sch")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "65c51b96-1ba9-5a86-a168-9d15c82370b9")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "R3")
-			(value "120R")
-			(footprint "IFB01:R_1206_3216")
-			(description "120 ohm 1 percent RS-422 termination")
-			(fields
-				(field
-					(name "Manufacturer") "Yageo")
-				(field
-					(name "MPN") "RC1206FR-07120RL")
-				(field
-					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
-				(field
-					(name "Footprint") "IFB01:R_1206_3216")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "120 ohm 1 percent RS-422 termination")
-			)
-			(libsource
-				(lib "IFB01")
-				(part "R")
-				(description "Two-terminal resistor")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Yageo")
-			)
-			(property
-				(name "MPN")
-				(value "RC1206FR-07120RL")
-			)
-			(property
-				(name "Design status")
-				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
-			)
-			(property
-				(name "Sheetname")
-				(value "Root")
-			)
-			(property
-				(name "Sheetfile")
-				(value "if-b01.kicad_sch")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "e258fd69-61e9-5b4b-b068-f01169200290")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "R4")
-			(value "120R")
-			(footprint "IFB01:R_1206_3216")
-			(description "120 ohm 1 percent RS-422 termination")
-			(fields
-				(field
-					(name "Manufacturer") "Yageo")
-				(field
-					(name "MPN") "RC1206FR-07120RL")
-				(field
-					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
-				(field
-					(name "Footprint") "IFB01:R_1206_3216")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "120 ohm 1 percent RS-422 termination")
-			)
-			(libsource
-				(lib "IFB01")
-				(part "R")
-				(description "Two-terminal resistor")
-			)
-			(property
-				(name "Manufacturer")
-				(value "Yageo")
-			)
-			(property
-				(name "MPN")
-				(value "RC1206FR-07120RL")
-			)
-			(property
-				(name "Design status")
-				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
-			)
-			(property
-				(name "Sheetname")
-				(value "Root")
-			)
-			(property
-				(name "Sheetfile")
-				(value "if-b01.kicad_sch")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "3311b687-c728-514c-a46b-a24e4a32b716")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
 				)
 			)
 		)
@@ -4662,7 +4662,7 @@
 			(ref "R28")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -4676,7 +4676,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -4726,7 +4726,7 @@
 			(ref "R29")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -4740,7 +4740,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -4790,7 +4790,7 @@
 			(ref "R30")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -4804,7 +4804,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -4854,7 +4854,7 @@
 			(ref "R31")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -4868,7 +4868,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -4918,7 +4918,7 @@
 			(ref "R32")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -4932,7 +4932,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -4982,7 +4982,7 @@
 			(ref "R33")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -4996,7 +4996,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -5046,7 +5046,7 @@
 			(ref "R34")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -5060,7 +5060,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -5110,7 +5110,7 @@
 			(ref "R35")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -5124,7 +5124,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -5174,7 +5174,7 @@
 			(ref "R36")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -5188,7 +5188,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -5238,7 +5238,7 @@
 			(ref "R37")
 			(value "47k")
 			(footprint "IFB01:R_0603_1608")
-			(description "47 kiloohm input pull-up resistors")
+			(description "47 kiloohm 1 percent input pull-up resistors")
 			(fields
 				(field
 					(name "Manufacturer") "Yageo")
@@ -5252,7 +5252,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "47 kiloohm input pull-up resistors")
+					(name "Description") "47 kiloohm 1 percent input pull-up resistors")
 			)
 			(libsource
 				(lib "IFB01")
@@ -5284,6 +5284,518 @@
 				(tstamps "/")
 			)
 			(tstamps "ed0fe5d9-40a4-5fba-a300-a9f466770368")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R38")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e388c6c2-d06d-53a2-922c-8328375b6c18")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R39")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "89eeeb1d-7774-59e8-8959-b8b8a15fe2eb")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R40")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "7227f7c8-bd63-5a29-85ad-10be81a90a4a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R41")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ded89fb2-3144-561e-a6bd-b4fd559b1163")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R42")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "8a86ee04-38fd-5cef-a400-ca8d8f1dc846")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R43")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e5541252-0c02-5a47-b201-bce21e1af067")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R44")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6173578c-d0fa-5afc-87b3-239f1a0f2b8d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R45")
+			(value "10k")
+			(footprint "IFB01:R_0603_1608")
+			(description "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			(fields
+				(field
+					(name "Manufacturer") "Yageo")
+				(field
+					(name "MPN") "RC0603FR-0710KL")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:R_0603_1608")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "10 kiloohm 1 percent receiver mid-bias divider resistors")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "R")
+				(description "Two-terminal resistor")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Yageo")
+			)
+			(property
+				(name "MPN")
+				(value "RC0603FR-0710KL")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "ef05d16e-93a5-543c-8aec-cbd7f97a38cc")
 			(units
 				(unit
 					(name "A")
@@ -5775,6 +6287,250 @@
 				(tstamps "/")
 			)
 			(tstamps "ebb9fd17-a64f-521f-892d-95235466d992")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP9")
+			(value "TP L_ENC_A_N")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c45f8016-86b3-5cb5-bb78-9824717c68a2")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP10")
+			(value "TP L_ENC_B_N")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "2f0434ec-64e3-51fd-a0ae-ad03c0fac9d7")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP11")
+			(value "TP R_ENC_A_N")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "48b0c7c6-0e01-5923-bcc3-36c3fa4a68af")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP12")
+			(value "TP R_ENC_B_N")
+			(footprint "IFB01:TestPoint_1_0mm")
+			(description "loop test point")
+			(fields
+				(field
+					(name "Manufacturer") "Keystone")
+				(field
+					(name "MPN") "5000")
+				(field
+					(name "Design status") "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+				(field
+					(name "Footprint") "IFB01:TestPoint_1_0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "loop test point")
+			)
+			(libsource
+				(lib "IFB01")
+				(part "TP")
+				(description "Single-pad loop test point")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Keystone")
+			)
+			(property
+				(name "MPN")
+				(value "5000")
+			)
+			(property
+				(name "Design status")
+				(value "DRAFT — NOT RELEASED FOR FABRICATION OR ENERGISATION")
+			)
+			(property
+				(name "Sheetname")
+				(value "Root")
+			)
+			(property
+				(name "Sheetfile")
+				(value "if-b01.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "78f9e5fc-3fba-5451-b134-e3d8ba3382d8")
 			(units
 				(unit
 					(name "A")
@@ -6708,7 +7464,7 @@
 		(libpart
 			(lib "IFB01")
 			(part "PICO2_RIGHT_SOCKET")
-			(description "Pico 2 SC1631 physical pins 21-40 socket row")
+			(description "Pico 2 SC1631 physical pins 21-40 right socket row; pin 1 (GP16) is drawn at the row bottom exactly where physical pin 21 sits")
 			(fields
 				(field
 					(name "Reference") "J")
@@ -6721,7 +7477,7 @@
 					(name "Datasheet")
 				)
 				(field
-					(name "Description") "Pico 2 SC1631 physical pins 21-40 socket row")
+					(name "Description") "Pico 2 SC1631 physical pins 21-40 right socket row; pin 1 (GP16) is drawn at the row bottom exactly where physical pin 21 sits")
 			)
 			(pins
 				(pin
@@ -7039,6 +7795,18 @@
 				(pinfunction "1_+5V_1")
 				(pintype "passive")
 			)
+			(node
+				(ref "R38")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R40")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
 		)
 		(net
 			(code "2")
@@ -7054,6 +7822,18 @@
 				(ref "J9")
 				(pin "1")
 				(pinfunction "1_+5V_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R42")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R44")
+				(pin "1")
+				(pinfunction "1_1")
 				(pintype "passive")
 			)
 		)
@@ -7180,6 +7960,30 @@
 			)
 			(node
 				(ref "C13")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C14")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C15")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C16")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C17")
 				(pin "2")
 				(pinfunction "2_2")
 				(pintype "passive")
@@ -7452,6 +8256,30 @@
 				(ref "J9")
 				(pin "2")
 				(pinfunction "2_0V_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R39")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R41")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R43")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R45")
+				(pin "1")
+				(pinfunction "1_1")
 				(pintype "passive")
 			)
 			(node
@@ -8817,15 +9645,33 @@
 			(name "/L_ENC_A_N")
 			(class "Default")
 			(node
+				(ref "C14")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
 				(ref "J8")
 				(pin "4")
 				(pinfunction "4_A-_4")
 				(pintype "output")
 			)
 			(node
-				(ref "R1")
+				(ref "R38")
 				(pin "2")
 				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R39")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP9")
+				(pin "1")
+				(pinfunction "TP_1")
 				(pintype "passive")
 			)
 			(node
@@ -8846,12 +9692,6 @@
 				(pintype "output")
 			)
 			(node
-				(ref "R1")
-				(pin "1")
-				(pinfunction "1_1")
-				(pintype "passive")
-			)
-			(node
 				(ref "U1")
 				(pin "2")
 				(pinfunction "1A_2")
@@ -8863,15 +9703,33 @@
 			(name "/L_ENC_B_N")
 			(class "Default")
 			(node
+				(ref "C15")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
 				(ref "J8")
 				(pin "6")
 				(pinfunction "6_B-_6")
 				(pintype "output")
 			)
 			(node
-				(ref "R2")
+				(ref "R40")
 				(pin "2")
 				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R41")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP10")
+				(pin "1")
+				(pinfunction "TP_1")
 				(pintype "passive")
 			)
 			(node
@@ -8890,12 +9748,6 @@
 				(pin "5")
 				(pinfunction "5_B+_5")
 				(pintype "output")
-			)
-			(node
-				(ref "R2")
-				(pin "1")
-				(pinfunction "1_1")
-				(pintype "passive")
 			)
 			(node
 				(ref "U1")
@@ -8943,15 +9795,33 @@
 			(name "/R_ENC_A_N")
 			(class "Default")
 			(node
+				(ref "C16")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
 				(ref "J9")
 				(pin "4")
 				(pinfunction "4_A-_4")
 				(pintype "output")
 			)
 			(node
-				(ref "R3")
+				(ref "R42")
 				(pin "2")
 				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R43")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP11")
+				(pin "1")
+				(pinfunction "TP_1")
 				(pintype "passive")
 			)
 			(node
@@ -8972,12 +9842,6 @@
 				(pintype "output")
 			)
 			(node
-				(ref "R3")
-				(pin "1")
-				(pinfunction "1_1")
-				(pintype "passive")
-			)
-			(node
 				(ref "U1")
 				(pin "10")
 				(pinfunction "3A_10")
@@ -8989,15 +9853,33 @@
 			(name "/R_ENC_B_N")
 			(class "Default")
 			(node
+				(ref "C17")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
 				(ref "J9")
 				(pin "6")
 				(pinfunction "6_B-_6")
 				(pintype "output")
 			)
 			(node
-				(ref "R4")
+				(ref "R44")
 				(pin "2")
 				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R45")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP12")
+				(pin "1")
+				(pinfunction "TP_1")
 				(pintype "passive")
 			)
 			(node
@@ -9016,12 +9898,6 @@
 				(pin "5")
 				(pinfunction "5_B+_5")
 				(pintype "output")
-			)
-			(node
-				(ref "R4")
-				(pin "1")
-				(pinfunction "1_1")
-				(pintype "passive")
 			)
 			(node
 				(ref "U1")

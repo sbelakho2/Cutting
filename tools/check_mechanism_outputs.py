@@ -30,13 +30,14 @@ STATIC_PARTS = {
     "GD_G106": ("R2 selected S235JR 5mm guard-lock mounting plate;body pocket only;SLC drilling pattern requires manufacturer drawing", "0"),
     "GD_G107": ("Bernstein SLC-F-024-20/20-R4 30x192x44 catalogue envelope;static fit only", "1"),
     "GD_G108": ("Bernstein ACF-1 60x40x52.6 catalogue envelope;static fit only", "1"),
-    "PO_P001": ("R2 selected welded payoff spool OD400x160;3mm S235JR flanges with 20.5 bores;60x2.5 ERW hub;not load-qualified", "0"),
+    "PO_P001": ("R2 selected welded payoff spool OD400x160;3mm S235JR flanges;left flange carries the welded P008 drive boss;right flange 20.5 pilot bore;60x2.5 ERW hub", "0"),
     "PO_P002": ("R2 selected C45 20h6 payoff spindle L660;M20x1.5 ends not modeled;bearing pockets in P004/P005", "0"),
     "PO_P003": ("R2 selected S235JR payoff base 430x560x8;4x13 anchor holes;selected not load-qualified", "0"),
     "PO_P004": ("R2 selected S235JR 18mm left payoff post;47H7 6204 pocket and 20.5 spindle bore;weld and load path not validated", "0"),
     "PO_P005": ("R2 selected S235JR 18mm right payoff post;47H7 6204 pocket and 20.5 spindle bore;weld and load path not validated", "0"),
     "PO_P006": ("R2 selected S235JR brake disc 180x6;20H7 bore;keyway and setscrew are fabrication details;friction brake not safety brake", "0"),
     "PO_P007": ("R2 selected brake caliper bracket envelope;pads and SWU-class adjuster spring not modeled;tension brake not safety brake", "0"),
+    "PO_P008": ("R2 selected keyed spool drive boss 54.6x12;20H7 bore + 6JS9 keyseat;welded to the left flange inside the hub;transmits brake torque;not load-qualified", "0"),
 }
 
 EXPECTED_TRUE = {
@@ -56,13 +57,14 @@ EXPECTED_FALSE = {
     "fabrication_released",
 }
 EXPECTED_GROUP_COUNTS = {
-    "head": 55,
+    "head": 57,
     "RIGHT_": 181,
     "LEFT_": 181,
     "MM_": 43,
+    "MM2_": 43,
     "FR_": 29,
     "GD_": 8,
-    "PO_": 7,
+    "PO_": 8,
 }
 
 
@@ -116,8 +118,8 @@ def verify_status() -> None:
         raise OutputError(f"{status_path.relative_to(ROOT)} is invalid JSON: {error}") from error
     if status.get("mechanism_revision") != source_revision():
         raise OutputError("published mechanism status revision does not match shared/mechanism_spec.hpp")
-    if status.get("occurrences") != 504:
-        raise OutputError(f"published mechanism occurrence count is {status.get('occurrences')!r}, expected 504")
+    if status.get("occurrences") != 550:
+        raise OutputError(f"published mechanism occurrence count is {status.get('occurrences')!r}, expected 550")
     for key in EXPECTED_TRUE:
         if status.get(key) is not True:
             raise OutputError(f"published mechanism status must retain {key}:true")
@@ -132,8 +134,8 @@ def verify_status() -> None:
 def verify_manifest_and_bom() -> None:
     manifest_path = OUTPUT / "manifest.csv"
     manifest = read_csv(manifest_path, MANIFEST_HEADERS)
-    if len(manifest) != 504:
-        raise OutputError(f"published manifest has {len(manifest)} rows, expected 504")
+    if len(manifest) != 550:
+        raise OutputError(f"published manifest has {len(manifest)} rows, expected 550")
     seen_ids: set[str] = set()
     group_counts = dict.fromkeys(EXPECTED_GROUP_COUNTS, 0)
     for row_number, row in enumerate(manifest, start=2):
@@ -194,12 +196,44 @@ def verify_step() -> None:
         raise OutputError("published full-machine STEP is absent or empty")
 
 
+def verify_stock_containment() -> None:
+    manifest = read_csv(OUTPUT / "manifest.csv", ["id", "description", "purchased", "xmin_mm", "ymin_mm", "zmin_mm", "xmax_mm", "ymax_mm", "zmax_mm", "volume_mm3"])
+    bounds: dict[str, tuple[float, float, float]] = {}
+    for row in manifest:
+        part_id = row["id"].split("_")[-1] if "_" in row["id"] else row["id"]
+        extents = (
+            float(row["xmax_mm"]) - float(row["xmin_mm"]),
+            float(row["ymax_mm"]) - float(row["ymin_mm"]),
+            float(row["zmax_mm"]) - float(row["zmin_mm"]),
+        )
+        current = bounds.get(part_id)
+        merged = tuple(max(a, b) for a, b in zip(current, extents)) if current else extents
+        bounds[part_id] = merged
+    custom = read_csv(ROOT / "bom" / "mechanism-custom-parts.csv", ["id", "quantity", "description", "material", "nominal_stock", "manufacturing_record", "release_state"])
+    for row in custom:
+        stock = row["nominal_stock"]
+        match = re.fullmatch(r"(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)", stock)
+        if not match:
+            continue
+        stock_dims = sorted(float(g) for g in match.groups())
+        part_id = row["id"]
+        if part_id not in bounds:
+            continue
+        need = sorted(bounds[part_id])
+        if any(s < n for s, n in zip(stock_dims, need)):
+            raise OutputError(
+                f"stock containment failure: {part_id} stock {stock} cannot contain CAD extent "
+                f"{bounds[part_id][0]:.2f}x{bounds[part_id][1]:.2f}x{bounds[part_id][2]:.2f}"
+            )
+
+
 def main() -> int:
     try:
         verify_status()
         verify_manifest_and_bom()
+        verify_stock_containment()
         verify_step()
-        print("mechanism generated-output integrity passed: R4, 504 occurrences, 15 guard/payoff parts, unreleased")
+        print("mechanism generated-output integrity passed: R4, 550 occurrences, 15 guard/payoff parts, stock containment, two measuring stations, unreleased")
     except (OSError, csv.Error, OutputError) as error:
         print(f"mechanism generated-output integrity failed: {error}", file=sys.stderr)
         return 1

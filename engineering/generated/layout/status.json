@@ -3,7 +3,7 @@
   "feed_revision":"S1-B-FEED-R6-2026-09-12",
   "run_complete":true,
   "scope":"selected head and eight-roller placements;support frame,pressure/tensioning slides,measuring modules and guards absent",
-  "occurrences":287,
+  "occurrences":289,
   "wire_od_mm":4.5,
   "left_cassette_transform":"proper180degreeZrotation,not reflection of purchased parts",
   "cross_subsystem_static_intersections_checked":true,

@@ -26,6 +26,7 @@ HM-B4_F,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",30.54,-485,102.5
 HM-W4_F,"ISO7092 M5 200HV motor washer9x5.3x1",30.29,-480,102.29,39.29,-479,111.29
 CP01_F,"R+W MK2/100/50/8/14 interference envelope",-20,-452,52,20,-402,92
 H004_F,"42CrMo4+QT single-piece blade holder",-35,-139.5,86,35,-17,134
+H007_F,"42CrMo4+QT blade backing plate 30x46x8;shimmed blade seat;carries the 1200 N blade reaction;face gap set at assembly (docs/34)",0.49,-41.5,89.5,8.49,-12.5,134.5
 T001_F,"Ground V tooling purchase-to-drawing / qualification hold",-3.01,-34,93,-0.01,15,131
 H002_R,"Stage riser /20mm clearance for true NEMA34 body",-55,20,20,55,375,40
 AX01-R_R,"Custom-axis HGR20 rail pair external envelope (docs/39)",-43,28,40,43,368,59
@@ -53,6 +54,7 @@ HM-B4_R,"ISO4762 M5x25 class10.9;nominal-major cosmetic thread",-39.04,455,102.5
 HM-W4_R,"ISO7092 M5 200HV motor washer9x5.3x1",-39.29,479,102.29,-30.29,480,111.29
 CP01_R,"R+W MK2/100/50/8/14 interference envelope",-20,402,52,20,452,92
 H004_R,"42CrMo4+QT single-piece blade holder",-35,17,86,35,139.5,134
+H007_R,"42CrMo4+QT blade backing plate 30x46x8;shimmed blade seat;carries the 1200 N blade reaction;face gap set at assembly (docs/34)",-8.49,12.5,89.5,-0.49,41.5,134.5
 T001_R,"Ground V tooling purchase-to-drawing / qualification hold",0.01,-15,93,3.01,34,131
 LEFT_L1_F101,"42CrMo4+QT rotor;matched j5 bearing seats;nominal-major cosmetic threads",-85,-4.25,80.25,-66,108.75,99.25
 LEFT_L1_F102,"6082-T6 rear bearing/base;front module removable for assembly",-98.5,16.75,55.75,-52.5,89.75,108.75

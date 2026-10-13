@@ -167,6 +167,11 @@ Inputs BoardRp2350::read_inputs() {
     in.safety_ok = field_safety_ok();
     in.home_front = active_low(ctrl::pin::in_home_front);
     in.home_rear = active_low(ctrl::pin::in_home_rear);
+    // No discharge-clearance channel is assigned in shared/controls_spec.hpp
+    // yet (see the controller.hpp NOTES): report "clear" so the optional
+    // present->clear acceptance check stays disabled by default. Production use
+    // with Settings::part_clear_check requires a real pin and GPIO read here.
+    in.part_clear = true;
     in.alm[0] = active_low(ctrl::pin::in_alm_blade_front);
     in.alm[1] = active_low(ctrl::pin::in_alm_blade_rear);
     in.alm[2] = active_low(ctrl::pin::in_alm_feed_left);
@@ -242,11 +247,11 @@ bool BoardRp2350::encoder_healthy(std::uint8_t side) {
     return encoder_ok_[side];
 }
 
-std::uint16_t BoardRp2350::boot_faults() {
+FaultBits BoardRp2350::boot_faults() {
     return boot_faults_;
 }
 
-std::uint16_t BoardRp2350::latched_faults() {
+FaultBits BoardRp2350::latched_faults() {
     return latched_faults_.load(std::memory_order_relaxed);
 }
 
@@ -288,7 +293,9 @@ void BoardRp2350::restart_encoder_sm(std::uint8_t side) {
     pio0->fdebug = debug_bit; // clear a prior blocking PUSH/RX FIFO stall
     pio_sm_exec(pio0, sm, pio_encode_jmp(quadrature_offset_));
     encoder_last_[side] = ab_at(encoder_a_pin[side]);
-    pio_sm_put_blocking(pio0, sm, encoder_last_[side]);
+    // Load the sampled AB state straight into X. The RX-joined FIFO has no TX
+    // side, so pio_sm_put_blocking() here would stall forever.
+    pio_sm_exec(pio0, sm, pio_encode_set(pio_x, encoder_last_[side]));
     encoder_ok_[side] = true;
     pio_sm_set_enabled(pio0, sm, true);
 }
@@ -340,11 +347,11 @@ bool BoardRp2350::field_safety_ok() const {
     return active_low(ctrl::pin::in_safety_ok);
 }
 
-void BoardRp2350::latch_fault(std::uint16_t reason) {
+void BoardRp2350::latch_fault(FaultBits reason) {
     emergency_disable(reason);
 }
 
-void __not_in_flash_func(BoardRp2350::emergency_disable)(std::uint16_t reason) {
+void __not_in_flash_func(BoardRp2350::emergency_disable)(FaultBits reason) {
     latched_faults_.fetch_or(reason, std::memory_order_relaxed);
     pio_set_sm_mask_enabled(pio0, step_pio_mask[0], false);
     pio_set_sm_mask_enabled(pio1, step_pio_mask[1], false);

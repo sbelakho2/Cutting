@@ -400,21 +400,28 @@ This phase closes the physical weld inspection behind gate 7 and feeds gates
 
 ### P3-5 Frame resonance verification (gate 45)
 
-- **What you need:** an instrumented hammer or a soft-faced tap plus an
-  accelerometer/phone-vibration logger, or a DTI decay check, on the
-  assembled P1 frame with the bed bolted (docs/40 §2).
+- **What you need:** an instrumented hammer (steel tip) or a soft-faced tap
+  plus an accelerometer/vibration logger with **analysis bandwidth ≥ 2 kHz**
+  (sample rate ≥ 5 kHz), or a DTI decay check, on the assembled P1 frame
+  with the bed bolted (docs/40 §2). Mount the accelerometer with stud or wax
+  on the bed top face near the cut axis and on the H005 plate mid-span; do
+  not hold it by hand or use a suction cup.
 - **What you do:** tap the bed centre and the H005 plate and record the
   dominant ring-down frequencies. Repeat with the drive loads bolted in
   place.
 - **What you check:** against the [docs/40](40-resonance-and-structural-audit.md)
   desk predictions — bed mode 245–368 Hz, rail composite 82–123 Hz, cut-axis
   plate 98–352 Hz, frame sway 19–38 Hz. Acceptance: the measured bed mode is
-  ≥ 2× away from the 199/200/300 Hz excitation lines and the cut-axis plate
-  ≥ 2× away from 500 Hz at the commissioning feed.
-- **Where you write it down:** the build record.
+  ≥ 2× away from the corrected tooth-pass lines **79.6 / 159.2 / 238.7 Hz**
+  and the 199 Hz electrical line, and the cut-axis plate ≥ 2× away from
+  500 Hz (34E1K detent) at the commissioning feed.
+- **Where you write it down:** the build record, including sensor mounting
+  position, hammer tip, analysis bandwidth and sample rate.
 - **If it fails:** install the pre-approved contingencies — the 3–5 mm damped
   bed–rail interface pad (with M10×40 screws, per docs/40 §3) for the bed
-  mode, or the H005 stiffening rib for the plate mode — and re-measure.
+  mode, or the H005 stiffening rib for the plate mode (the rib is an
+  **undesigned contingency**: design and re-analysis required before
+  fitment) — and re-measure.
 
 ---
 

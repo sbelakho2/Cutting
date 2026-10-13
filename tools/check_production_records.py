@@ -238,6 +238,7 @@ def verify_guard_payoff_custom_parts() -> None:
         "P005": "provisional_payoff_right_support_post_envelope60x70",
         "P006": "payoff_brake_disc_180x6",
         "P007": "payoff_brake_caliper",
+        "P008": "keyed_spool_drive_boss_54.6x12",
     }
     by_id = {row["id"]: row for row in rows}
     concept_ids = {item_id for item_id in by_id if item_id.startswith("G") or item_id.startswith("P")}

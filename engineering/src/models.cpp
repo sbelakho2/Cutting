@@ -183,17 +183,17 @@ std::vector<Check> analyticalChecks() {
     check("motor_running_margin","conditional_design",available/demand,d::minimum_running_margin,"ratio","60V/5.7Arms catalogue curve;80% qualification reserve",false);
     check("coupling_working_torque","catalogue_screen",demand,c::coupling_torque_nm,"Nm","MK2/100 catalogue");
     const double stall=2*pi*c::motor_holding_nm/0.01; // eta=1 worst possible thrust conversion.
-    check("fixed_bearing_stall_thrust","catalogue_screen",stall,c::bearing_max_n,"N","HIWIN6320N maximum axial, not9240N rating");
-    check("ballscrew_static_factor","catalogue_screen",c::screw_static_n/stall,2,"ratio","HIWIN static capacity / calculated stall thrust",false);
+    check("fixed_bearing_stall_thrust","catalogue_screen",stall,c::custom_fixed_end_max_n,"N","BK12-class supplier-stated axial rating, verify at receipt");
+    check("ballscrew_static_factor","catalogue_screen",c::custom_screw_static_n/stall,2,"ratio","SFU1610-class supplier-stated static capacity / calculated stall thrust",false);
     const double momentPitch=d::working_thrust_n*0.040+d::vertical_load_n*0.123;
     const double momentYaw=d::transverse_load_n*0.123;
     const double momentRoll=d::transverse_load_n*0.040;
     // Conservative linear utilisation screen, not a manufacturer combined-rating equation.
-    const double usage=momentPitch/c::moment_pitch_nm+momentYaw/c::moment_yaw_nm+momentRoll/c::moment_roll_nm+
-        std::hypot(d::transverse_load_n,d::vertical_load_n)/c::guide_static_n;
+    const double usage=momentPitch/c::custom_block_moment_pitch_nm+momentYaw/c::custom_block_moment_yaw_nm+momentRoll/c::custom_block_moment_roll_nm+
+        std::hypot(d::transverse_load_n,d::vertical_load_n)/c::custom_guide_static_n;
     check("guide_combined_static_screen","conditional_design",usage,0.5,"utilisation","Linear sum; imposed2500/750/375N load case; required factor2");
     const double lifeLoad=equivalentLoad({d::working_thrust_n,200,50},{0.20,0.30,0.50});
-    check("screw_basic_l10_revolutions","informational",lifeRevolutions(c::screw_dynamic_n,lifeLoad),1e6,"rev","Specified illustrative travel-weighted spectrum; NOT machine life",false);
+    check("screw_basic_l10_revolutions","informational",lifeRevolutions(c::custom_screw_dynamic_n,lifeLoad),1e6,"rev","SFU1610-class supplier-stated dynamic capacity; illustrative spectrum; NOT machine life",false);
     check("coupling_elastic_position","catalogue_screen",demand/c::coupling_stiffness_nm_rad*10/(2*pi),0.005,"mm","Catalogue torsional stiffness; one axis");
     check("pulse_frequency","catalogue_screen",d::blade_speed_mm_s*d::steps_per_mm,40000,"Hz","Shared controller pulse ceiling");
     check("holder_axial_average_stress","conditional_design",d::working_thrust_n/(d::holder_arm_width*d::holder_arm_height),d::specified_yield_pa/1e6/d::structural_factor,"MPa","Certified650MPa steel requirement; local stresses require FEA");

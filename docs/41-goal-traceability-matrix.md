@@ -1,85 +1,111 @@
-# 41 — Goal traceability matrix — S1-B
+# 41 — Goal traceability matrix — S1-B — audit re-verdict R2
 
-**Revision:** `S1-B-GTM-R1-2026-09-17`
-**Status:** consolidated desk record. One table traces every design goal to
-its source requirement and the existing analysis/simulation evidence. No
-goal is closed here by relaxation: verdicts below use the same numbers and
-gates as the underlying reports. Physical machines, measurements and
-qualifications do not exist; nothing here releases fabrication or
-energisation.
+**Revision:** `S1-B-GTM-R2-2026-10-13`
+**Status:** consolidated desk record, **re-verdicted by the external audit of
+2026-10-13**. This revision replaces the R1 self-assessment categories row by
+row with the audit's verdicts; no verdict was softened and no acceptance
+number was changed. Physical machines, measurements and qualifications do not
+exist; nothing here releases fabrication or energisation.
 
-## Verdict legend
+## Verdict legend (audit status definitions, reproduced)
 
-- **MET** — the stated goal is fully met by desk evidence within its stated scope.
-- **MET-WITH-PHYSICAL-REMAINDER** — desk evidence passes; a physical measurement/test is the remaining closure.
-- **NOT-MET-DESK** — desk evidence fails a criterion or leaves an unmet gate; a one-line design action is given in the closure column.
-- **NOT-EVALUABLE** — no desk evidence can close the goal (physical-only or external-inquiry).
+- **BLOCKED** — a present design/control contradiction or known failed
+  calculation.
+- **DESK ONLY** — a bounded documentary/model result that is useful but does
+  not close physical operation.
+- **UNPROVEN** — required physical/vendor evidence is absent.
+- A goal can have both a correct local calculation and a blocked
+  machine-level use, hence the combined verdict forms below.
 
-## Matrix
+Old R1 categories (MET / MET-WITH-PHYSICAL-REMAINDER / NOT-MET-DESK /
+NOT-EVALUABLE) are retired: the audit's verdicts supersede them. The R1
+counts "12 MET, 18 MET-WITH-PHYSICAL-REMAINDER" must **not** be interpreted
+as 30 operationally achieved goals; several listed "physical remainders"
+contained unfinished design decisions that must close before fabrication.
 
-| # | Goal | Source | Requirement value | Analysis/Simulation evidence (file + numbers) | Verdict | Remaining closure (exact) |
-|---|---|---|---|---|---|---|
-| 1 | Process — finished length accuracy | docs/01 §2; docs/20 | ±(0.20 mm + 0.05 % length): ±0.30 mm @200 mm, **±0.70 mm @1 m** | [measurement-analysis](../engineering/generated/measurement-analysis/report.md): uncalibrated budget **1.65 mm/m** (factory circumference 1.0 mm on the assumed ±0.2 mm, runout 0.2, quantisation 0.05, tension 0.15, slip 0.25 — allocations, not measured errors); [docs/37 §3](37-system-dynamics.md): calibrated-at-allocations ≈**0.80 mm/m**, still FAIL; [adapter-r6](../engineering/generated/adapter-r6-analysis/report.md): `uncalibrated_length_budget_1m` 1.65 vs 0.7 **FAIL**; ifm E60137 publishes no circumference tolerance | **NOT-MET-DESK** | Design action (already defined): traceable physical calibration (docs/13) + 30-piece qualification cells (docs/20) must *demonstrate* the slip/tension/temperature terms — reduce allocations by evidence, not re-budgeting; separate 626-CN thermal/matching design (0.5 µm clearance residue at 10 K) is part of the same gate |
-| 2 | Process — strip accuracy | docs/01 §2 | ±0.20 mm strip target | Axis contribution only: C7 screw repeatability ±0.01–0.02 mm class and C-grade stage ≈±0.01 mm ([docs/39](39-custom-cut-axis.md) §4; gate 31) — ~4× inside the target; no strip-process evidence exists | **NOT-EVALUABLE** | Physical strip-accuracy cells on qualified blades (docs/20 cells; gate 13 first) |
-| 3 | Process — cut quality / edge qualification | docs/01 §5; docs/24 §4.4 (gate 13) | No conductor damage; qualified incision diameter | Blade pair T001 purchase-to-drawing, **not sourced or edge-qualified** ([docs/02](02-benchmarks-and-sources.md) S1-B table); desk support only: cut force 700–1200 N vs stage cap 1578 N ([docs/37](37-system-dynamics.md) §1.3) | **NOT-EVALUABLE** | Specialist manufacture quote, loaded clearance verification, edge qualification per docs/24 §4.4 (runbook P0-5, P6-8) |
-| 4 | Process — throughput / cycle budget | docs/02 (2026-09-15 budget) | Desk budget from configured limits | Sequential **2.15 s** (L=100, ≈28/min) / **3.64 s** (L=1000, ≈16.5/min); overlapped 1.64 s (≈37/min) / 2.32 s (≈26/min); blade stroke dominates short-wire time | **MET** (desk arithmetic) | Measured cycle confirmation is a commissioning step (docs/28 §4); no OEE/throughput claim until then |
-| 5 | Process — Cpk ≥ 1.33 | docs/20; gate 25 | Cpk ≥ 1.33, ≥30 pieces/cell (OD 1.2/4.5 mm × 200/1000 mm), nip 50–75 N, wheel 6–19 N, 15–30 °C, gauge U ≤ 0.05 mm / 1.0 N | Procedure and fail-closed tool exist; all templates blank; synthetic fixtures are not results (gate 25) | **NOT-EVALUABLE** | Execute docs/20 cells on assembled hardware (runbook P10-1…P10-5) |
-| 6 | Process — Komax comparison | docs/02 | Documented feature survey; no parity claim | Survey of Kappa 310/330/350, E300/E400, Alpha 530/550 G2, Mira, B300 complete; S1 ±0.70 mm/1 m is a design target vs Komax ±(0.2 % + 1 mm) = ±3 mm at 1 m | **MET** (documentation) | Any parity/accuracy/throughput equivalence remains explicitly **NOT-EVALUABLE** — never infer it from docs/02 |
-| 7 | Process — wire range & lane geometry | docs/01 §2; [feed_drive_spec](../shared/feed_drive_spec.hpp) | 0.5–2.5 mm² Cu/PVC; OD 1.2–4.5 mm | [feed-analysis](../engineering/generated/feed-analysis/report.md): wire lane S108.75; with 4.5 mm wire, ±0.20 mm lane and access tolerances → **0.55 mm** min pocket-edge / **2.10 mm** tread-edge clearance; nips X75.5/138.0 | **MET** (desk geometry) | Incoming OD/lane measurement at build (docs/12) |
-| 8 | Process — length range & retained grip | [machine_spec](../shared/machine_spec.hpp); [feed_drive_spec](../shared/feed_drive_spec.hpp) | 200–3000 mm (qualification 200–1000 mm); strip 3–25 mm; 10 mm insulated grip margin | Shortest-part arithmetic ([docs/01 §4](01-design-basis.md)): far nip X140; L=200, s₁=s₂=25 → 150 mm insulated edge → **10 mm grip retained**; min/max length and strip constants enforced in firmware job envelope | **MET** (desk arithmetic) | Physical part-handling/ejection qualification (docs/20) |
-| 9 | Motion — feed ceiling | docs/01 §2; [machine_spec](../shared/machine_spec.hpp) | 0.50 m/s; initial commissioning 0.05 m/s | [controls_spec](../shared/controls_spec.hpp) static asserts: 500 mm/s × 15.915 steps/mm = **7958 Hz < 8000** max_step_hz; 238.7 rpm < 260 rpm shaft limit; belt min capacity 10.89 Nm at 260 rpm vs 2.5 Nm factored → 4.36× | **MET** (desk) | Commissioned speed ramp is physical (gate 24) |
-| 10 | Motion — feed command & shaft ceiling | docs/01 §2 | 2000 pulses/rev; 260 rpm shaft ceiling; 8666.7 Hz command rate | 2000 × 260/60 = 8666.7 Hz; operating envelope 7958 Hz at the 0.50 m/s ceiling; machine_spec `max_step_hz` 40000 covers both | **MET** (desk) | Loaded rolling-radius calibration required (docs/01 §2) — physical |
-| 11 | Motion — cutting axis | docs/01 §2; [cutting_head_spec](../shared/cutting_head_spec.hpp) | 12.5 mm/s, 300 mm/s²; 100 pulses/mm; 1250 Hz max command | [adapter-r6](../engineering/generated/adapter-r6-analysis/report.md): `pulse_frequency` **1250 vs 40000 Hz PASS**; `motor_running_margin` **1.2688 vs 1.25 PASS**; `coupling_working_torque` 4.65 vs 10 Nm PASS; 12.5 mm/s = 1.7 % of stage 740 mm/s limit | **MET** (desk) | Hot-motor torque, short-stroke resonance and settled-position measurement remain physical (adapter report §Remaining) |
-| 12 | Mechanical — head acceptance loads | docs/01 §2; [cutting_head_spec](../shared/cutting_head_spec.hpp) `design::` | 2500 N axial, 750 N transverse, 375 N vertical, all signs; 5000 N double proof | [adapter-r6](../engineering/generated/adapter-r6-analysis/report.md): `holder_axial_average_stress` 0.81 vs 216.67 MPa PASS; `holder_joint_slip` 2500 vs 5357.81 N PASS; `holder_joint_bolt_proof` 0.4628 vs 0.75 PASS; `ballscrew_static_factor` 2.3671 vs 2 PASS; `fixed_bearing_stall_thrust` 5340.71 vs 6320 N PASS; R4 isolated holder FEM converged all signs + double proof (docs/01 §5) | **MET-WITH-PHYSICAL-REMAINDER** | Assembled blade/stage/joint compliance and loaded blade-face clearance on hardware (adapter report §Remaining) |
-| 13 | Mechanical — feed structural envelopes | [feed_drive_spec](../shared/feed_drive_spec.hpp) `design::` | 1 Nm running, ×2.5 reversal service, 5 Nm fault; belt ±480 N; roller ±60 N both planes | [feed-analysis](../engineering/generated/feed-analysis/report.md): **25 checks, 0 failures**; belt 10.89 Nm → 4.36× factored / 2.18× fault; slack strand 22.92 N > 0 at 180 N/5 Nm; [feed-fem](../engineering/generated/feed-fem/report.md): whole-shaft working **76.59 MPa** / fault **158.19 MPa**, working displacement 0.0205 mm, 48-phase envelope with analytic remainder bound | **MET-WITH-PHYSICAL-REMAINDER** | 16 regional FEM gates unmet in the four-mesh study (see row 14/15 for the submodel closure); true threads, 0.05–0.10 mm edge breaks, contact/preload and the 5 Nm/10 s/10-cycle slip-marked belt proof (docs/12:152) remain physical |
-| 14 | Mechanical — shaft section stiffness | [feed-sections](../engineering/generated/feed-sections/report.md) | Smaller principal bending inertia ≥ reduced beam model at every machined station | 191 sections sampled, **0 failures**, minimum stiffness ratio **1** at S88.017; keyways, slot intersections, radii, chamfers, blind drill included | **MET** (sampled nominal audit) | Continuous tolerance proof, local stress and fatigue are separate gates — not relaxed by this audit |
-| 15 | Mechanical — shaft fatigue | docs/38; gate 11 | Infinite-life regime at 10,000 h / ≈1.8×10⁷ cuts duty; physical rotating-fatigue test | [docs/38](38-fatigue-and-life.md): σ_a = 76.6 MPa whole-shaft bound, worst converged regional working peak 60.4 MPa (M15 corner); 42CrMo4+QT σ_w 400–450 MPa (FKM basis), Kt 1.5–2.6 → **n_f ≥ 1.7 worst stated combination, ≥ 5.5 at converged regional peaks**; 5 Nm fault 158–165 MPa = 3.9–4.1× below yield, 1000 cycles <0.2 % damage; bearings L10 ≥ 20,000 h by ≥ 7.9× (6001 1.6×10⁵ h worst) | **MET-WITH-PHYSICAL-REMAINDER** (desk PASS) | Physical rotating-fatigue test on the actual shaft/build (docs/15, gate 11, runbook P6-9) |
-| 16 | Mechanical — bearing fits | [bearing-fit](../engineering/generated/bearing-fit/report.md) | Matched j5 seats, 3–6 µm interference; housing bores 28.008–28.018 / 32.008–32.019 | **256 corners** enumerated; min residual radial clearance **1.28 µm**, min outer-ring/housing clearance 2.432 µm; unselected 12 µm interference case fails and is tested as a regression; guarded acceptance 3.5–5.5 µm, gauge U ≤ 0.5 µm | **MET-WITH-PHYSICAL-REMAINDER** (conditional pass) | Matched-bore measurement at 20 °C, certified cylindrical finishing Ra ≤ 0.4 µm, instrumented cold-start/hot-run demonstration of the thermal envelope (docs/12:36–38) |
-| 17 | Mechanical — bearing/housing contact compliance | [bearing-contact-thermal](../engineering/generated/bearing-contact-thermal/report.md) study 1 | Seat/ring/housing stress within allowables under 6 µm interference + 310 N front-bearing load | Lamé resolved pressure **17.65 MPa** on seat; seat peak vm 22.73 vs 650 MPa (28.6×), ring 82.26 vs ≈1700 MPa, housing bore-wall 0.98 vs 260 MPa under the resolved 310 N; housing compliance changes seat stress ≤3.9 MPa absolute (rigid-boundary artifact) — **PASS** | **MET-WITH-PHYSICAL-REMAINDER** | Measured preload/contact on the actual build (gate 10 physical part, runbook P1-1…P1-5) |
-| 18 | Mechanical — bearing thermal envelope | [bearing-contact-thermal](../engineering/generated/bearing-contact-thermal/report.md) study 2; [bearing-fit](../engineering/generated/bearing-fit/report.md) | Shaft ≤ 20 K above housing (5+10+5 K chain) at the 30 W standstill motor-loss bound | Steady-state FEM: front-seat rise **29.66 K (max) / 19.98 K (mean)** vs 20 K envelope at the central 2800 W/m²K conductance (sensitivity 15.53 / 51.73 K at 8000 / 1000) → **HOLD / envelope not met** | **NOT-MET-DESK** | Design action (already defined): instrumented cold-start/hot-run test + measured motor-case temperature at rated hold (docs/12:38, docs/28 §2.5); the S5M belt thermal break and rear-half path are stated mitigations, not used to relax the number |
-| 19 | Mechanical — collar/key contact | [collar-contact](../engineering/generated/collar-contact/report.md) | Key/collar survive 5 Nm fault + 7 kN clamp | F109 3×4×18: FEM contact **26.2 MPa** (25.25 ideal) vs 120 MPa C45 bearing and **43.3 MPa aluminium collar-wall limit → 1.66× margin**; key shear 18.5 vs 180 MPa; key peak vm 164 vs ≥300 MPa F109 yield; DIN 3×3×20 erodes the Al margin to ≈1.0× — **not** an endorsed substitute; clamp 3.5 kN/screw = 69 % of proof | **MET-WITH-PHYSICAL-REMAINDER** (desk part closed) | Incoming bore 10.000–10.030 / keyway 3.04±0.01/2.35±0.025 measurement on F110, clamp torque record, 5 Nm belt proof (docs/12:152, runbook P0-2/P4-1/P4-4/P4-5) |
-| 20 | Mechanical — adapter FEM peak gate | [adapter-r6-analysis](../engineering/generated/adapter-r6-analysis/report.md) | Raw peak converged (≤5 % last change) and ≤ yield/3 = 216.67 MPa screen | Finest raw peak **285.99 MPa** (preload-induced seat compression, mean seat pressure 200.71 MPa, profile peak 376.33 MPa); last-change 18.46 % vs 5 % → **REFINE**; displacement 4.96 % vs 3 % → REFINE; peak stress screen **FAIL**; stiffness sweep changes peak only 0.17 % | **NOT-MET-DESK** | Design action (already done + proposed): seat-scale refinement pair already run (321.67 → 312.71 MPa, 2.86 %) bounding the model peak ≈313 MPa — below the 650 MPa certified yield, above the yield/3 screen; remaining physical: measured washer/joint contact stiffness or a two-body ISO7092 washer contact solve (gate 2, runbook P4-2) |
-| 21 | Mechanical — blade drive capability | docs/37 §1.3 | Cut force within stage/motor/screw capacity | Blade force 700–1200 N (guillotine bound 2.15–2.62 kN × 0.3–0.5 stated V-wedge factor); stage 2.79 Nm cap → 1578 N (1.32× worst / 2.25× low estimate); motor 3381 N at 0.8× curve (2.8×); screw dynamic 7144 N (5.9×) | **MET-WITH-PHYSICAL-REMAINDER** | Load-cell trials across wire constructions/temperatures/edge wear (gate 13); the 2500 N `working_thrust_n` is an externally applied acceptance load, not a drive demand |
-| 22 | Mechanical — blade face gap under cut | docs/37 §4; [cutting_head_spec](../shared/cutting_head_spec.hpp) `blade_face_gap` | 0.020 mm blade-face gap maintained at cut | Plain-plate bound: blade edge deflection **≈300 µm at 1200 N** (≈600 µm at 2500 N acceptance) vs 20 µm gap; holder H004 ≈4 µm and datum negligible — holder/datum are not the driver | **NOT-MET-DESK** | Design action (already placed): blade-edge stiffness and backing geometry are purchase-drawing requirements for the unqualified blade pair (gate 13); procure and edge-qualify before relying on the gap |
-| 23 | Mechanical — nip preload | [mechanism_spec](../shared/mechanism_spec.hpp) `design::nip_force_*` | Nip force 50–75 N, target 60 N | [mechanism](../engineering/generated/mechanism/status.json): nip preload per nip **60 N**; carrier spring SWU17-60 at 35.224 mm → 101.334 N (147.1 N capacity); CAD force-window checks at both wire extremes | **MET-WITH-PHYSICAL-REMAINDER** | Physical nip-force records per docs/20 cell; pressure/friction/jam qualification (gate 12, runbook P6-4…P6-6) |
-| 24 | Mechanical — measuring-wheel force | [mechanism_spec](../shared/mechanism_spec.hpp) `design::wheel_force_*` | Wheel contact force 6–19 N, target 10 N | [mechanism](../engineering/generated/mechanism/status.json): wheel contact force **10 N**; arm spring SWU10.5-35 at 27.538 mm; lug raised 15.915 mm with the 200 mm wheel substitution keeps the spring in its deflection window | **MET-WITH-PHYSICAL-REMAINDER** | Physical 6–19 N force record (docs/20 cell, runbook P6-5) |
-| 25 | Mechanical — head assembly & coupling fit | [head](../engineering/generated/head/status.json) | Jaw sweep 0–4.2 mm; coupling axial stack 49–50 mm; 256 tolerance corners | 55 occurrences; endpoint closures [0, 4.2] mm; **256 corners** full-hub tolerance check PASS; step/STL readback; intentional thread intersections limited to M5 tapping zones; 1.00 mm hub shoulder setting | **MET** (desk CAD) | Supplier motor/coupling tolerances verified at incoming inspection; all swept collisions only for the selected head (not full machine) |
-| 26 | Mechanical — layout & mechanism static integration | [layout](../engineering/generated/layout/status.json); [mechanism](../engineering/generated/mechanism/status.json) | No cross-subsystem static intersections; moving head/feed separation | Layout: 287 occurrences, min moving head-to-feed X gap **17.5 mm**, jaw sweep certificate, left cassette is a proper 180° Z rotation; mechanism: 504 occurrences, min moving head-to-mechanism gap **3 mm**, common wire envelope **0 mm³**, external wire route checked, frame integrated, step readback | **MET** (desk CAD, stated scope) | Full-machine/cabinet/safety integration and all guard/payoff validation flags remain false — physical build (gates 42/43) |
-| 27 | Mechanical — payoff spindle | docs/28 §2.1; docs/26 §3 | Spool ≤ 30 kg commissioning limit; spindle survives static load | Ø20 C45, 560 mm span: 30 kg → **0.65 mm / 52 MPa**; 61 kg absolute bound → 1.33 mm / 107 MPa < C45 ≈340 MPa yield; 6204 L10 1.0×10⁷ h (docs/38 §4) | **MET-WITH-PHYSICAL-REMAINDER** | Weigh full spool (≤30 kg until re-check), measure deflection, weld inspection, brake adjustment, runaway/overspeed measurement (docs/26 §6.3, runbook P7-1…P7-4) |
-| 28 | Mechanical — belt tension & dynamics | docs/37 §2; [feed-analysis](../engineering/generated/feed-analysis/report.md) | Initial tension 180–200 N, target 190 N, max 221 N | First strand mode **378 Hz at 190 N** (368–388 Hz across acceptance) vs 100 Hz tooth-passing at 500 mm/s → **3.8× separation**; slack strand 22.9 N > 0 at 180 N/5 Nm; ±0.41 mm belt tolerance = ±0.205 mm centre change | **MET-WITH-PHYSICAL-REMAINDER** | Strand-frequency/1.000 mm-deflection measurement at commissioning (docs/12 method); encoder cross-check after moves |
-| 29 | Electrical — 40 °C room / drive ambient | docs/01 §2; [cutting_head_spec](../shared/cutting_head_spec.hpp) `driver_max_ambient_c` | 40 °C room design case; selected drives limit 40 °C; active cooling/overtemperature integration required | [adapter-r6](../engineering/generated/adapter-r6-analysis/report.md): `driver_at_40C_room_with_5C_rise` **45 vs 40 °C FAIL** — the drive runs above its limit at the design room with a 5 K internal rise | **NOT-MET-DESK** | Design action (already done at selection): active cooling selected (Rittal SK3303.500, 280 W L35/L50 capacity) with overtemperature integration required; commissioning thermal mapping must confirm ≤40 °C at the drives before continuous duty |
-| 30 | Electrical — cabinet thermal budget | docs/22 §11.5 | Cabinet dissipation ≤ cooler capacity | **≈152 W** total internal loss (3×41 W supplies + coils/XPS/board/misc) vs 280 W L35 cooler → **≈128 W margin**; passes on paper | **MET-WITH-PHYSICAL-REMAINDER** | Temperature mapping at maximum duty and L50 derating check are commissioning measurements (docs/22 §11.5) |
-| 31 | Electrical — DC switching duty K1–K3 | docs/22 §11.1; gate 19 | Interrupt 36 V/9.7 A and 60 V/5.8 A branches | TeSys Deca catalogue 2026 (archived): LC1D12BD 3 poles in series rated **20 A at ≤75 V** in DC-1 and DC-2..5 → margins **2.06×** (K3, 36 V) / **3.45×** (K1/K2, 60 V); load L/R ≈0.1–0.3 µs ≪ 1 ms | **MET-WITH-PHYSICAL-REMAINDER** (catalogue-qualified) | Measured K1/K2/K3 opening behavior + bus decay on hardware (docs/22 §8.5, runbook P5-5); catalogue critical-current durability note stands |
-| 32 | Electrical — protection | docs/22 §11.3/§11.4; gate 20 | Correct fuse sizing/coordination on every branch | XPS output corrected to **2 A** (ESKA 522620 in Phoenix 3046032 fused terminal — priced, selected); drive-logic feeds on 3046032 + 1 A links; power branches kept on the contactors + LE-350 overload protection (5×20 class ends at 6.3 A); 24 V PSU 2.5 A with 3.2 A constant-current ceiling | **MET-WITH-PHYSICAL-REMAINDER** | Short-circuit/prospective-fault coordination, inrush and measured bus-decay are commissioning measurements (docs/22 §10 hold 3) |
-| 33 | Electrical — regeneration & discharge | docs/22 §11.2; docs/28 §2.6 | Regeneration absorbed; deterministic bus discharge before guard release | Worst case ≤**0.1 J** kinetic per stop vs ≥**0.18 J** stored in 100 µF at 60 V → regeneration is not a design driver; discharge estimate ≤0.45 s to 42 V (500 µF assumed); 2.2 kΩ 5 W bleed proposal τ≈1.1 s | **MET-WITH-PHYSICAL-REMAINDER** | Measured bus-decay curve sets the T2 release timer (≥1 s margin) — docs/22 §10 hold 5 (runbook P5-6) |
-| 34 | Safety — guard aperture distance | docs/28 §2.2; docs/26 §2 | EN ISO 13857 reach-through distance | Ø30 mm wire apertures at X ±345 mm vs ≤120 mm slot-reach for finger access → **345 > 120 mm, ≈2.9× margin**; with wire installed residual annulus ≤12.75 mm | **MET-WITH-PHYSICAL-REMAINDER** (desk pass) | Reconfirm against the current standard edition + completed risk assessment sign-off (gate 14, runbook P8-2/P8-3); apertures are clearance openings, not finger-safe |
-| 35 | Safety — E-stop & safety function | docs/22 §3; cabinet spec | Two-channel E-stop + guard loop removes motor power independent of firmware | XPSUAF13AP topology, dual-channel chains, K1–K3 NC EDM chain and contactor assignments specified; no PL/SIL claim; no validation exists | **NOT-EVALUABLE** | Physical safety-function validation: fault injection, stop time, bus decay (gate 23, docs/22 §8.4–8.5, runbook P5-4/P5-7/P5-8) |
-| 36 | Safety — guard lock & release permission | docs/22 §11.8; gate 22 | Unlock only after power removal + bus decay; fail-safe power-loss direction | Desk design specified: R2 release relay behind the K1–K3 mirror-NC chain + T2 on-delay timer (τ≈1.1 s → set ≈3 s); power loss keeps the lock locked — **CLOSED-DESK** | **MET-WITH-PHYSICAL-REMAINDER** | Measured bus decay, timer setting verification, risk-assessment sign-off, fault-injection validation (docs/22 §10 holds 5/6, runbook P5-6/P8-5) |
-| 37 | Cost/sourcing — custom cut axis | docs/39 | Replace HIWIN KK86 (USD 824.72/unit) with a priced custom axis | HGR20 set US$8–13 + SFU1605 C7 set US$5–10 (made-in-china, live 2026-09-17) + own-shop plates → **≈US$70–115/axis**; physics: buckling 11.6 kN = 4.8× proof, critical speed 2600 vs 300 rpm = 8.7×, HGR20 blocks ≥9.5×, C7 ±0.05/300 vs re-derived ±0.1 mm placement budget; H003/head CAD/FEM reused unchanged | **MET-WITH-PHYSICAL-REMAINDER** | Run-in 1 h + repeatability record (±0.02 mm over 194 mm travel, docs/39 §5); 5 vs 10 mm lead choice recorded at order |
-| 38 | Cost/sourcing — priced lines | docs/22 §11; gates 31/33/34/37 | Every selectable line observed live-priced | ifm E60137 wheel EUR 57.00 ex VAT; ifm RU3100 EUR 186.40 ex VAT; XPS fuse link EUR 1.49 + terminal EUR 7.99; 1 A links EUR 1.49; iID RCD EUR 35.99; A12 ring EUR 0.086/pc — all observed 2026-09-16/17 | **MET** (observed prices, not quotations) | Distributor page recorded at order time; prices are observations, not delivered cost |
-| 39 | Cost/sourcing — remaining enquiries | docs/35; gates 30/32/35/36/40 | Close R+W couplings, Rittal cooler, StepperOnline drives, sous-douane RFQ | Open letters **L2** (MK2/100/50/8/14 + 10/12 interior-clearance CAD + made-to-bore quotes), **L5** (SK3303.500), **L6** (CL57T-V41/LE-350-36), **L8** (Tunisia sous-douane landed-cost RFQ); class anchors exist (MK2/100/50/10/14 EUR 99.43 net; SK3303.500 EUR 1,669 incl VAT observed) | **NOT-EVALUABLE** | Send letters L2/L5/L6/L8 per docs/35 and record offers before ordering |
-| 40 | Software — stack constraint & commissioning guard | docs/01 §1 | Rust/C/C++ only; personnel safety independent of MCU/HMI; no uncommissioned start | Firmware targets RP2350 (Pico 2) with watchdog/PIO supervision; legacy host returns `NotCommissioned` and rejects job start; safety path is hardwired XPS/contactor (firmware not in the safety function) | **MET** (constraint, desk) | Assembled-machine software/safety-function validation is **NOT-EVALUABLE** — physical commissioning (gate 24) |
+## 1. Audit verdicts — goals 1–40 (unchanged acceptance)
 
-## NOT-MET-DESK summary (design actions)
+| # | Goal and unchanged acceptance | Audit verdict | Required closure |
+|---|---|---|---|
+| 1 | Finished length ±(0.20 mm + 0.05 % L) | **BLOCKED** | F06/F09/F10/F21; complete functional metrology and demonstrate relaxed-part errors at 200–3000 mm |
+| 2 | Strip accuracy ±0.20 mm | **BLOCKED** | F07/F08/F22; correct sequence/closure and add actual strip-accuracy cells |
+| 3 | Cut quality, no conductor damage, qualified incision | **BLOCKED / UNPROVEN** | Complete blade/backing definition and cut/strip qualification; counting is not inspection |
+| 4 | Throughput/cycle budget | **BLOCKED** | F29/F19; supported-length, state-machine timing and a stated rate requirement |
+| 5 | Cpk ≥ 1.33, ≥ 30 consecutive pieces/cell | **BLOCKED / UNPROVEN** | F32; unique actual pieces, complete process envelope, guarded metrology and stable-process evidence |
+| 6 | Komax survey/benchmark without parity claim | **DESK ONLY** | Comparison is useful; update stale S1 component/feature rows, preserve the lack of measured parity |
+| 7 | 0.5–2.5 mm² Cu/PVC; OD 1.2–4.5; lane clearances | **DESK ONLY / UNPROVEN** | Local clearance calculation is useful; traction, handling, actual lots and quality remain unqualified |
+| 8 | 200–3000 mm; independent 3–25 mm strips; 10 mm insulated grip margin | **BLOCKED** | F06/F07/F11; minimum-part sensing and process geometry; supported 3 m output |
+| 9 | 0.50 m/s feed; initial 0.05 m/s | **BLOCKED / UNPROVEN** | Command frequency fits nominally; F19/F20 mean payoff/traction do not establish the speed envelope |
+| 10 | 2000 feed pulses/rev; 260 rpm ceiling; loaded radius calibration | **DESK ONLY / UNPROVEN** | Nominal operating point is 238.7 rpm/7958 Hz; qualify loaded radius, driver setting and actual motion |
+| 11 | Blade 12.5 mm/s, 300 mm/s², 100 pulses/mm for 10 mm lead | **BLOCKED** | F13–F15; select/freeze screw/driver map and revalidate the real custom axis |
+| 12 | Head acceptance loads 2500 N axial, 750 transverse, 375 vertical; double proof | **BLOCKED** | F14/F15/F22; do not substitute 1200/2400 N or old HIWIN capacities |
+| 13 | Feed 1 Nm ×2.5; 5 Nm fault; belt ±480 N; roller ±60 N | **DESK ONLY, INCOMPLETE** | Existing bounded shaft/belt analyses useful; F24 and actual traction/jam/rotor roles must be included |
+| 14 | Machined section stiffness ≥ reduced model, 191-section audit | **DESK ONLY** | Sampled nominal result retained; tolerance-continuous proof, local contacts and fabrication remain separate |
+| 15 | Shaft fatigue, 10,000 h / 1.8×10⁷-cut duty | **UNPROVEN** | F24/F31; correct spectrum and validate actual shaft/manufacture under it |
+| 16 | Matched j5, 3–6 µm interference, stated clearance envelope | **BLOCKED / UNPROVEN** | Conditional corner screen retained; F23/F35 require resolved temperature paths and adequate measured matching |
+| 17 | Bearing/housing contact stress within allowables | **DESK ONLY** | Local stated-load study retained; assembled stiffness, actual loads and manufacturing contacts need validation |
+| 18 | Shaft ≤ 20 K above housing | **BLOCKED** | Published central thermal bound exceeds it; redesign/model then instrument worst-duty paths |
+| 19 | F109/collar survives 5 Nm plus 7 kN clamp | **DESK ONLY / UNPROVEN** | Bounded contact result useful; exact collar/key geometry, torque scatter, proof/fretting records still required |
+| 20 | Adapter peak converged and ≤ 216.67 MPa screen | **BLOCKED** | Reported ≈313 MPa remains above the screen; custom support invalidates automatic reuse; do not substitute yield alone |
+| 21 | Blade force within actual axis capability | **BLOCKED / UNPROVEN** | Actual selected screw/support/motor data and measured wire/blade force; old KK86 input-torque cap is not a custom rating |
+| 22 | Blade-face gap 0.020 mm under cut | **BLOCKED** | Complete tooling/backing and assembled load-clearance verification |
+| 23 | Nip force 50–75 N, target 60 | **DESK ONLY / UNPROVEN** | Measure each nip, actual sharing, damage and friction; F20/F24 |
+| 24 | Each measuring wheel force 6–19 N, target 10 | **BLOCKED / UNPROVEN** | Integrate both modules and resolve CN fits; qualify both wheels individually |
+| 25 | Full head/coupling fit and independent jaw sweep | **BLOCKED for selected build** | Existing envelope checks are useful historical scope; custom hardware geometry must be integrated and checked |
+| 26 | Full layout/mechanism static integration | **BLOCKED** | Second module, custom internals, payoff torque path, cabinet, takeaway and guard mechanics are incomplete |
+| 27 | Payoff ≤ 30 kg, spindle static support | **DESK ONLY / UNPROVEN** | Ø20 shaft beam result is plausible; complete retention/torque/weld load paths, weigh and load-test |
+| 28 | Belt 180–200 N, target 190; dynamic margin | **DESK ONLY, CORRECTION REQUIRED** | Static tension arithmetic useful; use 79.58 Hz tooth-pass and measured resonant response |
+| 29 | 40 °C room; drive ambient ≤ 40 °C | **UNPROVEN / INCOMPLETE** | Complete cabinet loss/airflow/overtemperature design, then actual 40 °C mapping |
+| 30 | Cabinet dissipation within cooler capacity | **BLOCKED as current budget** | Include all four drives, all supplies/coils and cabinet heat gains before declaring margin |
+| 31 | K1–K3 DC make/break duty on 36/60 V branches | **UNPROVEN** | Catalogue series-pole selection useful; actual capacitive inrush, bus topology and measured interruption still required |
+| 32 | Correct branch/XPS protection and coordination | **BLOCKED as claimed closure** | Fuse curves/I²t/DC interruption and PSU-limited faults need complete coordination, not nominal-current equivalence |
+| 33 | Regeneration absorption and deterministic discharge | **BLOCKED** | Voltage-headroom calculation, exact components and measured branch decay/stop behaviour |
+| 34 | Guard aperture safety distance | **UNPROVEN** | Assess actual opening type and nearest hazards, all paths, door/guard states and machine use; blade-only distance insufficient |
+| 35 | Two-channel independent E-stop/guard safety function | **UNPROVEN** | Complete schematic/risk-required performance, fault injection, stop/energy validation |
+| 36 | Guard release only after safe energy/standstill; safe power-loss direction | **BLOCKED at design level** | F25/F26; exact independent contacts, release request, timer/monitor and validated mechanics |
+| 37 | Cheaper custom cut axis meeting unchanged goals | **BLOCKED** | F13–F15; manufacturable custom assembly, correct scale, actual ratings, original loads and inspected equivalent quote |
+| 38 | Priced/selectable sourcing lines | **DESK ONLY, INCOMPLETE** | Dated observations remain observations; exact package/kit contents and purchase-time offers must agree |
+| 39 | Remaining coupling/cooler/drive/Tunisia enquiries | **UNPROVEN** | Obtain and reconcile actual offers; complete missing items; no landed total established |
+| 40 | Rust/C/C++ machine stack; independent safety; no uncommissioned start | **PARTLY MET / BLOCKED** | Language and hardwired-safety intent retained; production approval absent, target startup broken, validation incomplete |
 
-| # | Goal | One-line design action |
-|---|---|---|
-| 1 | Length accuracy ±0.70 mm/1 m | Already defined: traceable calibration (docs/13) + 30-piece cells (docs/20) must demonstrate the slip/tension/temperature allocations, plus the 626-CN thermal/matching redesign; no re-budgeting on paper |
-| 18 | Bearing thermal 20 K envelope | Already defined: instrumented cold-start/hot-run test and measured motor-case temperature at rated hold (docs/12:38, docs/28 §2.5); belt thermal break not used to relax the number |
-| 20 | Adapter FEM peak gate | Already done + proposed: seat-scale refinement run (321.67 → 312.71 MPa) bounds the model peak ≈313 MPa < 650 MPa yield; remaining physical = measured washer/joint stiffness or a two-body contact solve (gate 2) |
-| 22 | Blade face gap 0.020 mm | Already placed: blade-edge stiffness/backing are purchase-drawing requirements (gate 13); procure and edge-qualify the pair — holder/datum contributions are ~1 µm-class and not the driver |
-| 29 | Drive ambient ≤40 °C | Already done at selection: active cooling (Rittal SK3303.500) + overtemperature integration; commissioning thermal mapping must confirm ≤40 °C at the drives |
+## 2. Added goals 41–47 (absent/underrepresented in R1; release criterion from the audit)
 
-## Counts
+The audit requires these as explicit rows. Status is mapped from the audit's
+findings for each (the audit table itself states the release criterion); no
+desk evidence closes any of them yet.
 
-- **MET:** 12 (rows 4, 6, 7, 8, 9, 10, 11, 14, 25, 26, 38, 40)
-- **MET-WITH-PHYSICAL-REMAINDER:** 18 (rows 12, 13, 15, 16, 17, 19, 21, 23, 24, 27, 28, 30, 31, 32, 33, 34, 36, 37)
-- **NOT-MET-DESK:** 5 (rows 1, 18, 20, 22, 29)
-- **NOT-EVALUABLE:** 5 (rows 2, 3, 5, 35, 39)
-- **Total goals:** 40
+| # | Goal | Audit-mapped status | Release criterion to add (audit) |
+|---|---|---|---|
+| 41 | Easy, reproducible assembly | **BLOCKED** (F35: release travellers/kit not complete) | A competent builder completes a release traveller without choosing geometry, component variants or wiring; correct parts/quantities, tools, access and fixtures are supplied |
+| 42 | Screenless routine operation | **BLOCKED** (F12: no commissioning/recipe approval interlock) | Safe panel-only start/stop/reset/repeat batches with retained approved recipe; distinguish partial/scrap recovery, material changes and calibration service |
+| 43 | Complete automatic handling | **BLOCKED** (F06/F07/F11) | Verified prime, independent strips, slug disposal, output clearance and supported full-length delivery |
+| 44 | Factory robustness | **UNPROVEN** | Cold/hot start, mains/USB loss, EMI, sensor open/short/stuck faults, friction variation, spool depletion, wear and maintenance recovery |
+| 45 | Resonance/structural precision | **DESK ONLY, CORRECTION REQUIRED** (F30) | Qualified relative blade/wire displacement over the allowed speed/duty envelope, with stated sensor bandwidth |
+| 46 | Whole-machine endurance/serviceability | **UNPROVEN** (F31) | Duty-specific endurance acceptance, preventive maintenance, spares and inspected replacement/recalibration procedures |
+| 47 | Cost and insourcing | **UNPROVEN** (F35) | Complete equivalent delivered build cost, machining/grinding/metrology/qualification labour and consumables; exact externally supplied items identified |
 
-Every NOT-MET-DESK row retains its original acceptance number; no criterion was
-relaxed and no raw failed data was deleted. This matrix changes no category in
-[docs/33](33-gate-ledger.md): each desk closure it relies on is already recorded
-there (gates 1, 2, 10, 11, 12, 14, 19, 22, 25, 29, 31, 33, 34, 37, 44), and all
-physical/external steps remain as listed.
+## Counts (audit re-verdict)
+
+| Verdict carried | Goals 1–40 | Added 41–47 | Total rows |
+|---|---|---|---|
+| BLOCKED (alone or combined) | 22 | 3 | **25** |
+| DESK ONLY (alone or combined) | 11 | 1 | **12** |
+| UNPROVEN (alone or combined) | 17 | 3 | **20** |
+| PARTLY MET / BLOCKED | 1 | 0 | **1** |
+| **Rows** | **40** | **7** | **47** |
+
+Combined verdicts mean one row is counted under each verdict it names, so
+columns do not sum to the row totals. No row is MET; no criterion was
+relaxed and no raw failed data was deleted. The audit's fix references
+(F01–F35) and required closures above are the exact remaining work; the
+qualification subset (200–1000 mm, 15–30 °C) is labelled a subset everywhere
+and does not qualify 3000 mm/hotter by implication ([docs/01 §2](01-design-basis.md)).
+
+## Relation to the gate ledger
+
+Every physical/external closure referenced above remains in
+[docs/33](33-gate-ledger.md) with its category unchanged; this matrix adds
+the audit's re-verdicts and the seven added goals, and removes no gate. The
+R1 matrix's per-row "MET" desk closures were reviewed by the audit and
+re-verdicted as shown; the earlier adapter/throughput/custom-axis/integration/
+software rows in particular overstated completion.

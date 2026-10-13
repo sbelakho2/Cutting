@@ -75,7 +75,7 @@ energy path, enclosure, or thermal design.
 | Domain | Selected source | Intended load | Required state / release hold |
 |---|---|---|---|
 | `+24V_PELV` | Siemens `6EP3332-6SB00-0AY0`, 24 VDC / 2.5 A | XPS relay, panel controls, relay couplers, drive-input anodes, indicators and IF-B01 low-voltage interface | Distribution, load calculation, branch protection and wiring are not released |
-| `+5V_LOGIC` | Siemens `6EP3310-6SB00-0AY0`, 5 VDC / 3 A | Pico `VSYS` and encoder branches through IF-B01 | Distribution and short-circuit coordination are not released |
+| `+5V_LOGIC` | Siemens `6EP3310-6SB00-0AY0`, 5 VDC / 3 A | Pico `VSYS` and encoder branches through IF-B01 | Distribution and short-circuit coordination are not released. Identity verified 2026-10-13 on the maker product record ([6EP3310-6SB00-0AY0](https://mall.industry.siemens.com/mall/en/WW/Catalog/Product/6EP3310-6SB00-0AY0)): 5 V DC, ±3 % overall tolerance, adjustable 4.6–5.4 V, 3 A, 4.7 W typical loss at rated output; the earlier "second 24 V PSU" wording is superseded — IF-B01 contains no 24→5 V converter |
 | `+60V_BF` | one `LE-350-60` | blade-front CL86T driver power | K1 is the proposed isolation contactor; DC interrupting duty is unproven |
 | `+60V_BR` | second, isolated `LE-350-60` | blade-rear CL86T driver power | K2 is the proposed isolation contactor; DC interrupting duty is unproven |
 | `+36V_FEED` | one `LE-350-36` | both CL57T feed-driver branches | K3 is the proposed isolation contactor; DC interrupting duty is unproven |
@@ -104,9 +104,10 @@ The proposed assignments are:
 | K3 | feed `LE-350-36` positive branch | XPS `33-34` |
 
 The selected XPS documentation specifies a 10 A gG external fuse for its
-safety output circuit; that rating cannot protect the 5 A DC-1 outputs, so
-the corrected 2 A selection is used (§11.3): an ESKA 522620 2 A T 5×20 link
-in a Phoenix 3046032 fused terminal (selected 2026-09-16, CB-XPS-FUSE).
+safety output circuit; that rating cannot protect the 5 A DC-1 outputs, so a
+2 A link is selected provisionally (§11.3, subject to the explicit
+curve/breaking-capacity comparison recorded there): an ESKA 522620 2 A T 5×20
+link in a Phoenix 3046032 fused terminal (selected 2026-09-16, CB-XPS-FUSE).
 DC branch coordination, prospective-fault assessment and installation are
 still release holds. `C10G` is not selected for this machine; it is an
 Eaton Bussmann series, not a Mersen or Schneider designation.
@@ -201,46 +202,125 @@ $3 \times 5.4\ \mathrm{W} / 24\ \mathrm{V} = 0.675\ \mathrm{A}$ does not close
 that calculation because it excludes KA4, KSR1, the XPS, field relays,
 indicators, board loads and transient conditions.
 
-## 4. Guard unlocking is deliberately unresolved
+## 4. Guard unlocking release-permission (design specified 2026-10-13)
 
-## 11.8 E1/E2 guard-release-permission design (desk part, 2026-09-16)
+The E1/E2 guard-lock release is a hardwired, firmware-free permission chain
+specified in [§11.8](#118-e1e2-guard-release-permission-chain-redesigned-2026-10-13).
+It is a **new desk design**, not a qualified safety function: the circuit
+elements, identities and terminal-level wiring now exist in this document and
+in the [IF-B01 cabinet-integration note](../hardware/if-b01/if-b01-cabinet-integration.md),
+while the measured bus decay, timer setting, contact proof tests, fault
+injection and the risk-assessment acceptance remain physical holds (§10 item 5).
+Until those close, access after a trip remains a controlled lockout/tagout
+procedure, not an automatic unlock feature.
 
-The SLC `E1/E2` release coil gets its authorised power path from a
-hardware release-permission chain — no firmware in the path:
+## 11.8 E1/E2 guard-release-permission chain (redesigned 2026-10-13)
 
-1. **Coil drive:** 24 VDC to E1/E2 through one normally-open contact of a
-   release-permission relay R2 (24 VDC coil).
-2. **R2 coil supply:** series chain of the three power-contactor NC
-   auxiliary contacts (K1 21-22, K2 21-22, K3 21-22 — mirror-certified),
-   supplied from the 24 V PELV through the SLC's own solenoid-control
-   output only when the XPS safety outputs are OFF. Result: R2 can only
-   pull in when the safety relay has opened AND all three power
-   contactors report open.
-3. **Discharge interlock:** an on-delay timer T2 (24 VDC, set to the
-   measured bus-decay time plus ≥1 s margin; with the proposed 2.2 kΩ
-   5 W bleed resistors τ≈1.1 s, set ≈3 s) in the R2 coil path, so the
-   release coil energizes only after the bus is below the release
-   criterion. Timer identity: select a DIN-rail 24 VDC on-delay relay
-   (e.g., Finder 80.01-class) at purchase; price not observed.
-4. **Unlock flow:** guard open request → XPS outputs off → K1–K3 open →
-   T2 counts → R2 → E1/E2 energized → spring-retained lock releases.
-   Power loss = lock stays locked (fail-safe direction).
-5. **Terminal-level wiring** (SLC solenoid control inputs, XPS output
-   assignment) must follow the Bernstein installation manual, which is
-   not archived here — that step is an external document requirement,
-   not a design gap.
+### 11.8.1 Why the 2026-09-16 draft was not executable
 
-The desk design is now specified; what remains is physical: measured bus
-decay, timer setting verification, the risk-assessment sign-off and the
-fault-injection validation of the chain (hold 5/6 of section 10). The
-original design-input list (risk assessment of stored energy, verified
-safe-voltage condition after K1/K2/K3 open, controlled operator request and
-restart prevention, fault/power-loss/escape behavior, measured contactor
-opening and bus decay) is satisfied by items 1–4 above at the design level;
-each of those five conditions still requires its physical verification.
-Until the physical verification and the risk assessment are recorded,
-access after a trip remains a controlled maintenance procedure under
-lockout/tagout, not an automatic unlock feature.
+The earlier desk draft placed the K1–K3 `21-22` NC auxiliaries **both** in the
+XPS `Y1`/`Y2` monitored-start (EDM) chain **and** in the R2 release-coil chain.
+One contact cannot carry two independent circuits, and the TeSys Deca catalogue
+states that the mirror contact to IEC 60947-4-1 is the single NC **incorporated
+in the contactor** (B8/94). The draft was therefore not a separated wiring
+design. The corrected design uses **distinct** contacts:
+
+- the built-in `21-22` mirror NC of each K1–K3 stays **exclusively** in the
+  [§3.3](#33-startreset-and-external-device-monitoring-path) `Y1 → KSR1 NO →
+  K1 21-22 → K2 21-22 → K3 21-22 → Y2` EDM/start chain;
+- the release chain gets a **second, dedicated NC contact per contactor**.
+
+### 11.8.2 Actual solution for the second contact
+
+A 1-NC block (`LADN01`) cannot be fitted to the DC-coil `LC1D12BD`: the
+catalogue table (B8/43) allows the DC-coil `LC1D09…D38` either one 2-contact or
+one 4-contact front block and no 1-contact block. The fitted solution is
+therefore **one Schneider `LADN02` 2-NC front auxiliary block per contactor**
+(TeSys Deca accessory range, B8/44), with one NC wired into the release chain
+and the second NC left unwired. The add-on NC is mechanically linked to the
+contactor mechanism but is **not catalogued as a mirror contact**; the release
+chain below is consequently specified as a **single-channel release
+interlock**, not a certified safety function. If the risk assessment rejects
+that single-channel argument, the recorded fallback is a dedicated safety relay
+with its own release output fed from the three built-in mirror NC contacts —
+that change requires a change record and a repeat of this section.
+
+Exact identities (no automated live price could be observed on 2026-10-13;
+automation24/Conrad fetch returned bot-protection pages):
+
+| Element | Exact identity | Source / status |
+|---|---|---|
+| K1–K3 second NC | Schneider `LADN02` (2 NC, front-mounted clip-on block), 3× | TeSys Deca catalogue 2026 B8/43–B8/44; live distributor price not observed 2026-10-13 — confirm at purchase |
+| Release request PB04 | Siemens SIRIUS ACT `3SU1152-0AB40-1BA0` (green illuminated momentary, 1 NO — same identity as PB01), labelled GUARD RELEASE REQUEST | identical to the already selected CT-PB01 identity (EUR 22.00 observed 2026-09-13) |
+| On-delay timer T2 | Finder `80.01.0.240.0000` (DIN-rail multifunction time relay, 24–240 V AC/DC, 1 CO 16 A) configured as on-delay | identity selected; live price not observed 2026-10-13 — record distributor page at purchase |
+| Release relay R2 | Phoenix Contact `PLC-RSC-24DC/21` 2966171 (one additional unit; NO contact `11-14` drives E1/E2) | same identity as CT-RC01/KA1–KA10 (USD 16.13 observed 2026-09-13) |
+| Lock coil E1/E2 | Bernstein SLC `E1/E2` (existing guard device) | unchanged |
+
+### 11.8.3 Circuit and terminal-level definition
+
+```mermaid
+flowchart LR
+  P24["+24V_PELV"] --> RF["CB-R2-LINK 1 A T"] --> PB04["PB04 NO release request"]
+  PB04 --> K1["K1 LADN02 NC-A"] --> K2["K2 LADN02 NC-A"] --> K3["K3 LADN02 NC-A"]
+  K3 --> T2["T2 A1/A2 on-delay"]
+  T2 -- "contact 15-18 after set time" --> R2["R2 coil A1/A2"]
+  R2 -- "contact 11-14" --> E["E1/E2 lock coil"] --> Z["0 V PELV"]
+```
+
+| Node | Terminal-level connection |
+|---|---|
+| Protected release branch | `+24V_PELV → CB-R2-LINK (1 A T 5×20 link in a 3046032 fused terminal) → TB-S` |
+| Release request | `TB-S → PB04 NO (13-14) → K1 LADN02 NC-A common` |
+| Monitor chain | `K1 LADN02 NC-A (51-52) → K2 LADN02 NC-A (51-52) → K3 LADN02 NC-A (51-52) → T2 A1`; each LADN02 NC-B left unwired; block terminal numbers per the fitted block marking to be recorded at the wiring review |
+| Timer | `T2 A2 → 0V_PELV`; T2 output `15-18` (NO) in series with `R2 A1`; `R2 A2 → 0V_PELV` |
+| Lock drive | `R2 NO (11-14) → E1`; `E2 → 0V_PELV` |
+| Indication (optional, non-safety) | a free R2 `12`-`11` NC leg may drive a panel lamp only; no firmware input exists on IF-B01 for it |
+
+### 11.8.4 Release conditions
+
+1. **Controlled request:** the operator must hold PB04; no automatic release
+   with the button released. A stuck-closed PB04 degenerates to automatic
+   release once conditions 2–3 hold — documented operational fault, never an
+   energy hazard by itself.
+2. **Contactor-open condition:** all three XPS outputs off (implied by the
+   chain: any energised K1–K3 holds its LADN02 NC open) — a contactor that is
+   electrically held closed blocks release.
+3. **Stored-energy/standstill condition:** all three 60/60/36 V buses below the
+   measured safe threshold (42 V design criterion in §11.2) and the
+   **measured** decay completed; T2 is set to *measured decay + ≥1 s* (desk
+   estimate ≈3 s with the proposed 2.2 kΩ 5 W bleed resistors, τ≈1.1 s). The
+   time element alone is provisional: the decay curve, the bleed installation
+   and the 42 V criterion are physical measurements.
+4. **Fail-safe direction:** loss of 24 V, loss of a chain conductor, an open
+   contact or a de-energised R2 all leave E1/E2 unpowered; the spring retains
+   the lock.
+5. **Restart prevention:** while the guard is open, the SLC interlock and
+   locked-state contacts break both XPS channels, and the XPS needs its
+   monitored falling-edge start through KSR1; the machine cannot restart with
+   the guard open.
+
+### 11.8.5 Fault cases
+
+| Fault | Response / direction |
+|---|---|
+| K1–K3 main pole welded closed | built-in mirror NC stays open (EDM blocks restart); LADN02 NC stays open (release blocked) — safe direction |
+| LADN02 NC welded closed (one contact) | release can complete although that pole may be welded — **residual single-channel fault**; compensated only by the proof test and the risk assessment; fallback safety-relay architecture if rejected |
+| PB04 stuck closed | release once the machine is de-energised and decayed; no energy hazard, operational fault; momentary button recommended |
+| T2 never times out / contact open | release blocked — safe direction |
+| T2 contact welded closed | release begins as soon as the chain closes even before the set delay — **hazard if the bus is still live**; T2 proof test required, flagged in the risk assessment |
+| R2 fails to energise | no release — safe direction |
+| R2 contact welded closed | E1/E2 can energise whenever the chain completes; same exposure as a T2 early-release case — flagged |
+| Chain conductor open / terminal loose | release blocked — safe direction; continuity test at commissioning |
+| Loss of 24 V or E1/E2 cable | lock stays locked — safe direction (deliberate fail-safe) |
+
+### 11.8.6 What remains physical
+
+Measured K1/K2/K3 opening and bus-decay curves for the exact branches, the T2
+setting record, installation proof of each LADN02 NC contact and of R2/T2
+(through-continuity and weld check where possible), the fault-injection test of
+the release chain, and the risk-assessment acceptance of the single-channel
+release interlock. Until these are recorded, release after a trip stays behind
+lockout/tagout.
 
 ## 5. Front-panel and field-interface intent
 
@@ -279,7 +359,7 @@ inferred solely from connector position.
 |---|---|---|
 | J3 | `TB24-01 +24V_PELV`, `TB24-02 0V_PELV`, `TB24-03 +5V_LOGIC`, `TB24-02 0V_PELV` | Board power only; actual terminal product and branch protection are release holds |
 | J4–J7 | One labelled CL86T/CL57T drive each | IF-B01 sinks `PUL−`, `DIR−`, `ENA−`; common-anode positives come from separately protected `+24V_DRVLOGIC` cabinet wiring and are never routed through IF-B01 |
-| J8–J9 | Left/right ifm RU3100 measuring encoders — **REVIEWED 2026-09-16**: **TTL mode required via IO-Link** (factory setting is HTL 50 mA); single-ended A/B into the AM26LV32EIDR + inputs with the − inputs tied to a **2.5 V mid-bias**; the four **120 Ω** RS-422 terminators (R1–R4) are **not fitted** for TTL drive (bias network instead); Z insulated | 5 V through board PTCs; A/B single-ended push-pull (no Ā/B̄ outputs); receiver common mode −7…+7 V accepts the TTL swing |
+| J8–J9 | Left/right ifm RU3100 measuring encoders — implemented native circuit: **TTL mode required via IO-Link** (factory setting HTL 50 mA; resolution set to **2048 PPR via IO-Link**); encoder A/B drive the AM26LV32EIDR + inputs single-ended, and each − input (`L_ENC_A_N`, `L_ENC_B_N`, `R_ENC_A_N`, `R_ENC_B_N`) is held at a **2.5 V mid-bias** by 10 kΩ/10 kΩ 1 % dividers from the encoder's own 5 V branch with 100 nF filters (R38–R45, C14–C17; test points TP9–TP12); the four **120 Ω** RS-422 terminators (R1–R4) are **removed from the design**; Z insulated | 5 V branches through verified 1812 SMD PTCs F2/F3 `MF-MSMF050/16X`; A/B single-ended push-pull (no Ā/B̄ outputs); receiver common mode −7…+7 V accepts the TTL swing |
 | J10 | KA1–KA6 isolated contact pairs | Inputs close only to `0V_PELV`; no 24 V field voltage reaches Pico GPIO |
 | J11 | KA7–KA10 isolated alarm-contact pairs | Inputs close only to `0V_PELV`; no 24 V driver-alarm voltage reaches Pico GPIO |
 | J12 | PB01 green LED cathode, PB02 red LED cathode and buzzer negative | Their positive terminals use separately protected `+24V_PELV`; IF-B01 uses low-side channels |
@@ -302,11 +382,19 @@ they are not selected terminal-block products:
 - RU3100 encoders are **single-ended push-pull** (no Ā/B̄): parameterise each
   encoder to **TTL mode via IO-Link** on the bench before installation (the
   factory setting is HTL 50 mA and must not be wired to IF-B01). Wire A to
-  the J8/J9 A+ terminal and B to B+; tie the receiver A−/B− terminals to a
-  **2.5 V mid-bias** derived from the encoder 5 V branch — never ground or
-  float them (a floated failsafe input reads high; grounding reads a TTL low
-  as high). Do **not** fit the four 120 Ω RS-422 terminators for TTL drive;
-  fit the mid-bias network in their place (board change). Bond each encoder
+  the J8/J9 A+ terminal and B to B+; the receiver `L_ENC_A_N`/`L_ENC_B_N`/
+  `R_ENC_A_N`/`R_ENC_B_N` inputs are **on-board 2.5 V mid-bias nodes** —
+  implemented by R38–R45 (2 × 10 kΩ 1 % per input, 5 kΩ Thévenin) with
+  C14–C17 100 nF filters and probeable at TP9–TP12 — and must never be
+  grounded, floated or wired to the encoder. The 2.5 V value is the mid-point
+  of the encoder's own 5 V TTL swing, so the differential seen by U1 is
+  ≈ ±2.5 V, far outside the ±0.2 V receiver thresholds; with the AM26LV32E
+  input resistance of 4–17 kΩ the loaded node sits at 1.1–1.9 V over corners,
+  still giving ≥0.9 V of LOW-threshold margin. The encoder output drives only
+  the + input: ≤1.4 mA worst-case (4 kΩ receiver input) versus the RU3100
+  push-pull output rating (HTL setting 50 mA; the TTL-mode drive rating is to
+  be confirmed from ifm at purchase). Do **not** fit or substitute the removed
+  four 120 Ω RS-422 terminators for TTL drive. Bond each encoder
   cable screen to the cabinet PE bar at the metal cable entry; do not bond
   the screen to IF-B01 `0V_PELV`.
 - Keep the two unused encoder Z conductors individually insulated at the board
@@ -319,6 +407,16 @@ they are not selected terminal-block products:
 - Treat 24 V field relay coils and dry-contact return pairs as distinct from
   the 3.3 V GPIO side. IF-B01's protected active-low inputs accept only the
   isolated contact closure to `0V_PELV`.
+- **Dry-contact pull contract (F04):** the board input is a 10 kΩ series
+  resistor followed by a 47 kΩ 1 % pull-up to `3V3_MCU`, a 10 nF filter and a
+  3.6 V clamp; the field contact closes the series resistor's far end to
+  `0V_PELV`. The RP2350 internal pull-up/pull-down must therefore be
+  **disabled in BOTH firmware images** on all ten input GPIOs (`GP12`–`GP16`,
+  `GP27`, `GP18`–`GP21`); the contract list is generated into the schematic and
+  the intent manifest and is enforced by `tools/check_if_b01_gpio_mapping.py`.
+  With an internal pull enabled the asserted LOW rises to 0.82–1.14 V and
+  exceeds the RP2350 `VIL(max)` of 0.8 V; with the internal pulls disabled the
+  nominal LOW is 0.579 V (§11.9).
 - Do not use IF-B01's 100 kΩ `GP17` pull-down, controller watchdog, PIO abort,
   USB disconnection or software STOP command as safety-energy isolation.
 
@@ -391,11 +489,12 @@ named physical/manufacturer step):
    observed public price and local-regulation design review remains);
    enclosure, remaining terminal-block parts, cable glands, PE bonding and
    local-regulation design (thermal budget calculated — §11.5 —);
-5. E1/E2 guard-release-permission circuit — desk design specified in
-   [§11.8](#118-e1e2-guard-release-permission-design-desk-part-2026-09-16)
-   (R2 + K1–K3 NC chain + T2 on-delay timer, fail-safe power-loss
-   direction); physical bus-decay/timer verification and the risk
-   assessment remain;
+5. E1/E2 guard-release-permission circuit — executable desk design in
+   [§11.8](#118-e1e2-guard-release-permission-chain-redesigned-2026-10-13)
+   (distinct LADN02 second NC per K1–K3 + PB04 release request + T2 on-delay
+   timer + R2; built-in mirror NCs stay exclusively in the XPS EDM chain;
+   fail-safe power-loss direction); physical measured bus-decay, T2 setting,
+   contact proof tests, fault injection and the risk assessment remain;
 6. full safety-function validation, including fault injection, stop time and
    contactor/bus decay measurements on assembled hardware;
 7. actual IF-B01, USB, encoder, field I/O, contactor and driver commissioning;
@@ -509,18 +608,41 @@ solution:
   2026-09-16 at
   [Conrad](https://www.conrad.com/en/p/eska-522620-522620-dc-fuse-o-x-l-5-mm-x-20-mm-2-a-250-v-dc-time-delay-t-content-1-pc-s-1414701.html).
 
-Equivalence reasoning: the DF2CN02 2 A gG 10×38 link and the 522620 2 A T
-5×20 link fuse the same ≈0.45 A load at the same 2 A nominal rating; the
-T characteristic is the IEC 60127 counterpart of the gG overload class, and
-the 250 V DC link voltage exceeds the 24 V DC circuit with a wide margin.
-The 10×38 holder is no longer required and the `HOLD-FUSE-HOLDER` rows are
-removed. The Schneider DIN-rail 10×38 holder identity is nevertheless now
-confirmed from the archived TeSys catalogue (pages B4/4, B4/10–11):
+**Protection-selection requirement (corrected 2026-10-13, audit F27a).** The
+earlier "2 A T ≈ gG equivalence" reasoning is withdrawn: IEC 60127 (T) and
+IEC 60269 (gG) time-current curves, breaking capacities and DC ratings are not
+interchangeable, so equivalence may not be asserted. The 2 A selection is
+retained only as the provisional smallest standard 5×20 link above the
+≈0.45 A coil load, and the row stays **not closed** until an explicit
+comparison is recorded from maker data:
+
+1. **Clearing curve:** the chosen link's time-current characteristic compared
+   against the prospective fault current into the XPS output circuit — bounded
+   by the 6EP3332 short-circuit constant-current limit of 3.2 A (§11.1) — and
+   against the XPS output relay's published (or conservatively bounded)
+   clearing `I²t` / contact withstand; the 5 A DC-1 / 3 A DC-13 relay outputs
+   must not be welded or eroded by a cleared downstream fault.
+2. **Breaking capacity:** the link's rated breaking capacity at **24 V DC**
+   (use its DC rating, not the AC rating; the selected ESKA 522620 is listed as
+   a 2 A / 250 V DC T link on the recorded distributor page, observed
+   2026-09-16 — confirm on the maker datasheet).
+3. **Relay `I²t`:** the prospective let-through energy at the 3.2 A
+   current-limited supply must sit inside the relay contact's withstand.
+4. **Hold margin:** the link's own carry rating and time-lag curve must hold
+   the coil inrush without nuisance opening.
+
+If any leg of that comparison cannot be demonstrated from the maker's data,
+`CB-XPS-FUSE` remains an open hold and the XPS output protection must be
+re-selected (the 10 A gG reference rating cannot be used against the 5 A DC-1
+outputs). The 10×38 holder is no longer required and the `HOLD-FUSE-HOLDER`
+rows are removed. The Schneider DIN-rail 10×38 holder identity is nevertheless
+now confirmed from the archived TeSys catalogue (pages B4/4, B4/10–11):
 **DF101** (1 pole, Ith 32 A, Ui 690 V, IP20, 17.5 mm wide on 35 mm DIN
 rail, padlockable; family DF101N/DF102/DF103, LED variants
 DF101V…DF103NV). It is recorded as the confirmed catalogue identity for
 the ledger gate (row CB-FUSE-HOLDER, superseded, not procured) and is not
-reintroduced: the design keeps the priced 5×20 solution above. The identity change is recorded in
+reintroduced: the design keeps the priced 5×20 solution above, subject to the
+comparison requirement. The identity change is recorded in
 [selected-controls.csv](../bom/selected-controls.csv),
 [selected-cabinet-wiring.csv](../bom/selected-cabinet-wiring.csv) and
 [sourcing-evidence.csv](../bom/sourcing-evidence.csv). Prospective
@@ -550,24 +672,48 @@ amp each) get 3× Phoenix 3046032 fused terminals with 1 A T 5×20 links
 rows CB-TB-DL and CB-TB-DL-K1-K3). Short-circuit coordination and inrush
 remain commissioning measurements (§10 hold 3).
 
-### 11.5 Enclosure thermal budget (calculated)
+### 11.5 Enclosure thermal budget (recalculated 2026-10-13, audit F27b)
 
-- Three supplies at full rated output: 350 W / 0.895 = 391 W input each,
-  i.e. ≈41 W loss each → **≈123 W** total (efficiency ≥89.5 % from the
-  archived LE-350 datasheets).
-- Add contactor coils 10.8 W, XPS ≈3 W, IF-B01 ≈5 W, misc ≈10 W →
-  **≈152 W** total internal dissipation at FULL rated load (never occurs
-  simultaneously in the duty cycle).
-- **Realistic-duty case:** at 30 cuts/min with intermittent 500 mm/s feed
-  and 12.5 mm/s blade motion, the three supplies run at a small fraction
-  of rating (feed ≈260 W mechanical worst, blade ≈40 W, duty <30 %):
-  dissipation ≈60–90 W → internal rise ≈4–6 K at 30 °C room →
-  **internal ≈34–36 °C** — below the archived CL57T 40 °C reliable-work
-  limit (CL57T-V41 datasheet: operating 0–40 °C).
-- Safeguards: set the TH-C01 cooler thermostat to hold the internal
-  temperature ≤38 °C; the P9 thermal mapping in
-  [docs/36](36-commissioning-runbook.md) measures the actual duty
-  temperatures and must confirm ≤40 °C before sustained production.
+Every significant cabinet heat source is now counted, including all four
+drives. The drives' own dissipation is not published by STEPPERONLINE, so a
+planning allowance is used and flagged as a measurement item.
+
+| Source | Realistic duty (30 cuts/min) | Full-rated envelope (never simultaneous) |
+|---|---|---|
+| 3 × LE-350 (60/60/36 V) | ≈35 W (losses at <30 % load) | 3 × 41 W = **123 W** at full rated output (≥89.5 % efficiency, archived datasheets) |
+| 4 stepper drives (2 × CL86T, 2 × CL57T) | ≈30 W allowance (≈7.5 W each; duty currents, unpublished — measure case temperatures) | ≈100 W allowance (25 W each at nameplate; conservative until measured) |
+| 24 V PSU 6EP3332 at 2.5 A | ≈4 W | 7 W (archived datasheet) |
+| 5 V PSU 6EP3310 at encoder load | ≈1 W | ≤1 W (4.7 W only at its 3 A rating) |
+| K1–K3 coils (3 × 5.4 W standard DC coil) | **16.2 W** (all three energised in production) | 16.2 W |
+| KA1–KA10 + KSR1 + R2 relay coils | ≈6 W (12 × ≈0.5 W allowance) | 6 W |
+| XPS + T2 | ≈4 W | 4 W |
+| IF-B01 board | ≈5 W | 5 W |
+| Panel indicators/HMI allowance | ≈5 W | 5 W |
+| **Total** | **≈106 W** | **≈267 W** |
+
+- **40 °C room case (limit ambient).** Rittal AE 800×600×210 painted-steel
+  surface ≈1.55 m², k ≈ 5.5 W/(m²K) → ≈8.5 W/K. Without the cooler the
+  realistic duty alone gives ΔT ≈ 12 K → internal ≈52 °C, above the archived
+  CL57T/CL86T 40 °C reliable-working limit: **the TH-C01 cooler is required,
+  not optional, at a 40 °C room.** With TH-C01 (Rittal SK3303.500; selected
+  row records 280 W cooling capacity at L35 — reconfirm against the Rittal
+  record at order): margin at realistic duty = 280 − 106 = **≈174 W (2.6×)**;
+  at the full-rated envelope = 280 − 267 = **≈13 W** only, so that envelope
+  must never be sustained. Set the TH-C01 thermostat to hold the internal
+  temperature ≤38 °C.
+- **Required overtemperature response.** Fit an independent DIN-rail
+  thermostat TH-C02 (NC, opens on rise, set ≈40 °C; Rittal SK3110.000-class
+  identity to confirm at purchase) **in series with the XPS `A1` supply**. On
+  overtemperature the XPS drops out, all three contactors open and every drive
+  bus de-energises; the `GP15`/KA4 diagnostic is lost in firmware and restart
+  stays blocked until the internal temperature is below 38 °C and PB03 is
+  reset. This is a protective drive stop, not a safety function and not a
+  substitute for the XPS channels.
+- The P9 thermal mapping in [docs/36](36-commissioning-runbook.md) must
+  measure the actual duty temperatures (supplies, drives, IF-B01, cooler
+  intake) and confirm ≤40 °C internally at a 40 °C room before sustained
+  production; the drive dissipation allowances above are replaced by the
+  measured values at that point.
 
 ### 11.6 Cabinet identities (proposal retained, verification notes)
 
@@ -598,13 +744,64 @@ confirm-and-purchase step is defined.
 ### 11.7 What this package closes vs leaves open
 
 Closed from the desk: branch current sizing, regen non-issue with numbers,
-discharge estimate + bleed proposal, XPS fuse correction (2 A) and its
-5×20 holder closure, the AC incoming identity (iC60N 2P C10 + iID 2P 25 A
+discharge estimate + bleed proposal, XPS output-link comparison requirement
+(§11.3 — the 2 A value is provisional until the curve/breaking-capacity
+comparison is recorded), the AC incoming identity (iC60N 2P C10 + iID 2P 25 A
 30 mA), the DC branch-protection decision, wiring schedule, PE sizing,
-enclosure thermal margin. Left open by nature: the measured K1/K2/K3 DC
-switching behavior and contact durability (the catalogue duty is qualified
-in §11.1; the critical-current note and §8.5 measurements remain),
+the recalculated enclosure thermal budget with all four drives and the 40 °C
+room case (§11.5), the dry-contact pull contract and nominal-LOW corner
+(§11.9), the encoder-supply drop check (§11.9) and the separated
+guard-release-permission chain (§11.8). Left open by nature: the measured
+K1/K2/K3 DC switching behavior and contact durability (the catalogue duty is
+qualified in §11.1; the critical-current note and §8.5 measurements remain),
 the unpriced incoming MCB (confirm at purchase),
-measured bus decay, prospective fault and stop-time measurements,
-risk-assessment sign-off, and the physical build itself (§10 holds 1–8
-remain).
+the XPS output-link coordination comparison and the unpriced LADN02/T2
+(confirm at purchase), measured bus decay, prospective fault and stop-time
+measurements, risk-assessment sign-off, and the physical build itself
+(§10 holds 1–8 remain).
+
+### 11.9 IF-B01 interface corners (2026-10-13)
+
+**Dry-contact LOW level (F04).** Board network per input: 10 kΩ series to the
+field terminal, 47 kΩ 1 % pull-up to `3V3_MCU` at the pin, 10 nF to
+`0V_PELV`, 3.6 V clamp. With the field contact closed and the RP2350 internal
+pulls **disabled**:
+
+- nominal LOW: 3.3 V × 10 kΩ / (10 kΩ + 47 kΩ) = **0.579 V**, margin
+  0.221 V to the RP2350 `VIL(max)` of 0.8 V;
+- worst case: 3.465 V rail (+5 %) and 46.53 kΩ pull-up (−1 %) give
+  0.613 V; 1 µA pin leakage into the node (10 kΩ ∥ 46.53 kΩ = 8.23 kΩ) adds
+  8 mV → **≤0.621 V**, still 0.179 V below 0.8 V;
+- released HIGH: the pin sits at the 3V3 rail through 47 kΩ with only
+  nanoamp–microamp leakage, ≫ the 2.0 V `VIH(min)`;
+- if an internal pull-up remains enabled (47 kΩ ∥ 32–86 kΩ), the asserted
+  LOW rises to 0.82–1.14 V and **fails** the 0.8 V limit — this is why the
+  contract list (`GP12`–`GP16`, `GP27`, `GP18`–`GP21`, both firmware images)
+  is enforced by `tools/check_if_b01_gpio_mapping.py`.
+
+**Encoder-supply drop (F02).** Path per encoder: `+5V_LOGIC` → J3-3 →
+F2/F3 (`MF-MSMF050/16X`, worst initial resistance R1max = 1.3 Ω, typical
+0.15 Ω; ratings, temperature derating and the pad layout verified in the
+Bourns MF-MSMF datasheet,
+[bourns.com/docs/Product-Datasheets/mfmsmf.pdf](https://www.bourns.com/docs/Product-Datasheets/mfmsmf.pdf))
+→ J8-1/J9-1 → encoder M12 UB. Encoder current ≤150 mA
+(RU3100 datasheet; the four 2.5 V dividers add 0.5 mA per encoder), planned
+cable ≤2 m of 5 × 0.25 mm² (69 mΩ/m per conductor). At the 5 V setting:
+
+- setpoint 5.0 V −3 % tolerance = 4.85 V at the PSU; drop at worst-case PTC
+  resistance = 0.1505 A × (1.3 + 2 × 2 × 0.069 + connector) ≈ 0.22 V →
+  ≈4.63 V at the encoder, i.e. **below the RU3100 4.75 V minimum at the
+  worst-case corner**;
+- therefore the 5 V rail is set to **5.2 V at commissioning** (within the
+  verified 4.6–5.4 V adjustment range): 5.2 V −3 % = 5.04 V, minus the same
+  0.22 V → ≈4.82 V ≥ 4.75 V, and the measured J8-1/J9-1 voltage under
+  encoder load is recorded;
+- maximum conductor length from the same budget: allowance
+  5.04 − 4.75 − 0.195 (PTC) ≈ 0.095 V at 0.1505 A → loop resistance
+  ≤0.63 Ω → **≤4.6 m of 0.25 mm² / ≤9.2 m of 0.5 mm²** for each encoder
+  cable; the planned 2 m cables sit inside this with >2× margin. Longer
+  cables require a larger cross-section or a local encoder supply.
+- the bias network draws its 0.5 mA per encoder downstream of the PTC, so it
+  is included in the 0.1505 A; a tripped F2/F3 therefore also removes the
+  bias (the receiver then sees no valid differential, which firmware treats
+  as an encoder fault, not as a valid direction).

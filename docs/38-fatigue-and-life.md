@@ -1,5 +1,10 @@
 # 38 — Fatigue and life desk assessment (feed desk half)
 
+Corrections 2026-10-13 (audit F29/F31): roller Ø40 (was Ø20) and the
+resulting cycle count/speed corrections; 30 cuts/min is an endurance duty,
+not a rate claim; L10 separated from guaranteed service life; wear/
+maintenance/consumable scope added as required work.
+
 Date: 2026-09-16. Status: desk study; nothing here releases fabrication or
 establishes a physical life number. This closes the desk halves of the
 fatigue/durability qualifications and leaves every physical gate unchanged.
@@ -9,11 +14,11 @@ fatigue/durability qualifications and leaves every physical gate unchanged.
 | Assumption | Value | Source / justification |
 |---|---|---|
 | Operating day | 8 h/day, 250 days/yr, 5 years | task-stated design duty |
-| Cut rate | 30 cuts/min | task-stated; sits between the docs/02 sequential cycle budget ≈28/min (100 mm) and ≈16.5/min (1000 mm) |
+| Cut rate | 30 cuts/min | **endurance-duty assumption, not a rate claim**: the corrected docs/02 sequential ideal floor is ≈26.5/min at 200 mm and ≈15.5/min at 1000 mm excluding sensing/handling |
 | Wire lengths | 200–1000 mm qualification, 200–3000 mm spec | docs/01 §2 |
 | Total duty | **10,000 h**, **≈1.8×10⁷ cuts** | 30×60×8×250×5 |
-| Shaft alternating cycles | ≈2–6×10⁸ (≈20–32 rev/cut × 1.8×10⁷ cuts; roller Ø20 = 62.83 mm/rev, forward+reverse) | feed geometry, docs/01 |
-| Speeds | shaft ceiling 260 rpm (docs/01:35); 0.5 m/s feed at Ø20 implies 478 rpm; measuring wheel 150 rpm (0.5 m/s ÷ 200 mm circumference); payoff ≤160 rpm (Ø60 hub bound, outer-layer payout ≈24 rpm) | docs/01, docs/13 |
+| Shaft alternating cycles | ≈1.8–2.9×10⁸ (≈10–16 rev/cut × 1.8×10⁷ cuts; roller **Ø40 = 125.66 mm/rev**, forward+reverse) | feed geometry, docs/01. Corrected: the previous 2–6×10⁸ (20–32 rev/cut) used the Ø20 circumference in error |
+| Speeds | shaft ceiling 260 rpm (docs/01:35); 0.5 m/s feed at **Ø40** implies **239 rpm** (inside the ceiling); measuring wheel 150 rpm (0.5 m/s ÷ 200 mm circumference); payoff ≤160 rpm (Ø60 hub bound, outer-layer payout ≈24 rpm) | docs/01, docs/13 |
 
 The duty cycle count is far beyond the S-N knee (10⁶–10⁷), so the shaft
 assessment is an endurance-limit (infinite-life) check, not a finite-life
@@ -110,11 +115,49 @@ bearing-life target (checked docs/01, 12, 20, 24, 26, 33); 20,000 h = 2× the
 10,000 h five-year duty, consistent with SKF life-selection guidance for
 machines in 8 h/day service.
 
-**Verdict: PASS.** Every bearing clears 20,000 h; the minimum margin is
-**7.9×** (6001). Sensitivity at the 478 rpm implied by 0.5 m/s feed at Ø20:
-6001 → 8.6×10⁴ h (4.3×), 6002 → 1.2×10⁵ h — still clear. All loads are
-envelope peaks used as constant loads, so these L10h values are conservative
-against the mixed-duty profile.
+**Verdict: PASS for the statistical L10 only.** Every bearing's L10 clears
+20,000 h; the minimum margin is **7.9×** (6001). The design point is
+239 rpm at 0.5 m/s on the Ø40 roller (docs/37), inside the 260 rpm row
+already tabulated; the previously quoted 478 rpm sensitivity came from a
+Ø20 diameter error and is withdrawn (the 260 rpm envelope row is the
+conservative case). All loads are envelope peaks used as constant loads, so
+these L10h values are conservative against the mixed-duty profile.
+
+### 4.1 L10 is not a guaranteed service life — required design work
+
+ISO 281 L10 is a **90 %-reliability statistical rating life** under
+idealised lubrication, clean environment and rated fit/clearance. It is not
+a guaranteed service life, and the following are outside it and remain open:
+
+- **Fit/clearance loss and thermal field.** The 626 CN stack consumes
+  1.5 µm of internal clearance for a 10 K ring difference and leaves only
+  **0.5 µm before any press-fit loss** (docs/13 §3). The 20 K seat-rise
+  requirement is unchanged. **Required design work:** heat-path model per
+  shaft role, verified fits/clearances including press-fit loss at the
+  corners, and bearing temperatures at the measured field (docs/28 §2.5).
+- **Motor heat path.** The feed motor is **directly coupled** to the driven
+  roller shaft through the MK2 coupling — no belt isolation on that path;
+  only the idler shaft is belt-isolated. The 6001/6002 seats sit on the
+  driven shaft and see the 30 W standstill-loss path.
+- **Lubrication, contamination and load spectrum.** The envelope-peak
+  constant-load basis is conservative on load but says nothing about grease
+  condition; the duty has no measured load spectrum.
+
+### 4.2 Wear, maintenance and consumable scope (required work)
+
+The 20,000 h target covers rolling-contact fatigue only. The following
+life-limited items have **no desk life number** and must be carried as
+inspection/replacement scope (annual or condition-based) in the maintenance
+plan — they are not closed by this document:
+
+| Item | Duty / mechanism | Disposition |
+|---|---|---|
+| Grease life (sealed 2Z bearings) | grease ageing vs temperature and speed; can bind below L10 at elevated seat temperature | measure/estimate bearing temperature, then use the manufacturer grease-life curve; service at the shorter of grease life and L10 |
+| PU tread wear (4 lower + 4 upper rollers + 2 measuring wheels) | rolling wear/polishing; feeds the retained 0.25 mm slip allocation | measurable wear limit (loaded circumference shift) triggers calibration invalidation (docs/13 §5 step 8); inspection interval required |
+| Cables (encoder, motor, drag/guard runs) | cyclic flex and connector contact | interval inspection; no life number claimed |
+| Contactors K1–K3 | electrical/contact life at the coil and switching duty | manufacturer electrical life vs the duty; replacement interval required |
+| Carrier and blade springs | relaxation at duty temperature | periodic force-window re-check (nip 50–75 N, wheel 6–19 N) |
+| Custom cut-axis ratings (docs/39) | catalogue rating under 12.5 mm/s / 300 mm/s² and the 1200 N blade reaction | rating-life interval (catalogue stroke/capacity) as planned maintenance |
 
 ## 5. Key/collar fretting and A12 ring duty
 

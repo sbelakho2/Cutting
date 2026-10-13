@@ -24,15 +24,17 @@ J11,1,Phoenix Contact,1759091,MSTB_2_5_8_G_5_08,"drive-alarm 8-position PCB plug
 P11,1,Phoenix Contact,1757291,MSTB_2_5_8_ST_5_08,"matching 8-position 5.08 mm screw plug for J11",ship with board
 J12,1,Phoenix Contact,1759033,MSTB_2_5_4_G_5_08,"indicator and buzzer 4-position PCB plug header",fit header
 P12,1,Phoenix Contact,1757233,MSTB_2_5_4_ST_5_08,"matching 4-position 5.08 mm screw plug for J12",ship with board
-F1-F3,3,Bourns,MF-R050,PTC-1812,"0.50 A hold resettable fuse",F1 plus24 TPL COM; F2 left encoder; F3 right encoder
-R1-R4,4,Yageo,RC1206FR-07120RL,R_1206_3216Metric,"120 ohm 1 percent RS-422 termination",fit directly beside U1 input pairs
+F1,1,Bourns,MF-MSMF050/60X,PTC-1812,"0.50 A hold 60 V 1812 SMD resettable PTC; +24V_TPL_COM branch; pads per the Bourns recommended layout (1.68 x 2.95 mm, 3.1 mm gap)",verified ratings and pad layout in https://www.bourns.com/docs/Product-Datasheets/mfmsmf.pdf
+F2-F3,2,Bourns,MF-MSMF050/16X,PTC-1812,"0.50 A hold 16 V 1812 SMD resettable PTC; one per encoder 5 V branch; pads per the Bourns recommended layout (1.68 x 2.95 mm, 3.1 mm gap)",verified ratings and pad layout in https://www.bourns.com/docs/Product-Datasheets/mfmsmf.pdf
 R5,1,Yageo,RC0603FR-07100KL,R_0603_1608Metric,"100 kiloohm 1 percent GP17 pull-down",fit directly at U3 enable input
 R6-R17,12,Yageo,RC0603FR-071KL,R_0603_1608Metric,"1 kiloohm GPIO output series resistors",GP0-7 GP17 GP22 GP26 GP28
 R18-R27,10,Yageo,RC0603FR-0710KL,R_0603_1608Metric,"10 kiloohm input series resistors",one per J10/J11 dry-contact input
-R28-R37,10,Yageo,RC0603FR-0747KL,R_0603_1608Metric,"47 kiloohm input pull-up resistors",one per J10/J11 dry-contact input
+R28-R37,10,Yageo,RC0603FR-0747KL,R_0603_1608Metric,"47 kiloohm 1 percent input pull-up resistors",one per J10/J11 dry-contact input; RP2350 internal pulls must be disabled
+R38-R45,8,Yageo,RC0603FR-0710KL,R_0603_1608Metric,"10 kiloohm 1 percent receiver mid-bias divider resistors",two per AM26LV32EIDR minus input (2.5 V mid-bias)
 C1,1,Murata,GRM188R71C104KA01D,C_0603_1608Metric,"100 nF 16 V X7R ceramic decoupler",U1 3V3_MCU to 0V_PELV only
 C2-C3,2,Murata,GRM188R71H104KA93D,C_0603_1608Metric,"100 nF 50 V X7R ceramic bypass capacitor",one from +24V_TPL_COM to 0V_PELV at U2 and U3
 C4-C13,10,Murata,GRM188R71C103KA01D,C_0603_1608Metric,"10 nF 16 V X7R input filter",one per J10/J11 dry-contact input
+C14-C17,4,Murata,GRM188R71C104KA01D,C_0603_1608Metric,"100 nF 16 V X7R bias filter",one per receiver minus input at the 2.5 V mid-bias node
 D1-D10,10,Nexperia,BZX384-C3V6,SC-76,"3.6 V input clamp diode",one per J10/J11 dry-contact input
-TP1-TP8,8,Keystone,5000,TestPoint_1.0mm,"loop test point",TP1 plus24 TP2 plus5 TP3 plus3V3 TP4 0V TP5 ENA TP6 GP0 TP7 left-A TP8 right-A
+TP1-TP12,12,Keystone,5000,TestPoint_1.0mm,"loop test point",TP1 plus24 TP2 plus5 TP3 plus3V3 TP4 0V TP5 ENA TP6 GP0 TP7 left-A TP8 right-A TP9-TP12 receiver minus 2.5 V mid-bias nodes
 MH1-MH4,4,Keystone,9903,MountingHole_3.2mm_M3,"M3 nylon board mounting hardware set",one spacer screw and nut per hole

@@ -19,18 +19,18 @@ J7,1,FR_PUL_NEG,CL57T-V41 FR PUL−,GP6,common-anode positive is externally fuse
 J7,2,FR_DIR_NEG,CL57T-V41 FR DIR−,GP7,common-anode positive is externally fused +24 V
 J7,3,DRV_ENA_NEG,CL57T-V41 FR ENA−,GP17,shared enable sink
 J7,4,0V_PELV,TB24-02 0 V PELV,,reference/test only
-J8,1,+5V_ENC_L,left E40S pin 3 brown +5 V,,through F2
-J8,2,0V_PELV,left E40S pin 4 blue 0 V,,do not bond cable screen here
-J8,3,L_ENC_A_P,left E40S pin 1 black A,,terminated to J8-4 by R1
-J8,4,L_ENC_A_N,left E40S pin 2 red A-bar,,terminated to J8-3 by R1
-J8,5,L_ENC_B_P,left E40S pin 5 white B,,terminated to J8-6 by R2
-J8,6,L_ENC_B_N,left E40S pin 6 gray B-bar,,terminated to J8-5 by R2
-J9,1,+5V_ENC_R,right E40S pin 3 brown +5 V,,through F3
-J9,2,0V_PELV,right E40S pin 4 blue 0 V,,do not bond cable screen here
-J9,3,R_ENC_A_P,right E40S pin 1 black A,,terminated to J9-4 by R3
-J9,4,R_ENC_A_N,right E40S pin 2 red A-bar,,terminated to J9-3 by R3
-J9,5,R_ENC_B_P,right E40S pin 5 white B,,terminated to J9-6 by R4
-J9,6,R_ENC_B_N,right E40S pin 6 gray B-bar,,terminated to J9-5 by R4
+J8,1,+5V_ENC_L,left RU3100 M12-1 UB +5 V,,through F2 (MF-MSMF050/16X)
+J8,2,0V_PELV,left RU3100 M12-3 GND,,do not bond cable screen here
+J8,3,L_ENC_A_P,left RU3100 M12-2 A,,single-ended TTL; drives U1 channel 1 + input directly
+J8,4,L_ENC_A_N,left RU3100 A- (not wired),,on-board 2.5 V mid-bias; R38/R39 10k 1% divider + C14 100nF; R1-R4 120 ohm terminators removed
+J8,5,L_ENC_B_P,left RU3100 M12-5 B,,single-ended TTL; drives U1 channel 2 + input directly
+J8,6,L_ENC_B_N,left RU3100 B- (not wired),,on-board 2.5 V mid-bias; R40/R41 10k 1% divider + C15 100nF; R1-R4 120 ohm terminators removed
+J9,1,+5V_ENC_R,right RU3100 M12-1 UB +5 V,,through F3 (MF-MSMF050/16X)
+J9,2,0V_PELV,right RU3100 M12-3 GND,,do not bond cable screen here
+J9,3,R_ENC_A_P,right RU3100 M12-2 A,,single-ended TTL; drives U1 channel 3 + input directly
+J9,4,R_ENC_A_N,right RU3100 A- (not wired),,on-board 2.5 V mid-bias; R42/R43 10k 1% divider + C16 100nF; R1-R4 120 ohm terminators removed
+J9,5,R_ENC_B_P,right RU3100 M12-5 B,,single-ended TTL; drives U1 channel 4 + input directly
+J9,6,R_ENC_B_N,right RU3100 B- (not wired),,on-board 2.5 V mid-bias; R44/R45 10k 1% divider + C17 100nF; R1-R4 120 ohm terminators removed
 J10,1,IN_START,KA1 NO contact to 0V_PELV,GP12,low while START pressed
 J10,2,0V_PELV,KA1 contact common,,paired with J10-1
 J10,3,IN_STOP_OK,KA2 NO contact to 0V_PELV,GP13,low while STOP NC loop is healthy

@@ -277,6 +277,16 @@ double nominalArmProtrusion() {
     return md::lug_z_min-5-length-(wheelCentreZ(fd::wire_diameter_max)+md::housing_half+md::arm_t);
 }
 
+std::vector<HeadPart> secondMeasuringModule(double d,double p,double at_x) {
+    // Second wheel station on the STOCK side (continuous contact for every
+    // part length; the piece side cannot host a wheel for 200 mm parts --
+    // see engineering/sources/second-module-position-analysis.md). Same
+    // facing as the first module, translated so the wheel sits at at_x.
+    auto parts=measuringModuleGroup(d,p);
+    gp_Trsf shift;shift.SetTranslation(gp_Vec(at_x-md::meas_x,0,0));
+    for(auto& part:parts)part.shape=BRepBuilderAPI_Transform(part.shape,shift,true).Shape();
+    return parts;
+}
 std::vector<HeadPart> measuringModuleGroup(double d,double p) {
     std::vector<HeadPart> parts;
     const double x=md::meas_x,zw=wheelCentreZ(d);
@@ -497,7 +507,14 @@ std::vector<HeadPart> payoffGroup() {
     if(!spool_fuse.IsDone())throw std::runtime_error("Payoff spool hub fuse failed");
     BRepAlgoAPI_Fuse spool_all(spool_fuse.Shape(),flange(flange_y_hi));spool_all.Build();
     if(!spool_all.IsDone())throw std::runtime_error("Payoff spool flange fuse failed");
-    add(parts,"P001","R2 selected welded payoff spool OD400x160;3mm S235JR flanges with 20.5 bores;60x2.5 ERW hub;not load-qualified",spool_all.Shape());
+    add(parts,"P001","R2 selected welded payoff spool OD400x160;3mm S235JR flanges;left flange carries the welded P008 drive boss;right flange 20.5 pilot bore;60x2.5 ERW hub",spool_all.Shape());
+    // P008 keyed spool drive boss: fits inside the hub tube, welded to the
+    // left flange inner face; the spindle key transmits the brake torque
+    // through it into the spool (audit F18 torque path).
+    auto boss=cylY(md::payoff_spool_x,flange_y_lo+md::payoff_flange_t,md::payoff_spool_z,27.3,12);
+    boss=cut(boss,cylY(md::payoff_spool_x,flange_y_lo+md::payoff_flange_t-0.01,md::payoff_spool_z,10.005,12.02));
+    boss=cut(boss,box(-3,flange_y_lo+md::payoff_flange_t-0.01,md::payoff_spool_z+10,6,12.02,2.8));
+    add(parts,"P008","R2 selected keyed spool drive boss 54.6x12;20H7 bore + 6JS9 keyseat;welded to the left flange inside the hub;transmits brake torque;not load-qualified",boss);
     add(parts,"P002","R2 selected C45 20h6 payoff spindle L660;M20x1.5 ends not modeled;bearing pockets in P004/P005",cylY(md::payoff_spool_x,
         md::payoff_shaft_y_min,md::payoff_spool_z,md::payoff_shaft_r,md::payoff_shaft_y_max-md::payoff_shaft_y_min));
     add(parts,"P003","R2 selected S235JR payoff base 430x560x8;4x13 anchor holes;selected not load-qualified",box(md::payoff_base_x_min,

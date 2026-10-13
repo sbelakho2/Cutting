@@ -16,7 +16,8 @@ design, fabrication, assembled board, cabinet integration or safety function.
 
 IF-B01 is intended to be the PELV/SELV interface between a Raspberry Pi Pico 2
 and 24 V common-anode drive inputs, indicators, dry-contact field interfaces,
-and 5 V RS-422 measuring encoders. It contains neither mains circuitry nor a
+and 5 V single-ended TTL measuring encoders (ifm RU3100 parameterised to TTL
+mode). It contains neither mains circuitry nor a
 functional-safety circuit. The XPS relay, E-stop, guard contacts and contactors
 remain hardwired cabinet functions described as an unreleased design concept in
 [the cabinet control record](../../docs/22-controls-and-wiring.md).
@@ -28,7 +29,7 @@ remain hardwired cabinet functions described as an unreleased design concept in
 | PUL/DIR | `TPL7407LDR` low-side NMOS channels to common-anode 24 V inputs | `GP0`–`GP7` high is intended to sink the named drive input |
 | Shared enable | One `TPL7407LDR` channel with a `100 kΩ` input pull-down | `GP17` high is intended to sink every `ENA−`; reset/power loss should keep the channel off |
 | Indicator/buzzer | `TPL7407LDR` low-side channels | `GP22`, `GP26`, `GP28` high are intended to sink the assigned 24 V load |
-| Measuring encoders | `AM26LV32EIDR` 3.3 V receiver (input common mode −7…+7 V); R1–R4 120 Ω RS-422 terminators replaced by a 2.5 V mid-bias network for the RU3100 single-ended TTL inputs | Non-inverted A/B outputs intended for `GP8`–`GP11` |
+| Measuring encoders | `AM26LV32EIDR` 3.3 V receiver (input common mode −7…+7 V); the RU3100 single-ended TTL A/B drive the `+` inputs directly and each `−` input carries an on-board 2.5 V mid-bias (R38–R45 10 kΩ 1 %, C14–C17 100 nF); the former R1–R4 120 Ω terminators are removed | Non-inverted A/B outputs intended for `GP8`–`GP11` |
 | Field/alarm contacts | Ten protected dry-contact-to-0 V inputs, active low | `GP12`–`GP16`, `GP18`–`GP21` |
 | Encoder power | Two individually resettable 5 V branches | One branch per ifm RU3100 encoder |
 
@@ -69,9 +70,13 @@ The deterministic generator [generate_if_b01_kicad.py](../../tools/generate_if_b
 reconciles the input BOM, connector allocation and fixed IC channels before it
 writes the native source. The parity check
 [check_if_b01_kicad.py](../../tools/check_if_b01_kicad.py) checks the actual
-KiCad netlist and BOM exports: 100 BOM references, 90 electrically represented
-netlist references, 278 connected symbol pins and six deliberate no-connects.
-The [output generator](../../tools/export_if_b01_manufacturing.py) refuses stale
+KiCad netlist and BOM exports: 112 BOM references, 102 electrically represented
+netlist references, 298 connected symbol pins and six deliberate no-connects.
+The allocation check [check_if_b01_gpio_mapping.py](../../tools/check_if_b01_gpio_mapping.py)
+additionally recomputes the physical Pico 2 pin of every J1/J2 pad from its PCB
+coordinates and fails on a reversed or mirrored socket row, and verifies the
+dry-contact pull-configuration contract. The
+[output generator](../../tools/export_if_b01_manufacturing.py) refuses stale
 source or any ERC/DRC/parity violation before it writes the draft package. These
 checks constrain transcription and layout errors; they do not replace
 electrical, mechanical, PCB, fabrication or safety review.
@@ -103,26 +108,38 @@ and assembly compatibility require schematic/PCB review.
 | J1/J2 | 20 + 20 | Pico 2 socket rows |
 | J3 | 4 | `+24V_PELV`, `0V_PELV`, `+5V_LOGIC`, `0V_PELV` |
 | J4–J7 | 4 each | BF, BR, FL, FR: `PUL−`, `DIR−`, `ENA−`, `0V_PELV` |
-| J8/J9 | 6 each | Left/right ifm RU3100 encoder: `+5V`, `0V`, `A+`, `A−`, `B+`, `B−` (single-ended A/B to the + terminals; A−/B− are the receiver mid-bias points, not encoder wires) |
+| J8/J9 | 6 each | Left/right ifm RU3100 encoder: `+5V`, `0V`, `A+`, `A−`, `B+`, `B−` (single-ended A/B to the + terminals; the − terminals are the on-board 2.5 V receiver mid-bias nodes, not encoder wires) |
 | J10 | 12 | Six isolated field-input contact pairs |
 | J11 | 8 | Four isolated driver-alarm contact pairs |
 | J12 | 4 | `GREEN−`, `RED−`, `BUZZER−`, `0V_PELV` |
 
-Each planned dry-contact input has a 10 kΩ series resistor, 47 kΩ pull-up,
+Each planned dry-contact input has a 10 kΩ series resistor, 47 kΩ 1 % pull-up,
 10 nF filter and 3.6 V clamp on the board side. An isolated NO contact is
-intended to close `SIG` to `0V_PELV`, producing a low asserted level. Each
-encoder supply and the TPL `COM` feed are intended to pass through a Bourns
-`MF-R050` resettable fuse. These values require schematic/ERC review and
-physical testing; neither a CSV nor a firmware pull-up proves their behaviour.
+intended to close `SIG` to `0V_PELV`, producing a low asserted level. Because the
+10 kΩ series resistor sits between the field terminal and the 47 kΩ board
+pull-up, the RP2350 internal pull-up must be **disabled** on all ten input GPIOs
+(`GP12`–`GP16`, `GP27`, `GP18`–`GP21`) in both firmware images; with the internal
+pull enabled the asserted LOW can reach 0.82–1.14 V and exceed the RP2350
+`VIL(max)` of 0.8 V. The board-only network guarantees
+`0.579 V = 3.3 V × 10 kΩ / (10 kΩ + 47 kΩ)` at the pin. The generated schematic
+carries the same pull-configuration contract and
+`tools/check_if_b01_gpio_mapping.py` verifies the contract list. Each encoder
+supply branch and the TPL `COM` feed pass through verified 1812 SMD PTCs:
+F1 `MF-MSMF050/60X` (60 V, 24 V branch) and F2/F3 `MF-MSMF050/16X` (16 V, 5 V
+encoder branches), both 0.50 A hold, per the Bourns MF-MSMF datasheet. These
+values require schematic/ERC review and physical testing; neither a CSV nor a
+firmware pull-up proves their behaviour.
 
 For encoder cables, the intended order is the RU3100 single-ended allocation:
 A and B to the J8/J9 A+/B+ terminals; the RU3100 has no A-bar/B-bar outputs,
-so the A−/B− terminals are the receiver **mid-bias** points, not encoder
-wires. Parameterise each RU3100 to **TTL mode** via IO-Link before wiring
-(factory setting is HTL 50 mA). The Z conductor stays unconnected and
-individually insulated (it doubles as the IO-Link line for bench
-parameterisation). Bond the cable screen at the cabinet PE entry, never to
-IF-B01 `0V_PELV`.
+so the A−/B− terminals are the receiver **mid-bias** nodes, held at 2.5 V by the
+on-board R38–R45/C14–C17 network — no A−/B− wire is fitted. Parameterise each
+RU3100 to **TTL mode** and **2048 PPR** via IO-Link before wiring (factory
+setting is HTL, 1024 PPR); the parameterisation needs an IO-Link master with a
+Class A M12 port (see [docs/23](../../docs/23-cabinet-electrical-assembly.md)).
+The Z conductor stays unconnected and individually insulated (it doubles
+as the IO-Link line for bench parameterisation). Bond the cable screen at the
+cabinet PE entry, never to IF-B01 `0V_PELV`.
 
 ## Safety boundary
 

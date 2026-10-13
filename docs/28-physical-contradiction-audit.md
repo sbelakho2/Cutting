@@ -1,6 +1,11 @@
 # Physical contradiction audit and analytic closure — S1-B-AUDIT-R1
 
 **Revision:** `S1-B-AUDIT-R1-2026-09-15`
+**Corrections 2026-10-13 (audit F23):** §2.5 rewritten as required design
+work — directly-coupled motor heat path (no belt isolation on the driven
+shaft), per-role heat-path model, 626 CN 0.5 µm fit residue, 20 K seat-rise
+requirement retained; not closed.
+
 **Status:** desk audit of the checked CAD against every archived datasheet,
 plus analytic closure of the remaining desk-computable items. Physical
 measurement gates are listed with their exact procedures and remain open.
@@ -17,7 +22,7 @@ measurement gates are listed with their exact procedures and remain open.
 | 6 | Encoder shaft | ifm RU3100 shaft Ø6 into a 6 mm coupling bore (2026-09-16 substitution) | none | Consistent (6 h6 class into coupling); M202 measuring shaft 6 h6 into ifm E60137 6 mm wheel bore |
 | 7 | A12 ring vs groove | Substituted ring (2026-09-16): Wegertseder 1950-010 DIN 471 12×1 Federstahl, d3 = 11.0 mm, s = 1.0 (−0.06). Groove Ø11.45±0.02 (11.43–11.47) sits inside the DIN 471 groove band d2 = 11.5 (−0.11). Install spread 1.0 mm (11.0 → 12.0 shaft); seated spread ≈0.45 mm — d3 < groove bottom always, so the ring grips the groove (no radial float). Axial float = groove width 1.12±0.02 (1.10–1.14) − ring 0.94–1.00 → 0.10–0.20 mm; seated OD ≈13.45 mm → ≈0.72 mm radial protrusion per side. Fit verdict PASS (coupling-ring-replacement-findings.md) | low | Accepted with assembly verification (below); no function depends on a tight A12 seat |
 | 8 | UMCL collar | Bore 10.000–10.030 on 10 h6 shaft: 0–0.039 mm clearance, key-transmitted | none | Consistent with docs/12; no interference-fit claim |
-| 9 | CB-PS05 identity | The cabinet row claims a 5 V output from a Siemens LOGO!POWER identity (a 24 V product family) | medium | Row corrected 2026-09-16: second 24 V PSU feeding the 5 V rail via the IF-B01 on-board regulator; exact 6EP3310 identity and the 5 V derivation to be confirmed at purchase. The 6EP3332-6SB00-0AY0 (CB-PS24) identity was verified against a live Automation24 listing (EUR 68.60, in stock) |
+| 9 | CB-PS05 identity | A 2026-09-16 note mis-read the Siemens 6EP3310-6SB00-0AY0 as "a 24 V product family" and rewrote the row as a second 24 V PSU | medium | Superseded 2026-10-13: the Siemens maker record confirms 6EP3310-6SB00-0AY0 is a 5 V/3 A supply (4.6–5.4 V adjustable) — the original 5 V logic-source selection was correct and is restored in the BOM/cabinet rows (CB-PS05/CT-PS05, maker link recorded); the 6EP3332-6SB00-0AY0 (CB-PS24) 24 V identity remains verified against Automation24 (EUR 68.60, in stock) |
 | 10 | STEPPERONLINE shop prices | CL57T-V41 and LE-350-36 prices are only visible in a browser | low | Purchase-time record step defined in the master plan §2.2 |
 
 ## 2. Analytic closures
@@ -66,17 +71,44 @@ the roller speed range (≈25 rad/s ≈ 240 rpm → ≈6 Nm equivalent); fault t
 5 Nm stays inside the belt rating with margin. PASS on catalogue capacity;
 belt tension is a commissioning setting.
 
-### 2.5 Bearing thermal input (F101 seats)
+### 2.5 Bearing thermal input and fit stack — REQUIRED DESIGN WORK (not closed)
 
 Holding-mode motor loss: 24HS40 5.0 A/phase, 0.60 Ω/phase → 2·5²·0.6 =
-30 W worst-case at standstill, delivered to the shaft through an insulating
-S5M belt (heat path through pulleys is the only conduction route; the belt is
-a thermal break). Roller friction heat at 50–75 N nip is negligible
-(<1 W). The seat temperature field is therefore bounded by the motor case
-temperature, which the archived datasheet does not publish; the closure path
-is: measure motor case temperature at rated hold, then apply the conduction
-calculation in [the bearing-fit record](../engineering/generated/bearing-fit/report.md).
-Recorded as calculated-input/measurement-defined, not closed.
+30 W worst-case at standstill. **Heat-path correction:** the motor is
+**directly coupled** to the driven roller shaft through the
+MK2/100/50/10/12 coupling — a metal conduction path, not the S5M belt. Only
+the *second (idler)* shaft of each cassette is belt-isolated; the belt is a
+thermal break on the pulley-to-pulley path only. The shaft roles differ:
+
+1. **Driven shaft (motor-coupled):** rotor loss conducts rotor → coupling →
+   Ø12 → Ø14/Ø15 journals → 6001/6002 seats. The coupling is a series
+   thermal resistance; the belt contributes nothing on this path.
+2. **Idler shaft (belt-driven):** heat enters only through the belt/pulley
+   contact; the belt is an isolating resistance here.
+3. **Measuring-wheel shafts (626 CN):** independent path (wheel friction and
+   encoder); SKF's thermal equation consumes 1.5 µm of the CN2–13 µm
+   clearance at a 10 K ring difference, leaving **0.5 µm before any
+   press-fit loss** (docs/13 §3).
+4. **Payoff spindle (6204):** ambient/spool-friction path; no motor coupling.
+
+**Concrete plan (REQUIRED DESIGN WORK — not closed):**
+
+- build a heat-path model per shaft role (source → series conduction
+  resistances → sink), using the measured motor case temperature at rated
+  hold as the boundary (the archived datasheet publishes none);
+- calculate the seat temperature rise for each role and keep the existing
+  **20 K seat-rise requirement** (the documented HOLD is 29.66 K vs the
+  20 K envelope — the overage must be closed by the model or a design
+  change, not waived);
+- verify the resulting fits/clearances at the corners (max seat ΔT,
+  min clearance), including press-fit loss, for 6001/6002 (feed) and the
+  626 CN measuring-wheel stack; apply the conduction calculation in
+  [the bearing-fit record](../engineering/generated/bearing-fit/report.md);
+- roller-friction heat at 50–75 N nip is negligible (<1 W) on every role.
+
+Until this model, the corner-case fit verification and the motor-case
+measurement exist, the thermal/fit field is **not closed**; no gate is
+closed by the desk statement above.
 
 ### 2.6 Regeneration and discharge
 

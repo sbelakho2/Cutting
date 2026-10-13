@@ -18,6 +18,15 @@ the build record.
    fixture after welding; perpendicularity of the spindle axis to the
    base top ≤0.15/300; no cracks/undercut; paint the completed assembly.
 
+## 1b. P008 drive boss (do this during §2 welding)
+
+Weld the P008 boss (Ø54.6 × 12, 20 H7 bore, 6 JS9 keyseat) to the **left**
+flange's inner face, inside the hub tube. The keyseat must line up with the
+spindle keyseat when the boss bore is slid over the spindle: check it with
+the key before welding. The spool must then turn with the spindle: if it can
+spin freely on the shaft, the brake does nothing — refit. Right flange keeps
+its plain Ø20.5 pilot bore.
+
 ## 2. Payoff spool weld (P001 flanges → hub tube)
 
 1. **Preparation:** tube ends square; flanges deburred; the hub passes
@@ -27,6 +36,14 @@ the build record.
 3. **Inspection:** flange runout ≤1.0 mm at Ø400; hub concentricity to
    the Ø20.5 flange bores ≤0.5; visual weld quality; balance by adding
    no extra material — mark the heavy point if runout is marginal.
+
+## 2b. Blade backing (H007)
+
+Before fitting the blades: slide the H007 backing plate (30 × 46 × 8) into
+the slot behind each blade seat in H004. Set the blade against the backing
+with shim stock to the 20 µm face-gap target from docs/36 P8, then lock the
+blade screws. The backing carries the cutting force; the blade must not be
+the part that deflects.
 
 ## 3. Guard jamb plate (G106) and door frame
 

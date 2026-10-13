@@ -178,11 +178,20 @@ def validate_controls_spec() -> None:
         raise ValueError(f"controls_spec.hpp no longer matches IF-B01 GPIO allocation: {missing}")
 
 
-def header_pins(count: int, names: list[str], kinds: list[str], x: float = -10.16) -> tuple[Pin, ...]:
+def header_pins(
+    count: int, names: list[str], kinds: list[str], x: float = -10.16, reverse_layout: bool = False
+) -> tuple[Pin, ...]:
     if len(names) != count or len(kinds) != count:
         raise ValueError("header pin metadata count mismatch")
     return tuple(
-        Pin(str(index + 1), names[index], kinds[index], x, ((count - 1) / 2 - index) * 2.54, 0)
+        Pin(
+            str(index + 1),
+            names[index],
+            kinds[index],
+            x,
+            ((index - (count - 1) / 2) if reverse_layout else ((count - 1) / 2 - index)) * 2.54,
+            0,
+        )
         for index in range(count)
     )
 
@@ -223,6 +232,39 @@ PICO_RIGHT_KINDS = [
     "input", "power_in", "power_in", "power_in",
 ]
 
+# Physical Pico 2 (SC1631) pinout reference used to prove socket orientation.
+# Physical pin 1 (GP0) is the top of the left row; physical pin 21 (GP16) is the
+# bottom of the right row; physical pin 40 (VBUS) is the top of the right row.
+PICO2_PHYSICAL_ROW_FUNCTION = (
+    "GP0", "GP1", "GND", "GP2", "GP3", "GP4", "GP5", "GND", "GP6", "GP7",
+    "GP8", "GP9", "GND", "GP10", "GP11", "GP12", "GP13", "GND", "GP14", "GP15",
+    "GP16", "GP17", "GND", "GP18", "GP19", "GP20", "GP21", "GND", "GP22", "RUN",
+    "GP26", "GP27", "AGND", "GP28", "ADC_VREF", "3V3", "3V3_EN", "GND", "VSYS", "VBUS",
+)
+
+# F04 pull-configuration contract: all ten dry-contact inputs rely solely on the
+# board's external 47 kOhm 1 % pull-up.  RP2350 internal pulls MUST be disabled in
+# BOTH firmware images on exactly these GPIOs, otherwise the guaranteed LOW rises
+# to 0.82-1.14 V and exceeds the RP2350 VIL(max) of 0.8 V.
+CONTACT_INPUTS = (
+    ("IN_START", "GP12"), ("IN_STOP_OK", "GP13"), ("IN_RESET", "GP14"),
+    ("IN_SAFETY_OK", "GP15"), ("IN_HOME_REAR", "GP16"), ("IN_HOME_FRONT", "GP27"),
+    ("IN_ALM_BF", "GP18"), ("IN_ALM_BR", "GP19"), ("IN_ALM_FL", "GP20"), ("IN_ALM_FR", "GP21"),
+)
+PULL_DISABLED_GPIO_ORDER = tuple(gpio for _, gpio in CONTACT_INPUTS)
+PULL_CONTRACT_MARKER = "PULL-CONFIG CONTRACT"
+
+# F03 RU3100 single-ended TTL interface: one 2.5 V mid-bias divider and filter
+# capacitor per receiver minus input (node, encoder rail, top R, bottom R, filter C).
+RECEIVER_BIAS_CHANNELS = (
+    ("L_ENC_A_N", "+5V_ENC_L", "R38", "R39", "C14"),
+    ("L_ENC_B_N", "+5V_ENC_L", "R40", "R41", "C15"),
+    ("R_ENC_A_N", "+5V_ENC_R", "R42", "R43", "C16"),
+    ("R_ENC_B_N", "+5V_ENC_R", "R44", "R45", "C17"),
+)
+BIAS_RESISTOR_VALUE = "10k"
+BIAS_CAPACITOR_VALUE = "100nF 16V"
+
 
 SYMBOLS: dict[str, SymbolSpec] = {
     "PICO2_LEFT_SOCKET": SymbolSpec(
@@ -230,8 +272,9 @@ SYMBOLS: dict[str, SymbolSpec] = {
         header_pins(20, PICO_LEFT_NAMES, PICO_LEFT_KINDS), 5.08, 26.67,
     ),
     "PICO2_RIGHT_SOCKET": SymbolSpec(
-        "PICO2_RIGHT_SOCKET", "J", "Pico 2 right socket", "Pico 2 SC1631 physical pins 21-40 socket row",
-        header_pins(20, PICO_RIGHT_NAMES, PICO_RIGHT_KINDS), 5.08, 26.67,
+        "PICO2_RIGHT_SOCKET", "J", "Pico 2 right socket",
+        "Pico 2 SC1631 physical pins 21-40 right socket row; pin 1 (GP16) is drawn at the row bottom exactly where physical pin 21 sits",
+        header_pins(20, PICO_RIGHT_NAMES, PICO_RIGHT_KINDS, reverse_layout=True), 5.08, 26.67,
     ),
     "HDR4_PELV": SymbolSpec(
         "HDR4_PELV", "J", "MSTB 2.5 4", "Four-position PELV supply header",
@@ -305,7 +348,7 @@ SYMBOLS: dict[str, SymbolSpec] = {
 
 FOOTPRINT_BY_SYMBOL = {
     "PICO2_LEFT_SOCKET": "PICO_SOCKET_1X20",
-    "PICO2_RIGHT_SOCKET": "PICO_SOCKET_1X20",
+    "PICO2_RIGHT_SOCKET": "PICO_SOCKET_1X20_RIGHT",
     "HDR4_PELV": "MSTB_2_5_4_G_5_08",
     "HDR4_IO": "MSTB_2_5_4_G_5_08",
     "ENC_HDR6": "MSTB_2_5_6_G_5_08",
@@ -395,13 +438,20 @@ def make_components(parts: dict[str, dict[str, str]]) -> list[Component]:
         "8": "0V_PELV", "9": "+24V_TPL_COM", "10": None, "11": None, "12": "BUZZER_NEG", "13": "RED_NEG", "14": "GREEN_NEG", "15": "DRV_ENA_NEG", "16": "FR_DIR_NEG",
     }, 256.54, 152.4, "TPL7407LDR")
 
-    add("F1", "FUSE", {"1": "+24V_PELV", "2": "+24V_TPL_COM"}, 101.6, 132.08, "MF-R050")
-    add("F2", "FUSE", {"1": "+5V_LOGIC", "2": "+5V_ENC_L"}, 266.7, 43.18, "MF-R050")
-    add("F3", "FUSE", {"1": "+5V_LOGIC", "2": "+5V_ENC_R"}, 266.7, 83.82, "MF-R050")
+    add("F1", "FUSE", {"1": "+24V_PELV", "2": "+24V_TPL_COM"}, 101.6, 132.08, "MF-MSMF050/60X")
+    add("F2", "FUSE", {"1": "+5V_LOGIC", "2": "+5V_ENC_L"}, 266.7, 43.18, "MF-MSMF050/16X")
+    add("F3", "FUSE", {"1": "+5V_LOGIC", "2": "+5V_ENC_R"}, 266.7, 83.82, "MF-MSMF050/16X")
 
-    encoder_pairs = (("L_ENC_A_P", "L_ENC_A_N"), ("L_ENC_B_P", "L_ENC_B_N"), ("R_ENC_A_P", "R_ENC_A_N"), ("R_ENC_B_P", "R_ENC_B_N"))
-    for index, nets in enumerate(encoder_pairs, start=1):
-        add(f"R{index}", "R", {"1": nets[0], "2": nets[1]}, 233.68, 43.18 + (index - 1) * 10.16, "120R", footprint="R_1206_3216")
+    # F03: the RU3100 is wired single-ended (TTL mode); the four RS-422 120 ohm
+    # differential terminators (R1-R4) are removed.  Each receiver minus input is
+    # held at the 2.5 V mid-bias of the encoder's own 5 V TTL swing by a 10k/10k
+    # 1 % divider with a 100 nF filter.  R1-R4 no longer exist.
+    for offset, (node_net, rail_net, top_ref, bottom_ref, cap_ref) in enumerate(RECEIVER_BIAS_CHANNELS):
+        x = 190.5 + offset * 30.48
+        y = 114.3
+        add(top_ref, "R", {"1": rail_net, "2": node_net}, x, y, BIAS_RESISTOR_VALUE)
+        add(bottom_ref, "R", {"1": "0V_PELV", "2": node_net}, x, y + 10.16, BIAS_RESISTOR_VALUE)
+        add(cap_ref, "C", {"1": node_net, "2": "0V_PELV"}, x, y + 20.32, BIAS_CAPACITOR_VALUE)
     add("R5", "R", {"1": "0V_PELV", "2": "DRV_ENABLE_IN"}, 256.54, 193.04, "100k")
 
     driver_resistors = (
@@ -412,11 +462,7 @@ def make_components(parts: dict[str, dict[str, str]]) -> list[Component]:
     for offset, nets in enumerate(driver_resistors):
         add(f"R{offset + 6}", "R", {"1": nets[0], "2": nets[1]}, 139.7 + (offset % 4) * 17.78, 180.34 + (offset // 4) * 10.16, "1k")
 
-    input_defs = (
-        ("IN_START", "GP12"), ("IN_STOP_OK", "GP13"), ("IN_RESET", "GP14"), ("IN_SAFETY_OK", "GP15"), ("IN_HOME_REAR", "GP16"),
-        ("IN_HOME_FRONT", "GP27"), ("IN_ALM_BF", "GP18"), ("IN_ALM_BR", "GP19"), ("IN_ALM_FL", "GP20"), ("IN_ALM_FR", "GP21"),
-    )
-    for offset, (field_net, gpio) in enumerate(input_defs):
+    for offset, (field_net, gpio) in enumerate(CONTACT_INPUTS):
         column, row = offset % 5, offset // 5
         x = 25.4 + column * 68.58
         y = 203.2 + row * 35.56
@@ -429,7 +475,10 @@ def make_components(parts: dict[str, dict[str, str]]) -> list[Component]:
     add("C2", "C", {"1": "+24V_TPL_COM", "2": "0V_PELV"}, 152.4, 132.08, "100nF 50V")
     add("C3", "C", {"1": "+24V_TPL_COM", "2": "0V_PELV"}, 231.14, 132.08, "100nF 50V")
 
-    test_point_nets = ("+24V_PELV", "+5V_LOGIC", "3V3_MCU", "0V_PELV", "DRV_ENA_NEG", "GP0", "GP8", "GP10")
+    test_point_nets = (
+        "+24V_PELV", "+5V_LOGIC", "3V3_MCU", "0V_PELV", "DRV_ENA_NEG", "GP0", "GP8", "GP10",
+        "L_ENC_A_N", "L_ENC_B_N", "R_ENC_A_N", "R_ENC_B_N",
+    )
     for index, net in enumerate(test_point_nets, start=1):
         add(f"TP{index}", "TP", {"1": net}, 127 + (index - 1) * 17.78, 279.4, f"TP {net}")
     for index, (x, y) in enumerate(((12.7, 12.7), (398.78, 12.7), (12.7, 279.4), (398.78, 279.4)), start=1):
@@ -468,6 +517,47 @@ def validate(parts: dict[str, dict[str, str]], components: list[Component]) -> N
     for reference in ("C2", "C3"):
         if parts[reference]["exact_order"] != "GRM188R71H104KA93D":
             raise ValueError(f"{reference} must be a 50 V COM bypass capacitor")
+
+    if {"R1", "R2", "R3", "R4"} & set(by_reference):
+        raise ValueError("the RU3100 interface is single-ended; the R1-R4 120 ohm terminators must not exist")
+
+    ptc_expectations = {"F1": "MF-MSMF050/60X", "F2": "MF-MSMF050/16X", "F3": "MF-MSMF050/16X"}
+    for reference, order in ptc_expectations.items():
+        if parts[reference]["exact_order"] != order:
+            raise ValueError(f"{reference} must be the verified 1812 SMD PTC {order}")
+        if by_reference[reference].footprint != "PTC_1812":
+            raise ValueError(f"{reference} must use the SMD PTC_1812 footprint")
+
+    for node_net, rail_net, top_ref, bottom_ref, cap_ref in RECEIVER_BIAS_CHANNELS:
+        expected = {
+            top_ref: {"1": rail_net, "2": node_net},
+            bottom_ref: {"1": "0V_PELV", "2": node_net},
+            cap_ref: {"1": node_net, "2": "0V_PELV"},
+        }
+        for reference, nets in expected.items():
+            if by_reference[reference].nets != nets:
+                raise ValueError(f"{reference} must implement the 2.5 V mid-bias for {node_net}")
+        if by_reference[top_ref].value != BIAS_RESISTOR_VALUE or by_reference[bottom_ref].value != BIAS_RESISTOR_VALUE:
+            raise ValueError(f"{top_ref}/{bottom_ref} must be {BIAS_RESISTOR_VALUE} bias divider resistors")
+        if by_reference[cap_ref].value != BIAS_CAPACITOR_VALUE:
+            raise ValueError(f"{cap_ref} must be the {BIAS_CAPACITOR_VALUE} bias filter")
+
+    contract_gpios = {by_reference[f"R{offset + 28}"].nets["2"] for offset in range(len(CONTACT_INPUTS))}
+    if contract_gpios != set(PULL_DISABLED_GPIO_ORDER):
+        raise ValueError("dry-contact external pull-up GPIO set does not match the pull contract")
+
+    pin_net_by_function = {"GND": "0V_PELV", "AGND": "0V_PELV", "3V3": "3V3_MCU", "VSYS": "+5V_LOGIC"}
+    for reference, physical_base in (("J1", 0), ("J2", 20)):
+        component = by_reference[reference]
+        for pin in range(1, 21):
+            function = PICO2_PHYSICAL_ROW_FUNCTION[physical_base + pin - 1]
+            expected_net = pin_net_by_function.get(function)
+            if expected_net is None and function.startswith("GP"):
+                expected_net = function
+            if component.nets[str(pin)] != expected_net:
+                raise ValueError(
+                    f"{reference}-{pin} must carry physical Pico pin {physical_base + pin} ({function}) net {expected_net}"
+                )
 
     for component in components:
         symbol = SYMBOLS[component.symbol]
@@ -553,6 +643,8 @@ def render_schematic(parts: dict[str, dict[str, str]], components: list[Componen
         "\t\t(comment 1 \"DRAFT — NOT FOR FABRICATION, ASSEMBLY, ENERGISATION OR SAFETY USE\")",
         "\t\t(comment 2 \"Placed/routed draft PCB source; review and release gates remain open\")",
         "\t\t(comment 3 \"C2/C3: 50 V minimum because TPL COM is connected to +24V_TPL_COM\")",
+        "\t\t(comment 4 \"J8/J9 RU3100: single-ended TTL via IO-Link; A-/B- at a 2.5 V mid-bias (10k/10k 1 %, 100 nF); R1-R4 120 ohm terminators removed\")",
+        "\t\t(comment 5 \"F1-F3: verified 1812 SMD PTCs MF-MSMF050/60X (24 V branch) and MF-MSMF050/16X (5 V encoder branches)\")",
         "\t)",
         "\t(lib_symbols",
     ]
@@ -568,6 +660,21 @@ def render_schematic(parts: dict[str, dict[str, str]], components: list[Componen
                 lines.append(f"\t(label {quoted(net)} (at {fmt(x)} {fmt(y)} 0) {effects()} )")
     for component in components:
         lines.extend(render_instance(component, parts))
+    contract_text = (
+        f"{PULL_CONTRACT_MARKER}: RP2350 internal pull-up/-down MUST be disabled in BOTH firmware images on "
+        + " ".join(PULL_DISABLED_GPIO_ORDER)
+        + "; the only pull on each dry-contact pin is the board external 47k 1 % pull-up to 3V3_MCU. "
+        "Nominal LOW = 3.3 V x 10k / (10k + 47k) = 0.579 V < VIL max 0.8 V."
+    )
+    bias_text = (
+        "J8/J9 RU3100 single-ended TTL (TTL mode selected via IO-Link): encoder A/B drive J8/J9 pins 3/5 (A+/B+); "
+        "A-/B- (pins 4/6) are held at the 2.5 V mid-bias by R38-R45 10k 1 % and C14-C17 100 nF; "
+        "the R1-R4 120 ohm differential terminators are removed."
+    )
+    for text, y in ((contract_text, 288.29), (bias_text, 293.37)):
+        lines.append(
+            f"\t(text {quoted(text)} (exclude_from_sim no) (at 12.7 {fmt(y)} 0) {effects()})"
+        )
     lines.extend(("\t(sheet_instances (path \"/\" (page \"1\")))", "\t(embedded_fonts no)", ")", ""))
     return "\n".join(lines)
 
@@ -622,16 +729,25 @@ def render_terminal_header(name: str, count: int) -> str:
     return "\n".join(lines)
 
 
-def render_pico_socket() -> str:
-    lines = footprint_header("PICO_SOCKET_1X20", "through_hole")
-    lines.extend((
+def pico_socket_silk(reverse: bool) -> list[str]:
+    """Silk/courtyard lines shared by the library file and board instance."""
+    marker_y = 49.59 if reverse else -1.33
+    marker_end = 0.0
+    lines = [
         "\t(fp_rect (start -1.33 -1.33) (end 1.33 49.59) (stroke (width 0.12) (type default)) (fill none) (layer \"F.SilkS\"))",
         "\t(fp_rect (start -1.77 -1.77) (end 1.77 50.03) (stroke (width 0.05) (type default)) (fill none) (layer \"F.CrtYd\"))",
-        "\t(fp_line (start -1.33 -1.33) (end 0 -1.33) (stroke (width 0.3) (type default)) (layer \"F.SilkS\"))",
-    ))
+        f"\t(fp_line (start -1.33 {fmt(marker_y)}) (end {fmt(marker_end)} {fmt(marker_y)}) (stroke (width 0.3) (type default)) (layer \"F.SilkS\"))",
+    ]
+    return lines
+
+
+def render_pico_socket(name: str = "PICO_SOCKET_1X20", reverse: bool = False) -> str:
+    lines = footprint_header(name, "through_hole")
+    lines.extend(pico_socket_silk(reverse))
     for index in range(20):
+        pad_y = (48.26 - index * 2.54) if reverse else (index * 2.54)
         shape = "rect" if index == 0 else "circle"
-        lines.append(f"\t(pad {quoted(str(index + 1))} thru_hole {shape} (at 0 {fmt(index * 2.54)}) (size 1.8 1.8) (drill 1) (layers \"*.Cu\" \"*.Mask\"))")
+        lines.append(f"\t(pad {quoted(str(index + 1))} thru_hole {shape} (at 0 {fmt(pad_y)}) (size 1.8 1.8) (drill 1) (layers \"*.Cu\" \"*.Mask\"))")
     lines.extend((")", ""))
     return "\n".join(lines)
 
@@ -682,8 +798,9 @@ def footprint_sources() -> dict[Path, str]:
     library = DESIGN_DIR / "if-b01.pretty"
     files: dict[Path, str] = {
         library / "PICO_SOCKET_1X20.kicad_mod": render_pico_socket(),
+        library / "PICO_SOCKET_1X20_RIGHT.kicad_mod": render_pico_socket("PICO_SOCKET_1X20_RIGHT", reverse=True),
         library / "SOIC_16_3_9x9_9_P1_27.kicad_mod": render_soic16(),
-        library / "PTC_1812.kicad_mod": render_smd_two_pad("PTC_1812", 2.1375, 1.125, 3.4),
+        library / "PTC_1812.kicad_mod": render_smd_two_pad("PTC_1812", 2.39, 1.68, 2.95),
         library / "R_0603_1608.kicad_mod": render_smd_two_pad("R_0603_1608", 0.825, 0.8, 0.95),
         library / "R_1206_3216.kicad_mod": render_smd_two_pad("R_1206_3216", 1.4625, 1.125, 1.75),
         library / "C_0603_1608.kicad_mod": render_smd_two_pad("C_0603_1608", 0.775, 0.9, 0.95),
@@ -713,7 +830,10 @@ def board_placements(components: list[Component]) -> dict[str, BoardPlacement]:
     than relying on an unreviewable autorouter result.
     """
     placements = {
-        # Pico 2 socket rows: pin-row origins are exactly 17.78 mm apart.
+        # Pico 2 socket rows: physical pin columns are exactly 17.78 mm apart.
+        # J2 uses the dedicated reversed (right-row) socket footprint so its pad 1
+        # (physical pin 21, GP16) sits at the row bottom exactly where a real
+        # Pico 2 places pin 21.
         "J1": BoardPlacement(100.0, 28.0),
         "J2": BoardPlacement(117.78, 28.0),
         # Left-edge field wiring: terminal pins are vertical and fan inward.
@@ -735,9 +855,13 @@ def board_placements(components: list[Component]) -> dict[str, BoardPlacement]:
     }
     # The electrical-component yard reserves an independent horizontal escape
     # cell for each footprint.  The allocation follows router order so each
-    # F.Cu dogbone remains local; it is not a dense experimental packing.
+    # F.Cu dogbone remains local; it is not a dense experimental packing.  When
+    # the primary lane set reaches BOARD_WIDTH - 75 mm the remainder wraps into
+    # a second lower lane set above the routing-bus alley.
     cursor = 180.0
     lane_y = (92.0, 116.0, 140.0, 164.0, 188.0, 212.0)
+    overflow_lane_y = (236.0, 260.0)
+    overflow = False
     for index, component in enumerate(
         sorted(
             (component for component in components if component.on_board and component.reference not in placements),
@@ -756,7 +880,11 @@ def board_placements(components: list[Component]) -> dict[str, BoardPlacement]:
             cell_width = 4.0
         else:
             cell_width = 5.0
-        y = lane_y[index % len(lane_y)]
+        if not overflow and cursor + cell_width > BOARD_WIDTH - 75.0:
+            overflow = True
+            cursor = 180.0
+        lanes = overflow_lane_y if overflow else lane_y
+        y = lanes[index % len(lanes)]
         if component.symbol == "TP":
             y = 264.0
         placements[component.reference] = BoardPlacement(cursor + cell_width / 2, y)
@@ -834,8 +962,9 @@ def pad_geometry(component: Component) -> dict[str, tuple[float, float, str, flo
             for index in range(count)
         }
     if component.symbol in {"PICO2_LEFT_SOCKET", "PICO2_RIGHT_SOCKET"}:
+        reverse = component.symbol == "PICO2_RIGHT_SOCKET"
         return {
-            str(index + 1): (0.0, index * 2.54, "tht", 0.9, 0.9)
+            str(index + 1): (0.0, (48.26 - index * 2.54) if reverse else (index * 2.54), "tht", 0.9, 0.9)
             for index in range(20)
         }
     if component.symbol in {"AM26LV32EIDR", "TPL7407LDR"}:
@@ -849,7 +978,7 @@ def pad_geometry(component: Component) -> dict[str, tuple[float, float, str, flo
         "R_0603_1608": (0.825, 0.4, 0.475),
         "C_0603_1608": (0.775, 0.45, 0.475),
         "R_1206_3216": (1.4625, 0.5625, 0.875),
-        "PTC_1812": (2.1375, 0.5625, 1.7),
+        "PTC_1812": (2.39, 0.84, 1.475),
         "SOD_323": (1.05, 0.3, 0.225),
     }
     if component.footprint in two_pad_geometries:
@@ -952,10 +1081,12 @@ def assign_escape_vias(pads: list[BoardPad], buses: dict[str, float]) -> list[Es
     differently-named column, and the resulting topology is reproducible and
     straightforward to inspect in KiCad.
     """
-    through_hole = [pad for pad in pads if pad.kind == "tht"]
-    # The four non-plated mounting holes are physical blockers even though
-    # they have no schematic pin or electrical net.
-    blockers = through_hole + [
+    # Every placed copper pad of a differently-named net is a physical blocker
+    # for an inner-layer vertical breakout: a through-via barrel passes all
+    # copper layers, and F.Cu dogbones must not cross a foreign pad.  The four
+    # non-plated mounting holes are blockers even though they have no schematic
+    # pin or electrical net.
+    blockers = list(pads) + [
         BoardPad(f"MH{index}", "", "", x, y, "tht", 1.6, 0, 0.0)
         for index, (x, y) in enumerate(((5.0, 5.0), (745.0, 5.0), (5.0, 395.0), (745.0, 395.0)), start=1)
     ]
@@ -1072,12 +1203,9 @@ def render_board_footprint(
                 f"(drill 1.4) (layers \"*.Cu\" \"*.Mask\"){pad_net_clause(component, pin, component.nets[pin], net_ids, unconnected_net_ids)}{roundrect})"
             )
     elif component.symbol in {"PICO2_LEFT_SOCKET", "PICO2_RIGHT_SOCKET"}:
-        lines.extend((
-            "\t\t(attr through_hole)",
-            "\t\t(fp_rect (start -1.33 -1.33) (end 1.33 49.59) (stroke (width 0.12) (type default)) (fill none) (layer \"F.SilkS\"))",
-            "\t\t(fp_rect (start -1.77 -1.77) (end 1.77 50.03) (stroke (width 0.05) (type default)) (fill none) (layer \"F.CrtYd\"))",
-            "\t\t(fp_line (start -1.33 -1.33) (end 0 -1.33) (stroke (width 0.3) (type default)) (layer \"F.SilkS\"))",
-        ))
+        reverse = component.symbol == "PICO2_RIGHT_SOCKET"
+        lines.append("\t\t(attr through_hole)")
+        lines.extend(pico_socket_silk(reverse))
         for pin, (x, y, _, _, _) in geometry.items():
             shape = "rect" if pin == "1" else "circle"
             lines.append(
@@ -1102,7 +1230,7 @@ def render_board_footprint(
             "R_0603_1608": (0.825, 0.4, 0.475),
             "C_0603_1608": (0.775, 0.45, 0.475),
             "R_1206_3216": (1.4625, 0.5625, 0.875),
-            "PTC_1812": (2.1375, 0.5625, 1.7),
+            "PTC_1812": (2.39, 0.84, 1.475),
             "SOD_323": (1.05, 0.3, 0.225),
         }[component.footprint]
         lines.extend((
@@ -1257,6 +1385,39 @@ def render_manifest(parts: dict[str, dict[str, str]], components: list[Component
         "connector_net_expectations": connector_map,
         "component_pin_net_expectations": {component.reference: component.nets for component in components if component.in_bom},
         "intentional_no_connects": {component.reference: [pin for pin, net in component.nets.items() if net is None] for component in components if any(net is None for net in component.nets.values())},
+        "pico_socket_evidence": {
+            "row_spacing_mm": 17.78,
+            "row_span_mm": 48.26,
+            "pin_pitch_mm": 2.54,
+            "physical_pin_21_position": "bottom of the right socket row, same Y as physical pin 20",
+            "detection": "tools/check_if_b01_gpio_mapping.py recomputes the physical Pico pin of every J1/J2 pad from pad coordinates and compares it with the intended pin function",
+        },
+        "gpio_pull_configuration_contract": {
+            "marker": PULL_CONTRACT_MARKER,
+            "requirement": "RP2350 internal pull-up/pull-down MUST be disabled in BOTH firmware images on the listed dry-contact/alarm GPIOs; the only pull is the board external 47 kOhm 1 % pull-up to 3V3_MCU.",
+            "gpios": list(PULL_DISABLED_GPIO_ORDER),
+            "gpio_nets": {gpio: net for net, gpio in CONTACT_INPUTS},
+            "series_ohm": 10000,
+            "external_pull_up_ohm": 47000,
+            "rail_v_nominal": 3.3,
+            "filter": "10 nF",
+            "clamp": "BZX384-C3V6",
+            "nominal_low_v": 0.579,
+            "vil_max_v": 0.8,
+            "worst_case_low_v": 0.621,
+            "worst_case_basis": "3.465 V (+5 %) rail and 46.53 kOhm (-1 %) external pull-up give 0.613 V; 1 uA pin leakage into the 10 kOhm/47 kOhm node adds 8 mV -> 0.621 V < 0.8 V",
+        },
+        "receiver_minus_input_bias": {
+            "encoder_mode": "RU3100 single-ended TTL, TTL mode selected via IO-Link",
+            "terminator_state": "R1-R4 120 ohm differential terminators removed; no 120 ohm part exists on the board",
+            "channels": {
+                node_net: {"top_resistor": top_ref, "bottom_resistor": bottom_ref, "filter_capacitor": cap_ref, "rail": rail_net}
+                for node_net, rail_net, top_ref, bottom_ref, cap_ref in RECEIVER_BIAS_CHANNELS
+            },
+            "divider_ohm": 10000,
+            "unloaded_bias_v": 2.5,
+            "thevenin_ohm": 5000,
+        },
         "release_holds": [
             "This source is a placed/routed draft; actual connector fit, fabricator stack-up and human layout review remain incomplete.",
             "A clean source DRC cannot replace fabrication inspection or physical board verification.",

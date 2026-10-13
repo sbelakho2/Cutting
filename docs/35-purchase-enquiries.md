@@ -85,6 +85,9 @@ analysis in [axis-replacement-findings](../engineering/sources/axis-replacement-
 **Remaining action:** record the receipt lot and certificate in
 incoming-inspection-template.csv; verify C grade, lead 10, 340/440 mm and
 the Ø8 h7 shaft at incoming inspection. No letter is sent for this line.
+**2026-10-13 (audit F13):** the frozen built configuration is the custom
+axis [docs/39](39-custom-cut-axis.md) (SFU1610-class 10 mm lead); this HIWIN
+line remains a **fallback purchase lead only** and holds no build authority.
 
 ---
 
@@ -304,7 +307,7 @@ lines; no landed-cost comparison exists anywhere in the repository).
 
 | # | Line | Quantity |
 |---|---|---|
-| 1 | HIWIN KK8610C-340A1-F0 (C-grade substitution, MISUMI VN detail 221005545419, VND 21,146,653/unit) | 2 |
+| 1 | Custom S1-B cut axis component sets ([docs/39](39-custom-cut-axis.md), frozen 10 mm lead): AX-R01 HGR20 rail+blocks ×4 sets, AX-S01 SFU1610-class screw+nut+supports ×2 sets (HIWIN KK8610C fallback lead, MISUMI VN detail 221005545419, VND 21,146,653/unit, quote only if the custom supply fails) | 4 + 2 |
 | 2 | R+W MK2/100/50/10/12 | 2 |
 | 3 | R+W MK2/100/50/8/14 | 2 |
 | 4 | ifm E60137 measuring wheel (U:200 N:06) | 2 |
@@ -315,7 +318,7 @@ lines; no landed-cost comparison exists anywhere in the repository).
 | 9 | Wegertseder 1950-010 DIN 471 12×1 Federstahl rings (A12 substitution, 100-pc pack) | 8 |
 | 10 | Standard hardware (traceable industrial supplier), full list below | per row |
 | 11 | Schneider Acti9 iC60N 2P C10 A9F54210 (AC incoming MCB half) | 1 |
-| 12 | Siemens 6EP3332-7SB00-0AX0 (CT-PS36 register row) | 1 |
+| 12 | Siemens LOGO!POWER 6EP3310-6SB00-0AY0, **5 V/3 A** (CT-PS05; the correct 5 V identity — the earlier `6EP3332-7SB00-0AX0` pairing is removed, audit F28). The 24 V supply is CT-PS24 6EP3332-6SB00-0AY0 (merchandise price already observed) | 1 |
 | 13 | Texas Instruments AM26LV32EIDR / TPL7407LDR (CT-IF-U1 / CT-IF-U2-U3) | 1 / 2 |
 
 Line 10 — standard hardware (rows per
@@ -362,7 +365,8 @@ and payment terms; **EXW/FOB** seller terms (incoterm and named place);
 freight to your **Tunisia sous-douane consolidation point**; forwarder
 handling; air/sea freight; destination charges and customs terms (**DDU
 sous-douane**); lead time; validity. State the consolidated weight/volume
-and any dangerous-goods or long-item surcharges (the HIWIN 440 mm axis).
+and any dangerous-goods or long-item surcharges (the 440 mm custom axis and
+500 mm screw sets; the HIWIN fallback lead is the same length class).
 
 **Delivery address type:** Tunisia sous-douane company — delivery to the
 forwarder's Tunisia consolidation point with DDU sous-douane terms.

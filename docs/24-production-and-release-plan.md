@@ -32,6 +32,31 @@ execution path.
    [the link check](../tools/check_links.zsh). Their passing status establishes
    only source consistency.
 
+**Historical records — no build authority (audit F35).** The following
+records are superseded and must not be used to fill any build instruction:
+
+- **HIWIN KK86 axis material** (KK8610C leads, KK86-era axis drawings and
+  studies): superseded 2026-09-17 by the custom axis
+  [docs/39](39-custom-cut-axis.md). The frozen build configuration is the
+  custom axis with the SFU1610-class **10 mm lead** (docs/39 §3); the HIWIN
+  rows remain historical/fallback purchase leads only.
+- **Guard/payoff R1:** [docs/25](25-preliminary-guard-and-payoff.md) and the
+  R1 preliminary guard/payoff geometry are superseded by the R2 selection
+  [docs/26](26-guard-and-payoff-selection.md).
+- **Feed-shaft drawing revisions** F101-R4 and F101-R5
+  ([F101-R4-shaft.pdf](../engineering/generated/drawings/F101-R4-shaft.pdf),
+  [F101-R5-shaft.pdf](../engineering/generated/drawings/F101-R5-shaft.pdf)):
+  superseded by F101-R6.
+- **M201-R1 encoder plate** and the 1024 PPR-era measurement numbers/error
+  budgets: superseded by M201-R2 and the 2048 PPR R2 record
+  ([docs/13](13-measuring-interfaces-and-calibration.md),
+  [docs/42](42-process-dynamics-r2.md)).
+- **Older adapter FEM boundary studies** (arbitrary square node-support
+  patches): superseded by the resolved-pressure model
+  ([adapter contact findings](../engineering/sources/adapter-contact-findings.md)).
+- [docs/28](28-physical-contradiction-audit.md) is retained as a historical
+  audit record, not an active instruction.
+
 ## 2. Procurement and incoming control
 
 1. Purchase only an exact manufacturer/order code from an approved selection.
@@ -107,8 +132,10 @@ currency, freight/duty terms, lead time and validity.
 | TR-RR01 | SEEGER-ORBIS A12 ×8; brand-exact has no live price; verified DIN 471 12×1 rings 100 pcs EUR 8.57 in stock ([Wegertseder Art. 1950-010](https://www.wegertseder.com/DIN-471-Sicherungsringe-fuer-Wellen-Regelausfuehrung-FEDERSTAHL-Diameter-12)); Amazon MZA EUR 0.62/pc; Simply Bearings GBP 0.85/pc | Any DIN 471 12×1 federstahl ring meets the groove; brand substitution needs a change record |
 | Standard hardware (TR-K01; all TR-FB*/TR-FW*/TR-FD*/ME-FB*/ME-FW* rows; the ISO4762/ISO4032/ISO7092/DIN913/DIN929 rows of the mechanism BOM) | Priced anchors in stock at [Wegertseder](https://www.wegertseder.com/): ISO4762 M5×16 class 10.9, 50 pcs EUR 6.19 (Art. 2540-034); ISO 8734-class 3m6×20 hardened dowels (DIN 6325 m6), 10 pcs EUR 2.73 (Art. 1018-078) | Commodity purchase-to-requirement; record certificate and lot at receipt |
 | CB-AC-INCOMING (MCB half) | Schneider Acti9 iC60N 2P C10, A9F54210 ×1 | No reachable public price 2026-09-16 (automation24 category/search unreachable to automated fetch, Conrad 1P/3P/4P iC60N only, ebmia 2P B-curve only, se.com 403); confirm on a live distributor page at purchase |
-| CT-PS36 | 6EP3332-7SB00-0AX0 ×1 | Record the distributor page at order time |
+| CT-PS36 / CT-PS05 | CT-PS36 = LE-350-36 (already registered at TR-P01 above — no duplicate order line). CT-PS05 = **Siemens LOGO!POWER 6EP3310-6SB00-0AY0, 5 V/3 A** ×1 for Pico `VSYS` and the encoder branches through IF-B01 (docs/22 §11.4). The earlier `6EP3332-7SB00-0AX0` pairing is removed (audit F28); the 24 V domain remains CT-PS24 `6EP3332-6SB00-0AY0` | Record the distributor page at order time |
 | CT-IF-U1 / CT-IF-U2-U3 | Exact USB-isolator/interface identities per selected-controls.csv | Confirm availability before the board order |
+| CT-AUX01 | Schneider LADN02 2-NC auxiliary contact blocks ×3 (guard-release chain) | automation24/Conrad retrieval blocked 2026-10-13; confirm at purchase |
+| CT-T2 | Finder 80.01.0.240.0000 on-delay timer ×1 (release-permission chain) | Conrad search page recorded; confirm price at purchase |
 
 Every row above remains a `HOLD-`/unpriced line until its quotation and
 incoming inspection are recorded; none may be substituted silently.
@@ -215,8 +242,11 @@ traceable evidence.
    conduct the approved staged electrical procedure under competent oversight.
 3. Verify actual voltages, phase/polarity, field contacts, encoder direction,
    drive enable behavior, interlocks, fault response and restart prevention.
-   Record the actual hardware and instruments; do not extrapolate from host
-   tests.
+   Freeze each of the four drivers' direction DIP/parameter settings in the
+   build record and prove the machine-coordinate travel signs and encoder
+   signs per axis (docs/31 §5.4/§7, runbook P6-1/P6-7) — an unproven or
+   wrong sign blocks the axis. Record the actual hardware and instruments; do
+   not extrapolate from host tests.
 4. Before a guard-release function could be considered, measure K1/K2/K3
    opening behavior, DC-bus decay and regenerated-energy behavior and complete
    the safety-function review. This build plan does not authorize that work.
@@ -289,3 +319,46 @@ All remaining warnings, honesty boundaries and physical holds in one place:
 8. **Release.** `physical_results`, `fabrication_released`,
    `full_machine_integrated` remain false everywhere; this plan is
    source-controlled build guidance only.
+
+## 11. Toolchain versions and reproducible builds (audit F35)
+
+The host and target code is **C++20** (`CMAKE_CXX_STANDARD 20`, extensions
+off) with **CMake ≥ 3.24** and the Ninja generator. The configure presets in
+[CMakePresets.json](../CMakePresets.json) deliberately **do not pin compiler
+paths**: they pass the caller's `CC`/`CXX` environment through, so a
+specific toolchain is reproduced with e.g.
+
+```
+CC=$(brew --prefix llvm)/bin/clang CXX=$(brew --prefix llvm)/bin/clang++ \
+  cmake --preset engineering
+```
+
+or `cmake --preset engineering -DCMAKE_C_COMPILER=... -DCMAKE_CXX_COMPILER=...`.
+(The former hard-coded `/opt/homebrew/opt/llvm/bin/clang*` paths in the
+sanitize/engineering presets were removed 2026-10-13; on other hosts no
+Homebrew path is required.) On Apple hosts, dependency discovery additionally
+adds `/opt/homebrew` and `/opt/homebrew/opt/opencascade` to
+`CMAKE_PREFIX_PATH` (engineering/CMakeLists.txt); supply your own
+`CMAKE_PREFIX_PATH` elsewhere.
+
+What the build actually pins today, read from the CMakeLists:
+
+| Dependency | State in CMakeLists | Pinning requirement |
+|---|---|---|
+| C++ standard | **pinned: C++20** (`CMAKE_CXX_STANDARD_REQUIRED ON`, extensions off) | keep |
+| CMake | minimum **3.24** | record the exact CMake/Ninja versions in the build record |
+| OpenCASCADE | **pinned: `find_package(OpenCASCADE 7.9.3 REQUIRED ...)`** | keep; any other OCCT is a change record |
+| Eigen | unpinned version (`find_package(Eigen3 REQUIRED NO_MODULE)` resolves the Eigen 5.x package through the Eigen3 config name) | record the resolved Eigen version (5.x line) in the build record; pin to an exact release for a release build |
+| Gmsh | **unpinned** (`find_path`/`find_library gmsh`) | record the exact gmsh version used for every published mesh/report; pin before a release build |
+| SuiteSparse / CHOLMOD | **unpinned** (`find_package(CHOLMOD CONFIG REQUIRED)`) | record the resolved SuiteSparse version; pin before a release build |
+| LibXml2, Python3, Qt6 (drawing export only) | **unpinned** | record resolved versions in the build record |
+| Pico SDK / toolchain | **unpinned**: `PICO_SDK_PATH` must be supplied (software/machine/rp2350/CMakeLists.txt), `PICO_BOARD=pico2` | freeze the Pico SDK tag/commit, arm-none-eabi toolchain version and picotool version; record them with the firmware image identity |
+| Firmware image | not frozen in-repo | record the SHA-256 of the built `starz-machine.uf2` in the build record; the factory `if-b01-factory-test.uf2` is never installed as machine firmware |
+
+Where a dependency is unpinned, a build is reproducible only when the exact
+resolved versions above and the firmware UF2 SHA-256 are recorded in the
+build record (§1 item 1 revision set). Before a release claim: pin the Pico
+SDK commit and the engineering dependency versions, and attach the resolved
+versions plus the firmware hash and the logic-analyser commissioning
+capture instructions (runbook P6-1/P6-7) to the build record. This section
+pins nothing new by itself; it records what is and is not pinned.

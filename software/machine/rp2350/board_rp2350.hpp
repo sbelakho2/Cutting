@@ -32,8 +32,8 @@ public:
 
     std::int64_t encoder_count(std::uint8_t side) override;
     bool encoder_healthy(std::uint8_t side) override;
-    std::uint16_t boot_faults() override;
-    std::uint16_t latched_faults() override;
+    FaultBits boot_faults() override;
+    FaultBits latched_faults() override;
     bool clear_latched_faults() override;
 
     bool load_settings(void* dst, std::uint32_t len) override;
@@ -52,7 +52,7 @@ private:
 
 public: // Exposed solely for target compile-time storage-layout checks.
     using FlashRecord = journal::Record;
-    static_assert(sizeof(FlashRecord) == 60, "Flash record layout changed; review journal page allocation");
+    static_assert(sizeof(FlashRecord) == 76, "Flash record layout changed; review journal page allocation");
 
     static constexpr std::uint32_t flash_magic = journal::record_magic;
     static constexpr std::uint32_t flash_commit = journal::committed;
@@ -61,11 +61,11 @@ public: // Exposed solely for target compile-time storage-layout checks.
 
 private:
     static void gpio_irq(uint gpio, std::uint32_t events);
-    void emergency_disable(std::uint16_t reason);
+    void emergency_disable(FaultBits reason);
     void restart_step_sm(StepSm& sm, bool enable);
     void restart_encoder_sm(std::uint8_t side);
     void service_encoder(std::uint8_t side);
-    void latch_fault(std::uint16_t reason);
+    void latch_fault(FaultBits reason);
     bool field_safety_ok() const;
 
     static const FlashRecord* flash_slot(std::uint32_t slot);
@@ -77,8 +77,8 @@ private:
     std::int64_t encoder_count_[2] = {0, 0};
     std::uint8_t encoder_last_[2] = {0, 0};
     bool encoder_ok_[2] = {true, true};
-    std::atomic<std::uint16_t> latched_faults_{0};
-    std::uint16_t boot_faults_ = 0;
+    std::atomic<FaultBits> latched_faults_{0};
+    FaultBits boot_faults_ = 0;
     std::int32_t active_slot_ = -1;
     std::uint32_t generation_ = 0;
     bool initialized_ = false;
