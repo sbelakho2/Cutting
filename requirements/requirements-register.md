@@ -101,3 +101,20 @@ U01–U10 from `data/additional-user-requirements.csv` are registered as atomic 
 - Every released output identifies its input hashes; rebuilding from the same inputs reproduces semantically identical geometry, tables and binaries (M01 acceptance).
 - Every change to a part, resistor value, fan, wire recipe or sensor invalidates dependent evidence rather than inheriting an old green report (handoff §16.4).
 - Every goal has at least one verification method and evidence owner; unresolved physical gates are explicitly scheduled, never fabricated (handoff §16.4 rule 1).
+
+## 7. Artifact index (created by the completion agent)
+
+| artifact | serves | status |
+| --- | --- | --- |
+| `tests/reproduction-2026-10-29/` | pinned evidence reproduction + revised-tree results | done |
+| `software/machine/tests/material_plant.hpp` + host groups `observability`/`waste`/`negative_control` | G43/M27/M30 regression evidence | done (host) |
+| `requirements/signal-table.md` | M27 signal contract; Phase-H gates listed | done (gates open) |
+| `tools/reconcile_bom.py` + `bom/custom-axis-bom.csv` + `bom/selected-wire-and-payoff.csv` + `bom/sourcing-evidence-mechanical.csv` | G37/G38/G47 source quality | reconciliation CLOSED; quotes open |
+| `analysis/m36_m31/` | G01/G02/G10 metrology + timing | desk closed; P-gates open |
+| `analysis/electrical_thermal/` | G30/G32/G33 candidates | desk closed; TS/P-gates open |
+| `analysis/cost-basis/` | G47/U04 cost ledger | NOT ESTABLISHED (70 % test) |
+| `analysis/phase-h-io/option-study.md` | M27 channel delivery options | options; owner decision |
+| `tests/P10-thermal/` (35) + `tests/P00-P15/` (86) | all P/TS/TF physical tests | procedures done; execution open |
+| `procurement/rfq-drafts.md` | G39 | drafted, not sent |
+| `release/Cutting_Assembly_Manual.pdf` | G41/U02 (the one PDF) | pre-release manual |
+| `release/decision-log.md` | decisions/rejections | live |
