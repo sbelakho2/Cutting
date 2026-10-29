@@ -1,0 +1,15 @@
+{
+  "acceptance": "Dual-channel function with single-fault tolerance demonstrated at the wiring/component level; a competent safety engineer signs the final PLr validation (G35).",
+  "environment": {},
+  "executed": false,
+  "family": "P04 safety circuits and system integration",
+  "instruments": [],
+  "linked_goals": "35;36",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P04-T1",
+  "title": "Dual-channel E-stop loop validation"
+}

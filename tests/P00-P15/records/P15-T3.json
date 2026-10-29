@@ -1,0 +1,15 @@
+{
+  "acceptance": "Continuous motion without collision; tool/cable access verified; no envelope-only claim (G25/G26).",
+  "environment": {},
+  "executed": false,
+  "family": "P15 full-machine integration and build",
+  "instruments": [],
+  "linked_goals": "25;26;34",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P15-T3",
+  "title": "Static and moving collision/integration check"
+}

@@ -1,0 +1,15 @@
+{
+  "acceptance": "Measured decay matches the model within uncertainty; no branch exceeds its protected rating; the 57.411 V class error can never recur (G33).",
+  "environment": {},
+  "executed": false,
+  "family": "P11 electrical system behaviour",
+  "instruments": [],
+  "linked_goals": "33;31",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P11-T1",
+  "title": "Regeneration bus-decay measurement per branch"
+}

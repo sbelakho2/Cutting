@@ -1,0 +1,15 @@
+{
+  "acceptance": "Let-through I2t below every downstream wire/terminal limit with margin recorded.",
+  "environment": {},
+  "executed": false,
+  "family": "P02 protection bench",
+  "instruments": [],
+  "linked_goals": "32",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P02-T2",
+  "title": "I2t and let-through measurement at fault current"
+}

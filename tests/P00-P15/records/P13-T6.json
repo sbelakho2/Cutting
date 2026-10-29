@@ -1,0 +1,15 @@
+{
+  "acceptance": "The internal error budget stays below external tolerance; correction residual is never reported as accuracy (G01/M31).",
+  "environment": {},
+  "executed": false,
+  "family": "P13 accuracy and capability",
+  "instruments": [],
+  "linked_goals": "1;10",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P13-T6",
+  "title": "Correction residual vs external tolerance audit"
+}

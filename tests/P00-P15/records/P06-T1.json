@@ -1,0 +1,15 @@
+{
+  "acceptance": "Each nip 50-75 N (target 60 N) across the declared envelope; no averaging of nips (G23).",
+  "environment": {},
+  "executed": false,
+  "family": "P06 transport force and travel",
+  "instruments": [],
+  "linked_goals": "23;13",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P06-T1",
+  "title": "Nip force calibration over OD and travel (each of four nips)"
+}

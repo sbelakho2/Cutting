@@ -1,0 +1,15 @@
+{
+  "acceptance": "The contradiction is resolved by engineering change, never by rounding; until then the axis is not released (G37).",
+  "environment": {},
+  "executed": false,
+  "family": "P05 structural load and proof tests",
+  "instruments": [],
+  "linked_goals": "37",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P05-T6",
+  "title": "4900 N support vs 5000 N proof contradiction resolution"
+}

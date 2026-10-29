@@ -1,0 +1,15 @@
+{
+  "acceptance": "Wetting current above every relay minimum with margin; the old 57.9 uA at 3.3 V case may never recur (G44).",
+  "environment": {},
+  "executed": false,
+  "family": "P03 power-component electrical function",
+  "instruments": [],
+  "linked_goals": "44",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P03-T5",
+  "title": "Field-input wetting-current verification (57.9 uA defect fix)"
+}

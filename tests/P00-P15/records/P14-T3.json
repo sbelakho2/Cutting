@@ -1,0 +1,15 @@
+{
+  "acceptance": "Intervals in the manual are evidence-based; adjusted where the data says (G46).",
+  "environment": {},
+  "executed": false,
+  "family": "P14 endurance and service",
+  "instruments": [],
+  "linked_goals": "46",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P14-T3",
+  "title": "Maintenance interval validation (lubrication/filters)"
+}

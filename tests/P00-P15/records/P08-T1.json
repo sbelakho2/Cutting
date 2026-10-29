@@ -1,0 +1,15 @@
+{
+  "acceptance": "100 % stub transits or the machine faults before further feed; no accepted count from a trapped stub (G43).",
+  "environment": {},
+  "executed": false,
+  "family": "P08 handling and output",
+  "instruments": [],
+  "linked_goals": "43;30",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P08-T1",
+  "title": "Prime-stub removal verification (10 mm stub, 75.5 mm nip gap)"
+}

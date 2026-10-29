@@ -1,0 +1,15 @@
+{
+  "acceptance": "Every cost line has a dated source and matches its BOM occurrence; deviations recorded; blank never treated as zero (handoff 12.3).",
+  "environment": {},
+  "executed": false,
+  "family": "P00 receiving and evidence verification",
+  "instruments": [],
+  "linked_goals": "38;39;47",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P00-T3",
+  "title": "Price/evidence reconciliation of the purchase set"
+}

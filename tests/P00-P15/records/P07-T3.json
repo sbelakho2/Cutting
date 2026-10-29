@@ -1,0 +1,15 @@
+{
+  "acceptance": "|error| <= 0.20 mm per enabled end with |e|+U<=T satisfied; disabled ends stay disabled (G02).",
+  "environment": {},
+  "executed": false,
+  "family": "P07 cut and strip quality",
+  "instruments": [],
+  "linked_goals": "2;8",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P07-T3",
+  "title": "Strip dimension measurement per end"
+}

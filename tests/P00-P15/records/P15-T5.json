@@ -1,0 +1,15 @@
+{
+  "acceptance": "The manual's status may change only with signed records; nothing unverified is presented as complete (handoff 14).",
+  "environment": {},
+  "executed": false,
+  "family": "P15 full-machine integration and build",
+  "instruments": [],
+  "linked_goals": "41;47",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P15-T5",
+  "title": "Final inspection, photo record and release checklist"
+}

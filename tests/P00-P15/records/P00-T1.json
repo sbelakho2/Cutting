@@ -1,0 +1,15 @@
+{
+  "acceptance": "Every delivered item matches its exact BOM identity; certificates present where the row claims them; mismatches quarantined, never substituted.",
+  "environment": {},
+  "executed": false,
+  "family": "P00 receiving and evidence verification",
+  "instruments": [],
+  "linked_goals": "37;38;47",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P00-T1",
+  "title": "Identity and certificate check of every received line"
+}

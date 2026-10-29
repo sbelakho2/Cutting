@@ -1,0 +1,15 @@
+{
+  "acceptance": "All cases pass; no analysis capped at 60 N may erase the 75 N nip case (G13).",
+  "environment": {},
+  "executed": false,
+  "family": "P05 structural load and proof tests",
+  "instruments": [],
+  "linked_goals": "13;28",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P05-T5",
+  "title": "Belt load case +/-480 N and roller cases +/-60 N both planes"
+}

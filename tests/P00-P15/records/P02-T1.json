@@ -1,0 +1,15 @@
+{
+  "acceptance": "Measured curves match the released selection within the declared tolerance; no undocumented substitution (G32).",
+  "environment": {},
+  "executed": false,
+  "family": "P02 protection bench",
+  "instruments": [],
+  "linked_goals": "32;44",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P02-T1",
+  "title": "Fuse/breaker time-current curve capture on the DC branches"
+}

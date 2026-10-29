@@ -1,0 +1,15 @@
+{
+  "acceptance": "Sizing and torque match the electrical release; crimps pass pull test; the release document is the authority (manual warns against guessed values).",
+  "environment": {},
+  "executed": false,
+  "family": "P02 protection bench",
+  "instruments": [],
+  "linked_goals": "32",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P02-T5",
+  "title": "Conductor sizing and terminal torque verification"
+}

@@ -1,0 +1,15 @@
+{
+  "acceptance": "No half-known part is ever accepted; recovery is executable as written (M37/G40/G43).",
+  "environment": {},
+  "executed": false,
+  "family": "P08 handling and output",
+  "instruments": [],
+  "linked_goals": "43;40",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P08-T6",
+  "title": "Interrupted-part recovery drill"
+}

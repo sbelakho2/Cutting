@@ -1,0 +1,15 @@
+{
+  "acceptance": "No slip at 5 N.m service torque with the 7 kN class clamp recorded; settlement marks stable; fretting inspection after the screening (G19).",
+  "environment": {},
+  "executed": false,
+  "family": "P01 fits and mechanical assembly",
+  "instruments": [],
+  "linked_goals": "19",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P01-T2",
+  "title": "Collar/keyway fit and torque-set record (F109)"
+}

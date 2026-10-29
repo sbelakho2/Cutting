@@ -1,0 +1,15 @@
+{
+  "acceptance": "Quantified wear limits and intervals with their evidence; spares list updated (G46).",
+  "environment": {},
+  "executed": false,
+  "family": "P14 endurance and service",
+  "instruments": [],
+  "linked_goals": "3;23;24;46",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P14-T2",
+  "title": "Wear-limit establishment (blades, wheels, nips, filters)"
+}

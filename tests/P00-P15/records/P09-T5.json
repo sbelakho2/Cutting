@@ -1,0 +1,15 @@
+{
+  "acceptance": "Damping used in analysis is the evidenced lower bound, not the measured mean (M13 evidence rule).",
+  "environment": {},
+  "executed": false,
+  "family": "P09 dynamics and resonance",
+  "instruments": [],
+  "linked_goals": "45",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P09-T5",
+  "title": "Damping confidence bounds and repeatability"
+}

@@ -1,0 +1,15 @@
+{
+  "acceptance": "All ends meet the declared criteria across the coupon matrix (G03).",
+  "environment": {},
+  "executed": false,
+  "family": "P07 cut and strip quality",
+  "instruments": [],
+  "linked_goals": "3;7",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P07-T2",
+  "title": "Jacket/end criteria inspection"
+}

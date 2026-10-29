@@ -1,0 +1,15 @@
+{
+  "acceptance": "PLr/SIL derived from the risk assessment; no paper argument without the engineer's record (G35).",
+  "environment": {},
+  "executed": false,
+  "family": "P12 safety validation (competent engineer sign-off)",
+  "instruments": [],
+  "linked_goals": "35",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P12-T1",
+  "title": "Risk-assessment review and PLr/SIL assignment"
+}

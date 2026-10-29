@@ -1,0 +1,15 @@
+{
+  "acceptance": "0.020 mm nominal under load with the interval derived from quality data; complete loaded chain represented (G22).",
+  "environment": {},
+  "executed": false,
+  "family": "P07 cut and strip quality",
+  "instruments": [],
+  "linked_goals": "22",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P07-T6",
+  "title": "Loaded blade-face gap measurement and shim record"
+}

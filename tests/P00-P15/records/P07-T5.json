@@ -1,0 +1,15 @@
+{
+  "acceptance": "Measured envelope inside actual hot axis capability with margin recorded (G21).",
+  "environment": {},
+  "executed": false,
+  "family": "P07 cut and strip quality",
+  "instruments": [],
+  "linked_goals": "21;37",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P07-T5",
+  "title": "Cut-force envelope measurement"
+}

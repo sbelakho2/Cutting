@@ -1,0 +1,15 @@
+{
+  "acceptance": "Cpk >= 1.33 per declared cell; nonnormal/autocorrelated data handled properly; 30 pieces treated as a minimum record, not rare-event proof (G05).",
+  "environment": {},
+  "executed": false,
+  "family": "P13 accuracy and capability",
+  "instruments": [],
+  "linked_goals": "5",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P13-T3",
+  "title": "Capability statistics with predeclared conformity rule"
+}

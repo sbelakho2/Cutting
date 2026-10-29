@@ -1,0 +1,15 @@
+{
+  "acceptance": "Each function validated at its required PL with signed records; ordinary relays/MCU never assigned PL data without certified evidence (G35).",
+  "environment": {},
+  "executed": false,
+  "family": "P12 safety validation (competent engineer sign-off)",
+  "instruments": [],
+  "linked_goals": "35;36",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P12-T2",
+  "title": "Safety-function validation per ISO 13849-1/-2"
+}

@@ -1,0 +1,15 @@
+{
+  "acceptance": "Recovery possible per the manual without reaching into hazard; the manual needs no invented step (G34/G41/G43).",
+  "environment": {},
+  "executed": false,
+  "family": "P08 handling and output",
+  "instruments": [],
+  "linked_goals": "43;34",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P08-T5",
+  "title": "Bin-full and jam recovery without finger access"
+}

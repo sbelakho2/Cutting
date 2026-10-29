@@ -1,0 +1,15 @@
+{
+  "acceptance": "Replacement invalidates and regenerates dependent calibration/evidence; machine returns to qualified state only after requalification (G46).",
+  "environment": {},
+  "executed": false,
+  "family": "P14 endurance and service",
+  "instruments": [],
+  "linked_goals": "46",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P14-T4",
+  "title": "Replacement and requalification drill"
+}

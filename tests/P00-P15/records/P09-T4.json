@@ -1,0 +1,15 @@
+{
+  "acceptance": "Relative motion keeps the loaded face gap inside its interval across the qualified map (G22/G45).",
+  "environment": {},
+  "executed": false,
+  "family": "P09 dynamics and resonance",
+  "instruments": [],
+  "linked_goals": "45;22",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P09-T4",
+  "title": "Relative tool-to-wire motion measurement"
+}

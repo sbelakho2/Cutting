@@ -1,0 +1,15 @@
+{
+  "acceptance": "Every fastener at its documented torque with engagement verified; no fastener left at a guessed value.",
+  "environment": {},
+  "executed": false,
+  "family": "P01 fits and mechanical assembly",
+  "instruments": [],
+  "linked_goals": "22;25",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P01-T4",
+  "title": "Holder/tooling preload and fastener torque audit"
+}

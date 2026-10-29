@@ -1,0 +1,15 @@
+{
+  "acceptance": "Robustness improvement is shown by measured service/defect data, never by inference from parts (U08/G46).",
+  "environment": {},
+  "executed": false,
+  "family": "P14 endurance and service",
+  "instruments": [],
+  "linked_goals": "44;46;47",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P14-T5",
+  "title": "Service-effort and robustness measurement (U08)"
+}

@@ -1,0 +1,15 @@
+{
+  "acceptance": "Every slug cleared before the next blade close; worst-case adhesion/static handled (G43).",
+  "environment": {},
+  "executed": false,
+  "family": "P08 handling and output",
+  "instruments": [],
+  "linked_goals": "43;7",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P08-T2",
+  "title": "Slug removal verification 3-25 mm including adhesion/static"
+}

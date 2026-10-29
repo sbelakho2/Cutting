@@ -1,0 +1,15 @@
+{
+  "acceptance": "Structure survives the fault case without permanent change; the 2.5x running reversal case also demonstrated (G13).",
+  "environment": {},
+  "executed": false,
+  "family": "P05 structural load and proof tests",
+  "instruments": [],
+  "linked_goals": "13;37",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P05-T4",
+  "title": "Feed fault-torque load case 5 N.m with full rotor-role modelling check"
+}

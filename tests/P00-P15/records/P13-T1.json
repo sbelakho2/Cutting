@@ -1,0 +1,15 @@
+{
+  "acceptance": "|error| <= 0.20 mm + 0.05%*L with |e|+U<=T; >=30 unique consecutive pieces; failures/scrap retained (G01/G05).",
+  "environment": {},
+  "executed": false,
+  "family": "P13 accuracy and capability",
+  "instruments": [],
+  "linked_goals": "1;5;8",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P13-T1",
+  "title": "Finished-length record: >=30 unique consecutive pieces per cell"
+}

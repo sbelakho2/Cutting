@@ -1,0 +1,24 @@
+{
+  "executed": false,
+  "families": [
+    "P00 receiving and evidence verification",
+    "P01 fits and mechanical assembly",
+    "P02 protection bench",
+    "P03 power-component electrical function",
+    "P04 safety circuits and system integration",
+    "P05 structural load and proof tests",
+    "P06 transport force and travel",
+    "P07 cut and strip quality",
+    "P08 handling and output",
+    "P09 dynamics and resonance",
+    "P10 cabinet thermal",
+    "P11 electrical system behaviour",
+    "P12 safety validation (competent engineer sign-off)",
+    "P13 accuracy and capability",
+    "P14 endurance and service",
+    "P15 full-machine integration and build"
+  ],
+  "model": "P00-P15 physical test artifacts",
+  "note": "records ship executed=false; physical execution is the D8 hardware gate; P10 generated separately by tools/generate_thermal_tests.py",
+  "test_count": 87
+}

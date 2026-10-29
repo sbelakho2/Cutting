@@ -1,0 +1,15 @@
+{
+  "acceptance": "Duty achieved with recorded reliability basis; bearing L10 never substituted for machine life (G15/G46).",
+  "environment": {},
+  "executed": false,
+  "family": "P14 endurance and service",
+  "instruments": [],
+  "linked_goals": "3;4;6;15;46",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P14-T1",
+  "title": "Duty-specific endurance test (10,000 h / 1.8e7 cuts basis)"
+}

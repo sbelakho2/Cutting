@@ -1,0 +1,15 @@
+{
+  "acceptance": "Both stations within range with the re-check drift recorded; access method documented (G28).",
+  "environment": {},
+  "executed": false,
+  "family": "P06 transport force and travel",
+  "instruments": [],
+  "linked_goals": "28;13",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P06-T3",
+  "title": "Belt tension and both tension stations"
+}

@@ -1,0 +1,15 @@
+{
+  "acceptance": "No permanent change; residual within measurement uncertainty (G12).",
+  "environment": {},
+  "executed": false,
+  "family": "P05 structural load and proof tests",
+  "instruments": [],
+  "linked_goals": "12",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P05-T2",
+  "title": "Head transverse proof load 750 N (double)"
+}

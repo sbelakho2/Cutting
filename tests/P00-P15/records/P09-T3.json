@@ -1,0 +1,15 @@
+{
+  "acceptance": "Measured FRFs are the evidence for bandwidth and resonance claims; absolute frame acceleration is never the criterion (G45).",
+  "environment": {},
+  "executed": false,
+  "family": "P09 dynamics and resonance",
+  "instruments": [],
+  "linked_goals": "45;14",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P09-T3",
+  "title": "FRF measurement of the final assembled machine"
+}

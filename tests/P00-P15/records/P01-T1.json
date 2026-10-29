@@ -1,0 +1,15 @@
+{
+  "acceptance": "Actual interference 3-6 um per pair with documented measurement uncertainty; CNC access is not accepted as 1 um capability; remaining bearing clearance inside the manufacturer envelope (G16).",
+  "environment": {},
+  "executed": false,
+  "family": "P01 fits and mechanical assembly",
+  "instruments": [],
+  "linked_goals": "16;17",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P01-T1",
+  "title": "Bearing-seat interference measurement (matched pairs)"
+}

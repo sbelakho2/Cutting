@@ -1,0 +1,15 @@
+{
+  "acceptance": "As-built matches the released drawing revision; deviations require an approved change record before use.",
+  "environment": {},
+  "executed": false,
+  "family": "P00 receiving and evidence verification",
+  "instruments": [],
+  "linked_goals": "37;41",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P00-T5",
+  "title": "Conformance of fabricated assemblies to released drawings"
+}

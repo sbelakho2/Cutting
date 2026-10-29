@@ -1,0 +1,15 @@
+{
+  "acceptance": "No void above the drawing limit; mass within process tolerance; no sharp edges at wire/handling paths.",
+  "environment": {},
+  "executed": false,
+  "family": "P01 fits and mechanical assembly",
+  "instruments": [],
+  "linked_goals": "20;37",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P01-T7",
+  "title": "Assembly cleanliness and void inspection (cast/epoxy features)"
+}

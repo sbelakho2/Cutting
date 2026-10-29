@@ -1,0 +1,15 @@
+{
+  "acceptance": "Peak inrush within the device make-rating or limited by the designed precharge; no undocumented reliance on wiring resistance.",
+  "environment": {},
+  "executed": false,
+  "family": "P03 power-component electrical function",
+  "instruments": [],
+  "linked_goals": "31;33",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P03-T3",
+  "title": "Capacitive inrush measurement at bus energisation"
+}

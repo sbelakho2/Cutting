@@ -1,0 +1,15 @@
+{
+  "acceptance": "Correction residuals validated on held-out data; no fit from a failed run accepted (M23/M31).",
+  "environment": {},
+  "executed": false,
+  "family": "P13 accuracy and capability",
+  "instruments": [],
+  "linked_goals": "1;18",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P13-T5",
+  "title": "Tension-relaxation and thermal-drift validation"
+}

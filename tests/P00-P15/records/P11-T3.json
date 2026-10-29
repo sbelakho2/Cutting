@@ -1,0 +1,15 @@
+{
+  "acceptance": "Coordination matches the released protection design (G32/G33).",
+  "environment": {},
+  "executed": false,
+  "family": "P11 electrical system behaviour",
+  "instruments": [],
+  "linked_goals": "32;33",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P11-T3",
+  "title": "Branch coordination under sequential faults"
+}

@@ -1,0 +1,15 @@
+{
+  "acceptance": "Every PSU-limited fault either clears the protection or is demonstrably limited below hazard; no nuisance trip in normal load steps.",
+  "environment": {},
+  "executed": false,
+  "family": "P02 protection bench",
+  "instruments": [],
+  "linked_goals": "32;33",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P02-T3",
+  "title": "PSU-limited fault clearing verification"
+}

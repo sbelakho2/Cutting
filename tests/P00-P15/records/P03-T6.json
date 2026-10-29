@@ -1,0 +1,15 @@
+{
+  "acceptance": "Every driver fault reaches a safe torque-off state within the documented latency; ordinary MCU/relay paths are never claimed as certified STO (G35/G40).",
+  "environment": {},
+  "executed": false,
+  "family": "P03 power-component electrical function",
+  "instruments": [],
+  "linked_goals": "40;44",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P03-T6",
+  "title": "ALM/STO interface behaviour under driver fault"
+}

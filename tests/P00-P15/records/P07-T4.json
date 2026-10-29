@@ -1,0 +1,15 @@
+{
+  "acceptance": "Replacement limit defined from measured correlation; regrind procedure and its effect recorded (G03).",
+  "environment": {},
+  "executed": false,
+  "family": "P07 cut and strip quality",
+  "instruments": [],
+  "linked_goals": "3",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P07-T4",
+  "title": "Blade edge-life coupon progression"
+}

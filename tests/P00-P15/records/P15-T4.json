@@ -1,0 +1,15 @@
+{
+  "acceptance": "Both declared reel families handled safely with the loading method in the manual and cost; photos are never ratings (U07/G27).",
+  "environment": {},
+  "executed": false,
+  "family": "P15 full-machine integration and build",
+  "instruments": [],
+  "linked_goals": "27;7",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P15-T4",
+  "title": "Reel/payoff/buffer handling verification (<=30 kg)"
+}

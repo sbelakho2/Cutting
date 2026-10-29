@@ -1,0 +1,15 @@
+{
+  "acceptance": "No interior length exceeds the tolerance envelope predicted/verified at corners (G01).",
+  "environment": {},
+  "executed": false,
+  "family": "P13 accuracy and capability",
+  "instruments": [],
+  "linked_goals": "1;8",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P13-T7",
+  "title": "Corner-length and interior maximum-error search"
+}

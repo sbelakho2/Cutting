@@ -1,0 +1,15 @@
+{
+  "acceptance": "Every supported length clears the discharge zone within the evidence window without manual help (G08/G43).",
+  "environment": {},
+  "executed": false,
+  "family": "P06 transport force and travel",
+  "instruments": [],
+  "linked_goals": "43;8",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P06-T6",
+  "title": "Takeaway/output mechanical resistance (slide/conveyor)"
+}

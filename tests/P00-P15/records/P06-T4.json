@@ -1,0 +1,15 @@
+{
+  "acceptance": "Drag budget recorded and consistent with the traction model inputs (G23/G24).",
+  "environment": {},
+  "executed": false,
+  "family": "P06 transport force and travel",
+  "instruments": [],
+  "linked_goals": "24;23",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P06-T4",
+  "title": "Feed drag/friction measurement (no-wire and threaded)"
+}

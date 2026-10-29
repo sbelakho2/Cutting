@@ -1,0 +1,15 @@
+{
+  "acceptance": "Welded/stuck contacts are detected and safe; no auto-restart after a welded-contact fault (G35/G36).",
+  "environment": {},
+  "executed": false,
+  "family": "P03 power-component electrical function",
+  "instruments": [],
+  "linked_goals": "31;35;36",
+  "measurements": {},
+  "operator": null,
+  "raw_data_path": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "P03-T4",
+  "title": "Relay/contact life screening with welded-contact detection"
+}
