@@ -15,6 +15,7 @@ completed reality (handoff 14). Status labels used throughout:
 from __future__ import annotations
 
 import hashlib
+import json
 import pathlib
 
 from reportlab.lib import colors
@@ -402,6 +403,23 @@ def build() -> None:
            View(feed_cassette, height=64 * mm), Spacer(1, 4),
            View(payoff_view, height=64 * mm)]
     doc.build(st)
+    # Record the exact inputs the document control page embedded, so
+    # tools/verify_release.py can detect a stale PDF against current sources.
+    inputs = {
+        "bom/selected-cutting-head.csv": sha256(ROOT / "bom" / "selected-cutting-head.csv"),
+        "shared/controls_spec.hpp": sha256(ROOT / "shared" / "controls_spec.hpp"),
+        "requirements/signal-table.md": sha256(ROOT / "requirements" / "signal-table.md"),
+    }
+    build_record = {
+        "artifact": "release/Cutting_Assembly_Manual.pdf",
+        "revision": REVISION,
+        "build_date": BUILD_DATE,
+        "builder": "tools/build_assembly_manual.py (reportlab)",
+        "embedded_input_hashes_16": inputs,
+        "declared_status": "PRE-RELEASE BUILD/QUALIFICATION MANUAL",
+    }
+    (ROOT / "release" / "assembly-manual-build.json").write_text(
+        json.dumps(build_record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(f"wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size} bytes)")
 
 

@@ -317,11 +317,16 @@ private:
         detect_score_event();
         // Slug release: after a scored body separates past the bare-end
         // clearance while the blades hold, the slug is a pocket waste body.
-        // "Jaws open" means travel back inside the open window; the homing
-        // reference lands within the 200 um sensor window, so the release
-        // threshold must clear that offset.
+        // The commanded separation is exactly |end0| + strip_clear, but both the
+        // recorded end and the accumulated separation carry up to one actuator
+        // step of quantisation in opposite directions, so the threshold carries
+        // a two-step tolerance derived from the feed step size - never a tuned
+        // constant. "Jaws open" means travel back inside the open window; the
+        // homing reference lands within the 200 um sensor window, so the
+        // release threshold must clear that offset.
+        const double release_step_tolerance_um = 2.0 * 1000.0 / ctrl::axis::feed_steps_per_mm;
         if (score_armed_ && blade_true_um[0] <= 500.0 && blade_true_um[1] <= 500.0) {
-            if (score_separation_um_ >= std::fabs(score_end0_um_) + 3000.0) {
+            if (score_separation_um_ >= std::fabs(score_end0_um_) + 3000.0 - release_step_tolerance_um) {
                 const double lo = score_end0_um_ < 0.0 ? score_end0_um_ : 0.0;
                 const double hi = score_end0_um_ < 0.0 ? 0.0 : score_end0_um_;
                 pocket_.push_back(PocketBody{lo, hi});

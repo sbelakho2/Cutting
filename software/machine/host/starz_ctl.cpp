@@ -156,7 +156,7 @@ int simple(int fd, proto::Msg m) {
 int usage() {
     std::fprintf(stderr,
         "usage: starz-ctl <device> status|watch [ms]|load L lead tail depth wire qty (mm)|clear|start|stop|reset|home|\n"
-        "                 jog <axis 0-3> <+|-> <mm> <mm/s>|calib <w0> <w1> <piece>\n");
+        "                 jog <axis 0-3> <+|-> <mm> <mm/s>|calib <w0> <w1> <piece>|fixture <on|off>\n");
     return 2;
 }
 
@@ -235,6 +235,15 @@ int main(int argc, char** argv) {
         if (!parse_i32(argv[3], w0) || !parse_i32(argv[4], w1) || !parse_i32(argv[5], piece)) return usage();
         proto::Frame req{}; req.msg = proto::Msg::SetCalibration; req.seq = next_seq(); req.len = proto::calibration_len;
         proto::put_i32(req.payload, w0); proto::put_i32(req.payload + 4, w1); proto::put_i32(req.payload + 8, piece);
+        proto::Frame rep{};
+        if (!transact(fd, req, rep) || !command_reply(rep)) { std::fprintf(stderr, "invalid reply\n"); return 3; }
+        std::printf("%s\n", proto::result_name(static_cast<CommandResult>(rep.payload[0])));
+        return rep.msg == proto::Msg::Ack ? 0 : 1;
+    }
+    if (cmd == "fixture") {
+        if (argc != 4 || (std::string_view(argv[3]) != "on" && std::string_view(argv[3]) != "off")) return usage();
+        proto::Frame req{}; req.msg = proto::Msg::SetFixtureMode; req.seq = next_seq(); req.len = proto::set_fixture_len;
+        req.payload[0] = std::string_view(argv[3]) == "on" ? 1 : 0;
         proto::Frame rep{};
         if (!transact(fd, req, rep) || !command_reply(rep)) { std::fprintf(stderr, "invalid reply\n"); return 3; }
         std::printf("%s\n", proto::result_name(static_cast<CommandResult>(rep.payload[0])));

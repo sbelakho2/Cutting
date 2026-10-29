@@ -510,6 +510,7 @@ void Controller::start_tracked_feed(Axis a, std::int32_t delta_um, double speed_
         // D; a hole here means the sensor architecture is inconsistent.
         const std::int32_t magnitude = delta_um < 0 ? -delta_um : delta_um;
         if (!t.final_eject && t.observed_expect_um < magnitude) {
+            t.active = false; // never leave a pending expectation for an unstarted move
             enter_fault(fault::wire_geometry);
             return;
         }

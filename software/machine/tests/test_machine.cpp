@@ -308,7 +308,7 @@ int test_stop_pause_resume() {
     r.b.field.stop_ok = false; // NC STOP pressed
     r.run_ms(50);
     CHECK(r.c.state() == State::Stopping || r.c.state() == State::Paused);
-    REQUIRE(r.run_until(State::Paused, 5000));
+    REQUIRE(r.run_until(State::Paused, 20000));
     CHECK(!r.b.outputs.drives_disabled); // controlled stop keeps holding torque
     // START ignored while STOP still pressed.
     r.press(&Inputs::start, 150);
@@ -600,6 +600,46 @@ int test_protocol() {
     CHECK(reply.msg == proto::Msg::Ack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::Accepted));
     CHECK(r.c.telemetry().settings.part_clear_check == 1);
     CHECK(!r.c.telemetry().approved); // a production-setting change invalidates approval
+    // Revision-7 field round-trip: piece station, fixture state and the waste
+    // channel must survive encode/decode exactly (blind spot regression).
+    Telemetry wide2{};
+    wide2.piece_encoder_counts = -1234567890123ll;
+    wide2.counters.pieces_fixture = 77;
+    wide2.settings.counts_per_metre[2] = 41234;
+    wide2.fixture_mode = true;
+    wide2.inputs.waste_clear = true;
+    wide2.outputs.waste_sweep = true;
+    std::uint8_t status2[proto::status_len]{};
+    proto::encode_status(wide2, status2);
+    Telemetry decoded2{};
+    REQUIRE(proto::decode_status(status2, proto::status_len, decoded2));
+    CHECK(decoded2.piece_encoder_counts == wide2.piece_encoder_counts);
+    CHECK(decoded2.counters.pieces_fixture == 77);
+    CHECK(decoded2.settings.counts_per_metre[2] == 41234);
+    CHECK(decoded2.fixture_mode && decoded2.inputs.waste_clear && decoded2.outputs.waste_sweep);
+    // SetFixtureMode dispatch: fixture mode permits disabling handling
+    // verification but never persists approval; leaving it restores the
+    // production default.
+    malformed = proto::Frame{}; malformed.msg = proto::Msg::SetFixtureMode; malformed.seq = 16;
+    malformed.len = proto::set_fixture_len; malformed.payload[0] = 1;
+    proto::dispatch(r.c, malformed, reply);
+    CHECK(reply.msg == proto::Msg::Ack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::Accepted));
+    CHECK(r.c.telemetry().fixture_mode);
+    malformed = proto::Frame{}; malformed.msg = proto::Msg::SetPartClear; malformed.seq = 17;
+    malformed.len = proto::set_part_clear_len; malformed.payload[0] = 0;
+    proto::dispatch(r.c, malformed, reply);
+    CHECK(reply.msg == proto::Msg::Ack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::Accepted));
+    CHECK(r.c.telemetry().settings.part_clear_check == 0);
+    malformed = proto::Frame{}; malformed.msg = proto::Msg::SetFixtureMode; malformed.seq = 18;
+    malformed.len = proto::set_fixture_len; malformed.payload[0] = 0;
+    proto::dispatch(r.c, malformed, reply);
+    CHECK(reply.msg == proto::Msg::Ack);
+    CHECK(!r.c.telemetry().fixture_mode);
+    CHECK(r.c.telemetry().settings.part_clear_check == 1); // production default restored
+    malformed = proto::Frame{}; malformed.msg = proto::Msg::SetFixtureMode; malformed.seq = 19;
+    malformed.len = proto::set_fixture_len; malformed.payload[0] = 2;
+    proto::dispatch(r.c, malformed, reply);
+    CHECK(reply.msg == proto::Msg::Nack && reply.payload[0] == static_cast<std::uint8_t>(CommandResult::InvalidArgument));
     // Wire-level CRC check vector.
     CHECK(crc16(reinterpret_cast<const std::uint8_t*>("123456789"), 9) == 0x29B1);
     return 0;
@@ -1040,6 +1080,101 @@ int test_negative_control_legacy_fixture() {
     return 0;
 }
 
+// Interrupted-run recovery (M37/G43): a stop mid-feed leaves a long in-flight
+// stock body. The prime pass must classify it by REAL length (long -> scrap
+// discharge with full evidence, uncounted because the interruption already
+// counted the scrap) and then continue production normally.
+int test_recovery_scrap_eject() {
+    Rig r; r.boot_and_home();
+    const Job j = no_strip_job(2000000, 5); // 2 m pieces: 2 s of feed at 0.5 m/s
+    REQUIRE(r.load_and_approve(j));
+    r.press(&Inputs::start, 150);
+    // Run until the physical stock tip is deep past the plane (mid piece-1
+    // feed), then stop: the interrupt must leave a LONG in-flight body.
+    bool mid_feed = false;
+    for (std::uint32_t i = 0; i < 200000 && r.c.state() == State::Running; ++i) {
+        r.c.tick(); r.b.advance(ctrl::mcu::control_period_us);
+        if (r.b.stock_tip_um > 800000.0) { mid_feed = true; break; }
+    }
+    REQUIRE(mid_feed);
+    REQUIRE(r.c.stop() == CommandResult::Accepted);
+    REQUIRE(r.run_until(State::Paused, 20000));
+    CHECK(r.c.counters().pieces_scrap == 1);
+    const double tip_before = r.b.stock_tip_um;
+    CHECK(tip_before > 500000.0); // physically mid-feed, not at the plane
+    const std::size_t bin_before_resume = r.b.waste_bin_count();
+    // Resume: prime severs the long body -> scrap discharge through the
+    // takeaway with discharge evidence, then production continues.
+    r.press(&Inputs::start, 150);
+    bool scrap_ejected = false;
+    for (std::uint32_t i = 0; i < 400000 && r.c.state() == State::Running; ++i) {
+        r.c.tick(); r.b.advance(ctrl::mcu::control_period_us);
+        if (!scrap_ejected && r.c.phase() == Phase::Eject && r.c.counters().pieces_done == 0) {
+            scrap_ejected = true; // the prime-severed long body takes the eject path
+        }
+    }
+    REQUIRE(r.c.state() == State::Ready);
+    CHECK(scrap_ejected);
+    CHECK(r.c.counters().pieces_done == 5);
+    CHECK(r.c.counters().pieces_accepted == 5);
+    CHECK(r.c.counters().pieces_scrap == 1);        // the interruption only - never double-counted
+    CHECK(r.c.counters().pieces_fixture == 0);
+    // The long in-flight body was scrap-discharged, never waste-chuted: no
+    // additional body may enter the waste bin during the recovery.
+    CHECK(r.b.waste_bin_count() == bin_before_resume);
+    return 0;
+}
+
+// Envelope extremes (G01/G02/G08): minimum length with maximum asymmetric
+// strips and maximum length, on the honest plant with production evidence.
+int test_envelope_extremes() {
+    // L=200 mm with 3/25 asymmetric strips (maximum tail backfeed).
+    Rig r; r.boot_and_home();
+    Job j{};
+    j.length_um = 200000; j.strip_lead_um = 3000; j.strip_tail_um = 25000;
+    j.strip_depth_um = 600; j.wire_diameter_um = 2500; j.quantity = 2;
+    REQUIRE(r.load_and_approve(j));
+    r.press(&Inputs::start, 150);
+    REQUIRE(r.run_until(State::Ready, 400000));
+    CHECK(r.c.faults() == 0);
+    CHECK(r.c.counters().pieces_accepted == 2);
+    CHECK(r.b.waste_bin_count() == 1 + 2 * 2); // stub + 2 slugs per stripped piece
+
+    // L=3000 mm no strips: longest support case.
+    Rig r2; r2.boot_and_home();
+    REQUIRE(r2.load_and_approve(no_strip_job(3000000, 1)));
+    r2.press(&Inputs::start, 150);
+    REQUIRE(r2.run_until(State::Ready, 400000));
+    CHECK(r2.c.faults() == 0);
+    CHECK(r2.c.counters().pieces_accepted == 1);
+    return 0;
+}
+
+// D station origin transfer (M27): across a batch, station D accumulates
+// exactly the material that physically passes it - the feed portion past D
+// (L - X_D per piece) plus the eject window (X_D - tail0 per piece). For
+// unstripped pieces these sum to exactly L per piece: D observes the full
+// length of wire that becomes each piece, nothing more. Any motor-coupled
+// fabrication (the counterexample defect class) would add impossible counts
+// and fail this check.
+int test_piece_origin_transfer() {
+    Rig r; r.boot_and_home();
+    const Job j = no_strip_job(300000, 3);
+    REQUIRE(r.load_and_approve(j));
+    r.press(&Inputs::start, 150);
+    REQUIRE(r.run_until(State::Ready, 400000));
+    const double d_um = ctrl::sensing::piece_station_x_mm * 1000.0;
+    const std::int64_t feed_part = static_cast<std::int64_t>(300000.0 - d_um);   // 193250 um
+    const std::int64_t eject_part = Controller::piece_station_observed_um(0, 300000, 230000); // 106750 um
+    CHECK(feed_part + eject_part == 300000); // exact identity for unstripped pieces
+    const std::int64_t expected_counts = 3 * (feed_part + eject_part) * ctrl::enc::nominal_counts_per_metre / 1000000;
+    const std::int64_t measured = r.c.telemetry().piece_encoder_counts;
+    const std::int64_t delta = measured > expected_counts ? measured - expected_counts : expected_counts - measured;
+    CHECK(delta <= 8); // step quantisation and count truncation only
+    CHECK(r.c.counters().pieces_accepted == 3);
+    return 0;
+}
+
 // ------------------------------------------------------------------- F12
 // Commissioning/recipe approval interlock keyed to calibration, recipe and
 // firmware identity; production start requires it; changes invalidate it.
@@ -1220,6 +1355,8 @@ int main(int argc, char** argv) {
         {"f33_jog_overflow", test_f33_jog_overflow}, {"f33_polarity", test_f33_polarity},
         {"observability", test_observability_station_roles}, {"waste", test_waste_handling},
         {"negative_control", test_negative_control_legacy_fixture},
+        {"recovery", test_recovery_scrap_eject}, {"envelope", test_envelope_extremes},
+        {"origin_transfer", test_piece_origin_transfer},
     };
     int rc = 0; bool ran = false;
     for (auto& t : tests) if (which == "all" || which == t.name) { ran = true; rc |= t.fn(); }

@@ -1,0 +1,38 @@
+{
+  "M28_tooth_pass": {
+    "belt_speed_mm_s": 397.88735772973837,
+    "cross_check": "matches the handoff's corrected 79.5775 Hz nominal: the pulley runs 1:1 on the roller shaft, so tooth pass = teeth x wire speed / (pi x roller D), NOT teeth x wire speed / belt pitch circumference (belt speed is 397.9 mm/s, below wire speed)",
+    "pitch_mm": 5.0,
+    "pulley_teeth": 20,
+    "shaft_rps_at_500mm_s": 3.9788735772973833,
+    "tooth_pass_hz": 79.57747154594767
+  },
+  "derived": {
+    "discharge_evidence_required_in_every_cell": true,
+    "driven_eject_mm": {
+      "max": 140.0,
+      "min": 112.0
+    },
+    "eject_unobserved_mm": {
+      "max": 151.25,
+      "min": 123.25
+    },
+    "eject_window_mm": {
+      "max": 106.75,
+      "min": 78.75
+    },
+    "min_grip_margin_at_far_nip_mm": 35.0,
+    "takeaway_min_slide_mm": 130.0,
+    "waste_chute_min_body_capacity_mm": 140.0,
+    "waste_chute_note": "bodies below the grip boundary are never propel-lable: the waste path must accept severed bodies up to just under 140 mm (interrupted-stock tips), not only 10 mm stubs and 3-25 mm slugs"
+  },
+  "envelope_cells": 5184,
+  "invariants": {
+    "I1_tail_moves_fully_observable": true,
+    "I2_eject_always_partially_unobserved": true,
+    "I3_grip_held_through_tail_moves": true,
+    "I5_piece_spans_D_at_sever": true
+  },
+  "model": "transport-geometry envelope proof (M27/M30/M28)",
+  "violations": []
+}
