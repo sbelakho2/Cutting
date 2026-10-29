@@ -1,0 +1,50 @@
+{
+  "record_id": "REPRO-2026-10-29-A",
+  "date": "2026-10-29",
+  "operator": "completion agent (Kilo, mimo-v2.6-pro)",
+  "repo": "https://github.com/sbelakho2/Cutting",
+  "repo_commit": "0f28aa3289cf052409ad48f54dc5d23b130fd441",
+  "fresh_upstream_check": {
+    "method": "git ls-remote origin main",
+    "result": "0f28aa3289cf052409ad48f54dc5d23b130fd441",
+    "moved_since_pin": false
+  },
+  "worktree_state_before_work": "clean except deleted tracked tools/__pycache__/check_if_b01_kicad.cpython-314.pyc (restored to pinned state) and untracked handoff kit directory",
+  "agents_md_present": false,
+  "host_environment": {
+    "os": "macOS 27.0.1 (26A434) arm64",
+    "compiler": "Apple clang version 17.0.0 (clang-1700.4.4.1)",
+    "handoff_reference_environment": "GCC 13.3.0 on Ubuntu (x86_64)"
+  },
+  "host_tests": {
+    "command": "bash Cutting_Agent_Handoff_2026-10-29/tools/run_host_checks.sh /Users/sabelakhoua/IdeaProjects/Machines/Cutting <out>",
+    "tool_unmodified": true,
+    "compile_flags": "C++20, -Wall -Wextra -Werror, -fsanitize=undefined -fno-omit-frame-pointer (see sanitizer_note)",
+    "groups_run": "all (21 groups)",
+    "result": "ok",
+    "exit_code": 0
+  },
+  "sanitizer_note": {
+    "asansanitizer_status_on_this_host": "ASan-instrumented binaries hang at process startup in dyld __malloc_init on macOS 27 arm64 (Apple clang 17); captured in asan-startup-hang-sample-macos27-arm64.txt. This is a host-runtime limitation, not a test result.",
+    "adaptation": "gxx-ubsan-shim.sh intercepts g++ and rewrites only -fsanitize=address,undefined to -fsanitize=undefined so the unmodified handoff tools execute. No fixture, controller or demonstration logic was changed.",
+    "ubsan_result": "clean (ok)",
+    "asan_result": "not executable on this host; rerun ASan on the reference Linux/GCC environment for parity with the handoff evidence"
+  },
+  "counterexample": {
+    "tool": "Cutting_Agent_Handoff_2026-10-29/tools/reproduce_stock_side_mismatch.py (unmodified)",
+    "reproduced": true,
+    "observed": "state=1 faults=0x00000100 pieces_done=0 pieces_accepted=0 left_um=9990.265 right_um=240017.679 enc0=409 enc1=409",
+    "matches_handoff_record": true,
+    "scope": "stock-side sensor kinematics with unchanged upstream controller; kinematic defect demonstration, not a machine-function test"
+  },
+  "handoff_kit_validation": {
+    "tool": "Cutting_Agent_Handoff_2026-10-29/tools/validate_handoff.py",
+    "initial_result": "checksum mismatch: kit contained one unlisted byte-identical copy of the handoff report (Cutting_Completion_Agent_Handoff_2026-10-29.md == ENGINEERING_HANDOFF.md)",
+    "repair": "regenerated SHA256SUMS.txt with --write-checksums after verifying every originally listed file hash-matched and the extra file is byte-identical to ENGINEERING_HANDOFF.md",
+    "final_result": "handoff_packaging_valid: true",
+    "machine_qualified": false
+  },
+  "physical_test_performed": false,
+  "native_CAD_FEM_rebuilt": false,
+  "Pico_target_crossbuilt": false
+}

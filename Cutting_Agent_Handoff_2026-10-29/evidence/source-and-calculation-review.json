@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-29",
+  "commit": "0f28aa3289cf052409ad48f54dc5d23b130fd441",
+  "csv_rows": {
+    "bom/measurement-custom-parts.csv": 1,
+    "bom/feed-custom-parts.csv": 12,
+    "bom/selected-cutting-head.csv": 17,
+    "bom/selected-cabinet-wiring.csv": 24,
+    "bom/mechanism-custom-parts.csv": 32,
+    "bom/fabrication-tooling.csv": 1,
+    "bom/selected-mechanism.csv": 5,
+    "bom/selected-controls.csv": 25,
+    "bom/sourcing-evidence.csv": 9,
+    "bom/selected-transport-and-cabinet.csv": 23
+  },
+  "shape_errors": [
+    {
+      "file": "bom/selected-cutting-head.csv",
+      "line": 2,
+      "expected_fields": 9,
+      "actual_fields": 12,
+      "id": "AX-01"
+    }
+  ],
+  "native_geometry_rebuilt": false,
+  "physical_tests": false,
+  "independent_calculations": {
+    "stall_thrust_N_at_eta1": 5340.707511102649,
+    "fixed_end_N": 4900,
+    "proof_N": 5000,
+    "feed_hz_at_nominal_40mm": 7957.747154594767,
+    "minimum_loaded_radius_mm_for_8000Hz_at_500mm_s": 19.89436788648692,
+    "tooth_pass_hz": 79.57747154594766,
+    "cabinet_hot_inlet_C_650W_800m3h": 44.285714285714285,
+    "regen_100uF_36V_plus_0_1J_V": 57.41080037762929,
+    "old_contact_current_A": 5.789473684210526e-05,
+    "old_gpio_nominal_V_internal32k": 1.1364428945074105,
+    "ventilation_core_candidate_EUR_exVAT": "499.21",
+    "core_only_reduction_percent_if_equal_tax_and_scope": 70.08927501497902,
+    "four_candidate_drivers_USD_before_landed_charges": "156.80",
+    "illustrative_zero_failure_n_for_p_below_0_001_at95percent": 2995
+  },
+  "scope_note": "Independent arithmetic and current CSV/source review only; not final parts prices or whole-machine qualification. Core saving excludes additional permission/protection/wiring/cabinet costs."
+}

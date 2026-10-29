@@ -1,0 +1,1358 @@
+Cutting engineering audit and ventilation design
+13 October 2026 · Based on repository commit 0f28aa3
+
+The cooler replacement is calculated and implemented in the review change set. All 47 documented goals
+and every source/scope row are reviewed. The cabinet and machine remain unqualified prototypes.
+Result
+
+Evidence
+
+Selected cooling core
+
+2×PF66000,2×PFA60000 and Rittal 3114200:€499.21 exVAT
+
+Price reduction
+
+70.089% versus€1,669 cooler alone; known added
+controls$153.01; whole-machine saving unavailable
+
+Thermal envelope
+
+40°C inlet,650W total cabinet heat,800m³/h measured
+service flow; modeled hottest air44.286°C
+
+Fault bound
+
+49°C conditional on probe mapping≤1.5K and
+overshoot≤0.5K; physical tests pending
+
+Software execution
+
+65 thermal/model/fault checks,60-case sweep and21 current
+machine host groups passed withASan+UBSan
+
+Wider coverage
+
+217 source/scope rows,54 made-part/process quotes,52
+price observations,54 current exact priced primary rows
+
+Immediate closure priorities
+Shaft thermal rise29.6603K exceeds20K and adapter peak≈313MPa exceeds216.67MPa. Resolve these
+design failures and regenerate the affected evidence before machining.
+GPIO relay contacts see57.9µA at 3.3V, below the selected minimum switching load. Select and qualify the
+low-current stage. Physical part/slug-clear inputs andI/O allocation are also incomplete.
+Verify exact screw/guide/support ratings, including 5000N proof, regen/discharge, mains/inrush and
+protection. Re-export the correctedR3PCB with actualKiCad checks.
+Build the final cabinet and perform the complete physical protocol. The 650W figure includes fans and
+every other heat source. Mathematical150W cases are not two-fan physical operating tests.
+Complete-source CAD/FEM regeneration and RP2350 cross-build are outside the completed host run. Native metadata
+parity does not establish a freshERC/DRC or manufacturing release.
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+1
+
+Parts, prices and all-goal review -13 October
+2026
+Based on0f28aa3; preserves the upstream firmware, CAD and guard-release fixes. The selected
+replacement removes the €1,669 cooler, uses 50°C operating-rated V20 drivers, and specifies filtered
+ventilation with hardwired fault permission. This is an unreleased prototype; no assembled machine or
+physical acceptance record exists.
+
+Price result and engineering boundary
+Two PF66000 fans, two matched PFA60000 outlets and Rittal 3114200 total €499.21 ex VAT, 70.089%
+below the cooler alone. Additional known controls/protection total $153.01. Monitor, links, mats,
+wiring, enclosure differences, custom machining, inspection and landed charges remain unquoted. A
+whole-machine or complete-subsystem 70% saving is not established.
+Head motor/driver/extensions cost $131.95/axis, slightly above the old $130.77 kit; feed drivers are
+$33.52 each. MDR-40-5 is $18.60 against a historical $124.88 Siemens supply observation(85.1%
+merchandise reduction); HDR-60-24 is $20.90. New PSU overload/fuse/rail-corner qualification is required.
+Driver quality is improved on paper by the actual 50°C operating rating and full continuous-current
+capacity; machine robustness is not proven until physical faults, endurance and maintenance tests pass.
+Same-identity SKF offers are 6001-2Z/C3€2.06,6002-2Z/C3€2.25,626-2Z €1.97,6204-2Z/C3€3.18
+andMB2€0.59, ex VAT. The latest retrieved 6001 page is €2.06; earlier €1.99/€2.06 observations are not
+guaranteed checkout prices. Keep C3/CN identities, authenticate incoming stock and measure matched
+fits. Native currencies are retained; old convertedUSD observations are dated history, not new USD
+quotes.
+docs/45 contains selection, wiring, prototype layout,650W/800m³/h calculation and physical protocol. It
+predicts44.286°C hottest normal air at 40°C inlet and 49°C conditional fault-trip bound. Heat allocations,
+airflow, probe gradients and overshoot are measurement gates. MF disables/free-motors and clears
+alarms; its inverted semantics require NC relay adaptation. It is not STO. The LE350 45°C full-load inlet
+limit remains binding.
+
+Complete part and cost coverage
+Record
+
+Coverage
+
+Goals
+
+47
+
+Source/scope rows
+
+217
+
+Made-part/process quote lines
+
+54
+
+Grouped CAD records
+
+70
+
+Price/alternative observations
+
+52
+
+Primary source rows with a current exact public price
+
+54
+
+Every source row is reviewed across 11 selected/custom/tooling/PCB/thermal tables plus 17 incomplete
+scope packages. Alias rows and assembly summaries are not extra purchases. AX-01's malformed
+quantity row is corrected to two assembly summaries; head kits are itemised. F110 is8 secondary
+keyways on8 purchased rollers; T001 quantity 1 means one matchedpair of 2 blades.
+Made-part quote register keeps material, setup, run time, machine rate, outside work andinspection blank
+until an actual quote/internal cost card exists. Laser/brake/CNC access does not imply free labour, grinding
+capability or micrometre accuracy. CAD reconciliation includes every grouped mechanism row and
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+2
+
+prevents duplicate purchases.
+Remaining coverage includes payoff buffer/dancer/fault sensors, exact regen/bleed and protection, mating
+cables, IO-Link master, physical part/slug sensing and I/O expansion,3m output support, blade
+shims/fasteners, metrology, discrete cabinet harness, enclosure, spares and assembly/qualification labour.
+A quantity 1 unpriced lot is not a sufficient complete kit.
+
+Asian sourcing and lowest qualified cost
+STEPPERONLINE/Nanjing direct-China drives, motors, supplies and cables are selected. Alibaba Dema
+FK6625 advertises $15-17, MOQ1, but matched filtered curves, power, contents and seals are not verified.
+Juxingda PU rollers advertise $3.99-19.99 with cart/customisationMOQ10; the attributes separately
+sayMOQ1. Request8 installed+2spares with 40OD/20width/10H7 bore, keyway/collar,90ShoreA, runout,
+traction and wear specifications. The advertised family range is not an exact roller quote. Saipwell
+LC013NO is a Chinese monitor candidate pending price and installed threshold qualification.
+Made-in-China HGR20 and SFU families remain RFQs: a1605listing cannot price the frozen 1610complete
+kit or prove ratings/preload/end machining.
+Use the observation register, including rejected/cached/RFQ alternatives. The lower cached Mouser
+MDR40 price was rejected because the fresh page reports sales restrictions; MDR20's activeDC-OK output
+is not a drop-in relay substitute.
+For each offer require exactSKU/drawing revision, contents, quantity/pack/MOQ, dimensions/preload,
+material/traceability, inspection, warranty/spares, leadtime and delivered cost to the intended site.
+Compare equivalent accepted offers in one tax/currency basis. Select the lowest qualified landed/internal
+cost actually obtained. No open-ended search can prove global cheapest; no supplier was contacted and
+no purchase was made.
+
+Remaining design failures and source corrections
+The shaft contact/thermal study reports 29.6603 K central maximum rise against 20 K. The adapter
+record reports about 313 MPa versus the specified 216.67 MPa screen. These are unresolved design
+failures, not thermal-cabinet problems. The generic fixed-support maximum 4900 N is also below the
+restored 5000 N proof requirement and lacks exact supplier evidence. Do not fabricate these affected
+interfaces on a claimed pass.
+The newer physical target still lacks a real part-clear GPIO and all 26 exposed pins are allocated.
+Simulated present-to-clear checks do not supply a physical sensor or prove automatic handling. Resolve
+the I/O hardware and qualify output handling before release.
+PCB order numbers are now corrected in controlled BOM/native source and the review metadata
+projection:8-positionJ11=1759075, P11=1757077;4/6/12-position straight
+plugs=1757035/1757051/1757116. The falseKeystone9903M3nylonkit claim is removed and actual
+support hardware remains unselected. The projection is not a new KiCad export/ERC/DRC; historical
+R2manufacturing outputs are preserved and current R3re-export is pending KiCad 10.
+A further electrical failure is explicit: GPIO contact loops draw 57.9 µA at 3.3V, below the selected
+power-relay minimum 10mA/12V. These interfaces are not for procurement until replaced by a qualified
+low-current stage. PanasonicAQY212GS is a costedPhotoMOS circuit candidate, not a complete module. Its
+maker maximum on resistance is0.7 Ω; translated reseller data claiming0.34 Ω as maximum or
+overcurrent protection is not design evidence. A freshLCSC10-piece tier is $1.0105 each; board,
+connectors, protection, assembly andqualification remain open.
+Additional freshPCB prices: AM26LV32EIDR $2.31 cut-tape, DigiKey; TPL7407LDR $0.8513 at LCSC;
+SamtecSSQ-120-23-G-S $4.48 at DigiKey Marketplace. The olderLCSC $0.5175 TPLpage is superseded by
+its fresh canonical price. docs/46 records minimum-load, mains/inrush, regen, mechanical andhandling
+closure actions. Three LE350supplies alone have120Acoldinrush before other sources/fans; the old
+4.6Amains figure is retired.
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+3
+
+The thermal physical schedule now uses 300/450/650W total cabinet heat, including fans. The 150W
+mathematical reference is not a two-fan operating condition because fans alone are nominally 240W.
+Dummy-heater shutdown must reproduce downstream power removal; no650W heater is left running
+after a simulated stop.
+Additional current merchandise observations: the original 24HS40-5004D-E1000 feed motor is $36.87;
+RU3100 is €186.40 and E60137 is €57.00 ex VAT. The exact Phoenix 1759033 header and 1757035 plug
+are $0.6759 and $1.8113 respectively from LCSC at the one-piece tier, with six of each required. Buying
+ten for the next unit-price tier costs more than the six-part basket. The bare Pico 2 SC1631 is $6.12 cut
+tape at DigiKey; a fresh Adafruit observation is $6.25 and unavailable, so the historical $5 launch price is
+not a current checkout price. Two 20-pin male headers and their controlled assembly/inspection must be
+specified separately for the bare board; the current kit is incomplete without them. The preheaded
+SC1632 alternative needs mechanical review before selection.
+
+Every goal
+The following47-row matrix retains original acceptance and recognises completed upstream
+code/geometry fixes without claiming physical performance. The 200-1000mm/15-30°C qualification
+subset cannot qualify3000mm or40°C by implication.
+#
+
+Goal
+
+Current
+evidence
+
+Remaining closure
+
+1
+
+Finished length ±(0.20 mm
++ 0.05 % L)
+
+BLOCKED /
+UNPROVEN
+
+Second stock-side measuring module and final length-budget gate
+are implemented upstream. Qualify real metrology, relaxation,
+traction and all lengths 200-3000mm; close structural/fit/thermal
+failures first.
+
+2
+
+Strip accuracy ±0.20 mm
+
+BLOCKED /
+UNPROVEN
+
+Spatial strip sequence and half-open closure are corrected
+upstream. Qualify actual strip ends/depth/length ±0.20mm, blade
+support and wire lots; software geometry is not physical strip
+evidence.
+
+3
+
+Cut quality, no conductor
+damage, qualified incision
+
+UNPROVEN
+
+H007 backing is now modeled; final blade grind/material, shim
+fasteners, loaded gap and conductor-damage/cut/strip acceptance
+are still unqualified.
+
+4
+
+Throughput/cycle budget
+
+BLOCKED
+
+F29/F19; supported-length, state-machine timing and a stated rate
+requirement
+
+5
+
+Cpk ≥ 1.33, ≥ 30
+consecutive pieces/cell
+
+UNPROVEN
+
+Upstream rejects duplicate records and adds
+12-force-station/provenance requirements. Collect unique
+stable-process pieces, ≥30/cell, full material/length/temperature
+envelope and independent calibrated measurements.
+
+6
+
+Komax survey/benchmark
+without parity claim
+
+DESK ONLY
+
+Comparison is useful; update stale S1 component/feature rows,
+preserve the lack of measured parity
+
+7
+
+0.5-2.5 mm² Cu/PVC; OD
+1.2-4.5; lane clearances
+
+DESK ONLY /
+UNPROVEN
+
+Local clearance calculation is useful; traction, handling, actual lots
+and quality remain unqualified
+
+8
+
+200-3000 mm;
+independent 3-25 mm
+strips; 10 mm insulated
+grip margin
+
+BLOCKED /
+UNPROVEN
+
+Stock-side module location and spatial grip checks are
+implemented. Release actual handling/sensors and 3m output
+support; qualify independent3-25mm strips and minimum 200mm
+parts.
+
+9
+
+0.50 m/s feed; initial 0.05
+m/s
+
+BLOCKED /
+UNPROVEN
+
+Command frequency fits nominally; F19/F20 mean payoff/traction
+do not establish the speed envelope
+
+1
+0
+
+2000 feed pulses/rev; 260
+rpm ceiling; loaded radius
+calibration
+
+DESK ONLY /
+UNPROVEN
+
+Nominal operating point is 238.7 rpm/7958 Hz; qualify loaded
+radius, driver setting and actual motion
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+4
+
+#
+
+Goal
+
+Current
+evidence
+
+Remaining closure
+
+1
+1
+
+Blade 12.5 mm/s, 300
+mm/s², 100 pulses/mm for
+10 mm lead
+
+DESK ONLY /
+UNPROVEN
+
+10mm lead and 1000pulses/rev are frozen. Select an exact
+SFU1610 complete kit; qualify custom support/geometry, polarity
+and hot driver torque at 12.5mm/s and 300mm/s².
+
+1
+2
+
+Head acceptance loads
+2500 N axial, 750
+transverse, 375 vertical;
+double proof
+
+BLOCKED /
+UNPROVEN
+
+Original2500N axial/750N transverse/375N vertical and 5000N
+axial proof are restored. Supplier-stated4900N fixed-support
+maximum is below 5000N proof and unverified; choose/prove a
+suitable actual support. Qualify backing/joints and assembled load
+path.
+
+1
+3
+
+Feed 1 Nm ×2.5; 5 Nm
+fault; belt ±480 N; roller
+±60 N
+
+DESK ONLY,
+INCOMPLETE
+
+Existing bounded shaft/belt analyses useful; F24 and actual
+traction/jam/rotor roles must be included
+
+1
+4
+
+Machined section stiffness
+≥ reduced model,
+191-section audit
+
+DESK ONLY
+
+Sampled nominal result retained; tolerance-continuous proof, local
+contacts and fabrication remain separate
+
+1
+5
+
+Shaft fatigue, 10,000 h /
+1.8×10⁷-cut duty
+
+UNPROVEN
+
+F24/F31; correct spectrum and validate actual shaft/manufacture
+under it
+
+1
+6
+
+Matched j5, 3-6 µm
+interference, stated
+clearance envelope
+
+BLOCKED /
+UNPROVEN
+
+Conditional corner screen retained; F23/F35 require resolved
+temperature paths and adequate measured matching
+
+1
+7
+
+Bearing/housing contact
+stress within allowables
+
+DESK ONLY
+
+Local stated-load study retained; assembled stiffness, actual loads
+and manufacturing contacts need validation
+
+1
+8
+
+Shaft ≤ 20 K above housing
+
+BLOCKED
+
+Published central thermal bound exceeds it; redesign/model then
+instrument worst-duty paths
+
+1
+9
+
+F109/collar survives 5 Nm
+plus 7 kN clamp
+
+DESK ONLY /
+UNPROVEN
+
+Bounded contact result useful; exact collar/key geometry, torque
+scatter, proof/fretting records still required
+
+2
+0
+
+Adapter peak converged
+and ≤ 216.67 MPa screen
+
+BLOCKED
+
+Reported ≈313 MPa remains above the screen; custom support
+invalidates automatic reuse; do not substitute yield alone
+
+2
+1
+
+Blade force within actual
+axis capability
+
+BLOCKED /
+UNPROVEN
+
+Actual selected screw/support/motor data and measured
+wire/blade force; old KK86 input-torque cap is not a custom rating
+
+2
+2
+
+Blade-face gap 0.020 mm
+under cut
+
+BLOCKED
+
+Complete tooling/backing and assembled load-clearance
+verification
+
+2
+3
+
+Nip force 50-75 N, target
+60
+
+DESK ONLY /
+UNPROVEN
+
+Measure each nip, actual sharing, damage and friction; F20/F24
+
+2
+4
+
+Each measuring wheel
+force 6-19 N, target 10
+
+DESK ONLY /
+UNPROVEN
+
+Both measuring modules are now in CAD. Resolve CN-bearing
+matched fits, encoder/wheel interfaces and actual 6-19N force per
+wheel; no physical calibration exists.
+
+2
+5
+
+Full head/coupling fit and
+independent jaw sweep
+
+BLOCKED for
+selected build
+
+Existing envelope checks are useful historical scope; custom
+hardware geometry must be integrated and checked
+
+2
+6
+
+Full layout/mechanism
+static integration
+
+BLOCKED /
+UNPROVEN
+
+Upstream integrates the second module, P008 payoff torque boss
+and H007 backing. Custom-axis internals, cabinet arrangement,
+output support and actual guards/cables still need integrated
+clearance/assembly checks.
+
+2
+7
+
+Payoff ≤ 30 kg, spindle
+static support
+
+DESK ONLY /
+UNPROVEN
+
+Ø20 shaft beam result is plausible; complete retention/torque/weld
+load paths, weigh and load-test
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+5
+
+#
+
+Goal
+
+Current
+evidence
+
+Remaining closure
+
+2
+8
+
+Belt 180-200 N, target 190;
+dynamic margin
+
+DESK ONLY /
+UNPROVEN
+
+Use 190N nominal belt tension and corrected79.58Hz tooth-pass.
+Measure sharing, tension and resonance over the real duty;
+historical wrong frequency is retired.
+
+2
+9
+
+40°C room; selected-driver
+operating ambient≤50°C
+(normal design air≤45°C)
+
+DESK ONLY /
+UNPROVEN
+
+docs/45:40°C room, selected 50°C operating-rated
+drivers,650W/800m³/h;44.286°C modeled hottest normal air and
+conditional49°C trip. Physical mapping/PSU/fault/transient
+acceptance remains.
+
+3
+0
+
+All cabinet losses within
+selected
+ventilation/protection
+envelope
+
+DESK ONLY /
+UNPROVEN
+
+631.184W allocation+18.816W reserve to 650W. Actual
+driver/supply/fan/coils heat, installed flow, fouling, probe gradients
+and trip overshoot must be measured.
+
+3
+1
+
+K1-K3 DC make/break duty
+on 36/60 V branches
+
+UNPROVEN
+
+Catalogue series-pole selection useful; actual capacitive inrush,
+bus topology and measured interruption still required
+
+3
+2
+
+Correct branch/XPS
+protection and coordination
+
+BLOCKED as
+claimed closure
+
+Fuse curves/I²t/DC interruption and PSU-limited faults need
+complete coordination, not nominal-current equivalence
+
+3
+3
+
+Regeneration absorption
+and deterministic discharge
+
+BLOCKED
+
+Voltage-headroom calculation, exact components and measured
+branch decay/stop behaviour
+
+3
+4
+
+Guard aperture safety
+distance
+
+UNPROVEN
+
+Assess actual opening type and nearest hazards, all paths,
+door/guard states and machine use; blade-only distance
+insufficient
+
+3
+5
+
+Two-channel independent
+E-stop/guard safety
+function
+
+UNPROVEN
+
+Complete schematic/risk-required performance, fault injection,
+stop/energy validation
+
+3
+6
+
+Guard release only after
+safe energy/standstill; safe
+power-loss direction
+
+DESK ONLY /
+UNPROVEN
+
+Upstream defines separate LADN02/T2/R2 guard-release chain and
+request. Exact fault performance, actual safe-energy/standstill
+delay, spring-lock direction, mechanical fit and required safety
+performance remain unqualified.
+
+3
+7
+
+Cheaper custom cut axis
+meeting unchanged goals
+
+BLOCKED /
+UNPROVEN
+
+Frozen 10mm-lead custom axis has not been manufactured,
+inspected or quoted as an equivalent complete assembly. Resolve
+fixed-end proof rating, adapter stress and actual
+guide/screw/support interfaces; no weakened loads.
+
+3
+8
+
+Priced/selectable sourcing
+lines
+
+DESK ONLY,
+INCOMPLETE
+
+Every selected/source row has a price/quote status. Current exact
+offers, kit contents, pack/MOQ, custom fabrication and landed
+comparison are incomplete; blank prices are not zero.
+
+3
+9
+
+Remaining coupling/cooler/
+drive/Tunisia enquiries
+
+UNPROVEN
+
+Cooler is removed and V20 drivers priced. Exact coupling/axis,
+monitor, protective devices, mats, custom work and delivered-site
+quotes remain open; no globally cheapest result is established.
+
+4
+0
+
+Rust/C/C++ machine stack;
+independent safety; no
+uncommissioned start
+
+PARTLY MET /
+UNPROVEN
+
+Upstream PIO startup, strip/length/approval/jog fixes are
+preserved. Host regressions pass; target cross-build, pulse
+capture, new MF wiring, physical safety and missing handling I/O
+remain separate qualification.
+
+4
+1
+
+Easy, reproducible
+assembly
+
+BLOCKED (F35:
+release
+travellers/kit not
+complete)
+
+A competent builder completes a release traveller without
+choosing geometry, component variants or wiring; correct
+parts/quantities, tools, access and fixtures are supplied
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+6
+
+#
+
+Goal
+
+Current
+evidence
+
+Remaining closure
+
+4
+2
+
+Screenless routine
+operation
+
+BLOCKED /
+UNPROVEN
+
+Retained approval/recipe identity exists upstream. Physical
+part-clear input is unassigned and the 26 exposed GPIO are
+allocated; select real handling I/O before panel-only automatic
+handling qualification. Prove recipe/material/calibration
+invalidation and partial/scrap recovery.
+
+4
+3
+
+Complete automatic
+handling
+
+BLOCKED /
+UNPROVEN
+
+Upstream spatial sequence and present-to-clear contract exist, but
+actual part/slug-clear hardware and I/O are absent. Verify prime,
+slug disposal, output clearance and supported3m delivery.
+
+4
+4
+
+Factory robustness
+
+BLOCKED /
+UNPROVEN
+
+GPIO field contacts operate at 57.9 µA/3.3V below selected
+power-relay minimum 10mA/12V. Replace with a qualified
+low-current stage; then prove
+mains/USB/logic/EMI/sensor/spool/wear recovery and endurance.
+See docs/46.
+
+4
+5
+
+Resonance/structural
+precision
+
+DESK ONLY /
+UNPROVEN
+
+Corrected tooth-pass model is present. Measure relative blade/wire
+displacement and resonances over approved speeds, duty and
+sensor bandwidth; stiffness models alone do not establish
+precision.
+
+4
+6
+
+Whole-machine
+endurance/serviceability
+
+UNPROVEN (F31)
+
+Duty-specific endurance acceptance, preventive maintenance,
+spares and inspected replacement/recalibration procedures
+
+4
+7
+
+Cost and insourcing
+
+UNPROVEN (F35)
+
+Complete equivalent delivered build cost,
+machining/grinding/metrology/qualification labour and
+consumables; exact externally supplied items identified
+
+Verification and release
+python3 tools/run_cabinet_review.py --sanitize compiles and runs thermal/reference/fault-state
+checks and the current machine host regressions. Its result files identify actual success and always retain
+physical_results=false, target_rp2350_tested=false. A host pass does not prove real relay timing, sensor
+response, position accuracy or cut quality. Full CAD/FEM regeneration, KiCad manufacturing release,
+target cross-build/pulse capture and original length/strip/Cpk/load/fit/endurance/safety tests remain
+separate required scopes. A failed physical or supplier gate cannot be closed by writing a model pass.
+The current build cannot honestly be guaranteed 100% functional, globally cheapest, or 70%
+cheaper as a complete delivered machine. The reviewed change set and explicit closure records
+make the remaining work testable without weakening the goals.
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+7
+
+Cabinet ventilation replacement and acceptance
+test
+Revision S1-B-VENT-R1, 13 October 2026. Based on commit 0f28aa3. This guide supersedes the cooler,
+T-series driver, direct ENA and thermostat-in-XPS-A1 instructions in earlier guides. Unrelated mechanical
+and safety requirements remain applicable. Prototype selection; fabrication and physical
+acceptance remain unreleased.
+
+Selected components and scope
+Use two STEPPERONLINE CL86Y-V20 head drivers and two CL57Y-V20 feed drivers. Keep the 34E1K-85
+head motors and 24HS40-5004D-E1000 feed motors. Both driver manuals specify 0-50°C operating
+ambient. Head continuous current is 6 Arms; feed is 5.6 Arms, covering the original 5.7 Arms
+torque-curve point and 5 A feed motor. Hot torque, tuning and position error require qualification. The
+head manual's voltage table and prose disagree: use 80 VDC as the conservative ceiling, with nominal
+60 V and a separately qualified regeneration clamp.
+Install two Pfannenberg PF66000 IP54, 11666102055, each paired with one PFA60000 IP54,
+11760002055. At 230 V/50 Hz, the official matched-path flow is 445 m³/h, nominal input 120 W per fan,
+6 A prefuse, ball-bearing L10 40,000 h at 40°C. Do not use the 640 m³/h free-air figure. Two clean parallel
+paths have a catalogue total of 890 m³/h; the actual installed combined flow must be at least 800
+m³/h. The maker's web page says G3 while its current sheet says G4: order the exact matched IP54 filter
+identity and reconcile supplied mats before assembly.
+Replace control supplies with MEAN WELL HDR-60-24, 24 V/2.5 A/60 W, and MDR-40-5, 5 V/6 A/30 W.
+MDR-40 has a DC-OK dry contact; the cheaper MDR-20's active 20 mA signal is unsuitable for the selected
+permission circuit. At the 5.2 V setting, output must remain below 30/5.2 = 5.77 A and the temperature
+derating curve. Verify RU3100 loaded supply ≥4.75 V and Pico VSYS ≤5.5 V, including tolerance, ripple
+and transients. Keep 24 V driver logic and TPL suppression COM; do not convert them to 5 V.
+Use Rittal SK3114.200 / 3114200 on protected 24 VDC, with its supplied 1.8 m NTC. Set menu 6=2 (K2
+alarm), menu 8=2°C (low alarm), menu 9=45°C (high alarm). K2 healthy NO 11-14 opens on temperature
+alarm and sensor open/short. Catalogue switching/display accuracy is ±2 K; alarm hysteresis is 2 K. K1 is
+unused. Fans run continuously after the main isolator, upstream of the motor-power contactors.
+Additional required parts: two fan fuse holders/links, spare mats, two MF adapter relays, two thermal
+permission relays, three protected drive-logic branch-presence relays, two airflow monitors, separated
+terminals/barriers, PE bonding, conductors/ferrules, mounting and a checked enclosure arrangement. An
+unpriced installation lot does not select every discrete item. See thermal BOM.
+
+Verified merchandise prices and cost limits
+Public observations dated 13 October 2026; shipping, taxes and custom work excluded.
+Part
+
+Qty
+
+Unit price
+
+Extension
+
+PF66000 11666102055
+
+2
+
+€171.89 ex VAT
+
+€343.78
+
+PFA60000 11760002055
+
+2
+
+€34.65 ex VAT
+
+€69.30
+
+Rittal 3114200
+
+1
+
+€86.13 ex VAT
+
+€86.13
+
+Fan/filter/controller core
+
+€499.21 ex VAT
+
+Phoenix gold-contact 2966265, K_ENA1/2 and
+TH-R1/2
+
+4
+
+$19.64
+
+$78.56
+
+Phoenix branch-presence 2966171
+
+3
+
+$16.13
+
+$48.39
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+8
+
+Part
+
+Qty
+
+Unit price
+
+Extension
+
+Schneider DF101 fuse carrier
+
+2
+
+$13.03
+
+$26.06
+
+The core is 70.089% below the €1,669 cooler alone. The original Conrad baseline is plus VAT; the old
+BOM's “incl VAT” label was incorrect. Known additional controls total $153.01. Links, airflow monitors,
+spare mats, wiring, enclosure differences and landed charges remain unquoted, so neither the complete
+subsystem nor the complete machine has demonstrated a 70% reduction.
+Each new head motor/driver/extension basket is $76.21 + $44.88 + $10.86 = $131.95, slightly above the
+old $130.77 kit. CABLE-PC-2 debugging cable is included with the new driver. Feed drivers are $33.52
+each. HDR-60-24 is $20.90; MDR-40-5 is $18.60. Verify the separate motor/encoder extension kit's 1.7 m
+routes plus service loops.
+The smaller PF65000 pair was considered: 370 m³/h per matched path, €157.22 per fan. PF66000 adds
+€29.34 per pair and gives a more workable distribution/fouling allowance. Alibaba Dema FK6625
+advertises $15-17, MOQ 1, but its exact matched filtered curve and kit contents are unverified. It remains
+an RFQ alternative. Saipwell LC013 is a Chinese airflow-monitor candidate, pending price and installed
+qualification.
+
+Heat and airflow calculation
+Supply losses at 89.5% minimum efficiency are 3 × 350 × (1/0.895 − 1) = 123.184 W. Motor
+copper/mechanical losses occur outside the cabinet; do not count 350 W PSU output as PSU heat or
+subtract driver losses from PSU losses.
+Source
+
+Allocated W
+
+Evidence
+
+Three LE350 supply losses
+
+123.184
+
+Maker efficiency; actual duty still unmeasured
+
+Four drivers
+
+160
+
+40 W each, unmeasured allocation
+
+Two fans
+
+280
+
+120 W nominal each; allocate 140 W each for
+voltage/load reserve
+
+Control PSU losses
+
+16
+
+Unmeasured allocation
+
+All relay, contactor and guard coils
+
+30
+
+Unmeasured allocation including added coils
+
+PCB and safety electronics
+
+10
+
+Unmeasured allocation
+
+Temperature controller
+
+2
+
+24 VDC catalogue rating
+
+Other losses
+
+10
+
+Unmeasured allocation
+
+Allocated / reserve / design limit
+
+631.184 /
+18.816 / 650
+
+Actual cabinet heat must be verified
+
+Use ΔT = P × 3600 / (ρ × cp × Q) with inlet-equivalent flow Q in m³/h, density ≥1.05 kg/m³ and cp
+≥1000 J/(kg·K). This density bound is conditional on inlet ≤40°C, pressure ≥99 kPa and 40-70% RH,
+noncondensing. Give no credit to wall conduction. Allow 1.5 K between bulk air and the hottest driver inlet,
+subject to actual mapping.
+At 40°C inlet, 650 W
+
+Flow m³/h
+
+Bulk °C
+
+Hottest local
+air °C
+
+Interpretation
+
+Clean catalogue paths
+
+890
+
+42.504
+
+44.004
+
+Conditional normal model
+
+Minimum measured service flow
+
+800
+
+42.786
+
+44.286
+
+Conditional normal model
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+9
+
+At 40°C inlet, 650 W
+
+Flow m³/h
+
+Bulk °C
+
+Hottest local
+air °C
+
+Interpretation
+
+One clean path only
+
+445
+
+45.008
+
+46.508
+
+Fault; stop
+
+One path at half flow
+
+222.5
+
+50.016
+
+51.516
+
+Prompt shutdown required
+
+Both blocked
+
+0
+
+No finite
+steady
+solution
+
+No finite
+steady
+solution
+
+Measure transient shutdown
+
+Normal local driver air must be ≤45°C. LE350 full-rated operation also requires each PSU inlet ≤45°C; the
+drivers' 50°C rating does not extend that rating. Put supplies upstream in cooler air and measure their
+inlets separately.
+The conditional trip bound is 45 + 2 + 1.5 + 0.5 = 49°C, below the 50°C driver limit, only if hottest-air
+minus probe ≤1.5 K and actual post-trip overshoot ≤0.5 K, both including measurement uncertainty.
+Normal probe temperature must be ≤42.9°C at full hot duty so a 2 K overread stays below the 45°C alarm.
+A model does not establish sensor response or these gradients. Any failed mapping, PSU or transient
+criterion requires layout/control changes and retesting.
+
+Prototype layout and assembly
+The old 800×600×210 cabinet is retired. Begin enclosure layout with at least 1000 H × 800 W × 400 D
+mm to accommodate the present 750×400 PCB and DIN equipment. This is a starting envelope, not a
+released enclosure drawing. A compact PCB remains a separate potential cost saving requiring new
+native fabrication data and verification.
+Put one low inlet and one high outlet on each sidewall. Example face centres, from the outside panel
+lower/front edges: depth 200 mm; inlet height 200 mm; outlet height 800 mm. Their 320 mm faces
+occupy heights 40-360 and 640-960, leaving a 280 mm vertical gap. The maker's cutout is 292×292 mm
+for panels ≤2 mm, increased 1 mm for thickness >2-3 mm. Fan intrusion is 150 mm; outlet intrusion 39
+mm. Check actual PCB, rail and duct access/clearances before cutting; depth and width alone do not prove
+clearance. Deburr and use the matched gaskets.
+Mount drivers upright, preserve maker clearances and reserve 30 mm air channels in the proposed bank.
+Keep intake jets clear of wires and duct lids; prevent hot PSU exhaust recirculation. Separate mains and
+PELV, bond fan/enclosure/door PE and maintain fuse/filter service access. Clean, oil-free, nonconductive
+air is required; these filters do not qualify conductive machining dust.
+
+Driver MF adaptation and thermal permission
+Preserve active-high GP17 run request. Direct old ENA connections are retired: V20 MF asserts
+disable/free-motor and clears the alarm. MF is not STO or safety isolation.
+Connection
+
+Route
+
+PU+/DR+
+
+Each separately protected +24V_DRVLOGIC branch; V20
+selectors at 24 V
+
+PU−/DR−
+
+Existing dedicated IF-B01/TPL pulse/direction sinks
+
+K_ENA1/2 coils
+
+Protected 24 V to A1; A2 coils in parallel to GP17/TPL sink
+J4-3
+
+K_ENA1 NC 11-12
+
+11 to 0 V; 12 to both head MF−; MF+ to each head's
+protected logic branch
+
+K_ENA2 NC 11-12
+
+11 to 0 V; 12 to both feed MF−; MF+ to the protected feed
+logic branch
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+10
+
+Connection
+
+Route
+
+J5/J6/J7 ENA pins
+
+Unused and insulated
+
+Three logic-presence coils
+
+Across each protected 24 V driver-logic branch after its fuse
+
+Use gold-contact 2966265 for both MF groups and both thermal permission contacts. Its 50 mA/36 VDC
+rating covers head maximum 2×20=40 mA and feed maximum 2×7.5=15 mA. All four together could
+draw 55 mA, so one shared contact is inadequate. The manuals' resistor wording conflicts with
+selector wording: clarify or qualify the exact delivered selector/resistor/input-current arrangement before
+motor power. GP17 LOW/reset/3V3 loss drops K_ENA, NC closes and MF disables while 24 V is healthy. If
+logic power fails, the independent hardwired path must remove motor power instead.
+Permission-coil circuit: protected 24 V → MDR40 DC-OK dry contact → Rittal K2 healthy 11-14 → three
+logic-presence NO contacts → two airflow-healthy NO contacts → TH-R1/TH-R2 A1 in parallel; A2 to 0 V.
+Three presence relays use 2966171; approximately 18 mA/24 V load exceeds their 10 mA/12 V minimum.
+They detect presence, not a precise undervoltage threshold.
+TH-R1 NO 11-14 goes in series with original XPS CH1 (S11 → E-stop CH1 → locked-guard contacts → S12);
+TH-R2 likewise in CH2 (S21 → E-stop CH2 → locked-guard contacts → S22). Verify each loop's current
+within the gold contacts' 1-50 mA operating range. Keep XPS A1 on its original supply, monitored
+manual reset, mirror-NC EDM chain and separate guard-release request/T2/R2 circuit. Ordinary added
+relays and the temperature controller receive no independent personnel-safety claim.
+Saipwell LC013NO 01300.1-00 candidate closes with airflow: nominal local threshold 2.5 m/s, 50°C/70%
+RH maximum, 60 VDC/170 mA/10 W resistive contact. Mount each in a protected fan jet and prove it
+closes at service flow and opens when its fan stops. A local vane cannot prove 800 m³/h total flow;
+measure total flow separately. If mounting cannot meet the acceptance, select a different monitor and
+revise price/design before release.
+Configure head 1000 commanded pulses/rev with 10 mm lead (100 pulses/mm), feed 2000 pulses/rev.
+Check one measured revolution and 10.000 mm screw travel. Keep 0.50 m/s/260 rpm feed and 12.5
+mm/s/300 mm/s² blade ceilings. Generator capacity is 20 kHz; it does not raise motion limits. Verify ≥2.5
+µs pulse high/low and ≥10 µs direction setup at the driver terminals. Record polarity, motor encoder
+settings, current, tuning, alarm/disable behaviour and parameter readback.
+
+Software checks and required physical tests
+Run python3 tools/run_cabinet_review.py --sanitize. It compiles the model and current machine
+host regressions using ASan/UBSan, generates reference/fault checks and a temperature sweep, and
+writes success only after execution. Leak detection is disabled for hosted ptrace/proc restrictions. RP2350
+hardware and physical temperatures remain separate acceptance scopes.
+Instrument all four driver inlets/cases, three LE350 inlets/cases, control supplies, PCB, inlet/outlets and
+alarm probe. Use calibrated air probes with expanded uncertainty ≤0.1 K, wattmeters and a calibrated
+capture hood. Record serials, calibration, humidity/pressure, mains voltage, cabinet geometry/filter lot
+and firmware revision.
+1. With motor power disconnected, prove PE, insulation, polarity, branches and wiring. Inject 24 V loss,
+every driver-logic fuse loss, 5 V loss, MCU reset and sensor/alarm faults.
+2. Calibrate dummy heaters independently at 150/300 W. Then test total cabinet heat of 300/450/650 W
+at 15/30/40°C inlet, clean filters and the 800 m³/h service condition. Total includes fans, electronics, coils,
+supplies and heaters. The two fans alone are nominally 240 W:150W total with both running is not a
+feasible physical case. If actual baseline heat exceeds a lower target, record that case as unavailable and
+test the measured baseline instead. Include actual worst holding/moving duty and guard coil states.
+Measure heat by energy balance and cross-check inlet/outlet enthalpy; motor-system mains power is not
+cabinet heat. Arrange dummy-heater power removal to reproduce the qualified downstream load
+shutdown; never leave an assumed 650 W heater running after a simulated drive stop.
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+11
+
+3. Wait until no monitored point changes >0.1 K in the final 30 minutes. Include uncertainty when
+checking driver/LE350 inlets ≤45°C, other component derating, heat ≤650 W, flow ≥800 m³/h,
+hottest-minus-probe ≤1.5 K and normal probe ≤42.9°C.
+4. Stop each fan, foul/restrict one and both filters, block both paths, open/short NTC, remove controller
+power and each logic rail. Record temperatures, contacts, K1-K3 power removal, bus decay and
+overshoot. Use an independent supervised abort on the test fixture.
+5. Require driver air plus uncertainty <50°C, overshoot ≤0.5 K and PSU limits respected. Prove no
+automatic restart: hold RESET across fault/recovery, then require a fresh healthy monitored reset. Inject
+one welded TH-R contact; the other channel must stop and reset must be rejected until corrected.
+6. Complete 10 h worst hot-duty operation, cold starts and repeated trips. Set filter maintenance by
+measured flow. Requalify after filter, layout, driver or cooling changes.
+Use the blank physical record. No physical result has been entered. Thermal acceptance does not qualify
+accuracy, Cpk, cut/strip quality, endurance, fit, proof load or guarded energy.
+
+Primary references
+- PF66000/PFA60000 official sheet
+- Rittal 3114200 operating manual
+- CL86Y V2.0 manual
+- CL57Y V2.0 manual
+- MDR40 official sheet
+- Phoenix gold relay
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+12
+
+Additional closure actions -13 October 2026
+These findings remain explicit blockers alongside the 47-goal matrix. They are not closed by the cabinet
+heat model or by host regressions.
+
+GPIO field-interface minimum load
+The present 10kΩ series /47kΩ pull-up circuit draws 3.3/(10000+47000) = 57.9µA at 3.3V when the
+isolated contact closes. The selected Phoenix 2966171 power-contact relay has a 10mA at 12V
+minimum switching load. This is an inadequate specified load. Switching reliability/endurance cannot
+be inferred from a new relay initially conducting on the bench. Even gold 2966265 is specified at 1mA/24V
+and 100mV/10mA; do not assume a57.9µA loop is qualified by changing the plating alone.
+Replace KA1-KA10 with a qualified low-current interface before release. An economical candidate is a
+Panasonic AQY212GS PhotoMOS channel: manufacturer maximum on resistance 0.7Ω, off leakage 1µA,
+LED operate current 3mA, recommended 5mA input and 48V load ceiling. A3.3kΩ1% resistor from
+a19.2-28.8V field input gives at least 5.31mA using the 1.5V LED upper drop, and at most 8.82mA using
+zero drop as a conservative bound. Worst resistor heat is0.254W; use a properly derated ≥0.5W part. Add
+defined polarity/surge protection, connectors, PCB/insulation/mounting and fixture tests. This is a circuit
+candidate, not a released or completely priced module. GPIO loading, silicon leakage and actual on/off
+logic margins must be recomputed together; do not replace a DIN relay with an IC alone.
+Maker reference: AQY212GS specifications. Asian pricing reference: LCSC C719745. The physical input
+adapter, EMI/cold/hot/fault tests and incoming MCU silicon revision remain open. High-cycle home sensing
+also needs an endurance count. KSR1/XPS-reset minimum load must be measured too. R2 and
+driver/thermal permission relays serve other loads; do not blanket-remove them.
+
+Mains, regeneration and fault coordination
+The archived LE350 sheets specify40A cold inrush each at 230VAC. Three supplies can therefore
+contribute 120A before the new control supplies and fans. Retire the old 4.6A incoming figure.
+Measure/obtain real RMS current, power factor and cold/hot-start waveforms for the complete cabinet. A
+nominal C10 breaker or6A fan link is not a coordination proof; choose exact protection from the site fault
+level, conductors and maker curves, and prove repeated starts without nuisance trips or unsafe
+let-through.
+LE350 overload protection does not absorb returned motor energy. Include rotors, all
+rollers/shafts/pulleys, wire and winding energy, actual capacitance and voltage tolerance. Size an exact
+clamp/bleed circuit against the new conservative80V head and 50V feed limits, with actual driver
+requirements. Prove bus decay and safe guard-release delay. Nominal stored energy at 60V is not usable
+regeneration headroom.
+
+Mechanical and handling closure
+- Shaft thermal central result 29.6603K exceeds 20K. Determine the actual
+heat paths and worst duty, then redesign/measure to preserve the same20K limit and 3-6µm
+matched-fit/clearance requirements. Tightening fits or assuming an unmeasured contact conductance is
+not a closure.
+- Adapter peak about 313MPa exceeds 216.67MPa and convergence/contact support
+remains unresolved. Redesign and regenerate CAD/FEM with the actual custom axis. A thickness-only
+stress scaling cannot release a new adapter because screw-end and motor/coupling engagement change
+with its thickness.
+- Generic 4900N fixed-support limit does not establish 5000N proof capability.
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+13
+
+Obtain an exact adequate bearing/support, preload, life and interface definition. C7 family labels do not
+establish backlash/repeatability.
+- Part/slug-clear hardware and I/O allocation are absent. All 26 exposed GPIO
+are assigned. Target firmware reports unknown as occupied; select actual sensors and an integrated I/O
+design before automatic-handling qualification.
+The bare SC1631 Pico 2 cannot mate to the selected SSQ sockets without two 20-pin male headers. Select
+exact header pin/body/plating dimensions, record assembly and inspection, or qualify a preheaded
+SC1632 alternative. This is a separately recorded missing kit item, not an assumed free accessory.
+
+Thermal measurement and release
+The 650W limit is total cabinet heat, including both fans. Lower 150W mathematical cases do not
+describe the two-fan operating cabinet. Follow the corrected physical schedule in docs/45 and account for
+the actual heater shutdown path. Airflow-vane local threshold is not a total-flow measurement; confirm
+the selected monitor's mounting or replace it. Preserve all original accuracy, Cpk, quality, load, fit and
+endurance goals.
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+14
+
+Evidence and use of the companion register
+The companion workbook retains every source row, all 47goals and all 52 dated price/alternative
+observations. The fabrication/process sheet contains54quote lines with editable material, setup, run,
+outside work andinspection inputs. Blank values produceRFQ, notzero. Currency is explicit; nativeEUR
+andUSD are not combined with an invented exchange rate.
+In the workbook, the cooling price and heat equations recalculate from their inputs. Representative
+failed-fan, zero-flow and missing-versus-zero quote boundaries were tested. Spreadsheet calculations are
+explanatory and do not replace manufacturer evidence or physical measurements.
+Software reproduction: python3 tools/run_cabinet_review.py --sanitize. Record the exact source
+commit, compiler and completed result. The test script writes success only after compilation/execution.
+AddressSanitizer andUBSan run; LeakSanitizer is disabled for hosted restrictions.
+No physical results, production approval, complete landed total or global-cheapest claim has been
+entered. Obtain equivalent destination-specific offers and complete the build/inspection/qualification
+records before release.
+
+STARZ Cutting | Engineering review | 13 October 2026 | Physical qualification open
+
+15
+
+

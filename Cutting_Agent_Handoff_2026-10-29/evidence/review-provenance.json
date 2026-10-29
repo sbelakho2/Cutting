@@ -1,0 +1,50 @@
+{
+  "review_date": "2026-10-29",
+  "repo": "https://github.com/sbelakho2/Cutting",
+  "commit": "0f28aa3289cf052409ad48f54dc5d23b130fd441",
+  "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "host_test_groups": [
+    "profile",
+    "validate",
+    "homing",
+    "cycle",
+    "correction",
+    "slip",
+    "stop",
+    "safety",
+    "board",
+    "jog",
+    "storage",
+    "journal",
+    "protocol",
+    "f05_quadrature_init",
+    "f07_strip_geometry",
+    "f08_strip_closure",
+    "f09_length_budget",
+    "f11_part_clear",
+    "f12_approval",
+    "f33_jog_overflow",
+    "f33_polarity"
+  ],
+  "host_test_log": "ok\n",
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_sanitizer": false,
+  "native_CAD_FEM_rebuilt_this_review": false,
+  "Pico_target_crossbuilt_this_review": false,
+  "physical_test_performed": false,
+  "source_sha256": {
+    "shared/controls_spec.hpp": "6c88b397bcc9076571eebf4e2bf4ca4a71cfdac79a31723b5be18bd07c2482dd",
+    "shared/cutting_head_spec.hpp": "660ae638b10272d6e2048cc13129a98a6e0e4dc6a2fea56568b7e8454e20891c",
+    "shared/machine_spec.hpp": "d0329fbb1ce0521ed10f355dd98c4f1cd4ff7538a0ebd4256b2eba3b563be13f",
+    "software/machine/core/controller.cpp": "abfacab5124e855be6fb5c3af8fc5dacee4e440b4b0bfcd1e4f274334348f17a",
+    "software/machine/core/profile.cpp": "6477de20326694acacec8a11cf434a2b12f4d256f1b0ca20e3506cba9319188d",
+    "software/machine/core/protocol.cpp": "71249e0169e8302b5e50f87bae04b4f792d6dd5e2613c13be0dc1095ae6eb3ab",
+    "software/machine/core/types.hpp": "77790ec16f4f18535592ad596dc529971d4fa55b8825b9b2e352831966f2fd3d",
+    "software/machine/tests/sim_board.hpp": "4982c9269327a39486a9e2241fdc893512b47a53dbb42e2535693e3d1ac39a45",
+    "software/machine/tests/test_machine.cpp": "3aee4cee3aaea4a81765b42e167ebeb459d0b52200e88efe076c98c0079b0581"
+  },
+  "history_lost": "Earlier local R4/R7 source, build binaries and raw numerical fields were removed by workspace maintenance; local commit c83bca9 is not an available upstream branch or delivered patch."
+}

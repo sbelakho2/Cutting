@@ -1,0 +1,2 @@
+state=1 faults=0x00000100 pieces_done=0 pieces_accepted=0 left_um=9990.265 right_um=240017.679 enc0=409 enc1=409
+COUNTEREXAMPLE_REPRODUCED: stock wheels cannot verify severed-piece ejection

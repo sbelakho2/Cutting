@@ -1,0 +1,85 @@
+{
+  "template_only": true,
+  "selected_or_qualified": false,
+  "part_id": null,
+  "revision": null,
+  "family": null,
+  "function": null,
+  "parent_assemblies": [],
+  "occurrences": [],
+  "classification": "buy|make|modify|reuse|summary|tool|spare",
+  "identity": {
+    "manufacturer": null,
+    "full_order_code": null,
+    "configuration_suffixes": {},
+    "drawing_revision": null,
+    "material_grade_condition": null,
+    "certificate": null
+  },
+  "quantities": {
+    "installed": null,
+    "machine": null,
+    "pack_size": null,
+    "MOQ": null,
+    "purchase_packs": null,
+    "purchased_units": null,
+    "spares": null,
+    "kit_inclusions": []
+  },
+  "interfaces": {
+    "datum_frame": null,
+    "mating_ids": [],
+    "dimensions_tolerances": [],
+    "full_thread_and_drill_depth": null,
+    "pin_pad_terminal_map": [],
+    "clearance_and_service_paths": []
+  },
+  "ratings": [
+    {
+      "measurand": null,
+      "minimum": null,
+      "maximum": null,
+      "units": null,
+      "conditions": null,
+      "source_type": "guaranteed|typical|supplier_claim|assumption|measured",
+      "source_url_revision": null,
+      "uncertainty": null,
+      "margin": null
+    }
+  ],
+  "sourcing": {
+    "exact_offer_url_or_quote": null,
+    "date": null,
+    "valid_until": null,
+    "stock_lead_time": null,
+    "currency": null,
+    "tax_basis": null,
+    "unit_price": null,
+    "extended_purchased_price": null,
+    "destination_incoterm": null,
+    "freight_duty_handling": null,
+    "qualification_and_expected_reject_cost": null
+  },
+  "manufacturing_operations": [],
+  "inspection_records": [],
+  "requirement_ids": [],
+  "model_ids": [],
+  "physical_test_ids": [],
+  "assembly": {
+    "step_ids": [],
+    "tools": [],
+    "orientation": null,
+    "preparation_finish_friction": null,
+    "torque_tolerance": null,
+    "alignment_or_press_method": null,
+    "acceptance": null
+  },
+  "maintenance": {
+    "wear_or_service_limits": [],
+    "service_interval_basis": null,
+    "replacement_parts": [],
+    "invalidated_calibration_approval": []
+  },
+  "evidence_hashes": {},
+  "decision_and_rejected_alternatives": []
+}

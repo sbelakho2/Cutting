@@ -1,0 +1,11 @@
+requirement_id,instruction,models,handoff_sections
+U01,No handoff PDF; task specification only,none,0;16;17;20
+U02,Completion agent produces exactly one complete visual assembly PDF,M01;M02;M45,17;18
+U03,Find qualify price every bought/made/mating/tool/process line,M01;M45;M48,6;7;16;18
+U04,About70percent like-for-like full-machine savings target,M19;M42;M48,7;15;18
+U05,Search Alibaba and other Chinese sources plus western,M48,7;15
+U06,Replace1669EUR cooler with suitable drivers and filtered ventilation;calculate and test,M18;M19;M20;M21;M24;M32;M33;M34,4;10;11
+U07,Best adequate low-cost small/large reel method up to30kg,M02;M04;M09;M28;M29;M41;M48,5;10;11;17
+U08,Quality robustness and easy assembly improve while cost falls,M01;M42;M44;M45;M48,6;7;8;15;17
+U09,Extremely broad deep multi-physics and software simulation/validation,M01-M48,9;10;11;12;13;14
+U10,Implement finish; no mostly-BLOCKED audit as completion,all,0;15;18;20

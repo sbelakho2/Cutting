@@ -1,0 +1,19 @@
+test_id,ambient_C,mains_voltage_case,duty,filter_case,frequency_Hz,status,actual_input_hash,raw_data_path,max_guarded_temperature_C,minimum_measured_flow_m3_h,acceptance
+TS01,40,declared_minimum,D1_continuous_running,F1_clean,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS02,40,declared_minimum,D1_continuous_running,F2_uniform_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS03,40,declared_minimum,D1_continuous_running,F3_uneven_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS04,40,declared_minimum,D2_holding_all_inputs,F1_clean,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS05,40,declared_minimum,D2_holding_all_inputs,F2_uniform_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS06,40,declared_minimum,D2_holding_all_inputs,F3_uneven_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS07,40,declared_minimum,D3_spatially_adverse_mixed,F1_clean,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS08,40,declared_minimum,D3_spatially_adverse_mixed,F2_uniform_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS09,40,declared_minimum,D3_spatially_adverse_mixed,F3_uneven_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS10,40,declared_maximum,D1_continuous_running,F1_clean,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS11,40,declared_maximum,D1_continuous_running,F2_uniform_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS12,40,declared_maximum,D1_continuous_running,F3_uneven_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS13,40,declared_maximum,D2_holding_all_inputs,F1_clean,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS14,40,declared_maximum,D2_holding_all_inputs,F2_uniform_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS15,40,declared_maximum,D2_holding_all_inputs,F3_uneven_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS16,40,declared_maximum,D3_spatially_adverse_mixed,F1_clean,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS17,40,declared_maximum,D3_spatially_adverse_mixed,F2_uniform_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C
+TS18,40,declared_maximum,D3_spatially_adverse_mixed,F3_uneven_service_limit,final_selected; other_frequency_separately,planned_not_executed,,,,,section11.3; all individual limits and normal inlet<=45C

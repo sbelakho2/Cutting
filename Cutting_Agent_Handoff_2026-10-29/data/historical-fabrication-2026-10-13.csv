@@ -1,0 +1,55 @@
+Part ID,Qty,Scope / drawing,Material per unit,Setup h / lot,Run h / unit,Machine rate / h,Outside work / unit,Inspect h / unit,Inspect rate / h,Currency,Calculated lot cost,Quote status
+H005,2,H005 S1-B axis base plate,,,,,,,,,RFQ,Inputs missing
+H006,2,H006 S1-B carriage plate,,,,,,,,,RFQ,Inputs missing
+H001,1,H001 S1-B ground datum,,,,,,,,,RFQ,Inputs missing
+H002,2,H002 S1-B riser,,,,,,,,,RFQ,Inputs missing
+H003,2,H003 R6 motor adapter,,,,,,,,,RFQ,Inputs missing
+H004,2,H004 S1-B monolithic holder,,,,,,,,,RFQ,Inputs missing
+T001,1,PURCHASE_TO_DRAWING matched90deg V pair,,,,,,,,,RFQ,Inputs missing
+H007,2,H007 S1-B blade backing plate,,,,,,,,,RFQ,Inputs missing
+CT-IF01,1,IF-B01 interface board,,,,,,,,,RFQ,Inputs missing
+F101,8,,,,,,,,,,RFQ,Inputs missing
+F102,8,,,,,,,,,,RFQ,Inputs missing
+F103,8,,,,,,,,,,RFQ,Inputs missing
+F104,8,,,,,,,,,,RFQ,Inputs missing
+F105,8,,,,,,,,,,RFQ,Inputs missing
+F106,8,,,,,,,,,,RFQ,Inputs missing
+F107,8,,,,,,,,,,RFQ,Inputs missing
+F108,8,,,,,,,,,,RFQ,Inputs missing
+F109,8,,,,,,,,,,RFQ,Inputs missing
+F110,8,,,,,,,,,,RFQ,Inputs missing
+F111,2,,,,,,,,,,RFQ,Inputs missing
+F112,8,,,,,,,,,,RFQ,Inputs missing
+M201,2,,,,,,,,,,RFQ,Inputs missing
+F201,2,,,,,,,,,,RFQ,Inputs missing
+F202,2,,,,,,,,,,RFQ,Inputs missing
+F203,2,,,,,,,,,,RFQ,Inputs missing
+F205,2,,,,,,,,,,RFQ,Inputs missing
+F206,2,,,,,,,,,,RFQ,Inputs missing
+F208,2,,,,,,,,,,RFQ,Inputs missing
+M202,2,,,,,,,,,,RFQ,Inputs missing
+M203,2,,,,,,,,,,RFQ,Inputs missing
+M204,2,,,,,,,,,,RFQ,Inputs missing
+M206,2,,,,,,,,,,RFQ,Inputs missing
+M207,2,,,,,,,,,,RFQ,Inputs missing
+M209,2,,,,,,,,,,RFQ,Inputs missing
+M210,2,,,,,,,,,,RFQ,Inputs missing
+F301,1,,,,,,,,,,RFQ,Inputs missing
+F302,2,,,,,,,,,,RFQ,Inputs missing
+F303,2,,,,,,,,,,RFQ,Inputs missing
+F304,4,,,,,,,,,,RFQ,Inputs missing
+F305,4,,,,,,,,,,RFQ,Inputs missing
+G101,1,,,,,,,,,,RFQ,Inputs missing
+G102,1,,,,,,,,,,RFQ,Inputs missing
+G103,1,,,,,,,,,,RFQ,Inputs missing
+G104,1,,,,,,,,,,RFQ,Inputs missing
+G105,1,,,,,,,,,,RFQ,Inputs missing
+G106,1,,,,,,,,,,RFQ,Inputs missing
+P001,1,,,,,,,,,,RFQ,Inputs missing
+P002,1,,,,,,,,,,RFQ,Inputs missing
+P003,1,,,,,,,,,,RFQ,Inputs missing
+P004,1,,,,,,,,,,RFQ,Inputs missing
+P005,1,,,,,,,,,,RFQ,Inputs missing
+P006,1,,,,,,,,,,RFQ,Inputs missing
+P007,1,,,,,,,,,,RFQ,Inputs missing
+P008,1,,,,,,,,,,RFQ,Inputs missing
