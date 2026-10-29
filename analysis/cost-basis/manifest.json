@@ -88,7 +88,7 @@
     }
   },
   "inputs": {
-    "bom/sourcing-evidence.csv": "c43b2fda121fc374",
+    "bom/sourcing-evidence.csv": "4c0931065dbf48e3",
     "historical-prices-2026-10-13.csv": "2783bdc780ee3b06"
   },
   "model": "G47/U04 cost evidence ledger (not a build-cost claim)",

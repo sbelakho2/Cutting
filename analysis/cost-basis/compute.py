@@ -34,7 +34,7 @@ def load(path: pathlib.Path):
 
 def main() -> None:
     hist = load(DATA / "historical-prices-2026-10-13.csv")
-    ev = load(BOM / "sourcing-evidence.csv")
+    ev = load(BOM / "sourcing-evidence.csv") + load(BOM / "sourcing-evidence-mechanical.csv")
 
     hist_totals: dict[str, float] = {}
     hist_count = 0

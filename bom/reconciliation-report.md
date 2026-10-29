@@ -9,7 +9,8 @@ input feed-custom-parts.csv sha256=19332c084cb0ad92b3a22904c814933b332b9864ace39
 input measurement-custom-parts.csv sha256=0ee84c882ef460b3d814c64c44e13228a184d098b759582388e924325cf2e3e6
 input mechanism-custom-parts.csv sha256=140a496fd494a1e33c2e621ca6e5eb2a96670b78eaac22a97b941e3b5277c68a
 input fabrication-tooling.csv sha256=5930575e1cb294d22b6540b3f0b533663bc4fe76e55cc8c3cfd7d1810d19002a
-input sourcing-evidence.csv sha256=c43b2fda121fc374ef82f1a11595d25bb08ea09cd07bdd2fc41273a466d5f4b3
+input sourcing-evidence.csv sha256=4c0931065dbf48e335b0ea4480aa7ffda11aa93fe79a610e4c70ff1964604336
+input sourcing-evidence-mechanical.csv sha256=26124ca5a50e20620b347a23532c6fcb7545775ea4a731c7da936f0802308587
 input custom-axis-bom.csv sha256=1e6f123483ce7110198132344e75d314d63a282ea126231277a6794b0736aa96
 input selected-wire-and-payoff.csv sha256=657aca38c448aff7da7837b07f73553e98ea2995ef07420ec40a393738a25278
 [CLOSED] expected_files_present
@@ -131,12 +132,14 @@ input selected-wire-and-payoff.csv sha256=657aca38c448aff7da7837b07f73553e98ea29
 [CLOSED] sourcing-evidence.csv:SRC-CT-FSR01:priced_row_has_currency_basis
 [CLOSED] sourcing-evidence.csv:SRC-CT-K1-K3:priced_row_has_dated_observation
 [CLOSED] sourcing-evidence.csv:SRC-CT-K1-K3:priced_row_has_currency_basis
-[CLOSED] sourcing-evidence.csv:SRC-CH-DR01:priced_row_has_dated_observation
-[CLOSED] sourcing-evidence.csv:SRC-CH-DR01:priced_row_has_currency_basis
-[CLOSED] sourcing-evidence.csv:SRC-CH-PS01:priced_row_has_dated_observation
-[CLOSED] sourcing-evidence.csv:SRC-CH-PS01:priced_row_has_currency_basis
-[CLOSED] sourcing-evidence.csv:SRC-TR-M01:priced_row_has_dated_observation
-[CLOSED] sourcing-evidence.csv:SRC-TR-M01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence-mechanical.csv:uniform_field_count
+[CLOSED] sourcing-evidence-mechanical.csv:non_empty_ids
+[CLOSED] sourcing-evidence-mechanical.csv:SRC-CH-DR01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence-mechanical.csv:SRC-CH-DR01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence-mechanical.csv:SRC-CH-PS01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence-mechanical.csv:SRC-CH-PS01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence-mechanical.csv:SRC-TR-M01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence-mechanical.csv:SRC-TR-M01:priced_row_has_currency_basis
 [CLOSED] custom-axis-bom.csv:uniform_field_count
 [CLOSED] custom-axis-bom.csv:non_empty_ids
 [CLOSED] selected-wire-and-payoff.csv:uniform_field_count

@@ -39,6 +39,7 @@ EXPECTED_FILES = [
     "mechanism-custom-parts.csv",
     "fabrication-tooling.csv",
     "sourcing-evidence.csv",
+    "sourcing-evidence-mechanical.csv",
     "custom-axis-bom.csv",
     "selected-wire-and-payoff.csv",
 ]
@@ -87,11 +88,17 @@ def main() -> int:
     check("expected_files_present", not missing, f"missing: {missing}")
 
     all_ids: dict[str, list[str]] = {}
-    # Dated observation register: item_id -> observation date (may satisfy the
+    # Dated observation registers: item_id -> observation date (may satisfy the
     # dated-source requirement for prices restated in selection files).
+    # bom/sourcing-evidence.csv is the controls register (its integrity rule in
+    # tools/check_production_records.py restricts it to selected-controls.csv
+    # items); mechanical/transport observations live in
+    # bom/sourcing-evidence-mechanical.csv.
     evidence: dict[str, dict[str, str]] = {}
-    ev_path = BOM / "sourcing-evidence.csv"
-    if ev_path.exists():
+    for ev_name in ("sourcing-evidence.csv", "sourcing-evidence-mechanical.csv"):
+        ev_path = BOM / ev_name
+        if not ev_path.exists():
+            continue
         h, rows = load(ev_path)
         c = {n: i for i, n in enumerate(h)}
         for r in rows:
