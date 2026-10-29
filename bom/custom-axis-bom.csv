@@ -1,0 +1,9 @@
+id,parent,occurrence_per_axis,axis_count,total_quantity,description,source_bom_row,verification_gate
+AX-01,,1,2,2,Custom S1-B cut-axis assembly (one per cutting axis blade_front/blade_rear),bom/selected-cutting-head.csv:AX-01,"Occurrence reconciliation: 2 axes x 1 assembly = 2. Assembly loads per docs/39 must be revalidated against the frozen 10 mm-lead screw config (audit F15); not released for fabrication"
+AX-R01,AX-01,2,2,4,HGR20 400 mm linear rail + 2x HGH20CA block set,bom/selected-cutting-head.csv:AX-R01,"2 sets per axis x 2 axes = 4 (matches BOM quantity); rail stiffness vs reduced-model audit (G14) pending"
+AX-S01,AX-01,1,2,2,SFU1610-class C7 500 mm rolled ballscrew 10 mm lead + flange nut + DSG16h + BK12/BF12,bom/selected-cutting-head.csv:AX-S01,"1 per axis x 2 axes = 2 (matches); end machining 8 h7 x18; stall-thrust bound 5340.708 N at eta=1 is a declared bound not an advantage (G37); proof load 5000 N exceeds the 4900 N support rating - never rounded (G37)"
+H005,AX-01,1,2,2,H005 axis base plate 6082-T6 20x86x440,bom/selected-cutting-head.csv:H005,1 per axis x 2 = 2 (matches); machining quote pending (D5)
+H006,AX-01,1,2,2,H006 carriage plate 6082-T6 60x75 pad at 46 mm,bom/selected-cutting-head.csv:H006,1 per axis x 2 = 2 (matches); machining quote pending (D5)
+DR-01,AX-01,1,2,2,STEPPERONLINE 34E1K-85 + CL86T-V41 stepper kit,bom/selected-cutting-head.csv:DR-01,"1 per axis x 2 = 2 (matches); observed USD130.77 merchandise only; hot loaded torque at speed unproven (G09/G37)"
+CP-01,AX-01,1,2,2,R+W MK2/100/50/8/14 coupling 10 Nm,bom/selected-cutting-head.csv:CP-01,"1 per axis x 2 = 2 (matches); exact bores not observed; quotation pending (G39)"
+PS-01,AX-01,1,2,2,STEPPERONLINE LE-350-60 supply 60 V 5.8 A,bom/selected-cutting-head.csv:PS-01,"1 per axis x 2 = 2 (matches); one per axis no paralleling; bus/branch protection release pending (G32)"

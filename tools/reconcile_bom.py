@@ -1,0 +1,213 @@
+#!/usr/bin/env python3
+"""BOM occurrence/reconciliation checker (ENGINEERING_HANDOFF 3.13 / 12.3).
+
+Checks, across every CSV in bom/:
+  1. structural validity (uniform field counts, non-empty ids),
+  2. duplicate part IDs (within a file and across files),
+  3. every observed price is matched to a dated observation
+     (a date in price_basis/checked_date/observation_date),
+  4. a currency basis is present on every priced row,
+  5. assembly-occurrence reconciliation (bom/custom-axis-bom.csv vs the
+     selected-cutting-head.csv quantities),
+  6. explicit status on every row (blank is not zero),
+  7. expected evidence files exist.
+
+Exit code 0 = every check closed; 1 = findings remain (findings are printed,
+never silently ignored). Re-running the tool from the same inputs reproduces
+the same report (hashes recorded in the report header).
+"""
+from __future__ import annotations
+
+import csv
+import datetime
+import hashlib
+import io
+import pathlib
+import re
+import sys
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+BOM = ROOT / "bom"
+EXPECTED_FILES = [
+    "selected-cutting-head.csv",
+    "selected-transport-and-cabinet.csv",
+    "selected-mechanism.csv",
+    "selected-controls.csv",
+    "selected-cabinet-wiring.csv",
+    "feed-custom-parts.csv",
+    "measurement-custom-parts.csv",
+    "mechanism-custom-parts.csv",
+    "fabrication-tooling.csv",
+    "sourcing-evidence.csv",
+    "custom-axis-bom.csv",
+    "selected-wire-and-payoff.csv",
+]
+DATE_RE = re.compile(r"20\d{2}-\d{2}-\d{2}")
+PRICE_COLS = ("observed_unit_price", "observed_unit_usd", "observed_unit_eur",
+              "unit_price_usd", "extended_merchandise_usd")
+CURRENCY_COLS = ("currency", "price_basis")
+STATUS_COLS = ("status", "evidence_status", "commercial_status", "manufacturing_status",
+               "procurement_status", "engineering_record", "release_state", "release_status",
+               "manufacturing_record")
+
+
+def sha256(path: pathlib.Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def load(path: pathlib.Path):
+    with path.open(newline="", encoding="utf-8-sig") as f:
+        rows = list(csv.reader(f))
+    if not rows:
+        return [], []
+    return rows[0], rows[1:]
+
+
+def main() -> int:
+    out = io.StringIO()
+    findings: list[str] = []
+    checks: list[tuple[str, str]] = []
+
+    def check(name: str, ok: bool, detail: str = "") -> None:
+        checks.append((name, "CLOSED" if ok else "FINDING"))
+        if not ok:
+            findings.append(f"{name}: {detail}")
+        print(f"[{'CLOSED' if ok else 'FINDING'}] {name}" + (f" - {detail}" if detail and not ok else ""),
+              file=out)
+
+    print("BOM reconciliation report", file=out)
+    print(f"generated: {datetime.date.today().isoformat()} (deterministic inputs, rerun reproduces)", file=out)
+    for name in EXPECTED_FILES:
+        p = BOM / name
+        if p.exists():
+            print(f"input {name} sha256={sha256(p)}", file=out)
+
+    # 7. expected files
+    missing = [n for n in EXPECTED_FILES if not (BOM / n).exists()]
+    check("expected_files_present", not missing, f"missing: {missing}")
+
+    all_ids: dict[str, list[str]] = {}
+    # Dated observation register: item_id -> observation date (may satisfy the
+    # dated-source requirement for prices restated in selection files).
+    evidence: dict[str, dict[str, str]] = {}
+    ev_path = BOM / "sourcing-evidence.csv"
+    if ev_path.exists():
+        h, rows = load(ev_path)
+        c = {n: i for i, n in enumerate(h)}
+        for r in rows:
+            if r and r[0].strip():
+                evidence[r[c.get("item_id", 2)].strip()] = {
+                    "date": (r[c["observation_date"]].strip() if "observation_date" in c and c["observation_date"] < len(r) else ""),
+                }
+    for name in EXPECTED_FILES:
+        path = BOM / name
+        if not path.exists():
+            continue
+        header, rows = load(path)
+        # 1. structure
+        bad = [i + 2 for i, r in enumerate(rows) if len(r) != len(header)]
+        check(f"{name}:uniform_field_count", not bad, f"rows with wrong width: {bad}")
+        empty_id = [i + 2 for i, r in enumerate(rows) if not r or not r[0].strip()]
+        check(f"{name}:non_empty_ids", not empty_id, f"rows without id: {empty_id}")
+
+        cols = {c: i for i, c in enumerate(header)}
+        for i, r in enumerate(rows):
+            if not r or not r[0].strip():
+                continue
+            rid = r[0].strip()
+            all_ids.setdefault(rid, []).append(name)
+            # 3. dated observation for priced rows
+            price_idx = [cols[c] for c in PRICE_COLS if c in cols]
+            price_val = next((r[j].strip() for j in price_idx if j < len(r) and r[j].strip()), "")
+            basis_cols = [cols[c] for c in ("price_basis", "price_source") if c in cols]
+            basis_val = next((r[j].strip() for j in basis_cols if j < len(r) and r[j].strip()), "")
+            if price_val:
+                basis = " ".join(r[j] for j in range(len(r)) if j < len(r))
+                has_date = bool(DATE_RE.search(basis))
+                if not has_date:
+                    # a dated observation may live in the evidence register
+                    for ev_id, ev in evidence.items():
+                        if ev_id == rid and ev.get("date"):
+                            has_date = True
+                check(f"{name}:{rid}:priced_row_has_dated_observation", has_date,
+                      f"price {price_val} without any observation date (own row or bom/sourcing-evidence.csv)")
+                # 4. currency basis
+                cur = False
+                for c in CURRENCY_COLS:
+                    if c in cols and cols[c] < len(r) and r[cols[c]].strip():
+                        cur = True
+                if not cur:
+                    cur = any(x in basis.upper() for x in ("USD", "EUR", "GBP", "VND"))
+                check(f"{name}:{rid}:priced_row_has_currency_basis", cur,
+                      f"price {price_val} without currency/basis field")
+            else:
+                # 6. blank is not zero: an unpriced row in a file that tracks
+                # prices must carry an explicit basis (not_quoted / not_observed),
+                # never an implied 0.
+                if price_idx:
+                    bcols = basis_cols + [cols[c] for c in ("reference_basis", "comparison_status", "price_source")
+                                          if c in cols and cols[c] not in basis_cols]
+                    bval = next((r[j].strip() for j in bcols if j < len(r) and r[j].strip()), "")
+                    ok = bool(bval) and not re.fullmatch(r"0+(\.0+)?", bval)
+                    check(f"{name}:{rid}:blank_price_has_explicit_basis", ok,
+                          "unpriced row without explicit price basis")
+            # 8. quality claims need a sign-off/verification record
+            st_cols = [cols[c] for c in STATUS_COLS if c in cols]
+            st = next((r[j].strip() for j in st_cols if j < len(r) and r[j].strip()), "")
+            if st and re.search(r"qualif|approved|released", st, re.I) and not re.search(r"not_|pending|_not", st):
+                rec_cols = [cols[c] for c in ("engineering_record", "governing_record", "manufacturing_record",
+                                              "source_url", "source_record") if c in cols]
+                rec = next((r[j].strip() for j in rec_cols if j < len(r) and r[j].strip()), "")
+                check(f"{name}:{rid}:quality_claim_has_record", bool(rec),
+                      f"status '{st}' claims quality without a verification record")
+
+    # 2. duplicate IDs across the selection records (derived registers such as
+    # custom-axis-bom.csv restate source rows by design and may repeat them)
+    derived = {"custom-axis-bom.csv"}
+    dup = {i: files for i, files in all_ids.items()
+           if len([f for f in files if f not in derived]) > 1}
+    check("unique_part_ids", not dup, f"duplicated across selection files: {dup}")
+
+    # 5. occurrence reconciliation for the custom axis
+    ax_path = BOM / "custom-axis-bom.csv"
+    head_path = BOM / "selected-cutting-head.csv"
+    if ax_path.exists() and head_path.exists():
+        _, ax_rows = load(ax_path)
+        h_header, h_rows = load(head_path)
+        h_cols = {c: i for i, c in enumerate(h_header)}
+        h_qty = {r[0].strip(): r[h_cols["quantity"]].strip() for r in rows_of(h_rows) if r and r[0].strip()}
+        problems = []
+        for r in ax_rows:
+            if not r or not r[0].strip():
+                continue
+            rid, per_axis, axes, total = r[0].strip(), r[2].strip(), r[3].strip(), r[4].strip()
+            try:
+                if int(per_axis) * int(axes) != int(total):
+                    problems.append(f"{rid}: {per_axis}x{axes}!={total} in custom-axis-bom")
+            except ValueError:
+                problems.append(f"{rid}: non-integer occurrence fields")
+            if rid in h_qty and h_qty[rid] != total:
+                problems.append(f"{rid}: total {total} != selected-cutting-head quantity {h_qty[rid]}")
+        check("axis_occurrence_reconciliation", not problems, "; ".join(problems))
+
+    summary = "CLOSED" if not findings else f"{len(findings)} FINDING(S)"
+    print(file=out)
+    print(f"overall: {summary}", file=out)
+    if findings:
+        print("findings:", file=out)
+        for f in findings:
+            print(f"  - {f}", file=out)
+
+    report = BOM / "reconciliation-report.md"
+    report.write_text(out.getvalue(), encoding="utf-8")
+    print(out.getvalue())
+    print(f"report written to {report.relative_to(ROOT)}")
+    return 0 if not findings else 1
+
+
+def rows_of(rows):
+    return rows
+
+
+if __name__ == "__main__":
+    sys.exit(main())

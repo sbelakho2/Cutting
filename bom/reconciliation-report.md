@@ -1,0 +1,159 @@
+BOM reconciliation report
+generated: 2026-10-29 (deterministic inputs, rerun reproduces)
+input selected-cutting-head.csv sha256=910edfd8af8b012bae94f699cdecbf121119efd4f8c644c5ad38364098e864fa
+input selected-transport-and-cabinet.csv sha256=ec2d3264fefb9ec1d81682ab3e4aaa68950075c69134556497016cf465ffd672
+input selected-mechanism.csv sha256=2231ab9a094a62d157a2556ed6c2a3b0128c8cd835a9fd45d863ec590c5427ca
+input selected-controls.csv sha256=e7a5a6344c3cb141ec89d8f3aea83842912fce8ccacbd119ea79846a9d0a564f
+input selected-cabinet-wiring.csv sha256=17a1b9df3fbb3c9dc8d2c090dd97405e99108a1e6d1fc73ca4a63621d52635c7
+input feed-custom-parts.csv sha256=19332c084cb0ad92b3a22904c814933b332b9864ace39f4cd416a5418dffdd1c
+input measurement-custom-parts.csv sha256=0ee84c882ef460b3d814c64c44e13228a184d098b759582388e924325cf2e3e6
+input mechanism-custom-parts.csv sha256=140a496fd494a1e33c2e621ca6e5eb2a96670b78eaac22a97b941e3b5277c68a
+input fabrication-tooling.csv sha256=5930575e1cb294d22b6540b3f0b533663bc4fe76e55cc8c3cfd7d1810d19002a
+input sourcing-evidence.csv sha256=c43b2fda121fc374ef82f1a11595d25bb08ea09cd07bdd2fc41273a466d5f4b3
+input custom-axis-bom.csv sha256=1e6f123483ce7110198132344e75d314d63a282ea126231277a6794b0736aa96
+input selected-wire-and-payoff.csv sha256=657aca38c448aff7da7837b07f73553e98ea2995ef07420ec40a393738a25278
+[CLOSED] expected_files_present
+[CLOSED] selected-cutting-head.csv:uniform_field_count
+[CLOSED] selected-cutting-head.csv:non_empty_ids
+[CLOSED] selected-cutting-head.csv:AX-01:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:AX-R01:priced_row_has_dated_observation
+[CLOSED] selected-cutting-head.csv:AX-R01:priced_row_has_currency_basis
+[CLOSED] selected-cutting-head.csv:AX-S01:priced_row_has_dated_observation
+[CLOSED] selected-cutting-head.csv:AX-S01:priced_row_has_currency_basis
+[CLOSED] selected-cutting-head.csv:H005:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:H006:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:DR-01:priced_row_has_dated_observation
+[CLOSED] selected-cutting-head.csv:DR-01:priced_row_has_currency_basis
+[CLOSED] selected-cutting-head.csv:CP-01:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:PS-01:priced_row_has_dated_observation
+[CLOSED] selected-cutting-head.csv:PS-01:priced_row_has_currency_basis
+[CLOSED] selected-cutting-head.csv:H001:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:H002:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:H003:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:HF0-B:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:HM-B:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:HM-W:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:H004:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:T001:blank_price_has_explicit_basis
+[CLOSED] selected-cutting-head.csv:H007:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:uniform_field_count
+[CLOSED] selected-transport-and-cabinet.csv:non_empty_ids
+[CLOSED] selected-transport-and-cabinet.csv:TR-M01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TR-M01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-D01:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-P01:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-R01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TR-R01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-TP01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TR-TP01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-TB01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TR-TB01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-CP01:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-B01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TR-B01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-B02:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TR-B02:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-N01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TR-N01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-W01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TR-W01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-RR01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TR-RR01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-K01:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-FB01:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-FB02:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-FW02:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-FD02:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:TR-FB03:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:ME-W01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:ME-W01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:ME-E01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:ME-E01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:ME-B01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:ME-B01:priced_row_has_currency_basis
+[CLOSED] selected-transport-and-cabinet.csv:ME-FB01:blank_price_has_explicit_basis
+[CLOSED] selected-transport-and-cabinet.csv:TH-C01:priced_row_has_dated_observation
+[CLOSED] selected-transport-and-cabinet.csv:TH-C01:priced_row_has_currency_basis
+[CLOSED] selected-mechanism.csv:uniform_field_count
+[CLOSED] selected-mechanism.csv:non_empty_ids
+[CLOSED] selected-mechanism.csv:MC-B01:priced_row_has_dated_observation
+[CLOSED] selected-mechanism.csv:MC-B01:priced_row_has_currency_basis
+[CLOSED] selected-mechanism.csv:MC-S01:priced_row_has_dated_observation
+[CLOSED] selected-mechanism.csv:MC-S01:priced_row_has_currency_basis
+[CLOSED] selected-mechanism.csv:MC-P01:priced_row_has_dated_observation
+[CLOSED] selected-mechanism.csv:MC-P01:priced_row_has_currency_basis
+[CLOSED] selected-mechanism.csv:MC-P02:priced_row_has_dated_observation
+[CLOSED] selected-mechanism.csv:MC-P02:priced_row_has_currency_basis
+[CLOSED] selected-mechanism.csv:MC-B03:priced_row_has_dated_observation
+[CLOSED] selected-mechanism.csv:MC-B03:priced_row_has_currency_basis
+[CLOSED] selected-controls.csv:uniform_field_count
+[CLOSED] selected-controls.csv:non_empty_ids
+[CLOSED] selected-controls.csv:CT-MCU01:quality_claim_has_record
+[CLOSED] selected-controls.csv:CT-SR01:quality_claim_has_record
+[CLOSED] selected-controls.csv:CT-ES01:quality_claim_has_record
+[CLOSED] selected-controls.csv:CT-GL01:quality_claim_has_record
+[CLOSED] selected-controls.csv:CT-GLA01:quality_claim_has_record
+[CLOSED] selected-controls.csv:CT-K1-K3:quality_claim_has_record
+[CLOSED] selected-controls.csv:CT-PB01:quality_claim_has_record
+[CLOSED] selected-controls.csv:CT-PB02:quality_claim_has_record
+[CLOSED] selected-controls.csv:CT-PB03:quality_claim_has_record
+[CLOSED] selected-controls.csv:CT-BZ01:quality_claim_has_record
+[CLOSED] selected-cabinet-wiring.csv:uniform_field_count
+[CLOSED] selected-cabinet-wiring.csv:non_empty_ids
+[CLOSED] selected-cabinet-wiring.csv:CB-XPS:quality_claim_has_record
+[CLOSED] selected-cabinet-wiring.csv:CB-K1-K3:quality_claim_has_record
+[CLOSED] selected-cabinet-wiring.csv:CB-R2:quality_claim_has_record
+[CLOSED] feed-custom-parts.csv:uniform_field_count
+[CLOSED] feed-custom-parts.csv:non_empty_ids
+[CLOSED] measurement-custom-parts.csv:uniform_field_count
+[CLOSED] measurement-custom-parts.csv:non_empty_ids
+[CLOSED] mechanism-custom-parts.csv:uniform_field_count
+[CLOSED] mechanism-custom-parts.csv:non_empty_ids
+[CLOSED] fabrication-tooling.csv:uniform_field_count
+[CLOSED] fabrication-tooling.csv:non_empty_ids
+[CLOSED] fabrication-tooling.csv:MT01:priced_row_has_dated_observation
+[CLOSED] fabrication-tooling.csv:MT01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:uniform_field_count
+[CLOSED] sourcing-evidence.csv:non_empty_ids
+[CLOSED] sourcing-evidence.csv:SRC-CT-MCU01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-CT-MCU01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:SRC-CT-IF-U1:blank_price_has_explicit_basis
+[CLOSED] sourcing-evidence.csv:SRC-CT-IF-U2-U3:blank_price_has_explicit_basis
+[CLOSED] sourcing-evidence.csv:SRC-CT-SR01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-CT-SR01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:SRC-CT-ES01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-CT-ES01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:SRC-CT-GL01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-CT-GL01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:SRC-CT-GLA01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-CT-GLA01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:SRC-CT-FSR01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-CT-FSR01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:SRC-CT-K1-K3:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-CT-K1-K3:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:SRC-CH-DR01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-CH-DR01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:SRC-CH-PS01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-CH-PS01:priced_row_has_currency_basis
+[CLOSED] sourcing-evidence.csv:SRC-TR-M01:priced_row_has_dated_observation
+[CLOSED] sourcing-evidence.csv:SRC-TR-M01:priced_row_has_currency_basis
+[CLOSED] custom-axis-bom.csv:uniform_field_count
+[CLOSED] custom-axis-bom.csv:non_empty_ids
+[CLOSED] selected-wire-and-payoff.csv:uniform_field_count
+[CLOSED] selected-wire-and-payoff.csv:non_empty_ids
+[CLOSED] selected-wire-and-payoff.csv:PY-W01:blank_price_has_explicit_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-W02:blank_price_has_explicit_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-W03:blank_price_has_explicit_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-W04:blank_price_has_explicit_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-W05:blank_price_has_explicit_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-W06:blank_price_has_explicit_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-W07:blank_price_has_explicit_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-B01:priced_row_has_dated_observation
+[CLOSED] selected-wire-and-payoff.csv:PY-B01:priced_row_has_currency_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-R01:blank_price_has_explicit_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-R02:blank_price_has_explicit_basis
+[CLOSED] selected-wire-and-payoff.csv:PY-M01:blank_price_has_explicit_basis
+[CLOSED] unique_part_ids
+[CLOSED] axis_occurrence_reconciliation
+
+overall: CLOSED
