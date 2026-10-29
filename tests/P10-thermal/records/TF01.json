@@ -1,0 +1,19 @@
+{
+  "acceptance": "Detect or thermally protect worst affected zone before its guarded limit; no unsafe auto-restart",
+  "executed": false,
+  "instruments": [],
+  "kind": "fault",
+  "measurements": {
+    "guarded_limit_C": null,
+    "post_trip_soak_C": null,
+    "raw_data_path": null,
+    "shutdown_latency_s": null,
+    "worst_guarded_temperature_C": null
+  },
+  "operator": null,
+  "restart_result": null,
+  "result": null,
+  "scenario": "Fan 1 fails electrically/mechanically",
+  "template_only": true,
+  "test_id": "TF01"
+}

@@ -1,0 +1,92 @@
+{
+  "M31": {
+    "budget_rss_um": 109.0146127407497,
+    "budget_terms": [
+      {
+        "evidence": "host: 2 independent count quantisations + one accumulated fraction (test_cycle)",
+        "gate": "closed_host",
+        "half_width_um": 48.828125,
+        "term": "command_quantisation"
+      },
+      {
+        "evidence": "calibration procedure + gauge R&R pending (P13)",
+        "gate": "open_P13",
+        "half_width_um": 25.0,
+        "term": "wheel_scale_calibration"
+      },
+      {
+        "evidence": "wear/drift envelope pending (P06/P13)",
+        "gate": "open_P13",
+        "half_width_um": 15.0,
+        "term": "loaded_radius_wear"
+      },
+      {
+        "evidence": "planned movement verified against the calibrated wheel with tested error allocation (M26/M31)",
+        "gate": "open_P13",
+        "half_width_um": 50.0,
+        "term": "slip_within_grip"
+      },
+      {
+        "evidence": "wire relaxation model validated with held-out physical data (M23)",
+        "gate": "open_P13",
+        "half_width_um": 60.0,
+        "term": "tension_relaxation"
+      },
+      {
+        "evidence": "thermal drift (M23) + environment record (D1)",
+        "gate": "open_P10",
+        "half_width_um": 25.0,
+        "term": "thermal_expansion_length"
+      },
+      {
+        "evidence": "blade datum stability (P13)",
+        "gate": "open_P13",
+        "half_width_um": 20.0,
+        "term": "blade_datum_and_incision"
+      },
+      {
+        "evidence": "output/handling deflection (M30/P08)",
+        "gate": "open_P08",
+        "half_width_um": 30.0,
+        "term": "handling_deflection"
+      },
+      {
+        "evidence": "predeclared conformity rule |e|+U<=T with U<=0.05 mm gauge (M31)",
+        "gate": "open_P13",
+        "half_width_um": 25.0,
+        "term": "measurement_decision"
+      }
+    ],
+    "case_L_um": 1000000,
+    "decision": "external tolerance holds only if the RSS of the declared half-widths stays below T_L with the predeclared |e|+U<=T conformity rule; all open terms must close at their P-gates before capability claims (G05).",
+    "external_half_width_um": 700.0,
+    "host_closed_terms_rss_um": 48.828125,
+    "margin_um_at_1000mm": 590.9853872592503,
+    "strip_half_width_um": 200.0
+  },
+  "M36": {
+    "allowed_radius_loss_mm": 0.10563211351308155,
+    "ceiling_hz": 8000.0,
+    "decision": "production ceiling stays 8000 Hz; loaded-radius loss must stay <= 0.10563 mm (min loaded radius 19.89437 mm). A higher qualified ceiling or recalibrated loaded radius is a recorded alternative (M36 gate).",
+    "demand_hz_at_500mm_s": 7957.7471545947665,
+    "feed_steps_per_mm": 15.915494309189533,
+    "min_loaded_radius_mm": 19.89436788648692,
+    "nominal_radius_mm": 20.0,
+    "rate_margin_pct": 0.5281605675654192,
+    "roller_circumference_mm": 125.66370614359172,
+    "shaft_rpm_at_500mm_s": 238.732414637843,
+    "shaft_rpm_margin_pct": 8.179840523906542
+  },
+  "inputs": {
+    "feed_pulses_per_rev": 2000.0,
+    "feed_speed_mm_s": 500.0,
+    "length_tol_base_um": 200.0,
+    "length_tol_slope": 0.0005,
+    "nominal_counts_per_m": 40960,
+    "roller_d_mm": 40.0,
+    "shaft_limit_rpm": 260.0,
+    "source_of_truth": "shared/controls_spec.hpp (legacy 3200/40000 pair quarantined)",
+    "step_rate_ceiling_hz": 8000.0
+  },
+  "model": "M36 feed-timing envelope + M31 length error budget"
+}

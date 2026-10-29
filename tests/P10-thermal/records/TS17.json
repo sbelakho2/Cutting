@@ -1,0 +1,29 @@
+{
+  "acceptance": "section11.3; all individual limits and normal inlet<=45C",
+  "case": {
+    "airflow": "final_selected; other_frequency_separately",
+    "ambient_C": "40",
+    "duty": "D3_spatially_adverse_mixed",
+    "filter": "F2_uniform_service_limit",
+    "mains": "declared_maximum"
+  },
+  "executed": false,
+  "instruments": [],
+  "kind": "steady_state",
+  "margins": {},
+  "measurements": {
+    "ambient_C": null,
+    "energy_imbalance_pct": null,
+    "guarded_temperatures_C": {},
+    "inlet_driver_C": null,
+    "input_power_W": null,
+    "installed_flow_m3_h": null,
+    "mass_imbalance_pct": null,
+    "normal_inlet_limit_C": 45.0,
+    "raw_data_path": null
+  },
+  "operator": null,
+  "result": null,
+  "template_only": true,
+  "test_id": "TS17"
+}

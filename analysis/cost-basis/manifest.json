@@ -1,0 +1,108 @@
+{
+  "current_observations": {
+    "count": 10,
+    "note": "dated 2026-10-13/2026-10-29 merchandise observations; no freight/duty; no conversion",
+    "rows": [
+      {
+        "basis": "manufacturer_list_price_no_freight",
+        "currency": "USD",
+        "date": "2026-09-13",
+        "item": "CT-MCU01",
+        "price": "5.00"
+      },
+      {
+        "basis": "plus_VAT_plus_dispatch",
+        "currency": "EUR",
+        "date": "2026-09-13",
+        "item": "CT-SR01",
+        "price": "133.50"
+      },
+      {
+        "basis": "plus_VAT_plus_dispatch",
+        "currency": "EUR",
+        "date": "2026-09-13",
+        "item": "CT-ES01",
+        "price": "110.70"
+      },
+      {
+        "basis": "plus_VAT_plus_dispatch",
+        "currency": "EUR",
+        "date": "2026-09-13",
+        "item": "CT-GL01",
+        "price": "143.50"
+      },
+      {
+        "basis": "plus_VAT_plus_dispatch",
+        "currency": "EUR",
+        "date": "2026-09-13",
+        "item": "CT-GLA01",
+        "price": "17.90"
+      },
+      {
+        "basis": "incl_VAT_plus_dispatch",
+        "currency": "EUR",
+        "date": "2026-09-16",
+        "item": "CT-FSR01",
+        "price": "7.99"
+      },
+      {
+        "basis": "plus_VAT_plus_dispatch",
+        "currency": "EUR",
+        "date": "2026-09-13",
+        "item": "CT-K1-K3",
+        "price": "70.40"
+      },
+      {
+        "basis": "from_price_merchandise_no_freight",
+        "currency": "USD",
+        "date": "2026-10-29",
+        "item": "DR-01",
+        "price": "130.77"
+      },
+      {
+        "basis": "from_price_merchandise_no_freight",
+        "currency": "USD",
+        "date": "2026-10-29",
+        "item": "PS-01",
+        "price": "17.88"
+      },
+      {
+        "basis": "from_price_merchandise_no_freight",
+        "currency": "USD",
+        "date": "2026-10-29",
+        "item": "TR-M01",
+        "price": "36.87"
+      }
+    ],
+    "sums_by_currency": {
+      "EUR": 483.99,
+      "USD": 190.52
+    }
+  },
+  "historical_baseline_observations": {
+    "count": 44,
+    "note": "dated 2026-10-13 public observations; a sum of observations is not a build cost",
+    "sums_by_currency": {
+      "EUR": 2894.22,
+      "USD": 489.189
+    }
+  },
+  "inputs": {
+    "bom/sourcing-evidence.csv": "c43b2fda121fc374",
+    "historical-prices-2026-10-13.csv": "2783bdc780ee3b06"
+  },
+  "model": "G47/U04 cost evidence ledger (not a build-cost claim)",
+  "not_costed_evidence_rows": 2,
+  "open_cost_elements": [
+    "freight and duty to Tunisia (Incoterm/site = owner decision D1)",
+    "custom machining/finishing quotes (D5 dual route)",
+    "labour and assembly time",
+    "inspection and metrology",
+    "qualification testing",
+    "consumables (blades, filters, lubrication)"
+  ],
+  "seventy_percent_test": {
+    "reason": "neither side of C_new <= 0.30 * C_baseline is complete and like-for-like scope mapping (12.2) is an open decision; reporting a saving now would fabricate it",
+    "status": "NOT ESTABLISHED"
+  }
+}

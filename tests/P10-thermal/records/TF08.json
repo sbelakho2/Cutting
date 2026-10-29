@@ -1,0 +1,19 @@
+{
+  "acceptance": "Demonstrate independent protection/diagnostics or redesign; a timeout on a plausible temperature is not guaranteed detection",
+  "executed": false,
+  "instruments": [],
+  "kind": "fault",
+  "measurements": {
+    "guarded_limit_C": null,
+    "post_trip_soak_C": null,
+    "raw_data_path": null,
+    "shutdown_latency_s": null,
+    "worst_guarded_temperature_C": null
+  },
+  "operator": null,
+  "restart_result": null,
+  "result": null,
+  "scenario": "Probe stuck at plausible low value or displaced from mapped position",
+  "template_only": true,
+  "test_id": "TF08"
+}

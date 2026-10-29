@@ -1,0 +1,19 @@
+{
+  "acceptance": "Spatial protection mapping actually covers local credible faults or independent component protection is proven",
+  "executed": false,
+  "instruments": [],
+  "kind": "fault",
+  "measurements": {
+    "guarded_limit_C": null,
+    "post_trip_soak_C": null,
+    "raw_data_path": null,
+    "shutdown_latency_s": null,
+    "worst_guarded_temperature_C": null
+  },
+  "operator": null,
+  "restart_result": null,
+  "result": null,
+  "scenario": "Local heat fault near a driver/PCB component, remote probe remains relatively cool",
+  "template_only": true,
+  "test_id": "TF15"
+}

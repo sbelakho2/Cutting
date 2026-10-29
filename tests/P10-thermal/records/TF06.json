@@ -1,0 +1,19 @@
+{
+  "acceptance": "Exact delivered controller's fail behavior removes permission and latches the right diagnostic",
+  "executed": false,
+  "instruments": [],
+  "kind": "fault",
+  "measurements": {
+    "guarded_limit_C": null,
+    "post_trip_soak_C": null,
+    "raw_data_path": null,
+    "shutdown_latency_s": null,
+    "worst_guarded_temperature_C": null
+  },
+  "operator": null,
+  "restart_result": null,
+  "result": null,
+  "scenario": "Thermostat probe open/disconnected",
+  "template_only": true,
+  "test_id": "TF06"
+}

@@ -1,0 +1,19 @@
+{
+  "acceptance": "Protection does not rely on an undiagnosed optimistic input; assess single/common causes and actual fault coverage",
+  "executed": false,
+  "instruments": [],
+  "kind": "fault",
+  "measurements": {
+    "guarded_limit_C": null,
+    "post_trip_soak_C": null,
+    "raw_data_path": null,
+    "shutdown_latency_s": null,
+    "worst_guarded_temperature_C": null
+  },
+  "operator": null,
+  "restart_result": null,
+  "result": null,
+  "scenario": "Fan-presence/flow contact stuck healthy, broken return or short across one diagnostic path",
+  "template_only": true,
+  "test_id": "TF17"
+}
