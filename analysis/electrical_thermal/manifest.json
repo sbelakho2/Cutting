@@ -1,0 +1,79 @@
+{
+  "M20_ventilation": {
+    "balance_gates": {
+      "critical_temperature_refinement_K": "< 0.2 on final refinement",
+      "energy_imbalance_pct": "< 1 % (computed from measurements, never input as target)",
+      "mass_imbalance_pct": "< 0.1 %",
+      "normal_design_air_C": 45.0,
+      "selected_driver_inlet_C": 50.0,
+      "trip_bound_candidate_C": "45+2+1.5+0.5 = 49 with each term separately justified"
+    },
+    "candidate_paths": {
+      "alternative_60Hz_fans": "four-fan Rittal SK 3240.100 class; 60 Hz is a separate case",
+      "per_fan_at_50Hz_m3_h": 445.0,
+      "two_path_catalogue_at_50Hz_m3_h": 890.0
+    },
+    "decision": "candidate only: installed P-Q intersection with the real system resistance under final filters/doors/ducts must be measured (TS01-TS18).",
+    "declared_loss_budget_W": 650.0,
+    "required_service_flow_m3_h": 800.0,
+    "service_target_filter_cases": {
+      "final_filters": 890.0,
+      "uniform_service_limit": 830.0
+    }
+  },
+  "M21_bleed_envelope": {
+    "candidate": "18 kohm 25 W class bleed envelope (historical audit; identity unverified)",
+    "decision": "power taper is NOT a discharge guarantee: measured deterministic bus decay with the exact retained resistor/relay per branch is required before guard release (G33/G36, P10/P11).",
+    "examples": [
+      {
+        "V_after_2.6s": 33.71228708377208,
+        "V_after_60s": 7.911895791609129,
+        "branch": "36V_2200uF"
+      },
+      {
+        "V_after_2.6s": 58.18407557232389,
+        "V_after_60s": 29.521673959393723,
+        "branch": "60V_4700uF"
+      }
+    ]
+  },
+  "M33_branch_absorption": [
+    {
+      "C_F": 0.0001,
+      "E_increment_J": 0.1,
+      "V_final": 57.41080037762929,
+      "V_initial": 36.0,
+      "case": "stored_counterexample_36V_100uF_0.1J",
+      "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
+      "safe_within_10pct_of_nominal": false
+    },
+    {
+      "C_F": 0.0022,
+      "E_increment_J": 0.1,
+      "V_final": 37.24122837540528,
+      "V_initial": 36.0,
+      "case": "candidate_36V_2200uF_0.1J",
+      "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
+      "safe_within_10pct_of_nominal": true
+    },
+    {
+      "C_F": 0.0022,
+      "E_increment_J": 0.5,
+      "V_final": 63.67531275577258,
+      "V_initial": 60.0,
+      "case": "candidate_60V_2200uF_0.5J",
+      "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
+      "safe_within_10pct_of_nominal": true
+    },
+    {
+      "C_F": 0.0047,
+      "E_increment_J": 0.5,
+      "V_final": 61.74759879903678,
+      "V_initial": 60.0,
+      "case": "candidate_60V_4700uF_0.5J",
+      "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
+      "safe_within_10pct_of_nominal": true
+    }
+  ],
+  "model": "M33/M21/M20 electrical-thermal desk closure"
+}
