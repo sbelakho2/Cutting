@@ -20,7 +20,7 @@ struct Record {
     std::uint32_t record_crc;
 };
 
-static_assert(sizeof(Record) == 76, "Journal record layout changed; review target flash allocation");
+static_assert(sizeof(Record) == 84, "Journal record layout changed; review target flash allocation");
 
 inline std::uint32_t record_crc(const Record& record) noexcept {
     return crc16(reinterpret_cast<const std::uint8_t*>(&record), offsetof(Record, record_crc));
@@ -31,7 +31,8 @@ inline bool valid(const Record& record, std::uint32_t commit_latch) noexcept {
     const std::uint32_t settings_crc = crc16(reinterpret_cast<const std::uint8_t*>(&record.settings), offsetof(Settings, crc));
     return record.magic == record_magic && commit_latch == committed && record.record_crc == record_crc(record) &&
            record.settings.magic == defaults.magic && record.settings.crc == settings_crc &&
-           record.settings.counts_per_metre[0] > 0 && record.settings.counts_per_metre[1] > 0;
+           record.settings.counts_per_metre[0] > 0 && record.settings.counts_per_metre[1] > 0 &&
+           record.settings.counts_per_metre[2] > 0;
 }
 
 // Unsigned generation numbers compare correctly across a single 32-bit wrap,

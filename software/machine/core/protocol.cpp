@@ -84,19 +84,22 @@ std::uint16_t pack_inputs(const Inputs& i) {
     v |= i.start ? 1u : 0u; v |= i.stop_ok ? 2u : 0u; v |= i.reset ? 4u : 0u;
     v |= i.safety_ok ? 8u : 0u; v |= i.home_front ? 16u : 0u; v |= i.home_rear ? 32u : 0u;
     v |= i.part_clear ? (1u << 12) : 0u;
+    v |= i.waste_clear ? (1u << 13) : 0u;
     for (unsigned k = 0; k < 4; ++k) if (i.alm[k]) v = static_cast<std::uint16_t>(v | (1u << (8 + k)));
     return v;
 }
 void unpack_inputs(std::uint16_t v, Inputs& i) {
     i.start = v & 1u; i.stop_ok = v & 2u; i.reset = v & 4u; i.safety_ok = v & 8u;
     i.home_front = v & 16u; i.home_rear = v & 32u; i.part_clear = v & (1u << 12);
+    i.waste_clear = v & (1u << 13);
     for (unsigned k = 0; k < 4; ++k) i.alm[k] = (v >> (8 + k)) & 1u;
 }
 
-inline constexpr std::uint16_t status_input_mask = 0x1f3fu;
-inline constexpr std::uint8_t status_output_mask = 0x1fu;
+inline constexpr std::uint16_t status_input_mask = 0x3f3fu;
+inline constexpr std::uint8_t status_output_mask = 0x3fu;
 inline constexpr std::size_t status_job_offset = 82;
-static_assert(status_job_offset + load_job_len == status_len);
+inline constexpr std::size_t status_piece_offset = status_job_offset + load_job_len; // 106
+static_assert(status_piece_offset + 18 == status_len);
 }
 
 void encode_status(const Telemetry& t, std::uint8_t* p) noexcept {
@@ -104,7 +107,7 @@ void encode_status(const Telemetry& t, std::uint8_t* p) noexcept {
     put_u32(p + 2, t.faults); put_u16(p + 6, pack_inputs(t.inputs));
     p[8] = static_cast<std::uint8_t>((t.outputs.led_green ? 1 : 0) | (t.outputs.led_red ? 2 : 0) |
                                      (t.outputs.buzzer ? 4 : 0) | (t.outputs.drives_disabled ? 8 : 0) |
-                                     (t.approved ? 16 : 0));
+                                     (t.approved ? 16 : 0) | (t.outputs.waste_sweep ? 32 : 0));
     p[9] = t.job_loaded ? 1 : 0;
     put_u32(p + 10, t.counters.pieces_done); put_u32(p + 14, t.counters.pieces_accepted);
     put_u32(p + 18, t.counters.pieces_scrap);
@@ -115,13 +118,18 @@ void encode_status(const Telemetry& t, std::uint8_t* p) noexcept {
     put_i32(p + 70, t.settings.counts_per_metre[0]); put_i32(p + 74, t.settings.counts_per_metre[1]);
     put_u32(p + 78, static_cast<std::uint32_t>(t.uptime_us / 1000));
     encode_job(t.job, p + status_job_offset);
+    put_i64(p + status_piece_offset, t.piece_encoder_counts);
+    put_u32(p + status_piece_offset + 8, t.counters.pieces_fixture);
+    put_i32(p + status_piece_offset + 12, t.settings.counts_per_metre[2]);
+    p[status_piece_offset + 16] = t.fixture_mode ? 1 : 0;
+    p[status_piece_offset + 17] = t.settings.part_clear_check;
 }
 
 bool decode_status(const std::uint8_t* p, std::uint8_t len, Telemetry& t) noexcept {
     if (p == nullptr || len != status_len) return false;
     const std::uint16_t input_bits = get_u16(p + 6);
     if (p[0] > static_cast<std::uint8_t>(State::Jogging) ||
-        p[1] > static_cast<std::uint8_t>(Phase::Stop) ||
+        p[1] > static_cast<std::uint8_t>(Phase::WasteClear) ||
         (input_bits & static_cast<std::uint16_t>(~status_input_mask)) != 0 ||
         (p[8] & static_cast<std::uint8_t>(~status_output_mask)) != 0 || p[9] > 1) return false;
 
@@ -131,6 +139,7 @@ bool decode_status(const std::uint8_t* p, std::uint8_t len, Telemetry& t) noexce
     decoded.outputs.led_green = p[8] & 1; decoded.outputs.led_red = p[8] & 2;
     decoded.outputs.buzzer = p[8] & 4; decoded.outputs.drives_disabled = p[8] & 8;
     decoded.approved = (p[8] & 16) != 0;
+    decoded.outputs.waste_sweep = (p[8] & 32) != 0;
     decoded.job_loaded = p[9] == 1;
     decoded.counters.pieces_done = get_u32(p + 10); decoded.counters.pieces_accepted = get_u32(p + 14);
     decoded.counters.pieces_scrap = get_u32(p + 18);
@@ -140,6 +149,12 @@ bool decode_status(const std::uint8_t* p, std::uint8_t len, Telemetry& t) noexce
     decoded.encoder_counts[0] = get_i64(p + 54); decoded.encoder_counts[1] = get_i64(p + 62);
     decoded.settings.counts_per_metre[0] = get_i32(p + 70); decoded.settings.counts_per_metre[1] = get_i32(p + 74);
     decoded.uptime_us = static_cast<std::uint64_t>(get_u32(p + 78)) * 1000ull;
+    decoded.piece_encoder_counts = get_i64(p + status_piece_offset);
+    decoded.counters.pieces_fixture = get_u32(p + status_piece_offset + 8);
+    decoded.settings.counts_per_metre[2] = get_i32(p + status_piece_offset + 12);
+    decoded.fixture_mode = p[status_piece_offset + 16] != 0;
+    decoded.settings.part_clear_check = p[status_piece_offset + 17];
+    if (decoded.settings.part_clear_check > 1) return false;
     if (!decode_job(p + status_job_offset, load_job_len, decoded.job) ||
         (decoded.job_loaded && validate(decoded.job) != JobError::None)) return false;
     decoded.settings.stored_job = decoded.job;
@@ -188,7 +203,7 @@ void dispatch(Controller& c, const Frame& req, Frame& reply) noexcept {
         return;
     case Msg::SetCalibration:
         if (req.len != calibration_len) { ack(CommandResult::MalformedFrame); return; }
-        ack(c.set_calibration(get_i32(req.payload), get_i32(req.payload + 4)));
+        ack(c.set_calibration(get_i32(req.payload), get_i32(req.payload + 4), get_i32(req.payload + 8)));
         return;
     case Msg::Approve:
         if (!require_empty()) { ack(CommandResult::MalformedFrame); return; }
@@ -203,6 +218,11 @@ void dispatch(Controller& c, const Frame& req, Frame& reply) noexcept {
         if (req.len != set_part_clear_len) { ack(CommandResult::MalformedFrame); return; }
         if (req.payload[0] > 1) { ack(CommandResult::InvalidArgument); return; }
         ack(c.set_part_clear_check(req.payload[0] != 0));
+        return;
+    case Msg::SetFixtureMode:
+        if (req.len != set_fixture_len) { ack(CommandResult::MalformedFrame); return; }
+        if (req.payload[0] > 1) { ack(CommandResult::InvalidArgument); return; }
+        ack(c.set_fixture_mode(req.payload[0] != 0));
         return;
     default: ack(CommandResult::Unsupported); return;
     }
@@ -228,6 +248,7 @@ const char* phase_name(Phase p) noexcept {
     case Phase::TailOpen: return "TailOpen"; case Phase::Eject: return "Eject"; case Phase::AwaitClear: return "AwaitClear";
     case Phase::RestoreStock: return "RestoreStock"; case Phase::PieceDone: return "PieceDone";
     case Phase::Jog: return "Jog"; case Phase::Stop: return "Stop";
+    case Phase::WasteSweep: return "WasteSweep"; case Phase::WasteClear: return "WasteClear";
     }
     return "?";
 }

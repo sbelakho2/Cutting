@@ -45,7 +45,6 @@ static_assert(blade_sever_travel_um <= static_cast<std::int32_t>(ctrl::axis::bla
 
 // ---- cycle geometry (docs/01 §4, F07) ---------------------------------------
 constexpr std::int32_t strip_clear_um = spec::strip_clear_um;   // 3 mm lead/tail clearance at the bare end
-constexpr std::uint32_t part_clear_timeout_ms = 5000;
 static_assert(wire::separation_um == 10000, "tail-score separation is fixed at 10 mm by docs/01 §4");
 
 // Commissioning polarity move (F33).
@@ -127,7 +126,7 @@ void Controller::init() {
     Settings loaded{};
     if (board_.load_settings(&loaded, sizeof loaded) && loaded.magic == Settings{}.magic &&
         loaded.crc == settings_crc(loaded) && loaded.counts_per_metre[0] > 0 && loaded.counts_per_metre[1] > 0 &&
-        signs_valid(loaded) && loaded.part_clear_check <= 1) {
+        loaded.counts_per_metre[2] > 0 && signs_valid(loaded) && loaded.part_clear_check <= 1) {
         settings_ = loaded;
         if (settings_.stored_job_valid == Settings::stored_job_marker && validate(settings_.stored_job) == JobError::None) {
             job_ = settings_.stored_job;
@@ -137,6 +136,8 @@ void Controller::init() {
         settings_ = Settings{};
         settings_.crc = settings_crc(settings_);
     }
+    // Fixture mode is RAM-only service state: every boot is production mode.
+    fixture_mode_ = false;
     // PowerOn resolves to Fault-free Unhomed only after the first healthy sample.
 }
 
@@ -174,6 +175,80 @@ std::int32_t Controller::length_budget_um(std::int32_t target_um) const {
 std::int64_t Controller::logical_encoder_counts(std::uint8_t side) const {
     const std::int64_t raw = board_.encoder_count(side);
     return settings_.wheel_sign[side] < 0 ? -raw : raw;
+}
+std::int64_t Controller::logical_piece_counts() const {
+    const std::int64_t raw = board_.piece_encoder_count();
+    return settings_.wheel_sign[2] < 0 ? -raw : raw;
+}
+std::int32_t Controller::piece_station_observed_um(std::int32_t tail0_um, std::int32_t len_um, std::int32_t delta_um) {
+    // Occupancy of station D by the moving piece body [tail, tail+len]:
+    // observed = { x in [0,|delta|] : tail(x) <= D <= tail(x)+len }.
+    // Counts outside that interval are physically zero and never required or
+    // fabricated (M27 origin transfer and validity windows).
+    const double d_station = ctrl::sensing::piece_station_x_mm * 1000.0;
+    const double abs_d = delta_um < 0 ? -static_cast<double>(delta_um) : static_cast<double>(delta_um);
+    if (abs_d <= 0.0 || len_um <= 0) return 0;
+    const double sign = delta_um >= 0 ? 1.0 : -1.0;
+    const double t0 = static_cast<double>(tail0_um);
+    const double bound_a = (d_station - static_cast<double>(len_um) - t0) / sign;
+    const double bound_b = (d_station - t0) / sign;
+    double lo = 0.0, hi = abs_d;
+    if (sign > 0) { lo = bound_a > lo ? bound_a : lo; hi = bound_b < hi ? bound_b : hi; }
+    else { lo = bound_b > lo ? bound_b : lo; hi = bound_a < hi ? bound_a : hi; }
+    if (hi <= lo) return 0;
+    return static_cast<std::int32_t>(std::llround(hi - lo));
+}
+bool Controller::discharge_transition_valid() const {
+    // A debounced present edge inside the physical observation window that
+    // starts at ejection, followed by a clear edge. A part that cleared before
+    // PieceDone still carries valid evidence; a part that never showed present,
+    // or never cleared, is quarantined instead of accepted.
+    if (!part_present_seen_) return false;
+    if (part_present_at_us_ + ms_to_us(ctrl::timing::discharge_window_pre_ms) < clear_started_us_) return false;
+    return part_clear_at_us_ > part_present_at_us_;
+}
+bool Controller::waste_transition_valid() const {
+    if (!waste_present_seen_) return false;
+    if (waste_present_at_us_ + ms_to_us(ctrl::timing::discharge_window_pre_ms) < waste_started_us_) return false;
+    return waste_clear_at_us_ > waste_present_at_us_;
+}
+void Controller::arm_discharge_window() {
+    // Observation window starts at ejection; evidence is captured from here on.
+    // A body already presenting at window start (a long piece spans the
+    // discharge zone before ejection) counts as present evidence; only the
+    // clear edge must then be observed.
+    clear_started_us_ = now_us_;
+    part_present_seen_ = !in_.part_clear;
+    part_present_at_us_ = part_present_seen_ ? now_us_ : 0;
+    part_clear_at_us_ = 0;
+}
+void Controller::begin_waste_sweep() {
+    waste_present_seen_ = false;
+    waste_present_at_us_ = 0;
+    waste_clear_at_us_ = 0;
+    waste_started_us_ = now_us_;
+    out_.waste_sweep = true;
+    set_phase(Phase::WasteSweep);
+}
+
+void Controller::finish_waste() {
+    using namespace ctrl;
+    const Axis R = axis::feed_right;
+    switch (waste_next_) {
+    case WasteNext::PrimeDone:
+        piece_done_prime_ = priming_;
+        priming_ = false;
+        piece_present_ = false;
+        complete_or_launch();
+        break;
+    case WasteNext::AfterLead:
+        start_length_feed();
+        break;
+    case WasteNext::AfterTail:
+        start_tracked_feed(R, job::ejection_um, axis::feed_speed_mm_s, axis::feed_accel_mm_s2, 0, true);
+        set_phase(Phase::Eject);
+        break;
+    }
 }
 bool Controller::wire_state_valid() const {
     if (piece_present_) {
@@ -259,6 +334,7 @@ void Controller::sample_inputs() {
     home_front_.update(raw_.home_front, now_us_, db);
     home_rear_.update(raw_.home_rear, now_us_, db);
     part_clear_.update(raw_.part_clear, now_us_, db);
+    waste_clear_.update(raw_.waste_clear, now_us_, db);
     in_ = raw_;
     in_.start = start_.stable && start_.level;
     in_.stop_ok = stop_.stable && stop_.level;
@@ -267,6 +343,20 @@ void Controller::sample_inputs() {
     in_.home_front = home_front_.stable && home_front_.level;
     in_.home_rear = home_rear_.stable && home_rear_.level;
     in_.part_clear = part_clear_.stable && part_clear_.level;
+    in_.waste_clear = waste_clear_.stable && waste_clear_.level;
+    // Capture debounced sensor edges continuously: the discharge present->clear
+    // evidence must survive transitions that complete before PieceDone, and the
+    // waste transit that completes inside the sweep window (M27/M30).
+    if (in_.part_clear != part_level_last_) {
+        part_level_last_ = in_.part_clear;
+        if (in_.part_clear) part_clear_at_us_ = now_us_;
+        else { part_present_seen_ = true; part_present_at_us_ = now_us_; }
+    }
+    if (in_.waste_clear != waste_level_last_) {
+        waste_level_last_ = in_.waste_clear;
+        if (in_.waste_clear) waste_clear_at_us_ = now_us_;
+        else { waste_present_seen_ = true; waste_present_at_us_ = now_us_; }
+    }
 }
 
 void Controller::supervise_safety() {
@@ -371,7 +461,12 @@ bool Controller::start_move(Axis a, std::int64_t delta_steps, double speed_steps
     ax.stall_fault = stall_fault;
     ax.queue_limit = max_run == 1 ? 1 : Board::step_fifo_depth;
     ax.move_start_us = now_us_;
-    ax.encoder_start = board_.encoder_count(a == ctrl::axis::feed_right ? 1 : 0);
+    // Stall supervision reads the physically observing station: the stock
+    // wheels for stock moves, station D while the right cassette drives the
+    // severed piece.
+    ax.encoder_start = (a == ctrl::axis::feed_right && piece_present_)
+                           ? logical_piece_counts()
+                           : logical_encoder_counts(a == ctrl::axis::feed_right ? 1 : 0);
     return true;
 }
 
@@ -394,15 +489,42 @@ bool Controller::start_feed_move_um(Axis a, std::int32_t delta_um, double speed_
                       accel_mm_s2 * ctrl::axis::feed_steps_per_mm, stall_fault);
 }
 
-void Controller::start_tracked_feed(Axis a, std::int32_t delta_um, double speed_mm_s, double accel_mm_s2, std::uint16_t stall_fault) {
-    const std::uint8_t side = a == ctrl::axis::feed_right ? 1 : 0;
-    tracked_[side].expect_um = delta_um;
-    tracked_[side].encoder_start = logical_encoder_counts(side);
-    tracked_[side].active = true;
+void Controller::start_tracked_feed(Axis a, std::int32_t delta_um, double speed_mm_s, double accel_mm_s2,
+                                    std::uint16_t stall_fault, bool final_eject) {
+    // Physical observability plan (M27): the stock body is observed by the two
+    // stock-side wheels; the severed piece only by downstream station D while
+    // it occupies that station. A body the right cassette cannot grip is never
+    // moved by feed commands at all (see the waste sweep).
+    const bool body_is_piece = a == ctrl::axis::feed_right && piece_present_;
+    TrackedFeed& t = body_is_piece ? tracked_piece_ : tracked_[a == ctrl::axis::feed_right ? 1 : 0];
+    t.expect_um = delta_um;
+    t.body_is_piece = body_is_piece;
+    t.final_eject = body_is_piece && final_eject;
+    t.active = true;
+    if (body_is_piece) {
+        t.encoder_start = logical_piece_counts();
+        t.observed_expect_um = piece_station_observed_um(piece_tail_um_, piece_len_um_, delta_um);
+        // Unobserved piece transport is legal only for the final ejection,
+        // where the discharge present->clear evidence covers the remainder
+        // before acceptance. Any other piece move must be fully observable at
+        // D; a hole here means the sensor architecture is inconsistent.
+        const std::int32_t magnitude = delta_um < 0 ? -delta_um : delta_um;
+        if (!t.final_eject && t.observed_expect_um < magnitude) {
+            enter_fault(fault::wire_geometry);
+            return;
+        }
+        if (t.final_eject) arm_discharge_window();
+    } else {
+        const std::uint8_t side = a == ctrl::axis::feed_right ? 1 : 0;
+        t.encoder_start = logical_encoder_counts(side);
+        t.observed_expect_um = delta_um < 0 ? -delta_um : delta_um;
+    }
     if (!start_feed_move_um(a, delta_um, speed_mm_s, accel_mm_s2, stall_fault)) enter_fault(fault::internal);
 }
 
 bool Controller::verify_tracked_feed(std::uint8_t side, bool gross_only) {
+    // Stock body at wheel W0/W1: both wheels ride continuous stock, so the
+    // commanded stock transport is fully observable (no occupancy window).
     TrackedFeed& t = tracked_[side];
     if (!t.active) return true;
     t.active = false;
@@ -425,6 +547,42 @@ bool Controller::verify_tracked_feed(std::uint8_t side, bool gross_only) {
     return true;
 }
 
+bool Controller::verify_tracked_piece(bool gross_only) {
+    // Severed piece at downstream station D: compare exactly the observable
+    // portion of the move (signed; the piece may advance or backfeed). Counts
+    // outside the occupancy interval are physically zero; the unobserved
+    // remainder of a final ejection is covered by the discharge evidence
+    // before the piece can be accepted.
+    TrackedFeed& t = tracked_piece_;
+    if (!t.active) return true;
+    t.active = false;
+    if (!board_.piece_encoder_healthy()) { enter_fault(fault::encoder_invalid); return false; }
+    const std::int32_t moved = measured_um(2, logical_piece_counts() - t.encoder_start);
+    const std::int32_t observed = t.observed_expect_um;
+    const std::int32_t moved_magnitude = moved < 0 ? -moved : moved;
+    if (moved_magnitude > observed + static_cast<std::int32_t>(2 * ctrl::enc::nominal_um_per_count)) {
+        // Motion recorded outside the planned occupancy: geometry or sensor
+        // model disagreement. Never accept it silently.
+        enter_fault(fault::wire_geometry);
+        return false;
+    }
+    const std::int32_t expected_signed = t.expect_um < 0 ? -observed : observed;
+    const std::int64_t residual = static_cast<std::int64_t>(expected_signed) - moved;
+    const std::int64_t magnitude = residual < 0 ? -residual : residual;
+    if (magnitude > ctrl::enc::max_slip_um) {
+        enter_fault(fault::length_slip);
+        return false;
+    }
+    if (!gross_only) {
+        const std::int32_t budget = length_budget_um(t.expect_um);
+        if (magnitude > budget) {
+            enter_fault(fault::length_budget);
+            return false;
+        }
+    }
+    return true;
+}
+
 void Controller::service_axes() {
     if (out_.drives_disabled) return;
     for (std::uint8_t i = 0; i < ctrl::axis::count; ++i) {
@@ -440,9 +598,10 @@ void Controller::service_axes() {
         if (!ax.streamer.active() && board_.steps_idle(a)) ax.moving = false;
         if (ax.stall_fault != 0 && ax.moving) {
             const std::int64_t issued_um = feed_steps_to_um(ax.streamer.issued());
-            const std::uint8_t side = a == ctrl::axis::feed_right ? 1 : 0;
-            const std::int64_t enc = logical_encoder_counts(side) - ax.encoder_start;
-            const std::int32_t moved_um = std::abs(measured_um(side, enc));
+            const std::int64_t enc = (a == ctrl::axis::feed_right && piece_present_)
+                                         ? logical_piece_counts() - ax.encoder_start
+                                         : logical_encoder_counts(a == ctrl::axis::feed_right ? 1 : 0) - ax.encoder_start;
+            const std::int32_t moved_um = std::abs(measured_um(a == ctrl::axis::feed_right && piece_present_ ? 2 : (a == ctrl::axis::feed_right ? 1 : 0), enc));
             if (issued_um >= 5000 && moved_um < 1000) { enter_fault(ax.stall_fault); return; }
         }
         if (ax.moving && now_us_ - ax.move_start_us > ms_to_us(ctrl::timing::move_timeout_ms)) { enter_fault(fault::move_timeout); return; }
@@ -453,6 +612,15 @@ void Controller::service_axes() {
 void Controller::begin_homing() {
     for (auto& a : axis_) a.moving = false;
     home_sub_done_[0] = home_sub_done_[1] = false;
+    // Homing is part of the documented recovery/rethread sequence (M37): the
+    // operator has cleared and rethreaded the wire lane, so the wire-body
+    // model returns to the known threaded state at the plane.
+    stock_tip_um_ = 0;
+    piece_tail_um_ = 0;
+    piece_len_um_ = 0;
+    piece_present_ = false;
+    stock_restore_um_ = 0;
+    out_.waste_sweep = false;
     out_.drives_disabled = false;
     drives_enabled_at_us_ = now_us_;
     homing_started_us_ = now_us_;
@@ -543,13 +711,19 @@ void Controller::begin_job_run() {
     if (state_ == State::Ready) counters_ = Counters{};
     priming_ = true;
     correction_done_ = false;
-    stock_tip_um_ = 0;
-    piece_tail_um_ = 0;
-    piece_len_um_ = 0;
-    piece_present_ = false;
-    stock_restore_um_ = 0;
+    // The wire-body model is physical state: it is never blindly reset here.
+    // A leftover severed piece and a long prime-severed tip are handled by
+    // launch_pass/Cut (scrap discharge or stub sweep); the model is re-
+    // initialised only by an explicit rethread (home()).
     part_present_seen_ = false;
     part_clear_confirmed_ = false;
+    part_present_at_us_ = 0;
+    part_clear_at_us_ = 0;
+    waste_present_seen_ = false;
+    waste_clear_confirmed_ = false;
+    waste_present_at_us_ = 0;
+    waste_clear_at_us_ = 0;
+    out_.waste_sweep = false;
     out_.drives_disabled = false;
     drives_enabled_at_us_ = now_us_;
     set_state(State::Running);
@@ -558,6 +732,17 @@ void Controller::begin_job_run() {
 
 void Controller::launch_pass() {
     if (priming_) {
+        if (piece_present_) {
+            // Physical recovery (M37): an interrupted pass left a severed piece
+            // in the machine. Discharge it as scrap through the takeaway with
+            // the full evidence chain before any new feed. The stock cut is
+            // already square, so no prime trim follows (finalize_piece clears
+            // priming_ and the next pass is production).
+            start_tracked_feed(ctrl::axis::feed_right, ctrl::job::ejection_um, ctrl::axis::feed_speed_mm_s,
+                               ctrl::axis::feed_accel_mm_s2, 0, true);
+            set_phase(Phase::Eject);
+            return;
+        }
         // Prime pass: feed the trimmed stock far enough past the cut plane,
         // sever the stub and discharge it. It does not count a piece.
         feed_encoder_start_[0] = logical_encoder_counts(0);
@@ -696,10 +881,13 @@ void Controller::run_cycle() {
         break;
     case Phase::Cut:
         if (!any_moving()) {
-            // Severed: the piece tail and the stock tip both sit on the cut plane.
+            // Severed: the piece tail and the stock tip both sit on the cut
+            // plane. The prime pass severs the actual modelled tip: a short
+            // body (fresh 10 mm stub) is waste for the sweep; a long body left
+            // by an interrupted feed is scrap discharged through the takeaway.
             piece_present_ = true;
             piece_tail_um_ = 0;
-            piece_len_um_ = priming_ ? spec::stock_clear_um : job_.length_um;
+            piece_len_um_ = priming_ ? stock_tip_um_ : job_.length_um;
             stock_tip_um_ = 0;
             if (!wire_state_valid()) { enter_fault(fault::wire_geometry); return; }
             start_blade_moves_um(0, axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
@@ -708,8 +896,22 @@ void Controller::run_cycle() {
         break;
     case Phase::OpenAfterCut:
         if (!any_moving()) {
-            if (priming_ || job_.strip_tail_um == 0) {
-                start_tracked_feed(R, job::ejection_um, axis::feed_speed_mm_s, axis::feed_accel_mm_s2);
+            if (priming_ && piece_len_um_ < static_cast<std::int32_t>(ctrl::sensing::piece_body_grip_x_mm * 1000.0)) {
+                // The severed prime stub (10 mm fresh) cannot reach the nearest
+                // right nip at 75.5 mm and is never propelled by feed motion.
+                // It is removed by the constrained mechanical sweep and
+                // verified through the waste chute (M30).
+                waste_next_ = WasteNext::PrimeDone;
+                begin_waste_sweep();
+            } else if (priming_) {
+                // A long prime-severed body (stock left by an interrupted
+                // feed) is grippable scrap: discharge it through the takeaway
+                // with the full handling evidence chain, uncounted (the
+                // interruption already counted its scrap).
+                start_tracked_feed(R, job::ejection_um, axis::feed_speed_mm_s, axis::feed_accel_mm_s2, 0, true);
+                set_phase(Phase::Eject);
+            } else if (job_.strip_tail_um == 0) {
+                start_tracked_feed(R, job::ejection_um, axis::feed_speed_mm_s, axis::feed_accel_mm_s2, 0, true);
                 set_phase(Phase::Eject);
             } else {
                 // docs/01 §4 step 4: withdraw stock s2+10 and backfeed the piece
@@ -727,7 +929,7 @@ void Controller::run_cycle() {
         break;
     case Phase::TailWithdraw:
         if (!any_moving()) {
-            if (!verify_tracked_feed(0, false) || !verify_tracked_feed(1, false)) return;
+            if (!verify_tracked_feed(0, false) || !verify_tracked_piece(false)) return;
             // Reject scoring the wrong end (piece must be at the plane), any
             // loss of retained grip and any stock/piece overlap (docs/01 §4).
             if (!wire_state_valid() ||
@@ -749,50 +951,71 @@ void Controller::run_cycle() {
         break;
     case Phase::TailPull:
         if (!any_moving()) {
-            if (!verify_tracked_feed(1, false)) return;
+            if (!verify_tracked_piece(false)) return;
             start_blade_moves_um(0, axis::blade_speed_mm_s, axis::blade_accel_mm_s2);
             set_phase(Phase::TailOpen);
         }
         break;
     case Phase::TailOpen:
         if (!any_moving()) {
-            start_tracked_feed(R, job::ejection_um, axis::feed_speed_mm_s, axis::feed_accel_mm_s2);
-            set_phase(Phase::Eject);
+            // The released tail slug is swept into the waste chute and verified
+            // before the ejection can trap it against the takeaway.
+            waste_next_ = WasteNext::AfterTail;
+            begin_waste_sweep();
         }
         break;
     case Phase::Eject:
         if (!any_moving()) {
-            if (!verify_tracked_feed(1, true)) return; // the part intentionally leaves the nip
+            if (!verify_tracked_piece(true)) return; // the part intentionally leaves the nip
             piece_present_ = false;
             set_phase(Phase::PieceDone);
         }
         break;
     case Phase::PieceDone:
         // PieceDone counts the physical completion; accepted-pieces is a
-        // separate count that requires the discharge clearance when enabled.
+        // separate count that requires the complete handling evidence chain.
+        // The discharge observation window was armed at ejection and its edge
+        // history is NOT restarted here: a part that presented and cleared
+        // before this phase still carries valid evidence (M27).
         piece_done_prime_ = priming_;
         if (!priming_) ++counters_.pieces_done;
-        if (part_clear_check_enabled()) {
-            part_present_seen_ = false;
-            part_clear_confirmed_ = false;
-            clear_started_us_ = now_us_;
-            set_phase(Phase::AwaitClear);
-        } else {
+        if (fixture_mode_ || !part_clear_check_enabled()) {
+            // Fixture/engineering mode: no handling verification is claimed and
+            // no accepted production count is emitted.
             part_clear_confirmed_ = true;
             finalize_piece();
+        } else {
+            set_phase(Phase::AwaitClear);
         }
         break;
-    case Phase::AwaitClear: {
-        const bool clear = part_clear_.stable && part_clear_.level;
-        if (!clear) part_present_seen_ = true; // prior present state
-        if (part_present_seen_ && clear) {
+    case Phase::AwaitClear:
+        if (discharge_transition_valid()) {
             part_clear_confirmed_ = true;
             finalize_piece();
-        } else if (phase_timed_out(part_clear_timeout_ms)) {
+        } else if (phase_timed_out(ctrl::timing::discharge_clear_timeout_ms)) {
             enter_fault(fault::part_not_cleared); // quarantined: no accepted count
         }
         break;
-    }
+    case Phase::WasteSweep:
+        if (phase_timed_out(ctrl::timing::waste_sweep_ms)) {
+            out_.waste_sweep = false;
+            set_phase(Phase::WasteClear);
+        }
+        break;
+    case Phase::WasteClear:
+        if (fixture_mode_ || !part_clear_check_enabled()) {
+            // Fixture/engineering mode: no handling verification is claimed and
+            // no accepted counts are emitted; runs may proceed on incomplete
+            // hardware. Production demands the chute transit.
+            waste_clear_confirmed_ = true;
+            finish_waste();
+        } else if (waste_transition_valid()) {
+            waste_clear_confirmed_ = true;
+            finish_waste();
+        } else if (phase_timed_out(ctrl::timing::waste_clear_timeout_ms)) {
+            enter_fault(fault::waste_not_cleared); // a trapped stub/slug must not be fed over
+        }
+        break;
     case Phase::RestoreStock:
         if (!any_moving()) {
             if (!verify_tracked_feed(0, false)) return;
@@ -831,7 +1054,16 @@ void Controller::run_cycle() {
         }
         break;
     case Phase::LeadOpen: // open/clear slug, then the length feed
-        if (!any_moving()) start_length_feed();
+        if (!any_moving()) {
+            if (job_.strip_lead_um > 0) {
+                // The released lead slug is swept into the waste chute and its
+                // transit verified before the next feed can trap it.
+                waste_next_ = WasteNext::AfterLead;
+                begin_waste_sweep();
+            } else {
+                start_length_feed();
+            }
+        }
         break;
     default:
         enter_fault(fault::internal);
@@ -841,8 +1073,17 @@ void Controller::run_cycle() {
 void Controller::finalize_piece() {
     if (piece_done_prime_) {
         priming_ = false;
+    } else if (fixture_mode_) {
+        // Fixture/engineering runs never emit accepted production counts.
+        ++counters_.pieces_fixture;
+    } else if (!part_clear_check_enabled()) {
+        // Production cannot disable handling verification (see
+        // set_part_clear_check); this branch exists only for defensive
+        // completeness and counts nothing as accepted.
+        ++counters_.pieces_fixture;
     } else {
-        // Only here does a completed piece become an accepted piece.
+        // Only here does a completed piece become an accepted piece: the
+        // discharge present->clear evidence chain is complete.
         ++counters_.pieces_accepted;
     }
     if (stock_restore_um_ != 0) {
@@ -919,12 +1160,15 @@ CommandResult Controller::start() {
     case State::Unhomed: begin_homing(); return CommandResult::Accepted;
     case State::Ready:
         if (!job_loaded_) { beep_until_us_ = now_us_ + ms_to_us(150); return CommandResult::NoJob; }
-        if (!approved()) return CommandResult::NotApproved;
+        // Production start requires the persistent commissioning approval.
+        // Fixture mode runs engineering cycles without approval but can never
+        // emit accepted counts or a persistent approval.
+        if (!fixture_mode_ && !approved()) return CommandResult::NotApproved;
         begin_job_run(); return CommandResult::Accepted;
     case State::Paused:
         if (!homed_) return CommandResult::NotHomed;
         if (!job_loaded_) return CommandResult::NoJob;
-        if (!approved()) return CommandResult::NotApproved;
+        if (!fixture_mode_ && !approved()) return CommandResult::NotApproved;
         begin_job_run(); return CommandResult::Accepted; // re-primes; partial piece already counted as scrap
     default: return CommandResult::Busy;
     }
@@ -1089,14 +1333,18 @@ CommandResult Controller::set_wheel_sign(std::uint8_t side, std::int8_t sign) {
     return CommandResult::Accepted;
 }
 
-CommandResult Controller::set_calibration(std::int32_t left_counts_per_metre, std::int32_t right_counts_per_metre) {
+CommandResult Controller::set_calibration(std::int32_t w0_counts_per_metre, std::int32_t w1_counts_per_metre,
+                                          std::int32_t piece_counts_per_metre) {
     if (state_ == State::Running || state_ == State::Stopping || state_ == State::Homing || state_ == State::Jogging) return CommandResult::Busy;
     // ifm E60137 wheel 200 mm nominal circumference, 8192 counts/rev (2048 PPR x4): 40960 nominal; allow +/-5 % for wear/preload.
     const std::int32_t lo = ctrl::enc::nominal_counts_per_metre * 95 / 100, hi = ctrl::enc::nominal_counts_per_metre * 105 / 100;
-    if (left_counts_per_metre < lo || left_counts_per_metre > hi || right_counts_per_metre < lo || right_counts_per_metre > hi) return CommandResult::InvalidArgument;
+    if (w0_counts_per_metre < lo || w0_counts_per_metre > hi ||
+        w1_counts_per_metre < lo || w1_counts_per_metre > hi ||
+        piece_counts_per_metre < lo || piece_counts_per_metre > hi) return CommandResult::InvalidArgument;
     Settings updated = settings_;
-    updated.counts_per_metre[0] = left_counts_per_metre;
-    updated.counts_per_metre[1] = right_counts_per_metre;
+    updated.counts_per_metre[0] = w0_counts_per_metre;
+    updated.counts_per_metre[1] = w1_counts_per_metre;
+    updated.counts_per_metre[2] = piece_counts_per_metre;
     // Calibration is part of the approval identity: invalidate the old record.
     updated.approval = 0;
     updated.approval_key = 0;
@@ -1110,7 +1358,12 @@ CommandResult Controller::approve() {
     if (state_ == State::Fault) return CommandResult::Faulted;
     if (state_ == State::Running || state_ == State::Stopping || state_ == State::Homing || state_ == State::Jogging) return CommandResult::Busy;
     if (!inputs_healthy()) return CommandResult::WrongState;
+    // Fixture/engineering mode must not emit a persistent approval equivalent
+    // to a qualified production build.
+    if (fixture_mode_) return CommandResult::Unsupported;
     if (!job_loaded_ || validate(job_) != JobError::None) return CommandResult::NoJob;
+    // Production approval requires handling verification to be active.
+    if (!part_clear_check_enabled()) return CommandResult::Unsupported;
     Settings updated = settings_;
     updated.stored_job = job_;
     updated.stored_job_valid = Settings::stored_job_marker;
@@ -1124,9 +1377,28 @@ CommandResult Controller::approve() {
 
 CommandResult Controller::set_part_clear_check(bool enabled) {
     if (state_ == State::Running || state_ == State::Stopping || state_ == State::Homing || state_ == State::Jogging) return CommandResult::Busy;
+    // Production must not bypass required handling verification. Disabling the
+    // check is only permitted in explicit service fixture mode.
+    if (!enabled && !fixture_mode_) return CommandResult::Unsupported;
     Settings updated = settings_;
     updated.part_clear_check = enabled ? 1 : 0;
     updated.approval = 0; // a production-setting change requires re-approval
+    updated.approval_key = 0;
+    updated.crc = settings_crc(updated);
+    if (!board_.store_settings(&updated, sizeof updated)) return CommandResult::StorageError;
+    settings_ = updated;
+    return CommandResult::Accepted;
+}
+
+CommandResult Controller::set_fixture_mode(bool enabled) {
+    if (state_ == State::Running || state_ == State::Stopping || state_ == State::Homing || state_ == State::Jogging) return CommandResult::Busy;
+    fixture_mode_ = enabled;
+    // Entering or leaving fixture mode returns handling verification to the
+    // production default and invalidates any approval created under different
+    // settings; fixture state is never persisted across a reboot.
+    Settings updated = settings_;
+    updated.part_clear_check = 1;
+    updated.approval = 0;
     updated.approval_key = 0;
     updated.crc = settings_crc(updated);
     if (!board_.store_settings(&updated, sizeof updated)) return CommandResult::StorageError;
@@ -1145,9 +1417,11 @@ Telemetry Controller::telemetry() const {
     t.feed_um[1] = feed_steps_to_um(axis_[ctrl::axis::feed_right].position_steps);
     t.encoder_counts[0] = logical_encoder_counts(0);
     t.encoder_counts[1] = logical_encoder_counts(1);
+    t.piece_encoder_counts = logical_piece_counts();
     t.stock_tip_um = stock_tip_um_;
     t.piece_tail_um = piece_tail_um_;
     t.piece_present = piece_present_;
+    t.fixture_mode = fixture_mode_;
     t.settings = settings_;
     t.uptime_us = now_us_;
     return t;

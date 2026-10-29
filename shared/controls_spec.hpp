@@ -108,13 +108,65 @@ inline constexpr std::uint32_t dir_setup_us = 5;   // >= 2 us required by the dr
 // ------------------------------------------------------- measuring encoders
 namespace enc {
 inline constexpr std::int32_t counts_per_rev = spec::encoder_counts_rev;              // 8192 (x4 decode)
-inline constexpr double nominal_wheel_circumference_mm = spec::wheel_circumference_mm; // 200 mm ifm E60137 nominal, uncalibrated
+inline constexpr double nominal_wheel_circumference_mm = spec::wheel_circumference_mm; // 200 mm ifm E60137 nominal, not calibration!
 inline constexpr double nominal_um_per_count = nominal_wheel_circumference_mm * 1000.0 / counts_per_rev; // 24.414
 // Calibration scale is stored as counts per metre in flash and set by the CLI
 // after the docs/20 length record; nominal value until a physical calibration exists.
 inline constexpr std::int32_t nominal_counts_per_metre = 40960;
 inline constexpr std::int32_t max_slip_um = 1500;  // encoder vs commanded disagreement that trips a fault.
 }
+
+// ----------------------------------------------------- sensing/observability
+// M01/M27 single active source of truth for what each physical sensor observes
+// in every phase. X coordinates are machine millimetres from the cut plane X0,
+// +X toward the piece/eject side (active coordinate contract). Sources:
+// mechanism_spec.hpp meas_x=-205 and mechanism_cad.cpp second module X=-385
+// (both stock side), feed_drive_spec.hpp near_nip_x=75.5 and max_centres=64.5
+// (right-cassette nips at 75.5/140).
+namespace sensing {
+// Stock-side measuring wheels W0/W1: they ride continuous stock and can never
+// observe a severed piece. Agreement between them is redundancy, not proof of
+// absolute length (shared material/tread/temperature systematics).
+inline constexpr double stock_wheel_far_x_mm = -385.0;
+inline constexpr double stock_wheel_near_x_mm = -205.0;
+// Downstream measuring station D (candidate A: a repackaged module inside the
+// short-piece insulated window X38-140 from ENGINEERING_HANDOFF 3.1). Nominal
+// station sits between the right-cassette nips 75.5/138-140. The first
+// kinematic screen is NOT proof that the 63.66 mm wheel/encoder/housing fits:
+// the mechanical fit at this station remains a Phase-E/M02 gate.
+inline constexpr double piece_station_x_mm = 106.75;
+// Discharge clearance sensor: through-beam/proximity across the takeaway path,
+// observing bodies in the discharge zone. True (clear) while the path is empty.
+inline constexpr double discharge_sensor_x_mm = 250.0;
+inline constexpr double discharge_sensor_span_mm = 40.0;
+// Waste-chute transit sensor: it watches the blade-region waste chute (a fall
+// path below the wire lane, NOT the wire lane itself), so normal wire motion
+// never presents. A released prime stub or insulation slug must produce a
+// present->clear transit through the chute during the sweep window before the
+// next feed or blade close can trap it.
+inline constexpr double waste_chute_sensor_drop_mm = 30.0;
+inline constexpr double waste_chute_sensor_span_mm = 30.0;
+// Occupancy rules (physical, derived from material bodies - never from
+// commanded motor steps): a body [tail, tail+len] occupies station s while
+// tail <= s <= tail+len; the stock occupies s while stock_tip >= s. A station
+// is invalid before the wire arrives and after the body leaves it; counts
+// outside occupancy are physically zero and must never be fabricated or
+// required. Every tracked move declares its observing station and expected
+// observed distance; the unobserved remainder must be covered by discharge
+// evidence (final ejection only) or the move is a design error.
+inline constexpr double piece_body_grip_x_mm = 140.0; // far right nip: below
+// this length a severed body cannot be propelled by the right cassette and is
+// handled as a loose stub by the waste sweep (10 mm prime stub case).
+}
+
+// Legacy-constant quarantine (M01): machine_spec.hpp still carries historical
+// feed_steps_mm (3200 pulses/rev family) and max_step_hz = 40000. The single
+// active production source of truth is this header (2000 pulses/rev, 8000 Hz).
+// The legacy values must never drive a production consumer.
+static_assert(axis::feed_pulses_per_rev == 2000.0, "active feed scale drifted");
+static_assert(axis::max_step_hz == 8000, "active step-rate ceiling drifted");
+static_assert(spec::legacy_feed_pulses_per_rev != axis::feed_pulses_per_rev,
+              "legacy and active feed scales must stay distinguishable");
 
 // ------------------------------------------------------------- job envelope
 namespace job {
@@ -146,5 +198,16 @@ inline constexpr std::uint32_t move_timeout_ms = static_cast<std::uint32_t>(spec
 inline constexpr std::uint32_t host_link_timeout_ms = 750;  // only enforced while a host session is open.
 inline constexpr std::uint32_t buzzer_fault_ms = 2000;
 inline constexpr std::uint32_t blink_slow_ms = 500, blink_fast_ms = 125;
+// Handling verification windows (M27/M30). The discharge present->clear pair is
+// validated over the physical observation window that starts at ejection, so a
+// part that clears before PieceDone is still evidenced (and one that never shows
+// present or never clears faults and is quarantined).
+inline constexpr std::uint32_t discharge_clear_timeout_ms = 5000;
+inline constexpr std::uint32_t discharge_window_pre_ms = 100;  // slack before ejection start
+// Waste sweep: constrained mechanical sweep actuation, then a required
+// present->clear transit on the waste-chute sensor before the next feed or
+// blade close may trap a released stub/slug.
+inline constexpr std::uint32_t waste_sweep_ms = 200;
+inline constexpr std::uint32_t waste_clear_timeout_ms = 3000;
 }
 }

@@ -167,11 +167,15 @@ Inputs BoardRp2350::read_inputs() {
     in.safety_ok = field_safety_ok();
     in.home_front = active_low(ctrl::pin::in_home_front);
     in.home_rear = active_low(ctrl::pin::in_home_rear);
-    // No discharge-clearance channel is assigned in shared/controls_spec.hpp
-    // yet (see the controller.hpp NOTES): report "clear" so the optional
-    // present->clear acceptance check stays disabled by default. Production use
-    // with Settings::part_clear_check requires a real pin and GPIO read here.
-    in.part_clear = true;
+    // Discharge-clearance and waste-chute channels (ctrl::sensing) are defined
+    // in the observability contract but not yet assigned to physical pins: the
+    // assignment is the Phase-H I/O-architecture gate (all 26 exposed GPIOs are
+    // allocated; see requirements/signal-table.md). Unassigned channels FAIL
+    // CLOSED - both read "not clear" - so handling acceptance can never be
+    // faked by absent hardware and no waste transit can be claimed. Production
+    // handling verification does not pass until these channels are implemented.
+    in.part_clear = false;
+    in.waste_clear = false;
     in.alm[0] = active_low(ctrl::pin::in_alm_blade_front);
     in.alm[1] = active_low(ctrl::pin::in_alm_blade_rear);
     in.alm[2] = active_low(ctrl::pin::in_alm_feed_left);
@@ -185,6 +189,12 @@ void BoardRp2350::write_outputs(const Outputs& outputs) {
     gpio_put(ctrl::pin::out_led_green, outputs.led_green ? 1 : 0);
     gpio_put(ctrl::pin::out_led_red, outputs.led_red ? 1 : 0);
     gpio_put(ctrl::pin::out_buzzer, outputs.buzzer ? 1 : 0);
+    // Outputs::waste_sweep drives the constrained mechanical sweep actuator.
+    // Its pin/relay belongs to the Phase-H I/O architecture (see
+    // requirements/signal-table.md). Until assigned it is intentionally not
+    // driven: the waste verification then faults closed instead of pretending
+    // the sweep ran.
+    (void)outputs.waste_sweep;
 }
 
 void BoardRp2350::set_direction(Axis axis, bool forward) {

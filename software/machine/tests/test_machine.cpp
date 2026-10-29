@@ -7,6 +7,7 @@
 #include "protocol.hpp"
 #include "settings_journal.hpp"
 #include "sim_board.hpp"
+#include "material_plant.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
@@ -32,10 +33,11 @@ std::int32_t step_error_budget(double moves) {
     return static_cast<std::int32_t>(moves * 1000.0 / ctrl::axis::feed_steps_per_mm);
 }
 
-struct Rig {
-    sim::SimBoard b;
+template <class B>
+struct RigT {
+    B b;
     Controller c{b};
-    Rig() { c.init(); }
+    RigT() { c.init(); }
     // Run the 1 kHz loop for ms milliseconds.
     void run_ms(std::uint32_t ms) {
         for (std::uint32_t i = 0; i < ms; ++i) { c.tick(); b.advance(ctrl::mcu::control_period_us); }
@@ -62,6 +64,15 @@ struct Rig {
         return c.load_job(j) == CommandResult::Accepted && c.approve() == CommandResult::Accepted;
     }
 };
+
+// Default rig: the independent material plant (M27) with physically honest
+// sensor kinematics - production behaviour is tested here.
+using Rig = RigT<sim::MaterialPlant>;
+// Legacy rig: the original motor-coupled fixture. Its apply_step() advances
+// each encoder from commanded steps (the stock-side counterexample defect), so
+// it is retained ONLY for negative-control and board-level tests that do not
+// claim machine function.
+using LegacyRig = RigT<sim::SimBoard>;
 
 Job good_job() {
     Job j{};
@@ -223,10 +234,11 @@ int test_cycle() {
     CHECK(t.approved);   // approval survives the completed batch
     // Blades open at the end, drives still enabled (Ready).
     CHECK(t.blade_um[0] == 0 && t.blade_um[1] == 0);
-    // Right feed net advance: prime stock clearance + prime stub ejection plus,
-    // per piece, the L+3 feed, the s2 backfeed, the s2+3 pull and the ejection.
+    // Right feed net advance: prime stock clearance (the prime stub is swept,
+    // not fed), plus, per piece, the L+3 feed, the s2 backfeed, the s2+3 pull
+    // and the ejection.
     const double feed_len = j.length_um + spec::strip_clear_um;
-    const double expected = spec::stock_clear_um + ctrl::job::ejection_um +
+    const double expected = spec::stock_clear_um +
         j.quantity * (feed_len + 3000.0 + ctrl::job::ejection_um);
     CHECK(std::fabs((r.b.feed_true_um[1] - 0.0) - expected) <= step_error_budget(2.0 + 4.0 * j.quantity));
     // No pulse violated the driver minimum.
@@ -392,8 +404,8 @@ int test_jog_and_commands() {
     REQUIRE(r.run_until(State::Ready, 10000));
     CHECK(r.c.telemetry().blade_um[0] == 2000);
     CHECK(r.c.start() == CommandResult::NoJob);
-    CHECK(r.c.set_calibration(42000, 41600) == CommandResult::Accepted);
-    CHECK(r.c.set_calibration(38000, 41600) == CommandResult::InvalidArgument);
+    CHECK(r.c.set_calibration(42000, 41600, 41000) == CommandResult::Accepted);
+    CHECK(r.c.set_calibration(38000, 41600, 41000) == CommandResult::InvalidArgument);
     const Job saved = good_job();
     CHECK(r.c.load_job(saved) == CommandResult::Accepted);
     // Calibration and the valid screenless operating recipe survive a re-init.
@@ -414,7 +426,7 @@ int test_settings_storage_failure() {
     CHECK(r.c.load_job(recipe) == CommandResult::StorageError);
     CHECK(!r.c.telemetry().job_loaded);
     const Settings before = r.c.telemetry().settings;
-    CHECK(r.c.set_calibration(42000, 41600) == CommandResult::StorageError);
+    CHECK(r.c.set_calibration(42000, 41600, 41000) == CommandResult::StorageError);
     const Settings after = r.c.telemetry().settings;
     CHECK(after.counts_per_metre[0] == before.counts_per_metre[0]);
     CHECK(after.counts_per_metre[1] == before.counts_per_metre[1]);
@@ -533,13 +545,13 @@ int test_protocol() {
     malformed_status[0] = static_cast<std::uint8_t>(State::Jogging) + 1;
     CHECK(!proto::decode_status(malformed_status, proto::status_len, t));
     std::memcpy(malformed_status, reply.payload, sizeof malformed_status);
-    malformed_status[1] = static_cast<std::uint8_t>(Phase::Stop) + 1;
+    malformed_status[1] = static_cast<std::uint8_t>(Phase::WasteClear) + 1;
     CHECK(!proto::decode_status(malformed_status, proto::status_len, t));
     std::memcpy(malformed_status, reply.payload, sizeof malformed_status);
     malformed_status[6] |= 0x40; // reserved input bit (6)
     CHECK(!proto::decode_status(malformed_status, proto::status_len, t));
     std::memcpy(malformed_status, reply.payload, sizeof malformed_status);
-    malformed_status[8] |= 0x20; // reserved output bit
+    malformed_status[8] |= 0x40; // reserved output bit (6; bit 5 is waste_sweep)
     CHECK(!proto::decode_status(malformed_status, proto::status_len, t));
     std::memcpy(malformed_status, reply.payload, sizeof malformed_status);
     malformed_status[9] = 2; // job_loaded must be canonical
@@ -715,7 +727,7 @@ int test_f07_strip_geometry() {
     CHECK(lead_scores == 3);
     CHECK(cut_phases == 4);          // prime sever + one per piece
     CHECK(tail_scores == 3);
-    CHECK(ejects == 4);              // prime stub + one per piece
+    CHECK(ejects == 3);              // the prime stub is swept (waste chute), one ejection per piece
     CHECK(lead_tip_at_score == j.strip_lead_um);
     CHECK(retract_end_tip == -spec::strip_clear_um); // bare tip X-3
     const Telemetry t = r.c.telemetry();
@@ -839,59 +851,192 @@ int test_f09_length_budget() {
 // accepted-pieces; with the clear check enabled a missing present->clear
 // transition must not count good.
 int test_f11_part_clear() {
-    // Check enabled, no clearance transition for the finished piece: the prime
-    // stub is cleared, then the piece is physically done but never accepted.
+    // Production defaults (M27/M30, handoff 3.2): handling verification is
+    // required, cannot be disabled outside service fixture mode, and fixture
+    // runs never emit accepted production counts or persistent approval.
+    Rig r0; r0.boot_and_home();
+    CHECK(r0.c.telemetry().settings.part_clear_check == 1);
+    CHECK(r0.c.set_part_clear_check(false) == CommandResult::Unsupported);
+
+    // Natural production cycle on the material plant: the ejected piece
+    // presents and clears the discharge sensor inside its physical window.
     Rig r; r.boot_and_home();
-    REQUIRE(r.c.set_part_clear_check(true) == CommandResult::Accepted);
     REQUIRE(r.load_and_approve(no_strip_job(300000, 1)));
     r.press(&Inputs::start, 150);
-    bool prime_cleared = false;
-    bool piece_quarantined = false;
-    for (std::uint32_t i = 0; i < 300000 && r.c.state() != State::Fault; ++i) {
-        r.c.tick(); r.b.advance(ctrl::mcu::control_period_us);
-        if (r.c.phase() == Phase::AwaitClear && !prime_cleared && r.c.counters().pieces_done == 0) {
-            // Let the prime stub show present -> clear so the first piece starts.
-            r.b.field.part_clear = false; r.run_ms(ctrl::timing::input_debounce_ms + 10);
-            r.b.field.part_clear = true;  r.run_ms(ctrl::timing::input_debounce_ms + 10);
-            prime_cleared = true;
-        } else if (r.c.phase() == Phase::AwaitClear && r.c.counters().pieces_done == 1) {
-            piece_quarantined = true; // leave the takeaway clear-free: no transition
-        }
-        if (piece_quarantined && r.c.phase() != Phase::AwaitClear) break;
-    }
-    REQUIRE(r.c.state() == State::Fault);
-    CHECK((r.c.faults() & fault::part_not_cleared) != 0);
+    REQUIRE(r.run_until(State::Ready, 200000));
     CHECK(r.c.counters().pieces_done == 1);
-    CHECK(r.c.counters().pieces_accepted == 0);
-    CHECK(r.c.counters().pieces_scrap >= 1);
+    CHECK(r.c.counters().pieces_accepted == 1);
+    CHECK(r.c.counters().pieces_scrap == 0);
+    CHECK(r.c.faults() == 0);
 
-    // Check enabled, present then clear for every discharge: accepted.
+    // Early clear: the part presents and clears entirely before PieceDone (fast
+    // takeaway). The captured edge history still validates the pair - the old
+    // behaviour restarted watching only after ejection and quarantined this.
     Rig r2; r2.boot_and_home();
-    REQUIRE(r2.c.set_part_clear_check(true) == CommandResult::Accepted);
     REQUIRE(r2.load_and_approve(no_strip_job(300000, 1)));
-    r2.b.field.part_clear = false; // part present at discharge
+    r2.b.part_clear_stuck = true; // clear
     r2.press(&Inputs::start, 150);
-    for (std::uint32_t i = 0; i < 300000 && r2.c.state() != State::Ready; ++i) {
+    bool presented = false;
+    for (std::uint32_t i = 0; i < 300000 && r2.c.state() == State::Running; ++i) {
         r2.c.tick(); r2.b.advance(ctrl::mcu::control_period_us);
-        if (r2.c.phase() == Phase::AwaitClear) {
-            r2.b.field.part_clear = false; r2.run_ms(ctrl::timing::input_debounce_ms + 10); // present
-            r2.b.field.part_clear = true;  r2.run_ms(ctrl::timing::input_debounce_ms + 10); // clear
-            r2.b.field.part_clear = false; // prepare for the next discharge
+        if (r2.c.phase() == Phase::Eject && !presented) {
+            r2.b.part_clear_stuck = false; r2.run_ms(ctrl::timing::input_debounce_ms + 10); // present
+            r2.b.part_clear_stuck = true;  r2.run_ms(ctrl::timing::input_debounce_ms + 10); // cleared early
+            presented = true;
         }
     }
     REQUIRE(r2.c.state() == State::Ready);
-    CHECK(r2.c.counters().pieces_done == 1);
     CHECK(r2.c.counters().pieces_accepted == 1);
-    CHECK(r2.c.faults() == 0);
 
-    // Check disabled (default): the finished piece is accepted without a sensor.
+    // Stuck-clear sensor (never shows present): discharge cannot be evidenced
+    // -> faulted and quarantined, never accepted.
     Rig r3; r3.boot_and_home();
     REQUIRE(r3.load_and_approve(no_strip_job(300000, 1)));
-    REQUIRE(r3.c.telemetry().settings.part_clear_check == 0);
+    r3.b.part_clear_stuck = true;
     r3.press(&Inputs::start, 150);
-    REQUIRE(r3.run_until(State::Ready, 120000));
+    REQUIRE(r3.run_until(State::Fault, 300000));
+    CHECK(r3.c.faults() & fault::part_not_cleared);
     CHECK(r3.c.counters().pieces_done == 1);
-    CHECK(r3.c.counters().pieces_accepted == 1);
+    CHECK(r3.c.counters().pieces_accepted == 0);
+
+    // Stuck-present sensor (never clears): same quarantine.
+    Rig r4; r4.boot_and_home();
+    REQUIRE(r4.load_and_approve(no_strip_job(300000, 1)));
+    r4.b.part_clear_stuck = false;
+    r4.press(&Inputs::start, 150);
+    REQUIRE(r4.run_until(State::Fault, 300000));
+    CHECK(r4.c.faults() & fault::part_not_cleared);
+    CHECK(r4.c.counters().pieces_accepted == 0);
+
+    // Fixture mode: handling verification may be disabled for engineering
+    // runs, but such runs never count as accepted production output and no
+    // persistent approval can exist.
+    Rig r5; r5.boot_and_home();
+    REQUIRE(r5.c.set_fixture_mode(true) == CommandResult::Accepted);
+    CHECK(r5.c.approve() == CommandResult::Unsupported);
+    REQUIRE(r5.c.set_part_clear_check(false) == CommandResult::Accepted);
+    REQUIRE(r5.c.load_job(no_strip_job(300000, 1)) == CommandResult::Accepted);
+    CHECK(r5.c.start() == CommandResult::Accepted); // fixture runs without approval
+    REQUIRE(r5.run_until(State::Ready, 200000));
+    CHECK(r5.c.counters().pieces_done == 1);
+    CHECK(r5.c.counters().pieces_accepted == 0);
+    CHECK(r5.c.counters().pieces_fixture == 1);
+    // Leaving fixture mode restores the production default.
+    REQUIRE(r5.c.set_fixture_mode(false) == CommandResult::Accepted);
+    CHECK(r5.c.telemetry().settings.part_clear_check == 1);
+    CHECK(!r5.c.telemetry().fixture_mode);
+    return 0;
+}
+
+// ---------------------------------------------------------- M27/M30 groups
+// Sensor observability (M27): station roles are physical. Stock wheels ride
+// continuous stock and can never observe a severed piece; the downstream
+// station D is the only piece observer and is valid only while the piece
+// occupies it; the unobserved ejection remainder needs discharge evidence.
+int test_observability_station_roles() {
+    // Helper: run until the production piece (not the 10 mm prime stub) is
+    // severed and the blades are opening.
+    auto run_to_piece_sever = [](RigT<sim::MaterialPlant>& rig) -> bool {
+        for (std::uint32_t i = 0; i < 100000; ++i) {
+            if (rig.c.state() == State::Fault) return false;
+            if (rig.c.phase() == Phase::OpenAfterCut && rig.b.piece_present && rig.b.piece_len_um > 100000.0)
+                return true;
+            rig.run_ms(1);
+        }
+        return false;
+    };
+    // Freeze both stock wheels after the sever: the piece phases must still
+    // verify and accept via station D - piece verification never reads the
+    // stock wheels (the counterexample defect class).
+    Rig r; r.boot_and_home();
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 1)));
+    r.press(&Inputs::start, 150);
+    REQUIRE(run_to_piece_sever(r));
+    r.b.encoder_freeze[0] = r.b.encoder_freeze[1] = true;
+    REQUIRE(r.run_until(State::Ready, 200000));
+    CHECK(r.c.counters().pieces_accepted == 1);
+    CHECK(r.c.faults() == 0);
+
+    // Freeze station D after the sever: the piece motion is then physically
+    // unobserved and the controller must fault instead of fabricating counts.
+    Rig r2; r2.boot_and_home();
+    REQUIRE(r2.load_and_approve(no_strip_job(300000, 1)));
+    r2.press(&Inputs::start, 150);
+    REQUIRE(run_to_piece_sever(r2));
+    r2.b.encoder_freeze[2] = true;
+    REQUIRE(r2.run_until(State::Fault, 200000));
+    CHECK((r2.c.faults() & (fault::length_slip | fault::length_budget | fault::wire_geometry)) != 0);
+    CHECK(r2.c.counters().pieces_accepted == 0);
+
+    // The ejection's unobserved remainder is real geometry: for a 300 mm piece
+    // at tail X3 the station sees only the first 103.75 mm of the 230 mm move,
+    // so discharge evidence is mandatory before acceptance.
+    CHECK(Controller::piece_station_observed_um(3000, 300000, 230000) == 103750);
+    CHECK(Controller::piece_station_observed_um(3000, 300000, 230000) < 230000);
+    // A fully observable piece move (backfeed within occupancy) has no gap.
+    CHECK(Controller::piece_station_observed_um(0, 300000, -6000) == 6000);
+    return 0;
+}
+
+// Waste handling (M30): the prime stub and strip slugs are removed by the
+// constrained sweep with a verified chute transit; a trapped body faults
+// before any further feed or blade close.
+int test_waste_handling() {
+    // Blocked sweep: the stub stays at the pocket and the machine faults
+    // before feeding over it.
+    Rig r; r.boot_and_home();
+    r.b.sweep_blocked = true;
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 1)));
+    r.press(&Inputs::start, 150);
+    REQUIRE(r.run_until(State::Fault, 100000));
+    CHECK(r.c.faults() & fault::waste_not_cleared);
+    CHECK(r.c.counters().pieces_done == 0);
+    CHECK(r.b.pocket_waste_bodies() == 1); // never propelled by feed motion
+
+    // Healthy job: exactly one body per release reaches the bin (prime stub
+    // once per batch plus the lead and tail slug per stripped piece).
+    Rig r2; r2.boot_and_home();
+    const Job j = good_job();
+    REQUIRE(r2.load_and_approve(j));
+    r2.press(&Inputs::start, 150);
+    REQUIRE(r2.run_until(State::Ready, 400000));
+    CHECK(r2.b.waste_bin_count() == 1 + 2 * j.quantity);
+    CHECK(r2.b.pocket_waste_bodies() == 0);
+    return 0;
+}
+
+// Negative control (M27, handoff 3.1): the legacy fixture couples each encoder
+// to its motor's commanded steps - the defect demonstrated by the preserved
+// stock-side counterexample. Under the revised observability contract that
+// fixture can no longer fabricate a passing machine cycle: with no physical
+// piece station and no real handling channels it faults and never emits an
+// accepted count. Historical reproduction of the original defect stays pinned
+// in tests/reproduction-2026-10-29 against commit 0f28aa3.
+int test_negative_control_legacy_fixture() {
+    // Part 1: under production handling verification the legacy fixture faults
+    // and never accepts - it has no real channels from which to build evidence.
+    LegacyRig r; r.boot_and_home();
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 1)));
+    r.press(&Inputs::start, 150);
+    REQUIRE(r.run_until(State::Fault, 100000));
+    CHECK(r.c.counters().pieces_accepted == 0);
+    CHECK(r.c.counters().pieces_fixture == 0);
+
+    // Part 2: even with handling verification disabled in service fixture mode,
+    // the revised observability contract cannot be satisfied by commanded-step
+    // couplings: the piece move must be verified at the downstream station,
+    // which the legacy fixture does not have, so the run faults instead of
+    // fabricating motion. (The old fabricated pass existed only under the old
+    // contract; its pinned reproduction is tests/reproduction-2026-10-29.) No
+    // path ever relabels fixture completion as accepted output.
+    LegacyRig r2; r2.boot_and_home();
+    REQUIRE(r2.c.set_fixture_mode(true) == CommandResult::Accepted);
+    REQUIRE(r2.c.set_part_clear_check(false) == CommandResult::Accepted);
+    REQUIRE(r2.c.load_job(no_strip_job(300000, 1)) == CommandResult::Accepted);
+    CHECK(r2.c.start() == CommandResult::Accepted);
+    REQUIRE(r2.run_until(State::Fault, 200000));
+    CHECK(r2.c.counters().pieces_accepted == 0);
+    CHECK(r2.c.counters().pieces_fixture == 0);
     return 0;
 }
 
@@ -913,7 +1058,7 @@ int test_f12_approval() {
     CHECK(r.c.telemetry().approved); // persists across a completed batch
 
     // Calibration change invalidates the approval.
-    CHECK(r.c.set_calibration(42000, 41600) == CommandResult::Accepted);
+    CHECK(r.c.set_calibration(42000, 41600, 41000) == CommandResult::Accepted);
     CHECK(!r.c.telemetry().approved);
     CHECK(r.c.start() == CommandResult::NotApproved);
 
@@ -1012,6 +1157,10 @@ int test_f33_jog_overflow() {
 int test_f33_polarity() {
     Rig r; r.run_ms(ctrl::timing::input_debounce_ms + 5);
     CHECK(r.c.state() == State::Unhomed);
+    // Physically threaded state: wire routed through both cassettes so the
+    // right cassette actually grips stock (with an empty cassette the rollers
+    // spin free and no station may invent motion).
+    r.b.stock_tip_um = 200000.0;
     r.b.encoder_sign[1] = -1; // right measuring wheel wired inverted
     CHECK(r.c.commission_axis(ctrl::axis::feed_right, true) == CommandResult::Accepted);
     REQUIRE(r.run_until(State::Unhomed, 20000));
@@ -1069,6 +1218,8 @@ int main(int argc, char** argv) {
         {"f08_strip_closure", test_f08_strip_closure}, {"f09_length_budget", test_f09_length_budget},
         {"f11_part_clear", test_f11_part_clear}, {"f12_approval", test_f12_approval},
         {"f33_jog_overflow", test_f33_jog_overflow}, {"f33_polarity", test_f33_polarity},
+        {"observability", test_observability_station_roles}, {"waste", test_waste_handling},
+        {"negative_control", test_negative_control_legacy_fixture},
     };
     int rc = 0; bool ran = false;
     for (auto& t : tests) if (which == "all" || which == t.name) { ran = true; rc |= t.fn(); }

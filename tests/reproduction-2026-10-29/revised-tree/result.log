@@ -1,0 +1,2 @@
+state=1 faults=0x00080000 pieces_done=0 pieces_accepted=0 left_um=9990.265 right_um=9990.265 enc0=409 enc1=409
+COUNTEREXAMPLE_NOT_REPRODUCED: inspect source or fixture

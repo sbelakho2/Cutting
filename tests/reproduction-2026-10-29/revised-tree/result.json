@@ -1,0 +1,10 @@
+{
+  "repo_commit": "5af9a4eade1fd3eb10502606e282894b3507ed19",
+  "controller_sha256": "1d49afe7e68f1896f815e8538f9fea2eef91683b9ec2a63d0a8c6e833914e448",
+  "original_fixture_sha256": "4982c9269327a39486a9e2241fdc893512b47a53dbb42e2535693e3d1ac39a45",
+  "adapted_fixture_sha256": "2ed4dc06697d18fb9f1ffd3b06bb94f3fefa6e8d5d1a88d39a4640535977ad52",
+  "physical_test": false,
+  "scope": "stock-side sensor kinematics; same upstream controller",
+  "counterexample_reproduced": false,
+  "returncode": 5
+}

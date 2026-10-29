@@ -7,7 +7,7 @@
 //   starz-ctl <device> load <length_mm> <lead_mm> <tail_mm> <depth_mm> <wire_mm> <qty>
 //   starz-ctl <device> clear | start | stop | reset | home
 //   starz-ctl <device> jog <axis 0-3> <+|-> <distance_mm> <speed_mm_s>
-//   starz-ctl <device> calib <left_counts_per_m> <right_counts_per_m>
+//   starz-ctl <device> calib <w0_counts_per_m> <w1_counts_per_m> <piece_counts_per_m>
 #include "protocol.hpp"
 #include <chrono>
 #include <cerrno>
@@ -133,11 +133,15 @@ void print_status(const Telemetry& t) {
     } else {
         std::printf("retained_recipe: none\n");
     }
-    std::printf("blade_um=[%d %d] feed_um=[%lld %lld] enc=[%lld %lld] counts_per_m=[%d %d] uptime=%llu ms\n",
+    std::printf("blade_um=[%d %d] feed_um=[%lld %lld] enc=[%lld %lld] piece_enc=%lld counts_per_m=[%d %d %d] uptime=%llu ms\n",
                 t.blade_um[0], t.blade_um[1], static_cast<long long>(t.feed_um[0]), static_cast<long long>(t.feed_um[1]),
                 static_cast<long long>(t.encoder_counts[0]), static_cast<long long>(t.encoder_counts[1]),
-                t.settings.counts_per_metre[0], t.settings.counts_per_metre[1],
+                static_cast<long long>(t.piece_encoder_counts),
+                t.settings.counts_per_metre[0], t.settings.counts_per_metre[1], t.settings.counts_per_metre[2],
                 static_cast<unsigned long long>(t.uptime_us / 1000));
+    std::printf("pieces: done=%u accepted=%u scrap=%u fixture=%u%s\n",
+                t.counters.pieces_done, t.counters.pieces_accepted, t.counters.pieces_scrap,
+                t.counters.pieces_fixture, t.fixture_mode ? " [FIXTURE MODE]" : "");
 }
 
 int simple(int fd, proto::Msg m) {
@@ -152,7 +156,7 @@ int simple(int fd, proto::Msg m) {
 int usage() {
     std::fprintf(stderr,
         "usage: starz-ctl <device> status|watch [ms]|load L lead tail depth wire qty (mm)|clear|start|stop|reset|home|\n"
-        "                 jog <axis 0-3> <+|-> <mm> <mm/s>|calib <left> <right>\n");
+        "                 jog <axis 0-3> <+|-> <mm> <mm/s>|calib <w0> <w1> <piece>\n");
     return 2;
 }
 
@@ -226,11 +230,11 @@ int main(int argc, char** argv) {
         return rep.msg == proto::Msg::Ack ? 0 : 1;
     }
     if (cmd == "calib") {
-        if (argc != 5) return usage();
-        std::int32_t left = 0, right = 0;
-        if (!parse_i32(argv[3], left) || !parse_i32(argv[4], right)) return usage();
+        if (argc != 6) return usage();
+        std::int32_t w0 = 0, w1 = 0, piece = 0;
+        if (!parse_i32(argv[3], w0) || !parse_i32(argv[4], w1) || !parse_i32(argv[5], piece)) return usage();
         proto::Frame req{}; req.msg = proto::Msg::SetCalibration; req.seq = next_seq(); req.len = proto::calibration_len;
-        proto::put_i32(req.payload, left); proto::put_i32(req.payload + 4, right);
+        proto::put_i32(req.payload, w0); proto::put_i32(req.payload + 4, w1); proto::put_i32(req.payload + 8, piece);
         proto::Frame rep{};
         if (!transact(fd, req, rep) || !command_reply(rep)) { std::fprintf(stderr, "invalid reply\n"); return 3; }
         std::printf("%s\n", proto::result_name(static_cast<CommandResult>(rep.payload[0])));

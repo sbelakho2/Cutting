@@ -4,24 +4,34 @@
 // Runs at ctrl::mcu::control_period_us on the target; the host tests drive
 // tick() with a simulated Board.
 //
-// NOTES (required physical I/O that the controller model expects):
-// - Inputs::part_clear is an optional discharge-clearance channel (for example
-//   a through-beam or proximity sensor across the takeaway path). It reads true
-//   while the path is clear and false while a part is present. When
-//   Settings::part_clear_check is enabled (set over the host link before
-//   commissioning approval), the sequencer requires a debounced present->clear
-//   transition after discharge before a finished piece is counted as accepted;
-//   a missing transition faults (fault::part_not_cleared) and quarantines the
-//   piece instead of silently counting it. No RP2350 GPIO is assigned to this
-//   channel in shared/controls_spec.hpp yet: production use requires adding the
-//   pin, reading it in BoardRp2350::read_inputs() and updating the factory-test
-//   input list. With the check disabled the controller assumes every finished
-//   piece is good, as the current wiring does.
-// - Production START (ready with a retained recipe, or paused resume) requires a
-//   persistent commissioning approval (Settings::approval) keyed by
+// NOTES (physical I/O and observability contract, ctrl::sensing):
+// - The two stock-side measuring wheels (Board::encoder_count 0/1) ride
+//   continuous stock and can NEVER observe a severed piece. Stock moves are
+//   verified against them; piece moves are verified against the downstream
+//   station Board::piece_encoder_count() only while the piece occupies that
+//   station (M27 occupancy windows and origin transfer). The unobserved
+//   ejection remainder is covered by the discharge present->clear evidence or
+//   the piece is quarantined - never accepted on commanded steps alone.
+// - Inputs::part_clear (true = clear) is the discharge-clearance channel. In
+//   production (part_clear_check = 1, the default) a finished piece is counted
+//   accepted only after a debounced present->clear transition captured in the
+//   physical observation window that begins at ejection. An unassigned pin
+//   must read false so absence of hardware cannot fake acceptance.
+// - Inputs::waste_clear (true = clear) with Outputs::waste_sweep forms the
+//   blade-region waste path for the 10 mm prime stub and 3-25 mm strip slugs:
+//   every released body must produce a present->clear transit after the sweep
+//   before the next feed or blade close. A body the right cassette cannot
+//   reach (shorter than ctrl::sensing::piece_body_grip_x_mm) is never ejected
+//   by feed motion.
+// - Production START (ready with a retained recipe, or paused resume) requires
+//   a persistent commissioning approval (Settings::approval) keyed by
 //   commissioning_identity() to the calibration, the retained recipe and the
-//   firmware revision. Calibration/recipe changes clear it; approve it over the
-//   host link (Msg::Approve) after commissioning.
+//   firmware revision. Calibration/recipe changes clear it; approve it over
+//   the host link (Msg::Approve) after commissioning.
+// - Service fixture mode (set_fixture_mode, RAM-only, never persisted) permits
+//   engineering runs with handling verification disabled. Fixture runs must
+//   not emit accepted production counts (they count to pieces_fixture), cannot
+//   create persistent approval, and are visibly distinct in telemetry.
 #include <cstdint>
 #include "types.hpp"
 #include "board.hpp"
@@ -96,13 +106,19 @@ enum class Phase : std::uint8_t {
     TailWithdraw, TailScore, TailPull, TailOpen,
     Eject, AwaitClear, RestoreStock, PieceDone,
     Jog,
-    Stop
+    Stop,
+    // Waste handling (M30): a released prime stub or insulation slug is swept
+    // into the waste chute and verified by a present->clear transit on the
+    // waste sensor before any further feed or blade close can trap it.
+    // Appended after Stop so existing wire values stay stable.
+    WasteSweep, WasteClear
 };
 
 struct Counters {
     std::uint32_t pieces_done = 0;      // PieceDone events in the current job (physical completions).
-    std::uint32_t pieces_accepted = 0;  // pieces counted good (clearance confirmed when the check is on).
+    std::uint32_t pieces_accepted = 0;  // production-good pieces (handling evidence complete).
     std::uint32_t pieces_scrap = 0;     // partial pieces discarded after a stop/fault.
+    std::uint32_t pieces_fixture = 0;   // fixture-mode completions; never accepted production output.
     std::int32_t last_residual_um = 0;  // target minus measured on the last verified feed
     std::int32_t worst_residual_um = 0;
 };
@@ -119,11 +135,13 @@ struct Telemetry {
     Counters counters;
     std::int32_t blade_um[2];       // travel from open, commanded
     std::int64_t feed_um[2];        // cumulative commanded transport, left/right
-    std::int64_t encoder_counts[2]; // measuring wheels with the commissioned wheel polarity applied
+    std::int64_t encoder_counts[2]; // stock-side wheels W0/W1, commissioned polarity applied
+    std::int64_t piece_encoder_counts; // downstream station D, commissioned polarity applied
     // Explicit wire-body model positions, relative to the cut plane X0.
     std::int32_t stock_tip_um;      // stock leading end
     std::int32_t piece_tail_um;     // severed piece tail (valid while piece_present)
     bool piece_present;
+    bool fixture_mode;              // service fixture mode: no accepted counts, no approval
     Settings settings;
     std::uint64_t uptime_us;
 };
@@ -144,14 +162,21 @@ public:
     CommandResult reset();
     CommandResult home();
     CommandResult jog(Axis axis, bool forward, std::int32_t distance_um, std::int32_t speed_um_s);
-    CommandResult set_calibration(std::int32_t left_counts_per_metre, std::int32_t right_counts_per_metre);
+    CommandResult set_calibration(std::int32_t w0_counts_per_metre, std::int32_t w1_counts_per_metre,
+                                  std::int32_t piece_counts_per_metre);
     // Commissioning/recipe approval (F12 interlock); invalidated by any
     // calibration, recipe or firmware-identity change.
     CommandResult approve();
     bool approved() const noexcept;
-    // Discharge-clearance check configuration (F11); cleared approval to match
-    // the change of production settings.
+    // Discharge-clearance/handling verification configuration (F11). Production
+    // requires it (default 1). Disabling is only permitted in explicit service
+    // fixture mode and invalidates approval; fixture runs never count accepted.
     CommandResult set_part_clear_check(bool enabled);
+    // Service fixture mode (RAM-only, cleared at init): engineering runs with
+    // handling verification optional, no persistent approval, fixture-only
+    // counts. Production behaviour is the default.
+    CommandResult set_fixture_mode(bool enabled);
+    bool fixture_mode() const noexcept { return fixture_mode_; }
     // Validated direction polarity commissioning (F33). Runs a short move on
     // the axis and stores the sign that makes logical command and feedback
     // agree. Returns Accepted when the move has been started; the measured
@@ -168,6 +193,11 @@ public:
     const Counters& counters() const noexcept { return counters_; }
     // Ideal per-jaw strip closure for the loaded recipe (F08).
     std::int32_t strip_travel_um() const;
+    // Distance of a piece move [tail0, tail0+delta] that downstream station D
+    // physically observes (occupancy tail <= D <= tail+len throughout that part
+    // of the move). Counts outside occupancy are zero and never fabricated.
+    // Exposed for the observability tests (M27).
+    static std::int32_t piece_station_observed_um(std::int32_t tail0_um, std::int32_t len_um, std::int32_t delta_um);
 
 private:
     struct AxisState {
@@ -187,12 +217,19 @@ private:
         bool consumed = false;
         void update(bool raw, std::uint64_t now, std::uint32_t debounce_us);
     };
-    // One commanded feed move with its expected motor-transport distance; the
-    // measuring wheel is checked against it when the move completes.
+    // One commanded feed move with its physical observability plan (M27).
+    // station: 0/1 = stock wheels W0/W1 (stock body), 2 = downstream station D
+    // (piece body). observed_expect_um is the part of the commanded move during
+    // which the observing station is physically occupied by the moved body;
+    // the remainder is unobserved transport and is legal only for the final
+    // ejection, where discharge evidence covers it before acceptance.
     struct TrackedFeed {
         std::int32_t expect_um = 0;
+        std::int32_t observed_expect_um = 0;
         std::int64_t encoder_start = 0;
         bool active = false;
+        bool body_is_piece = false;
+        bool final_eject = false;
     };
 
     // supervision
@@ -230,9 +267,22 @@ private:
     // strip/cycle model helpers (F07/F09/F33)
     std::int32_t length_budget_um(std::int32_t target_um) const;
     std::int64_t logical_encoder_counts(std::uint8_t side) const;
+    std::int64_t logical_piece_counts() const;
     bool wire_state_valid() const;
-    void start_tracked_feed(Axis a, std::int32_t delta_um, double speed_mm_s, double accel_mm_s2, std::uint16_t stall_fault = 0);
-    bool verify_tracked_feed(std::uint8_t side, bool gross_only);
+    // Tracked feed with its physical observability plan. The moved body is the
+    // severed piece only when the right cassette drives with a piece present
+    // (stock otherwise). final_eject marks the single move whose unobserved
+    // remainder must be covered by discharge evidence before acceptance.
+    void start_tracked_feed(Axis a, std::int32_t delta_um, double speed_mm_s, double accel_mm_s2,
+                            std::uint16_t stall_fault = 0, bool final_eject = false);
+    bool verify_tracked_feed(std::uint8_t side, bool gross_only); // stock wheels W0/W1
+    bool verify_tracked_piece(bool gross_only);                   // downstream station D
+    // Discharge present->clear evidence inside the physical observation window.
+    bool discharge_transition_valid() const;
+    bool waste_transition_valid() const;
+    void arm_discharge_window();
+    void begin_waste_sweep();
+    void finish_waste();
     void launch_pass();
     void start_length_feed();
     void finalize_piece();
@@ -246,7 +296,7 @@ private:
     FaultBits faults_ = 0;
     Inputs raw_{};
     Inputs in_{};
-    Debounced start_, stop_, reset_, safety_, home_front_, home_rear_, part_clear_;
+    Debounced start_, stop_, reset_, safety_, home_front_, home_rear_, part_clear_, waste_clear_;
     Outputs out_{};
     AxisState axis_[ctrl::axis::count];
     bool homed_ = false;
@@ -279,11 +329,29 @@ private:
     std::int32_t piece_len_um_ = 0;
     bool piece_present_ = false;
     std::int32_t stock_restore_um_ = 0;
+    // Discharge evidence (M27): edge history is captured continuously from the
+    // start of the ejection observation window - never restarted after the only
+    // useful transition has passed. Validation requires a debounced
+    // present->clear pair whose present edge lies inside the window.
     bool part_present_seen_ = false;
     bool part_clear_confirmed_ = false;
-    std::uint64_t clear_started_us_ = 0;
+    std::uint64_t clear_started_us_ = 0;      // observation-window start (ejection)
+    std::uint64_t part_present_at_us_ = 0;    // last debounced present edge
+    std::uint64_t part_clear_at_us_ = 0;      // last debounced clear edge (must follow present)
+    bool part_level_last_ = true;             // previous debounced part_clear level
+    // Waste-path evidence: every released stub/slug must transit the chute.
+    bool waste_present_seen_ = false;
+    bool waste_clear_confirmed_ = false;
+    std::uint64_t waste_started_us_ = 0;
+    std::uint64_t waste_present_at_us_ = 0;
+    std::uint64_t waste_clear_at_us_ = 0;
+    bool waste_level_last_ = true;
+    enum class WasteNext : std::uint8_t { PrimeDone, AfterLead, AfterTail };
+    WasteNext waste_next_ = WasteNext::PrimeDone;
     bool piece_done_prime_ = false;
     TrackedFeed tracked_[2];
+    TrackedFeed tracked_piece_;
+    bool fixture_mode_ = false; // RAM-only service fixture mode
 
     // Commissioning polarity validation (F33).
     bool commissioning_ = false;

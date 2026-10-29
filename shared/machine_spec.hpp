@@ -40,8 +40,15 @@ inline constexpr std::int32_t ejection_um = 230000;
 inline constexpr std::uint64_t heartbeat_timeout_us = 750000;
 inline constexpr std::uint64_t move_timeout_us = 30000000;
 inline constexpr std::uint32_t max_quantity = 1000000;
-inline constexpr double feed_steps_mm = 3200.0 / (3.14159265358979323846 * roller_diameter_mm);
+// LEGACY constants (quarantined 2026-10-29, M01 data-lineage): the historical
+// 3200 pulses/rev feed scale and 40 kHz ceiling are consumed only by the
+// pre-production reference software (software/firmware). The single active
+// production source of truth is shared/controls_spec.hpp (2000 pulses/rev,
+// 8 kHz ceiling). Never mix the two in one consumer.
+inline constexpr double legacy_feed_pulses_per_rev = 3200.0;
+inline constexpr std::uint32_t legacy_max_step_hz = 40000;
+inline constexpr double feed_steps_mm = legacy_feed_pulses_per_rev / (3.14159265358979323846 * roller_diameter_mm);
 inline constexpr double blade_steps_mm = head::design::steps_per_mm; // 1000 pulses / actual10mm lead.
 inline constexpr std::uint32_t pio_clock_hz = 1000000;
-inline constexpr std::uint32_t max_step_hz = 40000;
+inline constexpr std::uint32_t max_step_hz = legacy_max_step_hz;
 }

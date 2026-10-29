@@ -24,11 +24,21 @@ public:
     static constexpr std::uint32_t step_fifo_depth = 8;
 
     // Measuring encoders, x4 decoded, signed, free-running.
-    virtual std::int64_t encoder_count(std::uint8_t side) = 0; // 0 = left, 1 = right
+    // side 0/1 are the two stock-side measuring wheels (ctrl::sensing W0/W1):
+    // they ride continuous stock and can never observe a severed piece.
+    virtual std::int64_t encoder_count(std::uint8_t side) = 0; // 0 = W0 (X=-385), 1 = W1 (X=-205)
     // False means the board lost encoder transitions (for example a PIO RX FIFO
     // overflow). The controller latches an encoder-overflow fault instead of
     // trusting an incomplete length measurement.
     virtual bool encoder_healthy(std::uint8_t side) { (void)side; return true; }
+    // Downstream measuring station D (ctrl::sensing::piece_station_x_mm): the
+    // only station that can observe the severed piece. It is physically invalid
+    // before the wire arrives and after the body leaves it; the controller
+    // derives occupancy from the wire-body model and never requires or trusts
+    // counts outside the occupied interval. Default 0 makes the absence of the
+    // station explicit: unobserved piece motion can never be verified away.
+    virtual std::int64_t piece_encoder_count() { return 0; }
+    virtual bool piece_encoder_healthy() { return true; }
 
     // Board-specific causes that must leave a reset controller faulted. The
     // RP2350 board reports a watchdog reset here; host simulations default to 0.
