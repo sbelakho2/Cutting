@@ -1,9 +1,9 @@
 {
   "current_observations": {
-    "count": 14,
+    "count": 15,
     "extended_sums_by_currency": {
       "EUR": 1037.87,
-      "USD": 532.84
+      "USD": 685.26
     },
     "note": "dated 2026-10-13/2026-10-29 merchandise observations extended at the BOM purchase quantity (unit price x quantity); no freight/duty; no conversion (review F10 correction)",
     "rows": [
@@ -132,6 +132,15 @@
         "item": "TH-F02",
         "quantity": 2.0,
         "unit_price": "34.65"
+      },
+      {
+        "basis": "exact_single_price;tier_as_low_as_65.02;full_datasheet_on_page",
+        "currency": "USD",
+        "date": "2026-10-30",
+        "extended": 152.42,
+        "item": "DR-M01",
+        "quantity": 2.0,
+        "unit_price": "76.21"
       }
     ]
   },
