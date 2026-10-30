@@ -9,6 +9,8 @@ Deterministic output of `analysis/electrical_thermal/compute.py`.
 | stored_counterexample_36V_100uF_0.1J | 36.0 | 0.1 | 0.0001 | 57.411 | NO |
 | candidate_36V_2200uF_0.1J | 36.0 | 0.1 | 0.0022 | 37.241 | yes |
 | candidate_60V_2200uF_0.5J | 60.0 | 0.5 | 0.0022 | 63.675 | yes |
+| accepted_48V_2200uF_0.2J_V20_branch | 48.0 | 0.2 | 0.0022 | 49.858 | yes |
+| accepted_48V_4700uF_0.5J_V20_branch | 48.0 | 0.5 | 0.0047 | 50.167 | yes |
 | candidate_60V_4700uF_0.5J | 60.0 | 0.5 | 0.0047 | 61.748 | yes |
 
 The stored counterexample (36 V, 100 uF, +0.1 J -> 57.411 V) demonstrates why a terminal nominal voltage is never a branch safety argument. Absorption/bleed parts per branch with measured bus decay are the G33 gate.

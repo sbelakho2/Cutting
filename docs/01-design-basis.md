@@ -7,7 +7,7 @@ One lane; two independent feed cassettes; four closed-loop stepper axes; two ind
 | Subsystem | Selected hardware |
 |---|---|
 | Each cutting axis | Custom S1-B cut axis (docs/39): HGR20 rails + SFU1610-class C7 screw, 10 mm lead, 1000 pulses/rev driver, 100 pulses/mm; 34E1K-85, CL86T-V41, R+W MK2/100/50/8/14; HIWIN KK8610 leads are fallback purchase leads only |
-| Cutting power | 2×LE-350-60, one isolated 60V branch per drive; not paralleled |
+| Cutting power | 2×LE-350-48 (48 V, inside the CL86Y-V20 24-50 VDC rating), one isolated branch per drive; not paralleled. Regen acceptance: bus must stay <= 50 V (see analysis/electrical_thermal) |
 | Each feed cassette | 24HS40-5004D-E1000,CL57T-V41,R+WMK2/100/50/10/12; two driven lower/two passive upper rollers |
 | Feed transmission | HTPA20S5M250-A-N14×2,HTBN225S5M-250×1 per cassette |
 | Rollers | UMCL40-10-20-MC with documented F110 secondary keyway; 8 total |

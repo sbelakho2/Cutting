@@ -31,6 +31,8 @@ for name, v_i, e_j, c_f in [
     ("stored_counterexample_36V_100uF_0.1J", 36.0, 0.1, 100e-6),
     ("candidate_36V_2200uF_0.1J", 36.0, 0.1, 2200e-6),
     ("candidate_60V_2200uF_0.5J", 60.0, 0.5, 2200e-6),
+    ("accepted_48V_2200uF_0.2J_V20_branch", 48.0, 0.2, 2200e-6),
+    ("accepted_48V_4700uF_0.5J_V20_branch", 48.0, 0.5, 4700e-6),
     ("candidate_60V_4700uF_0.5J", 60.0, 0.5, 4700e-6),
 ]:
     v_f = branch_absorption(v_i, e_j, c_f)
@@ -41,6 +43,7 @@ for name, v_i, e_j, c_f in [
         "C_F": c_f,
         "V_final": v_f,
         "safe_within_10pct_of_nominal": v_f <= v_i * 1.10,
+        "inside_V20_driver_limit_50V": (v_f <= 50.0) if abs(v_i - 48.0) < 1e-9 else None,
         "note": "safety of a DC branch is judged by the protected rating and the "
                 "component voltage classes, not by this bound alone (G33)",
     })

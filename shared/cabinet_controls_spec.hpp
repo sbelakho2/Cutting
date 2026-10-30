@@ -48,7 +48,7 @@ inline constexpr std::array<PowerTerminal, 6> power_terminals{{
     {"TB24-02", "0V_PELV", "J3-2/J3-4/J12-4", "return-current design open"},
     {"TB24-03", "+5V_LOGIC", "J3-3", "branch protection and terminal product open"},
     {"TB-DL", "+24V_DRVLOGIC", "drive PUL+/DIR+/ENA+ only", "fuse, terminals and current calculation open"},
-    {"TB-M1", "+60V_BF", "K1 to blade-front drive", "DC interruption, fusing and discharge open"},
+    {"TB-M1", "+48V_BF", "K1 to blade-front drive", "DC interruption, fusing and discharge open"},
     {"TB-M2/TB-M3", "+60V_BR/+36V_FEED", "K2/K3 to remaining drives", "DC interruption, fusing and discharge open"},
 }};
 
@@ -60,8 +60,8 @@ struct IsolationPath {
 };
 
 inline constexpr std::array<IsolationPath, 3> proposed_isolation_paths{{
-    {"K1", "LE-350-60 blade-front", "XPS 13-14", "DC opening duty not qualified"},
-    {"K2", "LE-350-60 blade-rear", "XPS 23-24", "DC opening duty not qualified"},
+    {"K1", "LE-350-48 blade-front (48V: CL86Y-V20 rated 24-50VDC)", "XPS 13-14", "DC opening duty not qualified"},
+    {"K2", "LE-350-48 blade-rear (48V: CL86Y-V20 rated 24-50VDC)", "XPS 23-24", "DC opening duty not qualified"},
     {"K3", "LE-350-36 feed", "XPS 33-34", "DC opening duty not qualified"},
 }};
 

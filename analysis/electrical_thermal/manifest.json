@@ -46,6 +46,7 @@
       "V_final": 57.41080037762929,
       "V_initial": 36.0,
       "case": "stored_counterexample_36V_100uF_0.1J",
+      "inside_V20_driver_limit_50V": null,
       "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
       "safe_within_10pct_of_nominal": false
     },
@@ -55,6 +56,7 @@
       "V_final": 37.24122837540528,
       "V_initial": 36.0,
       "case": "candidate_36V_2200uF_0.1J",
+      "inside_V20_driver_limit_50V": null,
       "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
       "safe_within_10pct_of_nominal": true
     },
@@ -64,6 +66,27 @@
       "V_final": 63.67531275577258,
       "V_initial": 60.0,
       "case": "candidate_60V_2200uF_0.5J",
+      "inside_V20_driver_limit_50V": null,
+      "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
+      "safe_within_10pct_of_nominal": true
+    },
+    {
+      "C_F": 0.0022,
+      "E_increment_J": 0.2,
+      "V_final": 49.857980121723564,
+      "V_initial": 48.0,
+      "case": "accepted_48V_2200uF_0.2J_V20_branch",
+      "inside_V20_driver_limit_50V": true,
+      "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
+      "safe_within_10pct_of_nominal": true
+    },
+    {
+      "C_F": 0.0047,
+      "E_increment_J": 0.5,
+      "V_final": 50.16737941577982,
+      "V_initial": 48.0,
+      "case": "accepted_48V_4700uF_0.5J_V20_branch",
+      "inside_V20_driver_limit_50V": false,
       "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
       "safe_within_10pct_of_nominal": true
     },
@@ -73,6 +96,7 @@
       "V_final": 61.74759879903678,
       "V_initial": 60.0,
       "case": "candidate_60V_4700uF_0.5J",
+      "inside_V20_driver_limit_50V": null,
       "note": "safety of a DC branch is judged by the protected rating and the component voltage classes, not by this bound alone (G33)",
       "safe_within_10pct_of_nominal": true
     }

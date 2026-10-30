@@ -46,6 +46,7 @@ REQUIRED_DELIVERABLES = [
     "tests/P00-P15/manifest.json",
     "tests/reproduction-2026-10-29/provenance.json",
     "procurement/rfq-drafts.md",
+    "procurement/compliance-matrix-2026-10-30.md",
     "analysis/reel-buffer/manifest.json",
     "analysis/axis-rating-requirements/manifest.json",
     "analysis/M-register.csv",
