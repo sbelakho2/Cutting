@@ -78,9 +78,13 @@ def main() -> None:
         for s1 in STRIPS:
             for s2 in STRIPS:
                 cells += 1
-                # post-sever geometry per docs/01 step sequence
+                # post-sever geometry per docs/01 step sequence, derived from the
+                # implemented phase states (review F11 correction): after tail
+                # withdraw the tail sits at -s2; the pull moves it +(s2+3), so
+                # the tail at ejection is ALWAYS +3 mm with an enabled tail
+                # strip (never s2+3), and 0 without one.
                 tail_at_score = -s2 if s2 else 0.0
-                tail_at_eject = (s2 + STRIP_CLEAR_MM) if s2 else 0.0
+                tail_at_eject = STRIP_CLEAR_MM if s2 else 0.0
                 # I3 grip through tail moves: piece [tail, tail+L] must cover far nip
                 grip_margin = (tail_at_score + L) - GRIP_MM
                 if grip_margin < min_grip_margin:
@@ -122,6 +126,17 @@ def main() -> None:
     result = {
         "model": "transport-geometry envelope proof (M27/M30/M28)",
         "envelope_cells": cells,
+        "method_note": "interval arithmetic over a 9 x 24 x 24 sampled grid of the "
+                       "validated envelope (L x lead x tail), evaluated from the "
+                       "implemented phase states; it is NOT 5184 end-to-end runs and "
+                       "not a validated contact/control model. The same ejection "
+                       "identity is checked against runtime in the host "
+                       "origin_transfer test; a wrong tail-origin variant must be "
+                       "rejected there (review F11).",
+        "runtime_identity": "signed D material over one piece = L exactly (feed part "
+                            "(L - X_D) + backfeed -s2 + pull +(s2+3) + eject window "
+                            "(X_D - 3)); validated by tests/P00-P15 and the "
+                            "origin_transfer host group",
         "invariants": {
             "I1_tail_moves_fully_observable": not any(v.startswith("I1") for v in violations),
             "I2_eject_always_partially_unobserved": not any(v.startswith("I2") for v in violations),
@@ -158,8 +173,12 @@ def main() -> None:
     (HERE / "manifest.json").write_text(payload, encoding="utf-8")
 
     lines = ["# Transport-geometry envelope proof (M27/M30/M28)", "",
-             f"Envelope cells swept: {cells} (L x lead-strip x tail-strip grid over the full "
-             "validated range). Deterministic output of `analysis/transport-geometry/compute.py`.", "",
+             f"Interval arithmetic over {cells} sampled envelope cells (9 lengths x 24 lead "
+             "x 24 tail settings) evaluated from the implemented phase states - not "
+             "end-to-end runs, not a contact/control model (see manifest method_note). "
+             "Deterministic output of `analysis/transport-geometry/compute.py`. The lead "
+             "setting is swept for coverage but does not enter the ejection equations: "
+             "it changes the feed start position, which cancels in the identity.", "",
              "## Invariants", ""]
     for k, v in result["invariants"].items():
         lines.append(f"- {'PASS' if v else 'FAIL'} — {k}")

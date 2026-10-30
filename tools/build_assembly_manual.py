@@ -32,7 +32,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "release" / "Cutting_Assembly_Manual.pdf"
 IMAGES = ROOT / "Cutting_Agent_Handoff_2026-10-29" / "images"
 BUILD_DATE = "2026-10-29"
-REVISION = "AM-PRE-2"
+REVISION = "AM-PRE-3"
 
 INK = colors.HexColor("#1a1a1a")
 ACCENT = colors.HexColor("#204a80")
@@ -40,19 +40,24 @@ WARN_RED = colors.HexColor("#8B0000")
 GREY = colors.HexColor("#555555")
 LIGHT = colors.HexColor("#EDF1F7")
 
-S = ParagraphStyle("body", fontName="Helvetica", fontSize=8.5, leading=11.2, textColor=INK)
+S = ParagraphStyle("body", fontName="Helvetica", fontSize=9.5, leading=12.5, textColor=INK)
 SB = ParagraphStyle("bodyb", parent=S, fontName="Helvetica-Bold")
 H1 = ParagraphStyle("h1", fontName="Helvetica-Bold", fontSize=17, leading=21, textColor=ACCENT, spaceAfter=8)
 H2 = ParagraphStyle("h2", fontName="Helvetica-Bold", fontSize=12, leading=15, textColor=ACCENT,
                     spaceBefore=9, spaceAfter=4)
 H3 = ParagraphStyle("h3", fontName="Helvetica-Bold", fontSize=9.5, leading=12, spaceBefore=6, spaceAfter=2)
 WARN = ParagraphStyle("warn", parent=SB, textColor=WARN_RED)
-CAP = ParagraphStyle("cap", parent=S, fontSize=7.5, leading=9.5, textColor=GREY)
+CAP = ParagraphStyle("cap", parent=S, fontSize=8.5, leading=10.5, textColor=GREY)
 TOC = ParagraphStyle("toc", parent=S, fontSize=9, leading=13)
 
 
 def sha256(p: pathlib.Path) -> str:
-    return hashlib.sha256(p.read_bytes()).hexdigest()
+    """Canonical hash (LF-normalised for text) - same rule as
+    tools/verify_release.py and tools/build_release_manifest.py (review F14)."""
+    data = p.read_bytes()
+    if p.suffix.lower() in {".csv", ".md", ".json", ".py", ".hpp", ".cpp", ".txt"} and b"\x00" not in data:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def bullets(*items) -> list:
@@ -63,7 +68,7 @@ def numbered(*items) -> list:
     return [Paragraph(f"{n}.&nbsp;&nbsp;{i}", S) for n, i in enumerate(items, 1)]
 
 
-def table(rows, widths=None, header=True, fs=7.5) -> Table:
+def table(rows, widths=None, header=True, fs=8.5) -> Table:
     cell = ParagraphStyle("cell", parent=S, fontSize=fs, leading=fs + 2.2)
     head = ParagraphStyle("head", parent=cell, fontName="Helvetica-Bold")
     wrapped = []
@@ -99,7 +104,7 @@ def dim_h(c, x1, x2, y, label, tick=1.4):
     c.line(x1, y, x2, y)
     for x in (x1, x2):
         c.line(x, y - tick, x, y + tick)
-    c.setFont("Helvetica", 6.5)
+    c.setFont("Helvetica", 7.5)
     c.setFillColor(INK)
     c.drawCentredString((x1 + x2) / 2, y + 1.6, label)
     c.restoreState()
@@ -112,7 +117,7 @@ def dim_v(c, y1, y2, x, label, tick=1.4):
     c.line(x, y1, x, y2)
     for y in (y1, y2):
         c.line(x - tick, y, x + tick, y)
-    c.setFont("Helvetica", 6.5)
+    c.setFont("Helvetica", 7.5)
     c.setFillColor(INK)
     c.saveState()
     c.translate(x - 1.8, (y1 + y2) / 2)
@@ -133,7 +138,7 @@ def balloon(c, x, y, n, tx=None, ty=None, r=4.6):
     c.setLineWidth(0.7)
     c.circle(x, y, r, stroke=1, fill=1)
     c.setFillColor(ACCENT)
-    c.setFont("Helvetica-Bold", 7)
+    c.setFont("Helvetica-Bold", 8)
     c.drawCentredString(x, y - 2.4, str(n))
     c.restoreState()
 
@@ -154,13 +159,13 @@ def hatch(c, x, y, w, h, step=2.2):
 
 def view_title(c, x, y, w, title, sub=None):
     c.saveState()
-    c.setFont("Helvetica-Bold", 8)
+    c.setFont("Helvetica-Bold", 9.5)
     c.setFillColor(ACCENT)
     c.drawCentredString(x + w / 2, y, title)
     if sub:
-        c.setFont("Helvetica", 6.8)
+        c.setFont("Helvetica", 8)
         c.setFillColor(GREY)
-        c.drawCentredString(x + w / 2, y - 8, sub)
+        c.drawCentredString(x + w / 2, y - 9, sub)
     c.restoreState()
 
 
@@ -232,7 +237,7 @@ def sheet_machine_elevation(c, x, y, w, h):
                 (106.75, "piece station D (cand.)", "M02 fit OPEN GATE"),
                 (140, "right nip (far)", "F-series"),
                 (250, "discharge sensor zone", "X230-270, Phase-H pin")]
-    c.setFont("Helvetica", 5.6)
+    c.setFont("Helvetica", 7.5)
     for i, (X, name, ref) in enumerate(stations):
         px = sx(X)
         c.setFillColor(INK)
@@ -291,7 +296,7 @@ def sheet_axis_exploded(c, x, y, w, h):
              (x + w - 132, cy + 12, 6, "6 coupling CP-01 (MK2/100/50/8/14)"),
              (x + 52, cy - 62, 7, "7 base plate H005"),
              (x + w - 84, cy - 44, 8, "8 adapter H003 (15 mm R5)")]
-    c.setFont("Helvetica", 6.4)
+    c.setFont("Helvetica", 8)
     for bx, by, n, label in items:
         anchor_x = bx if n in (2, 3, 7) else bx
         balloon(c, bx, by, n, anchor_x, by - 10 if by > cy else by + 10)
@@ -327,7 +332,7 @@ def sheet_head_assembly(c, x, y, w, h):
     c.setLineWidth(0.8)
     c.line(x + w - 92, cy + 46, x + w - 64, cy + 34)     # V blade 1
     c.line(x + w - 92, cy + 34, x + w - 64, cy + 46)     # V blade 2
-    c.setFont("Helvetica", 5.8)
+    c.setFont("Helvetica", 7.5)
     c.setFillColor(ACCENT)
     c.drawCentredString(x + w - 78, cy + 62, "90 deg V pair T001 49x38x3")
     c.drawCentredString(x + w - 78, cy + 12, "loaded face gap 0.020 nom")
@@ -341,7 +346,7 @@ def sheet_head_assembly(c, x, y, w, h):
              (cx, cy + 30, 2, "T001 matched blade pair"),
              (cx - 20, cy - 12, 3, "H007 backing 30x46x8 + shims"),
              (cx + 30, cy - 32, 4, "stage interface (carriage H006)")]
-    c.setFont("Helvetica", 6.4)
+    c.setFont("Helvetica", 8)
     for bx, by, n, label in items:
         balloon(c, bx, by, n, bx, by - 9)
         c.setFillColor(INK)
@@ -378,7 +383,7 @@ def sheet_feed_cassette(c, x, y, w, h):
              (hx + 36, hy - 66, 3, "feed motor TR-M01 (24HS40-5004D-E1000)"),
              (hx + 145, hy + 16, 4, "measuring module M202-M210 + RU3100"),
              (hx + 55, hy - 34, 5, "lower driven rollers (UMCL40 class)")]
-    c.setFont("Helvetica", 6.4)
+    c.setFont("Helvetica", 8)
     for bx, by, n, label in items:
         balloon(c, bx, by, n, bx, by - 9 if by > hy else by + 9)
         c.setFillColor(INK)
@@ -391,7 +396,7 @@ def sheet_feed_cassette(c, x, y, w, h):
     c.circle(x + w - 48, hy - 18, 11, stroke=1, fill=0)
     c.line(x + w - 90, hy + 25, x + w - 48, hy - 7)
     c.line(x + w - 90, hy - 9, x + w - 48, hy - 29)
-    c.setFont("Helvetica", 5.8)
+    c.setFont("Helvetica", 7.5)
     c.setFillColor(GREY)
     c.drawCentredString(x + w - 69, hy + 34, "HTD5M-225-25 belt / 20T pulley")
     c.drawCentredString(x + w - 69, hy - 40, "tooth-pass 79.5775 Hz @0.50 m/s")
@@ -434,7 +439,7 @@ def sheet_payoff(c, x, y, w, h):
              (x + w - 140, y + 28, 4, "P003 base 430x560x8 (4x M12 anchors)"),
              (x + w - 60, py + 16, 5, "P006/P007 friction brake (NOT a safety brake)"),
              (px - 30, py - 42, 6, "P008 keyed drive boss (6 JS9) - torque path")]
-    c.setFont("Helvetica", 6.4)
+    c.setFont("Helvetica", 8)
     for bx, by, n, label in items:
         balloon(c, bx, by, n, bx, by - 9)
         c.setFillColor(INK)
@@ -454,13 +459,13 @@ def sheet_cabinet_layout(c, x, y, w, h):
     c.setStrokeColor(INK)
     c.setLineWidth(1.0)
     c.rect(ox, oy, cw, ch, stroke=1, fill=0)
-    c.setFont("Helvetica", 6.2)
+    c.setFont("Helvetica", 8)
     comps = [
         (0.04, 0.72, 0.20, 0.22, "XPSUAF13AP safety relay (CT-SR01)", "dual-channel E-stop/guard"),
         (0.27, 0.72, 0.20, 0.22, "CP-E24V/10A 24 V PSU (CT-PS01)", "logic/sensor supply"),
         (0.50, 0.72, 0.22, 0.22, "LE-350-60 x2 (PS-01)", "60 V axes, NOT paralleled"),
         (0.04, 0.40, 0.16, 0.26, "CL86T-V41 (DR-01)", "head driver"),
-        (0.23, 0.40, 0.16, 0.26, "CL57T-V41 x2 (TR-D01)", "feed drivers"),
+        (0.23, 0.40, 0.16, 0.26, "CL57Y-V20 x2 (TR-D02)", "feed hot-rated drivers (U06)"),
         (0.42, 0.40, 0.16, 0.26, "LC1D12BD + coils", "K1-K3 contactors"),
         (0.61, 0.40, 0.16, 0.26, "Pico 2 (CT-MCU01)", "controller + carrier PCB"),
         (0.04, 0.06, 0.30, 0.26, "terminal rows + PLC-RSC couplers", "field I/O isolation"),
@@ -476,7 +481,7 @@ def sheet_cabinet_layout(c, x, y, w, h):
         c.drawString(bx + 3, by + bhi - 8, name)
         c.setFillColor(GREY)
         c.drawString(bx + 3, by + bhi - 15, note)
-    c.setFont("Helvetica", 6.5)
+    c.setFont("Helvetica", 8)
     c.setFillColor(WARN_RED)
     c.drawString(ox + 4, oy + ch + 6, "layout schematic - terminal/wire schedule follows the electrical release (G32 OPEN GATE)")
     view_title(c, x, y + h - 12, w,
@@ -507,9 +512,9 @@ def sheet_wiring_blocks(c, x, y, w, h):
         c.setLineWidth(0.8)
         c.rect(bx, by, w * 0.18, h * 0.16, stroke=1, fill=0)
         c.setFillColor(INK)
-        c.setFont("Helvetica-Bold", 6.2)
+        c.setFont("Helvetica-Bold", 8)
         c.drawCentredString(bx + w * 0.09, by + h * 0.11, name)
-        c.setFont("Helvetica", 5.4)
+        c.setFont("Helvetica", 7.5)
         c.setFillColor(GREY)
         c.drawCentredString(bx + w * 0.09, by + h * 0.045, note)
     arrows = [((0.24, 0.74), (0.30, 0.74)), ((0.48, 0.74), (0.54, 0.74)), ((0.72, 0.74), (0.78, 0.74)),
@@ -539,7 +544,7 @@ def sheet_handling_path(c, x, y, w, h):
     c.line(x + w * 0.32, lane - 22, x + w * 0.36, lane - 52)
     c.line(x + w * 0.38, lane - 22, x + w * 0.42, lane - 52)
     c.rect(x + w * 0.33, lane - 66, 34, 14, stroke=1, fill=0)
-    c.setFont("Helvetica", 5.8)
+    c.setFont("Helvetica", 7.5)
     c.setFillColor(INK)
     c.drawCentredString(x + w * 0.36, lane - 76, "waste bin")
     c.drawCentredString(x + w * 0.36, lane - 12, "blade pocket + sweep (waste_sweep)")
@@ -560,7 +565,7 @@ def sheet_handling_path(c, x, y, w, h):
              ("3-25 mm slugs", lane + 44, "release at open -> sweep -> chute"),
              ("200-3000 mm part", lane + 54, "grip to X140 -> coast -> takeaway -> clear")]
     for label, ly, note in flows:
-        c.setFont("Helvetica", 6.4)
+        c.setFont("Helvetica", 8)
         c.drawString(x + 24, ly, label)
         c.setFillColor(GREY)
         c.drawString(x + 120, ly, note)
@@ -625,8 +630,9 @@ def build() -> None:
            Spacer(1, 8 * mm)]
     if (IMAGES / "machine-front.jpg").exists():
         st += [Image(str(IMAGES / "machine-front.jpg"), width=110 * mm, height=42 * mm),
-               Paragraph("Machine under construction - reference photo; ratings and dimensions "
-                         "are never taken from photos.", CAP)]
+               Paragraph("OEM reference photograph (Schleuniger) supplied by the user as layout "
+                         "inspiration. It is NOT a Cutting prototype: no such machine has been "
+                         "built, and no rating or dimension is taken from photographs.", CAP)]
     st += [PageBreak()]
 
     # ------------------------------------------------- document control + TOC
@@ -646,9 +652,11 @@ def build() -> None:
            Paragraph("1.1 Revision history", H3),
            table([["rev", "date", "change"],
                   ["AM-PRE-1", BUILD_DATE, "initial pre-release manual"],
-                  ["AM-PRE-2", BUILD_DATE, "expanded work instructions, vector sheets with dimensions and balloons, "
-                                           "handling/waste paths, wiring blocks, commissioning, rigor requirements "
-                                           "reflected in qualification section"]],
+                  ["AM-PRE-2", BUILD_DATE, "expanded work instructions, vector sheets, handling/waste paths, "
+                                           "wiring blocks, commissioning, qualification section"],
+                  ["AM-PRE-3", BUILD_DATE, "review F15 corrections: print typography >=7.5 pt, OEM photo "
+                                           "attribution (Schleuniger reference images, not a prototype), U06 "
+                                           "driver/ventilation substitution reflected in labels and spares"]],
                  widths=[16 * mm, 22 * mm, 140 * mm]),
            Paragraph("1.2 How to read this manual", H3)]
     st += bullets(
@@ -997,7 +1005,7 @@ def build() -> None:
     st += [Paragraph("15. Spare parts (initial)", H2),
            table([["part", "identity", "qty", "status"],
                   ["blades", "T001 matched 90 deg V pair 49x38x3", "2 pairs", "DEFINED / NOT FABRICATED"],
-                  ["filters", "Pfannenberg 11666102055 / 11760002055 candidates", "1 set", "OPEN GATE TS evidence"],
+                  ["filters", "Pfannenberg 11666102055 / 11760002055 (TH-F01/TH-F02, U06 path)", "2+2", "OPEN GATE TS evidence"],
                   ["measuring wheels", "ifm E60137", "1", "DEFINED"],
                   ["encoders", "ifm RU3100", "1", "DEFINED"],
                   ["belt", "HTBN225S5M-250", "1", "DEFINED"],
@@ -1028,8 +1036,9 @@ def build() -> None:
 
     # ------------------------------------------------------ photos + sheets
     st += [PageBreak(), Paragraph("17. Photographic and vector sheet index", H2),
-           Paragraph("Reference photos from the machine under construction. They establish no "
-                     "ratings, dimensions or qualification.", S)]
+           Paragraph("OEM reference photographs (Schleuniger) supplied by the user. They are "
+                     "layout inspiration only: they do not show a Cutting prototype and "
+                     "establish no ratings, dimensions or qualification.", S)]
     for img, cap in [("machine-rear.jpg", "rear view (reference)"),
                      ("payoff-and-buffer.jpg", "payoff and buffer (reference)")]:
         p = IMAGES / img

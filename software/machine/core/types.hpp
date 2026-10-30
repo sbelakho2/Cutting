@@ -45,6 +45,7 @@ inline constexpr FaultBits part_not_cleared = 1u << 17; // discharge area did no
 inline constexpr FaultBits wire_geometry   = 1u << 18; // wire-body model rejected a planned move or score.
 inline constexpr FaultBits waste_not_cleared = 1u << 19; // released stub/slug did not produce a waste-chute transit.
 inline constexpr FaultBits part_sensor_implausible = 1u << 20; // discharge present/clear transition outside its physical window.
+inline constexpr FaultBits piece_length_cross_check = 1u << 21; // independent D-station length check disagrees (common-mode wheel error class).
 }
 
 struct Job {

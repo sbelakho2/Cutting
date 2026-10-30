@@ -53,12 +53,20 @@ def main() -> None:
     for r in ev:
         price = (r.get("observed_unit_price") or "").strip()
         cur = (r.get("currency") or "").strip()
+        try:
+            qty = float((r.get("quantity") or "1").strip() or "1")
+        except ValueError:
+            qty = 1.0
         if price and cur:
             try:
-                obs_totals[cur] = obs_totals.get(cur, 0.0) + float(price)
+                unit = float(price)
             except ValueError:
                 continue
-            obs_rows.append({"item": r["item_id"], "price": price, "currency": cur,
+            # Line extensions at the BOM purchase quantity (review F10): a unit
+            # observation times its occurrence count, never a bare unit sum.
+            obs_totals[cur] = obs_totals.get(cur, 0.0) + unit * qty
+            obs_rows.append({"item": r["item_id"], "unit_price": price, "quantity": qty,
+                             "extended": round(unit * qty, 2), "currency": cur,
                              "date": r.get("observation_date", ""), "basis": r.get("price_basis", "")})
         else:
             not_costed += 1
@@ -76,9 +84,11 @@ def main() -> None:
         },
         "current_observations": {
             "count": len(obs_rows),
-            "sums_by_currency": obs_totals,
+            "extended_sums_by_currency": obs_totals,
             "rows": obs_rows,
-            "note": "dated 2026-10-13/2026-10-29 merchandise observations; no freight/duty; no conversion",
+            "note": "dated 2026-10-13/2026-10-29 merchandise observations extended at the "
+                    "BOM purchase quantity (unit price x quantity); no freight/duty; no "
+                    "conversion (review F10 correction)",
         },
         "not_costed_evidence_rows": not_costed,
         "open_cost_elements": [
@@ -102,16 +112,18 @@ def main() -> None:
              "Deterministic output of `analysis/cost-basis/compute.py`.", "",
              f"- Historical baseline register: {hist_count} dated observations (2026-10-13), sums by currency: "
              + ", ".join(f"{k} {v:.2f}" for k, v in sorted(hist_totals.items())),
-             f"- Current dated observations: {len(obs_rows)} rows, sums by currency: "
+             f"- Current dated observations: {len(obs_rows)} rows, extended at BOM purchase "
+             f"quantity (unit x quantity), sums by currency: "
              + ", ".join(f"{k} {v:.2f}" for k, v in sorted(obs_totals.items())),
              f"- Evidence rows without cost: {not_costed} (blank is not zero - each is an open quote)",
              "- Open cost elements: freight/duty (D1), machining quotes (D5), labour, metrology, "
              "qualification, consumables.",
              "- ~70 % target test: NOT ESTABLISHED - both sides incomplete and like-for-like scope",
              "  mapping (12.2) open (D6). Any saving figure at this stage would be fabricated.", "",
-             "Currency sums are arithmetic sums of single observations at actual purchase",
-             "quantities; they are ledger facts, not basket prices. No currency conversion is",
-             "performed without a dated conversion observation."]
+             "Current-side sums are line extensions (unit price x BOM quantity); the",
+             "historical side remains a sum of unit observations (its quantities live in the",
+             "historical-parts mapping and are not re-derived here). Ledger facts, not basket",
+             "prices: no currency conversion without a dated conversion observation."]
     (HERE / "report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"historical={hist_count} rows, current={len(obs_rows)} rows, not_costed={not_costed}")
     print("seventy_percent_test: NOT ESTABLISHED (both sides incomplete)")

@@ -1,8 +1,8 @@
-# M33 / M21 / M20 electrical-thermal desk closure
+# M34 / M21 / M20 electrical-thermal desk closure
 
 Deterministic output of `analysis/electrical_thermal/compute.py`.
 
-## M33 branch absorption  `V_final = sqrt(V_i^2 + 2E/C)`
+## M34 branch absorption  `V_final = sqrt(V_i^2 + 2E/C)`
 
 | case | V_i | E (J) | C (F) | V_final | within +10 % of nominal |
 | --- | --- | --- | --- | --- | --- |
@@ -16,8 +16,8 @@ The stored counterexample (36 V, 100 uF, +0.1 J -> 57.411 V) demonstrates why a 
 ## M21 bleed envelope
 
 - Candidate: 18 kohm 25 W class bleed envelope (historical audit; identity unverified)
-- 36 V/2200 uF: 33.7 V after 2.6 s, 7.9 V after 60 s
-- 60 V/4700 uF: 58.2 V after 2.6 s, 29.5 V after 60 s
+- 36 V/2200 uF: 33.7 V after 2.6 s (87.7 % of initial power), 7.9 V after 60 s
+- 60 V/4700 uF: 58.2 V after 2.6 s (94.0 % of initial power), 29.5 V after 60 s
 - Decision: power taper is NOT a discharge guarantee: measured deterministic bus decay with the exact retained resistor/relay per branch is required before guard release (G33/G36, P10/P11).
 
 ## M20 ventilation balance (candidate)

@@ -23,9 +23,41 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
+TEXT_SUFFIXES = {".csv", ".md", ".json", ".py", ".hpp", ".cpp", ".h", ".txt", ".log", ".sh", ".cmake"}
+
+# Required membership of release/release-manifest.json (review F14): the
+# verifier must fail when deliverables are missing from the manifest, not only
+# when listed hashes drift.
+REQUIRED_DELIVERABLES = [
+    "requirements/requirements-register.md",
+    "requirements/signal-table.md",
+    "software/machine/tests/material_plant.hpp",
+    "software/machine/tests/test_machine.cpp",
+    "software/machine/core/controller.cpp",
+    "shared/controls_spec.hpp",
+    "bom/selected-cutting-head.csv",
+    "bom/reconciliation-report.md",
+    "tools/reconcile_bom.py",
+    "analysis/m36_m31/manifest.json",
+    "analysis/electrical_thermal/manifest.json",
+    "analysis/cost-basis/manifest.json",
+    "analysis/transport-geometry/manifest.json",
+    "tests/P10-thermal/manifest.json",
+    "tests/P00-P15/manifest.json",
+    "tests/reproduction-2026-10-29/provenance.json",
+    "procurement/rfq-drafts.md",
+    "release/Cutting_Assembly_Manual.pdf",
+    "release/decision-log.md",
+]
+
 
 def sha256(p: pathlib.Path) -> str:
-    return hashlib.sha256(p.read_bytes()).hexdigest()
+    """Canonical hash: text files are hashed with LF newlines so CRLF/LF
+    checkouts reproduce identical digests (review F14); binary files as-is."""
+    data = p.read_bytes()
+    if p.suffix.lower() in TEXT_SUFFIXES and b"\x00" not in data:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def check(name: str, ok: bool, detail: str = "") -> bool:
@@ -36,14 +68,18 @@ def check(name: str, ok: bool, detail: str = "") -> bool:
 def main() -> int:
     findings = 0
 
-    # V1 release manifest freshness
+    # V1 release manifest freshness and required membership
     manifest_path = ROOT / "release" / "release-manifest.json"
     if not manifest_path.exists():
         findings += not check("V1_release_manifest_exists", False, "run tools/build_release_manifest.py")
     else:
         manifest = json.loads(manifest_path.read_text())
+        listed = manifest.get("deliverables_sha256", {})
+        missing_members = [r for r in REQUIRED_DELIVERABLES if r not in listed]
+        findings += not check("V1_manifest_membership", not missing_members,
+                              f"required deliverables absent from manifest: {missing_members}")
         stale = []
-        for rel, expected in manifest.get("deliverables_sha256", {}).items():
+        for rel, expected in listed.items():
             p = ROOT / rel
             if not p.exists() or sha256(p) != expected:
                 stale.append(rel)
@@ -63,7 +99,9 @@ def main() -> int:
         findings += not check("V2_manual_inputs_fresh", not stale,
                               f"PDF built against older {stale}; rebuild tools/build_assembly_manual.py")
 
-    # V3 generator determinism (hash -> run -> hash)
+    # V3 generator determinism (hash -> run -> hash). Exit codes must be 0:
+    # a crashed generator is a FINDING even when its outputs happen to be
+    # unchanged (review F14 negative control).
     generators = [
         ("analysis/m36_m31/compute.py", ["analysis/m36_m31/manifest.json", "analysis/m36_m31/report.md"]),
         ("analysis/electrical_thermal/compute.py", ["analysis/electrical_thermal/manifest.json",
@@ -81,15 +119,18 @@ def main() -> int:
         before = {o: sha256(ROOT / o) for o in outputs if (ROOT / o).exists()}
         run = subprocess.run([sys.executable, str(ROOT / script)], capture_output=True, text=True)
         after = {o: sha256(ROOT / o) for o in outputs if (ROOT / o).exists()}
-        ok = run.returncode in (0, 1) and before == after  # reconcile exits 1 on findings
+        missing = [o for o in outputs if not (ROOT / o).exists()]
+        ok = run.returncode == 0 and not missing and before == after
         findings += not check(f"V3_deterministic:{script}", ok,
-                              f"script rc={run.returncode} or outputs drifted: "
-                              f"{[o for o in outputs if before.get(o) != after.get(o)]}")
+                              f"script rc={run.returncode} (must be 0), missing outputs {missing}, "
+                              f"or outputs drifted: {[o for o in outputs if before.get(o) != after.get(o)]}")
 
-    # V4 integrity checks clean
-    for script in ("tools/check_production_records.py",):
+    # V4 integrity checks must run clean, including BOM reconciliation
+    # (review F14: the documentation promised both).
+    for script in ("tools/check_production_records.py", "tools/reconcile_bom.py"):
         run = subprocess.run([sys.executable, str(ROOT / script)], capture_output=True, text=True)
-        findings += not check(f"V4:{script}", run.returncode == 0, run.stdout.strip() + run.stderr.strip())
+        findings += not check(f"V4:{script}", run.returncode == 0,
+                              (run.stdout.strip() + run.stderr.strip())[-400:])
 
     print()
     print(f"overall: {'CLOSED' if findings == 0 else f'{findings} FINDING(S)'}")

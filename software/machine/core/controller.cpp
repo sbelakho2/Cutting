@@ -168,7 +168,18 @@ std::int32_t Controller::strip_travel_um() const {
     return static_cast<std::int32_t>(std::llround(closure_mm * 1000.0));
 }
 std::int32_t Controller::length_budget_um(std::int32_t target_um) const {
-    // Length target from docs/01 §2: +/- (0.20 mm + 0.05 % of the target).
+    // Internal guarded residual limit: strictly smaller than the external
+    // length tolerance 0.20 mm + 0.05 % (handoff 12.1) - half-width allocation,
+    // so a correction residual can never consume the full external allowance.
+    const std::int64_t t = target_um < 0 ? -static_cast<std::int64_t>(target_um) : target_um;
+    return static_cast<std::int32_t>(100 + (t * 25 + 99999) / 100000);
+}
+std::int32_t Controller::strip_budget_um() const {
+    // Strip/pull moves use a flat internal limit: a strip move NEVER inherits a
+    // length-proportional allowance (handoff 12.1).
+    return 100;
+}
+std::int32_t Controller::external_tolerance_um(std::int32_t target_um) const {
     const std::int64_t t = target_um < 0 ? -static_cast<std::int64_t>(target_um) : target_um;
     return static_cast<std::int32_t>(200 + (t * 5 + 9999) / 10000);
 }
@@ -212,6 +223,29 @@ bool Controller::waste_transition_valid() const {
     if (waste_present_at_us_ + ms_to_us(ctrl::timing::discharge_window_pre_ms) < waste_started_us_) return false;
     return waste_clear_at_us_ > waste_present_at_us_;
 }
+bool Controller::verify_piece_length_d() {
+    // Independent per-piece length cross-check (review F04). Identity: the
+    // signed material observed at station D over one piece's lifetime (length
+    // feed through the end of the ejection window) equals the commanded piece
+    // length - the feed portion past D plus the signed piece-move windows
+    // (backfeed negative, pull positive) telescope exactly to L. A common-mode
+    // stock-wheel scale error that the correction loop amplifies into real
+    // material error is caught here because D is a separate instrument with its
+    // own calibration. D's calibration uncertainty gates the check (P13); the
+    // guard is the external tolerance, so anything D calls out of tolerance is
+    // quarantined and anything within tolerance passes.
+    if (!piece_d_watch_) return true;
+    piece_d_watch_ = false;
+    const std::int32_t observed = measured_um(2, logical_piece_counts() - piece_d_start_);
+    const std::int64_t residual = static_cast<std::int64_t>(job_.length_um) - observed;
+    const std::int64_t magnitude = residual < 0 ? -residual : residual;
+    if (magnitude > external_tolerance_um(job_.length_um)) {
+        enter_fault(fault::piece_length_cross_check); // quarantined: no accepted count
+        return false;
+    }
+    return true;
+}
+
 void Controller::arm_discharge_window() {
     // Observation window starts at ejection; evidence is captured from here on.
     // A body already presenting at window start (a long piece spans the
@@ -344,19 +378,37 @@ void Controller::sample_inputs() {
     in_.home_rear = home_rear_.stable && home_rear_.level;
     in_.part_clear = part_clear_.stable && part_clear_.level;
     in_.waste_clear = waste_clear_.stable && waste_clear_.level;
-    // Capture debounced sensor edges continuously: the discharge present->clear
-    // evidence must survive transitions that complete before PieceDone, and the
-    // waste transit that completes inside the sweep window (M27/M30).
-    if (in_.part_clear != part_level_last_) {
-        part_level_last_ = in_.part_clear;
-        if (in_.part_clear) part_clear_at_us_ = now_us_;
-        else { part_present_seen_ = true; part_present_at_us_ = now_us_; }
+    // Evidence channels (discharge and waste) publish only CONFIRMED levels
+    // (M27 two-edge validity, review F01): a raw pulse shorter than the debounce
+    // cannot flip the confirmed state and can never fabricate a present->clear
+    // transit - the PRESENT edge must itself be stable for the full debounce
+    // before it counts. Admissible physical transits (a body crossing the chute
+    // or the discharge zone) last tens of milliseconds at gravity/transport
+    // speeds; sub-debounce pulses are electrical noise, not material motion.
+    // Safety-loop inputs above keep the fail-fast publication (unstable reads as
+    // unsafe), which stops equipment; it must not manufacture material evidence.
+    const bool part_confirmed = part_clear_.stable ? part_clear_.level : part_level_confirmed_;
+    if (part_clear_.stable && part_clear_.level != part_level_confirmed_) {
+        part_level_confirmed_ = part_clear_.level;
+        if (part_level_confirmed_) {
+            part_clear_at_us_ = now_us_;
+        } else {
+            part_present_seen_ = true;
+            part_present_at_us_ = now_us_;
+        }
     }
-    if (in_.waste_clear != waste_level_last_) {
-        waste_level_last_ = in_.waste_clear;
-        if (in_.waste_clear) waste_clear_at_us_ = now_us_;
-        else { waste_present_seen_ = true; waste_present_at_us_ = now_us_; }
+    in_.part_clear = part_confirmed;
+    const bool waste_confirmed = waste_clear_.stable ? waste_clear_.level : waste_level_confirmed_;
+    if (waste_clear_.stable && waste_clear_.level != waste_level_confirmed_) {
+        waste_level_confirmed_ = waste_clear_.level;
+        if (waste_level_confirmed_) {
+            waste_clear_at_us_ = now_us_;
+        } else {
+            waste_present_seen_ = true;
+            waste_present_at_us_ = now_us_;
+        }
     }
+    in_.waste_clear = waste_confirmed;
 }
 
 void Controller::supervise_safety() {
@@ -490,7 +542,7 @@ bool Controller::start_feed_move_um(Axis a, std::int32_t delta_um, double speed_
 }
 
 void Controller::start_tracked_feed(Axis a, std::int32_t delta_um, double speed_mm_s, double accel_mm_s2,
-                                    std::uint16_t stall_fault, bool final_eject) {
+                                    std::uint16_t stall_fault, bool final_eject, bool strip_move) {
     // Physical observability plan (M27): the stock body is observed by the two
     // stock-side wheels; the severed piece only by downstream station D while
     // it occupies that station. A body the right cassette cannot grip is never
@@ -500,6 +552,7 @@ void Controller::start_tracked_feed(Axis a, std::int32_t delta_um, double speed_
     t.expect_um = delta_um;
     t.body_is_piece = body_is_piece;
     t.final_eject = body_is_piece && final_eject;
+    t.strip_move = strip_move;
     t.active = true;
     if (body_is_piece) {
         t.encoder_start = logical_piece_counts();
@@ -537,9 +590,9 @@ bool Controller::verify_tracked_feed(std::uint8_t side, bool gross_only) {
         return false;
     }
     if (!gross_only) {
-        // Strip/pull moves use the same 0.20 mm + 0.05 % budget shape as the
-        // piece length, with the strip tolerance as the base term.
-        const std::int32_t budget = length_budget_um(t.expect_um);
+        // Strip/pull moves use the flat strip budget; they never inherit a
+        // length-proportional allowance (handoff 12.1).
+        const std::int32_t budget = t.strip_move ? strip_budget_um() : length_budget_um(t.expect_um);
         if (magnitude > budget) {
             enter_fault(fault::length_budget); // piece/strip acceptance budget
             return false;
@@ -575,7 +628,7 @@ bool Controller::verify_tracked_piece(bool gross_only) {
         return false;
     }
     if (!gross_only) {
-        const std::int32_t budget = length_budget_um(t.expect_um);
+        const std::int32_t budget = t.strip_move ? strip_budget_um() : length_budget_um(t.expect_um);
         if (magnitude > budget) {
             enter_fault(fault::length_budget);
             return false;
@@ -621,6 +674,7 @@ void Controller::begin_homing() {
     piece_len_um_ = 0;
     piece_present_ = false;
     stock_restore_um_ = 0;
+    piece_d_watch_ = false;
     out_.waste_sweep = false;
     out_.drives_disabled = false;
     drives_enabled_at_us_ = now_us_;
@@ -724,6 +778,7 @@ void Controller::begin_job_run() {
     waste_clear_confirmed_ = false;
     waste_present_at_us_ = 0;
     waste_clear_at_us_ = 0;
+    piece_d_watch_ = false;
     out_.waste_sweep = false;
     out_.drives_disabled = false;
     drives_enabled_at_us_ = now_us_;
@@ -761,7 +816,7 @@ void Controller::launch_pass() {
     if (job_.strip_lead_um > 0) {
         // docs/01 §4 step 1: advance the stock by s1 so the score plane sits s1
         // behind the trimmed tip.
-        start_tracked_feed(ctrl::axis::feed_left, job_.strip_lead_um, ctrl::axis::strip_speed_mm_s, ctrl::axis::strip_accel_mm_s2);
+        start_tracked_feed(ctrl::axis::feed_left, job_.strip_lead_um, ctrl::axis::strip_speed_mm_s, ctrl::axis::strip_accel_mm_s2, 0, false, true);
         stock_tip_um_ += job_.strip_lead_um;
         set_phase(Phase::LeadAdvance);
         return;
@@ -773,6 +828,11 @@ void Controller::start_length_feed() {
     correction_done_ = false;
     feed_encoder_start_[0] = logical_encoder_counts(0);
     feed_encoder_start_[1] = logical_encoder_counts(1);
+    // Arm the per-piece independent length cross-check (review F04): the signed
+    // material station D sees from here to the end of ejection must equal the
+    // commanded piece length - the stock wheels cannot prove that alone.
+    piece_d_start_ = logical_piece_counts();
+    piece_d_watch_ = true;
     // docs/01 §4 step 2: feed L+3 after a lead strip (the tip is 3 mm behind the
     // plane after the lead retract), or L when no lead strip is configured.
     feed_target_um_ = job_.length_um + (job_.strip_lead_um > 0 ? strip_clear_um : 0);
@@ -886,6 +946,7 @@ void Controller::run_cycle() {
             // plane. The prime pass severs the actual modelled tip: a short
             // body (fresh 10 mm stub) is waste for the sweep; a long body left
             // by an interrupted feed is scrap discharged through the takeaway.
+            ++counters_.cut_cycles; // every sever wears the blade (review F02)
             piece_present_ = true;
             piece_tail_um_ = 0;
             piece_len_um_ = priming_ ? stock_tip_um_ : job_.length_um;
@@ -918,8 +979,8 @@ void Controller::run_cycle() {
                 // docs/01 §4 step 4: withdraw stock s2+10 and backfeed the piece
                 // s2, opening a 10 mm separation before the tail score.
                 const std::int32_t withdraw = job_.strip_tail_um + wire::separation_um;
-                start_tracked_feed(L, -withdraw, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
-                start_tracked_feed(R, -job_.strip_tail_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+                start_tracked_feed(L, -withdraw, axis::strip_speed_mm_s, axis::strip_accel_mm_s2, 0, false, true);
+                start_tracked_feed(R, -job_.strip_tail_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2, 0, false, true);
                 stock_tip_um_ -= withdraw;
                 piece_tail_um_ -= job_.strip_tail_um;
                 stock_restore_um_ = withdraw;
@@ -945,7 +1006,7 @@ void Controller::run_cycle() {
         break;
     case Phase::TailScore:
         if (!any_moving()) {
-            start_tracked_feed(R, job_.strip_tail_um + strip_clear_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+            start_tracked_feed(R, job_.strip_tail_um + strip_clear_um, axis::strip_speed_mm_s, axis::strip_accel_mm_s2, 0, false, true);
             piece_tail_um_ += job_.strip_tail_um + strip_clear_um;
             set_phase(Phase::TailPull);
         }
@@ -979,7 +1040,13 @@ void Controller::run_cycle() {
         // history is NOT restarted here: a part that presented and cleared
         // before this phase still carries valid evidence (M27).
         piece_done_prime_ = priming_;
-        if (!priming_) ++counters_.pieces_done;
+        if (!priming_) {
+            ++counters_.pieces_done;
+            // Independent D-station length cross-check before any acceptance:
+            // a piece the independent instrument says is out of tolerance is
+            // quarantined even when the stock wheels agreed (review F04).
+            if (!fixture_mode_ && !verify_piece_length_d()) return;
+        }
         if (fixture_mode_ || !part_clear_check_enabled()) {
             // Fixture/engineering mode: no handling verification is claimed and
             // no accepted production count is emitted.
@@ -1041,7 +1108,7 @@ void Controller::run_cycle() {
             // While the blades retain the slug, retract the stock s1+3; the bare
             // tip ends 3 mm behind the plane (docs/01 §4 step 1).
             const std::int32_t retract = job_.strip_lead_um + strip_clear_um;
-            start_tracked_feed(L, -retract, axis::strip_speed_mm_s, axis::strip_accel_mm_s2);
+            start_tracked_feed(L, -retract, axis::strip_speed_mm_s, axis::strip_accel_mm_s2, 0, false, true);
             stock_tip_um_ -= retract;
             set_phase(Phase::LeadRetract);
         }
@@ -1084,15 +1151,27 @@ void Controller::finalize_piece() {
         ++counters_.pieces_fixture;
     } else {
         // Only here does a completed piece become an accepted piece: the
-        // discharge present->clear evidence chain is complete.
+        // discharge present->clear evidence chain is complete and the
+        // independent D-station length cross-check has passed.
         ++counters_.pieces_accepted;
+        // Lifetime production total (review F02): exactly one increment per
+        // accepted piece; fixture output is never counted here. Persisted at
+        // batch end, at every 100 accepted pieces and at batch abort, so a
+        // sudden power loss can lose at most 99 uncommitted counts (recorded
+        // exposure; the flash endurance budget for this policy is a P11-T5
+        // gate, not a claim).
+        ++settings_.pieces_total;
+        if (settings_.pieces_total % 100 == 0) {
+            settings_.crc = settings_crc(settings_);
+            if (!board_.store_settings(&settings_, sizeof settings_)) { enter_fault(fault::internal); return; }
+        }
     }
     if (stock_restore_um_ != 0) {
         // The stock may only be restored after the takeaway confirmed clearance.
         if (!wire::restore_allowed(part_clear_check_enabled(), part_clear_confirmed_)) { enter_fault(fault::wire_geometry); return; }
         const std::int32_t restore = stock_restore_um_;
         stock_restore_um_ = 0;
-        start_tracked_feed(ctrl::axis::feed_left, restore, ctrl::axis::strip_speed_mm_s, ctrl::axis::strip_accel_mm_s2);
+        start_tracked_feed(ctrl::axis::feed_left, restore, ctrl::axis::strip_speed_mm_s, ctrl::axis::strip_accel_mm_s2, 0, false, true);
         stock_tip_um_ += restore;
         set_phase(Phase::RestoreStock);
         return;

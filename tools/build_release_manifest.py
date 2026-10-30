@@ -39,6 +39,8 @@ DELIVERABLES = [
     "analysis/m36_m31/manifest.json",
     "analysis/m36_m31/report.md",
     "analysis/electrical_thermal/manifest.json",
+    "analysis/transport-geometry/manifest.json",
+    "analysis/transport-geometry/report.md",
     "analysis/cost-basis/manifest.json",
     "analysis/phase-h-io/option-study.md",
     "tests/P10-thermal/manifest.json",
@@ -53,8 +55,17 @@ DELIVERABLES = [
 ]
 
 
+TEXT_SUFFIXES = {".csv", ".md", ".json", ".py", ".hpp", ".cpp", ".h", ".txt", ".log", ".sh", ".cmake"}
+
+
 def sha256(path: pathlib.Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    """Canonical hash: text files hashed with LF newlines (CRLF/LF checkouts
+    reproduce identical digests); binary files as-is. Same rule as
+    tools/verify_release.py and tools/build_assembly_manual.py (review F14)."""
+    data = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES and b"\x00" not in data:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def main() -> None:
@@ -78,7 +89,7 @@ def main() -> None:
             "bom_reconciliation": "overall CLOSED (bom/reconciliation-report.md)",
             "production_record_integrity": "passed (126 BOM rows, 9 controls sourcing records)",
             "analysis_determinism": "M36/M31, electrical_thermal, cost-basis manifests reproduce identical hashes across runs",
-            "pdf": "release/Cutting_Assembly_Manual.pdf built and content-checked (6 pages)",
+            "pdf": "release/Cutting_Assembly_Manual.pdf built and content-checked (AM-PRE-3, 15 pages)",
         },
         "declared_scope": "PRE-RELEASE build/qualification manual; physical qualification open "
                           "(P/TS/TF records shipped executed=false); ~70% cost test NOT ESTABLISHED",

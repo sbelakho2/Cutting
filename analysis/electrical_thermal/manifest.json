@@ -28,16 +28,18 @@
       {
         "V_after_2.6s": 33.71228708377208,
         "V_after_60s": 7.911895791609129,
-        "branch": "36V_2200uF"
+        "branch": "36V_2200uF",
+        "power_fraction_after_2.6s": 0.876943133039094
       },
       {
         "V_after_2.6s": 58.18407557232389,
         "V_after_60s": 29.521673959393723,
-        "branch": "60V_4700uF"
+        "branch": "60V_4700uF",
+        "power_fraction_after_2.6s": 0.9403851806127496
       }
     ]
   },
-  "M33_branch_absorption": [
+  "M34_branch_absorption": [
     {
       "C_F": 0.0001,
       "E_increment_J": 0.1,
@@ -75,5 +77,5 @@
       "safe_within_10pct_of_nominal": true
     }
   ],
-  "model": "M33/M21/M20 electrical-thermal desk closure"
+  "model": "M34/M21/M20 electrical-thermal desk closure"
 }

@@ -1,83 +1,139 @@
 {
   "current_observations": {
-    "count": 10,
-    "note": "dated 2026-10-13/2026-10-29 merchandise observations; no freight/duty; no conversion",
+    "count": 14,
+    "extended_sums_by_currency": {
+      "EUR": 1037.87,
+      "USD": 532.84
+    },
+    "note": "dated 2026-10-13/2026-10-29 merchandise observations extended at the BOM purchase quantity (unit price x quantity); no freight/duty; no conversion (review F10 correction)",
     "rows": [
       {
         "basis": "manufacturer_list_price_no_freight",
         "currency": "USD",
         "date": "2026-09-13",
+        "extended": 5.0,
         "item": "CT-MCU01",
-        "price": "5.00"
+        "quantity": 1.0,
+        "unit_price": "5.00"
       },
       {
         "basis": "plus_VAT_plus_dispatch",
         "currency": "EUR",
         "date": "2026-09-13",
+        "extended": 133.5,
         "item": "CT-SR01",
-        "price": "133.50"
+        "quantity": 1.0,
+        "unit_price": "133.50"
       },
       {
         "basis": "plus_VAT_plus_dispatch",
         "currency": "EUR",
         "date": "2026-09-13",
+        "extended": 110.7,
         "item": "CT-ES01",
-        "price": "110.70"
+        "quantity": 1.0,
+        "unit_price": "110.70"
       },
       {
         "basis": "plus_VAT_plus_dispatch",
         "currency": "EUR",
         "date": "2026-09-13",
+        "extended": 143.5,
         "item": "CT-GL01",
-        "price": "143.50"
+        "quantity": 1.0,
+        "unit_price": "143.50"
       },
       {
         "basis": "plus_VAT_plus_dispatch",
         "currency": "EUR",
         "date": "2026-09-13",
+        "extended": 17.9,
         "item": "CT-GLA01",
-        "price": "17.90"
+        "quantity": 1.0,
+        "unit_price": "17.90"
       },
       {
         "basis": "incl_VAT_plus_dispatch",
         "currency": "EUR",
         "date": "2026-09-16",
+        "extended": 7.99,
         "item": "CT-FSR01",
-        "price": "7.99"
+        "quantity": 1.0,
+        "unit_price": "7.99"
       },
       {
         "basis": "plus_VAT_plus_dispatch",
         "currency": "EUR",
         "date": "2026-09-13",
+        "extended": 211.2,
         "item": "CT-K1-K3",
-        "price": "70.40"
+        "quantity": 3.0,
+        "unit_price": "70.40"
       },
       {
         "basis": "from_price_merchandise_no_freight",
         "currency": "USD",
         "date": "2026-10-29",
+        "extended": 261.54,
         "item": "DR-01",
-        "price": "130.77"
+        "quantity": 2.0,
+        "unit_price": "130.77"
       },
       {
         "basis": "from_price_merchandise_no_freight",
         "currency": "USD",
         "date": "2026-10-29",
+        "extended": 35.76,
         "item": "PS-01",
-        "price": "17.88"
+        "quantity": 2.0,
+        "unit_price": "17.88"
       },
       {
         "basis": "from_price_merchandise_no_freight",
         "currency": "USD",
         "date": "2026-10-29",
+        "extended": 73.74,
         "item": "TR-M01",
-        "price": "36.87"
+        "quantity": 2.0,
+        "unit_price": "36.87"
+      },
+      {
+        "basis": "from_price_merchandise_no_freight",
+        "currency": "USD",
+        "date": "2026-10-29",
+        "extended": 89.76,
+        "item": "DR-02",
+        "quantity": 2.0,
+        "unit_price": "44.88"
+      },
+      {
+        "basis": "from_price_merchandise_no_freight",
+        "currency": "USD",
+        "date": "2026-10-29",
+        "extended": 67.04,
+        "item": "TR-D02",
+        "quantity": 2.0,
+        "unit_price": "33.52"
+      },
+      {
+        "basis": "ex_VAT_merchandise_no_freight",
+        "currency": "EUR",
+        "date": "2026-10-29",
+        "extended": 343.78,
+        "item": "TH-F01",
+        "quantity": 2.0,
+        "unit_price": "171.89"
+      },
+      {
+        "basis": "ex_VAT_merchandise_no_freight",
+        "currency": "EUR",
+        "date": "2026-10-29",
+        "extended": 69.3,
+        "item": "TH-F02",
+        "quantity": 2.0,
+        "unit_price": "34.65"
       }
-    ],
-    "sums_by_currency": {
-      "EUR": 483.99,
-      "USD": 190.52
-    }
+    ]
   },
   "historical_baseline_observations": {
     "count": 44,

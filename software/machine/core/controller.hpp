@@ -119,6 +119,7 @@ struct Counters {
     std::uint32_t pieces_accepted = 0;  // production-good pieces (handling evidence complete).
     std::uint32_t pieces_scrap = 0;     // partial pieces discarded after a stop/fault.
     std::uint32_t pieces_fixture = 0;   // fixture-mode completions; never accepted production output.
+    std::uint32_t cut_cycles = 0;       // wear-producing sever events (prime + production + scrap cuts).
     std::int32_t last_residual_um = 0;  // target minus measured on the last verified feed
     std::int32_t worst_residual_um = 0;
 };
@@ -230,6 +231,7 @@ private:
         bool active = false;
         bool body_is_piece = false;
         bool final_eject = false;
+        bool strip_move = false;   // strip/pull motions use the flat strip budget
     };
 
     // supervision
@@ -265,7 +267,13 @@ private:
     std::int32_t blade_travel_um(Axis a) const;
 
     // strip/cycle model helpers (F07/F09/F33)
-    std::int32_t length_budget_um(std::int32_t target_um) const;
+    // Internal guarded budgets are strictly SMALLER than the external
+    // tolerances (handoff 12.1): half-width allocations, so correction
+    // residuals cannot consume the whole external allowance.
+    std::int32_t length_budget_um(std::int32_t target_um) const;   // 100 + 0.025 % of |target|
+    std::int32_t strip_budget_um() const;                          // flat 100 um; strip moves
+    // never inherit a length-proportional allowance (handoff 12.1).
+    std::int32_t external_tolerance_um(std::int32_t target_um) const; // 200 + 0.05 % of |target|
     std::int64_t logical_encoder_counts(std::uint8_t side) const;
     std::int64_t logical_piece_counts() const;
     bool wire_state_valid() const;
@@ -274,9 +282,16 @@ private:
     // (stock otherwise). final_eject marks the single move whose unobserved
     // remainder must be covered by discharge evidence before acceptance.
     void start_tracked_feed(Axis a, std::int32_t delta_um, double speed_mm_s, double accel_mm_s2,
-                            std::uint16_t stall_fault = 0, bool final_eject = false);
+                            std::uint16_t stall_fault = 0, bool final_eject = false, bool strip_move = false);
     bool verify_tracked_feed(std::uint8_t side, bool gross_only); // stock wheels W0/W1
     bool verify_tracked_piece(bool gross_only);                   // downstream station D
+    // Independent per-piece length cross-check (review F04): station D is a
+    // separate instrument from the stock wheels, so the signed material it sees
+    // over one piece's lifetime (length feed -> ejection) must equal the
+    // commanded length. This detects common-mode stock-wheel scale error that
+    // agreeing W0/W1 can never prove. D's own calibration uncertainty gates its
+    // usefulness (P13); it is one more independent channel, not absolute truth.
+    bool verify_piece_length_d();
     // Discharge present->clear evidence inside the physical observation window.
     bool discharge_transition_valid() const;
     bool waste_transition_valid() const;
@@ -336,21 +351,24 @@ private:
     bool part_present_seen_ = false;
     bool part_clear_confirmed_ = false;
     std::uint64_t clear_started_us_ = 0;      // observation-window start (ejection)
-    std::uint64_t part_present_at_us_ = 0;    // last debounced present edge
-    std::uint64_t part_clear_at_us_ = 0;      // last debounced clear edge (must follow present)
-    bool part_level_last_ = true;             // previous debounced part_clear level
+    std::uint64_t part_present_at_us_ = 0;    // last CONFIRMED present edge
+    std::uint64_t part_clear_at_us_ = 0;      // last CONFIRMED clear edge (must follow present)
+    bool part_level_confirmed_ = true;        // last confirmed (debounce-stable) part_clear level
     // Waste-path evidence: every released stub/slug must transit the chute.
     bool waste_present_seen_ = false;
     bool waste_clear_confirmed_ = false;
     std::uint64_t waste_started_us_ = 0;
     std::uint64_t waste_present_at_us_ = 0;
     std::uint64_t waste_clear_at_us_ = 0;
-    bool waste_level_last_ = true;
+    bool waste_level_confirmed_ = true;       // last confirmed waste_clear level
     enum class WasteNext : std::uint8_t { PrimeDone, AfterLead, AfterTail };
     WasteNext waste_next_ = WasteNext::PrimeDone;
     bool piece_done_prime_ = false;
     TrackedFeed tracked_[2];
     TrackedFeed tracked_piece_;
+    // Per-piece D cross-check window (review F04).
+    std::int64_t piece_d_start_ = 0;
+    bool piece_d_watch_ = false;
     bool fixture_mode_ = false; // RAM-only service fixture mode
 
     // Commissioning polarity validation (F33).

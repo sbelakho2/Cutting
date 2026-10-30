@@ -251,16 +251,130 @@ int test_cycle() {
 }
 
 int test_cycle_no_strip_and_correction() {
-    Rig r; r.b.slip_ppm[0] = -3000; r.b.slip_ppm[1] = -3000; // roller reads 0.3 % short of command
+    // Common measuring-scale error whose amplified true length stays INSIDE the
+    // external tolerance: the bounded correction lands the true length within
+    // +/- (0.20 + 0.05 % L) and the independent D cross-check passes it.
+    Rig r; r.b.slip_ppm[0] = -800; r.b.slip_ppm[1] = -800; // 0.24 mm on 300 mm
     r.boot_and_home();
-    REQUIRE(r.load_and_approve(no_strip_job(300000, 2))); // 0.9 mm short, > budget, < max_slip
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 2)));
     r.press(&Inputs::start, 150);
     REQUIRE(r.run_until(State::Ready, 120000));
     const Telemetry t = r.c.telemetry();
     CHECK(t.counters.pieces_done == 2);
     CHECK(t.counters.pieces_accepted == 2);
+    CHECK(t.counters.pieces_scrap == 0);
+    CHECK((t.faults & fault::piece_length_cross_check) == 0);
+    // Ground truth on the physical body, not just encoder residuals.
+    CHECK(std::fabs(r.b.piece_len_um - 300000.0) <= 300.0 + 100.0);
     // One corrective move brings the encoder-measured length within the deadband.
     CHECK(std::abs(t.counters.last_residual_um) <= static_cast<std::int32_t>(2 * ctrl::enc::nominal_um_per_count));
+    return 0;
+}
+
+// Review F04 probe (regression): identical scale error on both stock wheels,
+// D clean. The wheels agree and the correction amplifies the error into real
+// material; the true severed body is out of tolerance and the independent
+// D-station length check must quarantine it. Before the fix this was accepted.
+int test_common_scale_wheel_error() {
+    Rig r; r.b.slip_ppm[0] = -3000; r.b.slip_ppm[1] = -3000;
+    r.boot_and_home();
+    REQUIRE(r.load_and_approve(no_strip_job(200000, 1))); // 200 mm +/- 0.300 mm
+    r.press(&Inputs::start, 150);
+    REQUIRE(r.run_until(State::Fault, 120000));
+    CHECK(r.c.faults() & fault::piece_length_cross_check);
+    CHECK(r.c.counters().pieces_accepted == 0);
+    CHECK(r.c.counters().pieces_done == 1); // physically complete but quarantined
+    const double true_error_um = std::fabs(r.b.piece_len_um - 200000.0);
+    CHECK(true_error_um > 300.0); // the disturbance really produced a bad part
+    return 0;
+}
+
+// Review F01 probe (regression): sub-debounce noise can never fabricate a
+// waste transit or a discharge transition (two-edge confirmed validity).
+int test_sensor_noise_rejected() {
+    // Trapped stub + a single 1 ms false pulse on the waste channel: no
+    // confirmed present edge, so no transit and no production continuation.
+    Rig r; r.boot_and_home();
+    r.b.sweep_blocked = true;
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 1)));
+    r.press(&Inputs::start, 150);
+    bool glitched = false;
+    for (std::uint32_t i = 0; i < 60000; ++i) {
+        r.c.tick(); r.b.advance(ctrl::mcu::control_period_us);
+        if (!glitched && r.c.phase() == Phase::WasteClear) {
+            r.b.waste_clear_stuck = false; // raw present for 1 ms only
+            r.c.tick(); r.b.advance(ctrl::mcu::control_period_us);
+            r.b.waste_clear_stuck = true;
+            glitched = true;
+        }
+        if (r.c.state() == State::Fault || r.c.state() == State::Ready) break;
+    }
+    REQUIRE(glitched);
+    REQUIRE(r.c.state() == State::Fault);
+    CHECK(r.c.faults() & fault::waste_not_cleared);
+    CHECK(r.c.counters().pieces_accepted == 0);
+    CHECK(r.b.pocket_waste_bodies() == 1); // stub still trapped
+
+    // A 1 ms present glitch on the discharge channel creates no evidence
+    // either: the piece still cannot be accepted without a confirmed pair.
+    Rig r2; r2.boot_and_home();
+    REQUIRE(r2.load_and_approve(no_strip_job(300000, 1)));
+    r2.b.part_clear_stuck = true;
+    r2.press(&Inputs::start, 150);
+    glitched = false;
+    for (std::uint32_t i = 0; i < 300000; ++i) {
+        r2.c.tick(); r2.b.advance(ctrl::mcu::control_period_us);
+        if (!glitched && r2.c.phase() == Phase::AwaitClear) {
+            r2.b.part_clear_stuck = false;
+            r2.c.tick(); r2.b.advance(ctrl::mcu::control_period_us);
+            r2.b.part_clear_stuck = true;
+            glitched = true;
+        }
+        if (r2.c.state() == State::Fault || r2.c.state() == State::Ready) break;
+    }
+    REQUIRE(glitched);
+    REQUIRE(r2.c.state() == State::Fault);
+    CHECK(r2.c.faults() & fault::part_not_cleared);
+    CHECK(r2.c.counters().pieces_accepted == 0);
+    return 0;
+}
+
+// Review F02 probe (regression): lifetime totals are numeric and persistent -
+// accepted pieces exactly once each, fixture output never, cuts counted for
+// wear, and the SAVED settings bytes carry the total (not just flash writes).
+int test_lifetime_counters() {
+    Rig r; r.boot_and_home();
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 2)));
+    r.press(&Inputs::start, 150);
+    REQUIRE(r.run_until(State::Ready, 200000));
+    CHECK(r.c.telemetry().settings.pieces_total == 2); // RAM lifetime
+    CHECK(r.c.counters().cut_cycles == 3);             // prime + two pieces
+    // Second batch accumulates without resetting the lifetime total.
+    REQUIRE(r.load_and_approve(no_strip_job(300000, 1)));
+    r.press(&Inputs::start, 150);
+    REQUIRE(r.run_until(State::Ready, 200000));
+    CHECK(r.c.telemetry().settings.pieces_total == 3);
+    CHECK(r.c.counters().cut_cycles == 2); // fresh batch counters
+    // The SAVED bytes carry the numeric lifetime total (review F02).
+    REQUIRE(r.b.stores >= 1);
+    Settings saved{};
+    REQUIRE(r.b.flash.size() == sizeof(Settings));
+    std::memcpy(&saved, r.b.flash.data(), sizeof(Settings));
+    CHECK(saved.pieces_total == 3);
+
+    // Fixture output is never counted as accepted production lifetime.
+    Rig f; f.boot_and_home();
+    REQUIRE(f.c.set_fixture_mode(true) == CommandResult::Accepted);
+    REQUIRE(f.c.load_job(no_strip_job(300000, 1)) == CommandResult::Accepted);
+    CHECK(f.c.start() == CommandResult::Accepted);
+    REQUIRE(f.run_until(State::Ready, 200000));
+    CHECK(f.c.counters().pieces_fixture == 1);
+    CHECK(f.c.telemetry().settings.pieces_total == 0);
+    Settings fsaved{};
+    if (!f.b.flash.empty() && f.b.flash.size() == sizeof(Settings)) {
+        std::memcpy(&fsaved, f.b.flash.data(), sizeof(Settings));
+        CHECK(fsaved.pieces_total == 0);
+    }
     return 0;
 }
 
@@ -1357,6 +1471,8 @@ int main(int argc, char** argv) {
         {"negative_control", test_negative_control_legacy_fixture},
         {"recovery", test_recovery_scrap_eject}, {"envelope", test_envelope_extremes},
         {"origin_transfer", test_piece_origin_transfer},
+        {"common_scale", test_common_scale_wheel_error}, {"sensor_noise", test_sensor_noise_rejected},
+        {"counters", test_lifetime_counters},
     };
     int rc = 0; bool ran = false;
     for (auto& t : tests) if (which == "all" || which == t.name) { ran = true; rc |= t.fn(); }

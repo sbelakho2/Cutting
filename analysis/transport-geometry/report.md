@@ -1,6 +1,6 @@
 # Transport-geometry envelope proof (M27/M30/M28)
 
-Envelope cells swept: 5184 (L x lead-strip x tail-strip grid over the full validated range). Deterministic output of `analysis/transport-geometry/compute.py`.
+Interval arithmetic over 5184 sampled envelope cells (9 lengths x 24 lead x 24 tail settings) evaluated from the implemented phase states - not end-to-end runs, not a contact/control model (see manifest method_note). Deterministic output of `analysis/transport-geometry/compute.py`. The lead setting is swept for coverage but does not enter the ejection equations: it changes the feed start position, which cancels in the identity.
 
 ## Invariants
 
@@ -14,8 +14,8 @@ Violations: 0
 
 ## Derived design requirements
 
-- Eject observation window at D: 78.75-106.75 mm of the 230 mm move; unobserved remainder 123.25-151.25 mm in every cell -> discharge evidence mandatory: True
-- Gripped eject distance: 112.0-140.0 mm; the takeaway must at minimum slide a further 130 mm to clear the discharge zone end
+- Eject observation window at D: 103.75-106.75 mm of the 230 mm move; unobserved remainder 123.25-126.25 mm in every cell -> discharge evidence mandatory: True
+- Gripped eject distance: 137.0-140.0 mm; the takeaway must at minimum slide a further 130 mm to clear the discharge zone end
 - Waste chute minimum body capacity: 140 mm (bodies below the grip boundary are never propel-lable: the waste path must accept severed bodies up to just under 140 mm (interrupted-stock tips), not only 10 mm stubs and 3-25 mm slugs)
 - Minimum grip margin at the far nip during tail score: 35.0 mm
 
