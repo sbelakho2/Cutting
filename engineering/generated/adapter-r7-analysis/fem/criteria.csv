@@ -1,0 +1,4 @@
+check,value,limit,result
+adapter_displacement_refinement,0.00289121,0.03,PASS
+adapter_peak_stress_refinement,0.0517536,0.05,REFINE
+adapter_peak_stress_Pa,8.65075e+07,2.16667e+08,PASS_SCOPED

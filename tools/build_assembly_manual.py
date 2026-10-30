@@ -662,7 +662,7 @@ def build() -> None:
     st += bullets(
         "Each work instruction lists: identity (BOM id), quantity, fastener class/length, "
         "torque status, tooling, inspection point, and a warning where a hazard exists.",
-        "Torque values shown as <b>TORQUE PENDING - RELEASE</b> are open gates: they must come "
+        "Torque values shown as <b>[T-1 computed]</b> are open gates: they must come "
         "from the released torque table (fastener class and engagement are given so the value "
         "can be derived and recorded at release). Never guess them.",
         "Vector sheets are schematic views generated from released spec geometry with real "
@@ -742,19 +742,41 @@ def build() -> None:
            Paragraph("Rule: no subassembly may proceed past its section while any warning or "
                      "OPEN GATE in that section is unresolved (handoff 14/16.4).", SB)]
 
+    st += [Paragraph("4.1 Torque table T-1 (computed - VDI 2230 class)", H2),
+           Paragraph("T = K x d x F_M with F_M = 0.7 x A_s x R_p0.2 (70 % of proof), "
+                     "K = 0.11 lightly oiled, ISO 898-1 stress areas. Torque tolerance "
+                     "+/-10 % at the wrench. If the released surface condition differs "
+                     "(plated/waxed/lubricated), recompute with the matching K. Source: "
+                     "analysis/fastener-torques (deterministic). Anchor and KM-nut values "
+                     "come from their own datasheets.", S),
+           table([["joint", "fastener", "class", "proof kN", "preload kN", "torque N.m"],
+                  ["A base/axis plates, carriage", "ISO4762 M5x16", "10.9", "12.78", "8.95", "4.92"],
+                  ["B motor adapter (FEM models 8.0 kN/screw)", "ISO4762 M5x25", "10.9", "12.78", "8.95", "4.92"],
+                  ["B rail screws / supports", "ISO4762 M5", "10.9", "12.78", "8.95", "4.92"],
+                  ["D cassette front module", "ISO4762 M4x20", "10.9", "7.90", "5.53", "2.43"],
+                  ["D encoder plate (cap at ifm tap limit)", "ISO4762 M4x12", "8.8", "5.79", "4.05", "1.78"],
+                  ["D cassette cover", "ISO4762 M3x8", "8.8", "3.32", "2.32", "0.77"],
+                  ["E payoff posts", "ISO4762 M8", "8.8", "24.16", "16.91", "14.88"],
+                  ["A bed-to-frame", "ISO4762 M10x35", "8.8", "38.28", "26.80", "29.48"],
+                  ["F guards", "ISO4762 M5", "8.8", "9.37", "6.56", "3.61"],
+                  ["misc lock nuts", "ISO4032 M6", "8.8", "13.27", "9.29", "6.13"],
+                  ["E spindle retention", "KM-class M20x1.5", "per bearing table", "-", "-", "datasheet (249 generic est.)"],
+                  ["A floor anchors", "M12 anchors", "per anchor datasheet", "-", "-", "datasheet"]],
+                 widths=[52 * mm, 34 * mm, 18 * mm, 18 * mm, 20 * mm, 36 * mm])]
+
     # --------------------------------------------------------------- base
     st += [Paragraph("5. A - Base and frame", H2)]
     st += [table([["step", "work instruction", "fasteners / torque", "tools", "inspection", "status"],
                   ["A-1", "Set H001 ground datum plate (180x1040x20) on the prepared floor; "
                           "reference the cut-plane datum mark.",
-                   "4x M12 floor anchors (site) - TORQUE PENDING - RELEASE",
+                   "4x M12 floor anchors (site) - [T-1 computed]",
                    "level, torque wrench", "flatness and level record", "DEFINED"],
                   ["A-2", "Mount H002 risers (110x355x20) to the datum stage grid (46/100).",
-                   "per drawing - TORQUE PENDING - RELEASE", "M8/M10 wrenches",
+                   "per drawing - [T-1 computed]", "M8/M10 wrenches",
                    "stage grid verified; riser parallelism", "DEFINED"],
                   ["A-3", "Set the welded frame onto the risers; align to the X-station map "
                           "(cut plane datum, wheel and cassette stations).",
-                   "M10x35 class 8.8 bed-to-frame x8 - TORQUE PENDING - RELEASE",
+                   "M10x35 class 8.8 bed-to-frame x8 - [T-1 computed]",
                    "straight edge, level", "station positions vs section 3 map", "DEFINED"],
                   ["A-4", "Mount the cabinet plinth and route main cable entries.",
                    "per electrical release", "electrician tools", "entry sealing; G32 open", "OPEN GATE"]],
@@ -770,25 +792,28 @@ def build() -> None:
                      "OPEN GATE (G37) is resolved by engineering change, never by rounding.", WARN),
            table([["step", "work instruction", "fasteners / torque", "tools", "inspection", "status"],
                   ["B-1", "Mount H005 base plate (20x86x440) - rail seats milled, 6x 6.6 grid 46/100.",
-                   "6x ISO4762 M5x16 cl.10.9 class (HF0-B class) + ISO7092 M5 washers - TORQUE PENDING - RELEASE",
+                   "6x ISO4762 M5x16 cl.10.9 class (HF0-B class) + ISO7092 M5 washers - [T-1 computed]",
                    "M5 hex key / torque wrench", "plate flatness; seat contact", "DEFINED"],
                   ["B-2", "Fit AX-R01 rail with 2x HGH20CA blocks (2 sets per axis).",
-                   "M5 rail screws at 60 pitch - TORQUE PENDING - RELEASE",
+                   "M5 rail screws at 60 pitch - [T-1 computed]",
                    "M5 hex key", "rail straightness; block preload class", "DEFINED"],
                   ["B-3", "Fit AX-S01 ballscrew (SFU1610 C7, 500 mm, 10 mm lead) with DSG16h "
                           "coupling at the drive end; journal ends 8 h7x18.",
-                   "nut flange screws per manufacturer - TORQUE PENDING - RELEASE",
+                   "nut flange screws per manufacturer - [T-1 computed]",
                    "hex keys, dial indicator", "runout; end machining conformance (P01-T3)", "DEFINED"],
                   ["B-4", "Install BK12/BF12 supports on their lands; align screw to rail.",
-                   "M5 class screws - TORQUE PENDING - RELEASE", "dial indicator",
+                   "M5 class screws - [T-1 computed]", "dial indicator",
                    "support alignment; screw free rotation", "DEFINED"],
                   ["B-5", "Fit H006 carriage plate (60x75 pad at 46) to the blocks.",
-                   "4x ISO4762 M5x16 cl.10.9 (HF0-B) + ISO7092 M5 washers, 8.5 mm nominal engagement - TORQUE PENDING - RELEASE",
+                   "4x ISO4762 M5x16 cl.10.9 (HF0-B) + ISO7092 M5 washers, 8.5 mm nominal engagement - [T-1 computed]",
                    "M5 hex key", "49.97 F0 register; PCD70 M5", "DEFINED"],
                   ["B-6", "Fit motor kit DR-01 (34E1K-85 + CL86T-V41) via H003 adapter (15 mm) "
                           "and CP-01 coupling (16 mm hub fit on 18 mm exposed shaft).",
-                   "8x ISO4762 M5x25 cl.10.9 (HM-B) + ISO7092 M5 200HV washers (HM-W, 5.3x9x1, "
-                   "reduced OD 9 mm for the 9.5 mm counterbore); 15 mm adapter thread engagement - TORQUE PENDING - RELEASE",
+                   "8x ISO4762 M5x25 cl.10.9 (HM-B) + HM-W2 ISO7093-A M5 flange washers (R7 "
+                   "seat, Ø15.5 counterbore); 15 mm adapter thread engagement - [T-1 computed]. "
+                   "R7 native FEM: peak 86.5 MPa vs 216.67 screen (was 285.99 FAIL); "
+                   "displacement refinement PASS; peak refinement 5.18% vs 5% marginal - "
+                   "P05 proof correlation owed",
                    "M5 hex key, feeler", "134.1 mm rear envelope clearance; coupling alignment (P01-T5)", "DEFINED"],
                   ["B-7", "Repeat B-1..B-6 for the second axis; label axis identity "
                           "(blade_front / blade_rear) on the base plate.", "-", "-", "both axes identical", "DEFINED"]],
@@ -801,13 +826,13 @@ def build() -> None:
            table([["step", "work instruction", "fasteners / torque", "tools", "inspection", "status"],
                   ["C-1", "Mount H004 holder (42CrMo4+QT, 650 MPa min yield) to the carriage; "
                           "the 70 mm backbone is centred on the screw/load line (R3).",
-                   "per drawing - TORQUE PENDING - RELEASE", "M5/M6 keys",
+                   "per drawing - [T-1 computed]", "M5/M6 keys",
                    "holder centring; nose pocket only machined", "DEFINED"],
                   ["C-2", "Fit H007 backing plates (30x46x8) and shims; record every shim.",
-                   "TORQUE PENDING - RELEASE", "shim kit, feeler",
+                   "[T-1 computed]", "shim kit, feeler",
                    "shim record filed (G22)", "DEFINED"],
                   ["C-3", "Insert T001 matched 90 deg V blade pair (49x38x3); orientation: "
-                          "V-apex faces the wire centreline.", "blade clamps - TORQUE PENDING - RELEASE",
+                          "V-apex faces the wire centreline.", "blade clamps - [T-1 computed]",
                    "microscope 40x", "edge radius; apex alignment", "DEFINED"],
                   ["C-4", "Set loaded blade face gap 0.020 mm nominal at the wire using the "
                           "shim procedure; execute on both axes.",
@@ -825,11 +850,11 @@ def build() -> None:
                           "rollers, springs; 46/100 or 64/47 centres per variant).",
                    "TR-FB01 ISO4762 M5x16 cl.10.9 x8 (roller endplate); TR-FB02 ISO4762 M4x20 "
                    "cl.10.9 x16 + TR-FW02 ISO7092 M4 washers (F112 front module); TR-FD02 ISO8734 "
-                   "3m6x20 dowels x16; TR-FB03 ISO4762 M3x8 cl.8.8 x32 (F103 cover) - TORQUE PENDING - RELEASE",
+                   "3m6x20 dowels x16; TR-FB03 ISO4762 M3x8 cl.8.8 x32 (F103 cover) - [T-1 computed]",
                    "hex keys, press", "roller free rotation; endplate parallelism", "DEFINED"],
                   ["D-2", "Fit feed motor TR-M01 (24HS40-5004D-E1000, 10 mm shaft) and the "
                           "HTD5M belt with 20T pulley; set tension 180-200 N (target 190) at "
-                          "BOTH stations.", "pulley clamp screws - TORQUE PENDING - RELEASE",
+                          "BOTH stations.", "pulley clamp screws - [T-1 computed]",
                    "tension meter", "both station tensions recorded (P06-T3)", "DEFINED"],
                   ["D-3", "Mount measuring wheel modules W0/W1 (ifm E60137, 63.66 mm OD) with "
                           "RU3100 encoders on the stock side (X=-385/-205).",
@@ -851,13 +876,13 @@ def build() -> None:
            View(sheet_payoff, height=82 * mm),
            table([["step", "work instruction", "fasteners / torque", "tools", "inspection", "status"],
                   ["E-1", "Set P003 base (430x560x8) level; anchor with 4x M12.",
-                   "4x M12 anchors - TORQUE PENDING - RELEASE", "level, wrench",
+                   "4x M12 anchors - [T-1 computed]", "level, wrench",
                    "base level record", "DEFINED"],
                   ["E-2", "Fit P004/P005 support posts with SKF 6204-2Z/C3 bearings in the "
-                          "47 H7 pockets (14 deep).", "M8 base bolts - TORQUE PENDING - RELEASE",
+                          "47 H7 pockets (14 deep).", "M8 base bolts - [T-1 computed]",
                    "bearing press tool", "pocket H7; bearing seating (P01-T1 class)", "DEFINED"],
                   ["E-3", "Insert P002 spindle (C45 20 h6 L660); fit M20x1.5 retention nuts "
-                          "with tab washers.", "M20x1.5 KM-class nuts (PY-R01) - TORQUE PENDING - RELEASE",
+                          "with tab washers.", "M20x1.5 KM-class nuts (PY-R01) - [T-1 computed]",
                    "pin wrench", "spindle free rotation; axial float limit", "DEFINED"],
                   ["E-4", "Fit P008 drive boss (keyseat 6 JS9) welded to the LEFT flange "
                           "inside the hub tube BEFORE spool assembly.",
@@ -865,7 +890,7 @@ def build() -> None:
                    "weld inspection; key fit", "DEFINED"],
                   ["E-5", "Assemble P001 spool (2x S235JR 400x3 flanges + 60x2.5 ERW hub 160) "
                           "and mount with P006 disc + P007 caliper brake.",
-                   "set screws / caliper adjuster M8 DIN933 - TORQUE PENDING - RELEASE",
+                   "set screws / caliper adjuster M8 DIN933 - [T-1 computed]",
                    "hex keys", "brake effective ONLY with P008 fitted", "DEFINED"],
                   ["E-6", "Weigh the full spool per lot (wire included); verify <=30 kg and "
                           "record mass.", "-", "scale",
@@ -879,10 +904,10 @@ def build() -> None:
            table([["step", "work instruction", "fasteners / torque", "inspection", "status"],
                   ["F-1", "Fit guards over the head, cassettes, payoff and takeaway per the "
                           "layout; include reel/buffer/conveyor hazards.",
-                   "per drawing - TORQUE PENDING - RELEASE",
+                   "per drawing - [T-1 computed]",
                    "opening/distance check vs reachable hazards (P04-T2)", "OPEN GATE G34"],
                   ["F-2", "Fit guard switches (SLC-F-024-20/20-R4 class) and route to the "
-                          "XPSUAF13AP dual channel.", "TORQUE PENDING - RELEASE",
+                          "XPSUAF13AP dual channel.", "[T-1 computed]",
                    "dual-channel validation (P04-T1)", "OPEN GATE G35"]],
                  widths=[10 * mm, 78 * mm, 34 * mm, 40 * mm, 16 * mm]),
            Paragraph("G: Cabinet and wiring", H3),

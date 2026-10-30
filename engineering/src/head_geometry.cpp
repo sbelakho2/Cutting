@@ -150,7 +150,8 @@ TopoDS_Shape adapterShape() {
     const double q=35/std::sqrt(2.0);
     for(double x : {-q,q}) for(double z : {-q,q}) {
         s=cut(s,cyl(2.75,d::adapter_thickness+2,x,-d::adapter_thickness-1,z,true));
-        s=cut(s,cyl(4.75,d::adapter_f0_counterbore_depth,x,-d::adapter_thickness,z,true));
+        // R7 (review F07): counterbore enlarged to r=7.75 (Ø15.5) so a hardened flange washer (ISO7093-A M5 class, Ø15) seats on the counterbore floor - the wider seat moves the preload closer to the floor support and cuts the bending demand that R6 failed at 285.987 MPa.
+        s=cut(s,cyl(7.75,d::adapter_f0_counterbore_depth,x,-d::adapter_thickness,z,true));
     }
     for(double x : {-c::motor_pitch/2,c::motor_pitch/2})
         for(double z : {-c::motor_pitch/2,c::motor_pitch/2})
@@ -209,7 +210,7 @@ std::vector<HeadPart> headAssembly(double closure) {
         const auto number=std::to_string(++boltIndex);
         const double seat=d::motor_face_y+d::adapter_f0_counterbore_depth;
         add("HF0-B"+number,"ISO4762 M5x16 class10.9;nominal-major cosmetic thread",screw(x,seat-1,72+z,16),true);
-        add("HF0-W"+number,"ISO7092 M5 200HV reduced-OD washer9x5.3x1",washer(x,seat-1,72+z),true);
+        add("HF0-W"+number,"ISO7093-A M5 flange washer (R7 seat) Ø15",washer(x,seat-1,72+z),true);
     }
     boltIndex=0;
     for(double x:{-c::motor_pitch/2,c::motor_pitch/2})for(double z:{-c::motor_pitch/2,c::motor_pitch/2}) {

@@ -16,9 +16,9 @@ it. Nothing is marked done without evidence.
 | F03 target cannot run production cycle | **OPEN (hardware)** | architecture DECIDED (analysis/phase-h-io/decision.md: board respin, 5 native channels, rejected alternatives recorded); PCB/layout/bring-up/HIL remain hardware work; occurrences registered (bom/phase-h-io-occurrences.csv) |
 | F04 common-mode wheel error passes | **FIXED** | independent per-piece D-station length cross-check + strict internal budgets + flat strip budget; regression `common_scale` reproduces the probe and asserts quarantine with ground-truth body length |
 | F05 cooler/driver replacement not implemented | **PARTIALLY FIXED** | U06 substitution is in the active BOM (CL86Y-V20/CL57Y-V20 + motor sets selected with dated observations; Rittal cooler + old drivers superseded DO-NOT-PURCHASE; Pfannenberg two-path ventilation selected). Thermal qualification remains the TS campaign (hardware) |
-| F06 axis capacity/geometry contradictions | **PARTIALLY FIXED** | analysis/axis-rating-requirements computes the real selection basis (stall 7539.8 N declared bound; C0/C criteria); rail-identity contradiction fixed in the register; the rated-part selection + native CAD re-solve remain (criteria are now exact) |
-| F07 adapter/shaft-thermal failures unchanged | **OPEN (native re-solve + hardware)** | analysis/joint-thermal-redesign/requirements.md fixes the redesign work order and recomputed demands (7539.8 N joint load; unchanged 216.67 MPa/20 K screens); redesign + convergence + correlation remain |
-| F08 field-input/board parts defects | **OPEN (hardware)** | folded into the IF-B02 respin work order (decision.md item 1: bias/wetting network, J11/P11/Keystone identities); firmware cannot fix wetting current |
+| F06 axis capacity/geometry contradictions | **PARTIALLY FIXED** | selection basis computed (stall 7539.8 N; C0/C/support criteria exact); rail-identity contradiction fixed; web search boundary recorded (family listings carry no certified ratings; MISUMI 403 / HIWIN catalog pages unavailable) - certified ratings are quote-class evidence requested in RFQ-03, so the final selection is externally gated on supplier datasheets |
+| F07 adapter/shaft-thermal failures unchanged | **ADAPTER: NATIVE REDESIGN DONE (scoped); THERMAL: OPEN** | R7 flange-washer redesign implemented in native code (counterbore Ø9.5->Ø15.5, seat annulus 2.75-7.5, ISO7093-A washer) and re-solved: peak 285.987->86.5 MPa vs 216.67 screen (PASS_SCOPED), displacement refinement 0.29% PASS, peak refinement 5.18% vs 5% marginal REFINE + P05 proof correlation owed. Shaft thermal redesign (20 K) still open per analysis/joint-thermal-redesign |
+| F08 field-input/board parts defects | **DESIGN DONE; PCB OPEN** | hardware/if-b02/if-b02-input-stage.md: full input stage with computed wetting 2.37 mA (24 V through 10k, >2x relay minima; the 57.9 uA class removed by construction), clamp/debounce/derating calculations and acceptance plan; layout/fixture remain PCB work |
 | F09 reel system + handling mechanisms | **PARTIALLY FIXED** | real M28/M29 physics computed (analysis/reel-buffer: J=0.6135 kg.m2, brake 0.82 N.m, dancer storage 172 mm) replacing the mislabelled script; mechanism/CAD/selection remain (open gates listed) |
 | F10 sourcing/cost/70 % | **PARTIALLY FIXED** | ledger extends by quantity (DR-01 = 261.54 at qty 2); V20/ventilation observations registered with dates; full basket/baseline/landed cost remains quote-dependent (RFQs drafted) |
 | F11 geometry study tail origin | **FIXED** | tail_at_eject corrected to +3 mm; regenerated study matches runtime exactly (103.75-106.75 mm windows; 137-140 mm driven); honest method note; runtime identity validated by `origin_transfer` |
@@ -56,3 +56,24 @@ integrity passes (132 BOM rows); BOM reconciliation overall CLOSED.
 This record supersedes no earlier claim silently: earlier wrong statements (the
 98-battery group coverage; the 6-page PDF claim; the mislabelled M33/M28 script
 tags) are corrected in release/decision-log.md at their points of correction.
+
+
+## Addendum (same date, later pass)
+
+- **Fastener torques computed** (analysis/fastener-torques): 13 joints with
+  A_s/proof/preload/torque per ISO 898-1 + VDI 2230 class method (K=0.11,
+  70% proof, +/-10%): M5x16 cl.10.9 = 4.92 N.m, M5x25 cl.10.9 = 4.92,
+  M4x20 10.9 = 2.43, M4x12 8.8 = 1.78 (cap at ifm tap limit), M3x8 8.8 = 0.77,
+  M8 8.8 = 14.88, M10x35 8.8 = 29.48 N.m. The manual carries them as table T-1.
+- **R7 adapter redesign implemented natively** (engineering/src/head_geometry.cpp
+  + analysis.cpp): enlarged counterbore + ISO7093-A flange seat washer.
+  Converged re-solve: peak 86.5 MPa (2.5x margin to the unchanged 216.67 MPa
+  screen), displacement convergence 0.29% PASS, peak refinement 5.18% vs 5%
+  marginal (further settling needs the joint P05 correlation). The 29.66 K
+  shaft thermal case is unchanged and remains open.
+- **F08 input stage designed** (hardware/if-b02): wetting current computed at
+  2.37 mA vs the old 57.9 uA defect class; acceptance plan defined.
+- **Sourcing search boundary recorded**: HGR20 family listing (taiyin
+  made-in-china) verified as unrated family text with $8-13 leads; MISUMI 403;
+  HIWIN catalog pages unavailable through the fetch path. Certified ratings
+  are requested in RFQ-03 - external quote-class evidence.

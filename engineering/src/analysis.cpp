@@ -192,7 +192,7 @@ int finiteElements(const fs::path& out,std::ostream& report,const std::string& s
             if(selectedPart=="all"||selectedPart=="datum")se::writeStep(se::datumShape(),out/"fem"/"datum.step");
     const double f0PcdRadius=35/std::sqrt(2.);
     // H003 support model: four ISO4762 M5x16 class10.9 screws with ISO7092
-    // M5 washers (OD9mm) clamp the adapter to the stage F0 face. The F0 screw
+    // R7 flange washers (OD15mm) clamp the adapter to the stage F0 face. The F0 screw
     // passes through a Ø5.5mm clearance hole, so no shank bearing transfers
     // load; the clamp reaches the stage interface as seat compression bounded
     // by the washer footprint r∈[2.75,4.5]mm around each PCD70 hole axis. The
@@ -202,7 +202,7 @@ int finiteElements(const fs::path& out,std::ostream& report,const std::string& s
     // annuli r∈[2.75,4.5]mm. This is a linear elastic-foundation model class,
     // not a contact/preload-loss/friction solve; no node is rigidly fixed and
     // no measured joint stiffness exists.
-    const double seatInnerMm=2.75,seatOuterMm=4.5;
+    const double seatInnerMm=2.75,seatOuterMm=7.5; // R7: ISO7093-A M5 flange washer Ø15 seat
     const double seatAreaMm2=std::numbers::pi*(seatOuterMm*seatOuterMm-seatInnerMm*seatInnerMm);
     const double f0PreloadN=8000.; // Required-preload screen: 60% of the 13.35kN ISO898 M5 10.9 proof load.
     // Normal foundation stiffness per unit area: the elastic half-space

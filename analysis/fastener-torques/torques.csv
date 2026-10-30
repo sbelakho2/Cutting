@@ -1,0 +1,14 @@
+joint,fastener,class,A_s_mm2,proof_kN,preload_kN,torque_Nm,tolerance,notes
+A base/axis plates,ISO4762 M5x16,10.9,14.2,12.78,8.95,4.92,+/-10%,"ISO7092 M5 washer (HF0-B/HF0-W class); H005 base, H006 carriage (4x per carriage), frame risers"
+B motor adapter,ISO4762 M5x25,10.9,14.2,12.78,8.95,4.92,+/-10%,HM-W ISO7092 M5 5.3x9x1 reduced-OD washer; 8x per axis; 15 mm adapter thread engagement; FEM preload 8.0 kN/screw noted
+B rail screws,ISO4762 M5,10.9,14.2,12.78,8.95,4.92,+/-10%,ISO7092 M5 washer; HGR20 rail at 60 mm pitch
+B supports,ISO4762 M5,10.9,14.2,12.78,8.95,4.92,+/-10%,ISO7092 M5 washer; BK12/BF12 lands
+D cassette front module,ISO4762 M4x20,10.9,8.78,7.9,5.53,2.43,+/-10%,"TR-FW02 ISO7092 M4 washer; F112 front module, 9 mm nominal engagement"
+D encoder plate,ISO4762 M4x12,8.8,8.78,5.79,4.06,1.78,+/-10%,ISO7092 M4 washer; M201 into ifm RU3100 M4x0.7x6 flange taps - CAP at ifm's stated tap limit (manufacturer value to be read from the datasheet at release)
+D cassette cover,ISO4762 M3x8,8.8,5.03,3.32,2.32,0.77,+/-10%,-; F103 cover to F112
+E payoff posts,ISO4762 M8,8.8,36.6,24.16,16.91,14.88,+/-10%,ISO4032 M8 lock nut where used; P004/P005 to P003 base
+E spindle retention,KM-class M20x1.5 nut,-,245.0,161.7,113.19,249.0,+/-10%,"bearing retention both ends - use the bearing manufacturer's nut torque table (KM-class), computed value below is the generic 70 % class estimate"
+A bed-to-frame,ISO4762 M10x35,8.8,58.0,38.28,26.8,29.48,+/-10%,-; frame to base
+A floor anchors,M12 anchors,-,,,,datasheet,datasheet,anchor installation torque is anchor-specific - use the anchor datasheet
+F guards,ISO4762 M5,8.8,14.2,9.37,6.56,3.61,+/-10%,ISO7092 M5 washer; guard fasteners
+misc lock nuts,ISO4032 M6,8.8,20.1,13.27,9.29,6.13,+/-10%,-; wiring/mechanism retention
