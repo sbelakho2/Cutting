@@ -46,6 +46,10 @@ REQUIRED_DELIVERABLES = [
     "tests/P00-P15/manifest.json",
     "tests/reproduction-2026-10-29/provenance.json",
     "procurement/rfq-drafts.md",
+    "analysis/reel-buffer/manifest.json",
+    "analysis/axis-rating-requirements/manifest.json",
+    "analysis/M-register.csv",
+    "release/audit-closure-2026-10-30.md",
     "release/Cutting_Assembly_Manual.pdf",
     "release/decision-log.md",
 ]
@@ -113,6 +117,10 @@ def main() -> int:
                                              "tests/P10-thermal/procedures.md"]),
         ("tools/generate_ph_tests.py", ["tests/P00-P15/manifest.json", "tests/P00-P15/tests-index.csv",
                                         "tests/P00-P15/procedures.md"]),
+        ("analysis/reel-buffer/compute.py", ["analysis/reel-buffer/manifest.json",
+                                             "analysis/reel-buffer/report.md"]),
+        ("analysis/axis-rating-requirements/compute.py", ["analysis/axis-rating-requirements/manifest.json",
+                                                          "analysis/axis-rating-requirements/report.md"]),
         ("tools/reconcile_bom.py", ["bom/reconciliation-report.md"]),
     ]
     for script, outputs in generators:

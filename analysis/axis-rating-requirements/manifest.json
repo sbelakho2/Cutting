@@ -1,0 +1,58 @@
+{
+  "model": "M04/M06 axis rating requirements (review F06)",
+  "open_gates": [
+    "select exact rated parts against these criteria and re-verify with catalogue documents (G38/G39); catalogue family text is not a quote",
+    "complete native axis CAD with the selected parts and manufacturing drawings",
+    "re-run all load signs/proof/fault cases and the loaded-gap/stiffness chain on the selected assembly (M04/M06/M08)"
+  ],
+  "register_contradictions_to_eliminate": [
+    "AX-01 interface text says 'rail 440 total' while AX-R01 is a 400 mm rail: the register must state ONE rail geometry per axis (KK8610 lineage is 340 mm rail / 440 overall; the custom HGR20 lineage is 400 mm rail / 440 base) - mixing the two lineages in one row is a source-quality defect",
+    "support rating class 4900 N vs 5000 N proof: never rounded, never reused",
+    "340/400 mm mismatch across engineering/README (KK8610 purchased-axis line) and bom/selected-cutting-head.csv (custom axis): the cost goal selects the custom axis; the purchased-axis line remains the comparison baseline, not the build"
+  ],
+  "selection_criteria": {
+    "ball_screw_nut": {
+      "dynamic_rating_N_min": 11309.733552923253,
+      "note": "SFU1610-class C7 10 mm lead; end machining 8 h7x18; the published nut rating must be checked at the declared preload class",
+      "static_rating_N_min": 7500.0
+    },
+    "coupling": {
+      "note": "reversal duty (1 N.m x 2.5 service factor for feed; head axes see the full stall bound); 16 mm fit length on the exposed shaft",
+      "rated_torque_nm_min": 10.2
+    },
+    "fixed_support_BK_class": {
+      "axial_rating_N_min": 9424.777960769377,
+      "note": "the support carrying the fault-thrust direction; its axial rating must clear BOTH the 5000 N proof and the stall bound with margin - the 4900 N contradiction is resolved ONLY by a rated part"
+    },
+    "floating_support_BF_class": {
+      "axial_rating_N_min": 5000.0,
+      "note": "floating side; radial capacity per guide reactions"
+    },
+    "linear_guide_block_set": {
+      "dynamic_load_C_N_min": 15079.644737231005,
+      "note": "per axis, 2 sets; HGR20-class candidates must show BOTH C0 and C against these numbers - the old generic '4900 N class' figure is below the 5000 N proof and may never be reused",
+      "static_load_C0_N_min": 7500.0
+    },
+    "motor_adapter_joint": {
+      "note": "the R6 adapter FEM still FAILS its screen (285.987 MPa vs 216.667 MPa; refinement 18.46%/4.96% vs 5%/3% gates) - no rating number releases it; the joint redesign + converged re-solve is the gate (review F07)"
+    }
+  },
+  "stall_thrust": {
+    "assumptions": {
+      "eta_min": 0.85,
+      "lead_mm": 10.0,
+      "motor_torque_nm": 8.5,
+      "torque_tolerance_factor": 1.2
+    },
+    "declared_bound_N": 7539.8223686155025,
+    "ideal_eta1_N": 5340.707511102649,
+    "note": "the 5340.708 N eta=1 figure is a DECLARED BOUND, not an advantage; the eta_min case is the selection basis"
+  },
+  "unchanged_loads": {
+    "proof_axial_N": 5000.0,
+    "proof_factor": 2.0,
+    "transverse_N": 750.0,
+    "vertical_N": 375.0,
+    "working_axial_N": 2500.0
+  }
+}

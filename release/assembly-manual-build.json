@@ -4,7 +4,7 @@
   "builder": "tools/build_assembly_manual.py (reportlab)",
   "declared_status": "PRE-RELEASE BUILD/QUALIFICATION MANUAL",
   "embedded_input_hashes_16": {
-    "bom/selected-cutting-head.csv": "c74051ee480ffeb0",
+    "bom/selected-cutting-head.csv": "19d1cbded89810d3",
     "bom/selected-transport-and-cabinet.csv": "f3fea4c54cd8befa",
     "requirements/signal-table.md": "e160b31ff24911bd",
     "shared/controls_spec.hpp": "0fbe8fdb1fbb46d6"

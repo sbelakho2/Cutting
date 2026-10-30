@@ -1,0 +1,62 @@
+{
+  "dancer_storage": {
+    "demand_profile": "0 -> 750 mm/s in 50 ms vs supply slew 2500 mm/s2 (to be validated)",
+    "note": "storage floor 100 mm; full validated dancer/control design is M29",
+    "required_travel_mm": 171.875
+  },
+  "envelope": {
+    "flange_mm": 400.0,
+    "hub_mm": 60.0,
+    "modes": [
+      "small-reel cassette/adapter",
+      "large-reel cradle"
+    ],
+    "note": "envelope from docs/26 + U07; final reel package freeze is owner decision D3",
+    "total_mass_cap_kg": 30.0,
+    "width_mm": 160.0
+  },
+  "inertia": {
+    "J_empty_kgm2": 0.12270000000000002,
+    "J_full_kgm2": 0.6135,
+    "worst_case_note": "full pack to flange radius is the bounding inertia"
+  },
+  "model": "M28 reel inertia/drive/brake + M29 dancer storage (review F09)",
+  "open_gates": [
+    "reel envelope freeze (D3): exact package OD/core/width/bore per family",
+    "drive/brake selection with identified parts and hot ratings (G38/G39)",
+    "dancer mechanism, control loop and fault behaviour (M29, P08/P14)",
+    "full/mid/empty tension and storage validation on hardware (P06/P15)",
+    "30 kg loading method and retention (P15-T4)"
+  ],
+  "torque_demand": {
+    "brake_requirement_nm": 0.8177744074455241,
+    "cases": [
+      {
+        "inertia_kgm2": 0.2588915590261647,
+        "pack_radius_m": 0.10222180093069051,
+        "pack_rpm_at_500mm_s": 46.708708409414704,
+        "unwind_torque_at_2N_nm": 0.20444360186138102,
+        "unwind_torque_at_8N_nm": 0.8177744074455241,
+        "wire_mass_kg": 24.0
+      },
+      {
+        "inertia_kgm2": 0.16214788975654118,
+        "pack_radius_m": 0.07533026146746645,
+        "pack_rpm_at_500mm_s": 63.38287163411652,
+        "unwind_torque_at_2N_nm": 0.1506605229349329,
+        "unwind_torque_at_8N_nm": 0.6026420917397316,
+        "wire_mass_kg": 12.0
+      },
+      {
+        "inertia_kgm2": 0.12379894367886489,
+        "pack_radius_m": 0.036026203765172626,
+        "pack_rpm_at_500mm_s": 132.53265106363008,
+        "unwind_torque_at_2N_nm": 0.07205240753034525,
+        "unwind_torque_at_8N_nm": 0.288209630121381,
+        "wire_mass_kg": 1.0
+      }
+    ],
+    "drive_requirement_nm": 0.8177744074455241,
+    "note": "brake must hold tension at full pack radius; drive must follow the demand slew; exact motor/brake identities are the selection gate (G38/G39)"
+  }
+}

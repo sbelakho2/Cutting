@@ -1,0 +1,9 @@
+id,parent,quantity,description,status,price_basis,verification_gate
+PH-IO01,carrier-PCB,1,IF-B02 carrier PCB respin (5 new GPIOs: 2x PIO for station D, 2 coupler inputs, 1 sink output; corrected field-input bias network),selected_design_not_released,not_quoted_custom_fabrication,"DRC/ERC + readback + board fixture (review F03/F08 acceptance)"
+PH-IO02,carrier-PCB,2,PLC-RSC 24DC/21 coupler module for part_clear/waste_clear (same class as existing field couplers),selected_identity_from_existing_pattern,not_quoted,"wetting measurement P03-T5 (57.9 uA defect class must not recur)"
+PH-IO03,carrier-PCB,1,TPL7407LDR-class sink output stage for waste_sweep,selected_identity_from_existing_pattern,not_quoted,"P04-T4 wiring audit; output timing P11-T4"
+PH-IO04,station-D,1,ifm E60137 wheel + RU3100 encoder + AM26LV32E receiver + bracket/housing for the downstream piece station,selected_TS_evidence_open,"E60137/RU3100 prices in selected-mechanism (dated 2026-09-13)","M02 fit study in X38-140 window among nips 75.5/138 BEFORE order; P06-T2 force/accuracy"
+PH-IO05,station-D,1,ME-FB-class mounting hardware set (M4x12 cl.8.8 + ISO7092 washers) for station D,selected_identity_from_existing_pattern,not_quoted,"P01-T4 torque audit"
+PH-W01,waste-path,1,constrained mechanical sweep actuator (24 V solenoid/relay class) + paddle,selected_identity_open,not_quoted_purchase_to_requirement,"P08-T1 stub removal + blocked-sweep fault; M30 mechanism design"
+PH-W02,waste-path,1,waste chute + bin with optical transit sensor (waste_clear channel),selected_identity_open,not_quoted_purchase_to_requirement,"P08-T1/T2 transit evidence; chute capacity >= grip boundary body length (analysis/transport-geometry)"
+PH-W03,output,1,supported output takeaway for 200-3000 mm parts (>=130 mm slide past grip loss),selected_identity_open,not_quoted_purchase_to_requirement,"P06-T6/P08-T4; M30 design"
