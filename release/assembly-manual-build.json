@@ -6,7 +6,7 @@
   "embedded_input_hashes_16": {
     "bom/selected-cutting-head.csv": "e4cb90e884a6d346",
     "bom/selected-transport-and-cabinet.csv": "f3fea4c54cd8befa",
-    "requirements/signal-table.md": "e160b31ff24911bd",
+    "requirements/signal-table.md": "4bb97f53f77c2d0c",
     "shared/controls_spec.hpp": "0fbe8fdb1fbb46d6"
   },
   "revision": "AM-PRE-3"

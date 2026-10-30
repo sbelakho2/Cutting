@@ -58,6 +58,7 @@ DELIVERABLES = [
     "tests/reproduction-2026-10-29/provenance.json",
     "procurement/rfq-drafts.md",
     "procurement/compliance-matrix-2026-10-30.md",
+    "procurement/po-requirements.md",
     "procurement/1688-alibaba-verified-2026-10-30.md",
     "release/Cutting_Assembly_Manual.pdf",
     "release/decision-log.md",

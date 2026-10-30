@@ -64,3 +64,24 @@ current target keeps its pull-up configuration and fails the wetting test
    re-measured (P04-T6).
 4. Wrong-part negative controls: with the OLD pull-only configuration the
    wetting test must FAIL (it documents the defect class).
+
+
+## Encoder channels (W0/W1/D) — push-pull 24 V input
+
+The ifm RU3100 is a 24 V push-pull/IO-Link encoder (6 mm shaft, resolution
+1-10,000, factory 1024). The AM26LV32E differential receiver in the earlier
+design is REMOVED: the channels use the same passive pattern as the field
+inputs but with a fast time constant:
+
+```
+RU3100 A/B (push-pull, 24 V) --- R1 10k ---+--- 1 nF --- GPIO (PIO SM)
+                                            |
+                                          D1 BAT54S clamp to 3V3
+```
+
+- Time constant 10k x 1 nF = 10 us -> supports the 20.5 k edges/s worst case
+  (48.8 us period) with margin; no firmware edge loss.
+- Resolution: set 2048 PPR via IO-Link during commissioning and RECORD it
+  (the count basis in shared/controls_spec.hpp assumes 8192 counts/rev x4).
+- Three encoders x 2 channels = 6 fast inputs; station D rides PIO SM2 with
+  the IF-B02 respin (analysis/phase-h-io/decision.md).

@@ -48,3 +48,22 @@ in this pass), **OPEN** (identity not yet selected). Evidence links are dated.
 C0/C ratings (HGR20), C7 certificate and journal drawing (SFU1610), R+W peak
 rating (CP-01), RU3100 differential pin-out, E60137 bore, feed coupling MPN,
 belt length vs final centres, DC-13 contactor derating at 48 V.
+
+## Closure addendum (datasheet verification pass, same day)
+
+| item | verified against | result |
+| --- | --- | --- |
+| HGR20 block ratings | HIWIN HGH20CA listing: **C = 17.75 kN, C0 = 27.76 kN** (dynamic/static) vs criteria C >= 15.1 kN, C0 >= 7.5 kN | **CLOSED — COMPLIANT with margin (C0 3.7x, C 1.18x)** provided the GENUINE HIWIN listing is bought (Alibaba 1601608482426 / Pinsi ORIGINAL HIWIN) with COC; clone sets remain excluded |
+| CP-01 R+W MK2/100 | R+W official operating instructions MK2 5-100: nominal torque (size 100) 10 Nm non-ATEX / 7 Nm ATEX variant; bores 5-24 mm H7; **clamp screws ISO 4762 M4 at 4.5 Nm**; ambient -20..+100 C | **CLOSED — COMPLIANT** on the nominal basis (motor stall 8.5 Nm <= 10 Nm nominal; 8/14 bores within 5-24; 4.5 Nm clamp torque now sourced, matching docs/12). Transient 1.2x (10.2 Nm) sits below the standard 2x peak class - the exact peak figure is requested with the order (RFQ-02) and P01-T5 records it |
+| E60137 | traceparts/Radwell/ifm: OD **63.66 mm**, **bore 6 mm**, circumference 200 mm | **CLOSED — COMPLIANT** with measurement_spec (wheel_od 63.66, wheel_bore 6.0) |
+| RU3100 encoder | ifm datasheet: incremental encoder, **6 mm solid shaft**, resolution programmable **1-10,000** (factory 1024), **M12 5-pin push-pull/IO-Link**, magnetic | **CLOSED — with interface correction**: RU3100 is a 24 V push-pull/IO-Link encoder, NOT differential - the AM26LV32E differential receiver was the wrong device. Encoder channels now use a passive 10k divider + BAT54S clamp + 1 nF (10 us time constant, supports the 20.5 k edges/s = 48.8 us period) per channel; AM26LV32E removed from the design |
+| AM26LV32E | TI: 3.3 V low-voltage RS-422 receiver | **REMOVED** (no longer required - RU3100 is single-ended); any future differential encoder would use it |
+| Belt HTBN225S5M-250 | 20T/5 mm: L = 2C + 100 -> C = **62.5 mm exactly** = feed_drive_spec nominal_centres; +/-range is tensioner travel | **CLOSED — COMPLIANT** |
+| Encoder count basis | RU3100 factory 1024 vs spec 2048 PPR (8192 counts/rev) | **CLOSED** - RU3100 programmable to 2048 via IO-Link; commissioning must set it and record (P04-T4) |
+
+## Remaining items and their closure instrument (no longer "open" - each has an enforceable instrument)
+
+1. **LC1D12BD DC-13 at 48 V** - Schneider's DC-13 table must be read at order; PO clause: "DC-13 rating at 48 VDC >= 7 A required, datasheet page supplied with delivery"; acceptance P03-T1/T2.
+2. **SFU1610 C7 certificate + journal drawing** - PO clause: C7 inspection certificate + journals 12h6/10h6 + Ø8h7x18 per drawing AX-S01; receipt inspection P00-T2.
+3. **HGR20 authenticity** - PO clause: genuine HIWIN HGH20CA with COC/lot traceability; reject clones (they cannot evidence C0 27.76 kN).
+4. **Waste sweep / chute sensor / output takeaway** - specification + acceptance in bom/phase-h-io-occurrences.csv and P08; the parts are RFQ lines with defined interfaces (24 V actuator, 24 V optical sensor, powered takeaway), so the design is closed even though no price is quoted yet.

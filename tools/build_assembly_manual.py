@@ -923,7 +923,8 @@ def build() -> None:
                   ["G-3", "Field inputs via PLC-RSC 24DC/21 couplers; wetting current must "
                           "exceed relay minima (the old 57.9 uA defect class must not recur).",
                    "wetting measurement (P03-T5)", "DEFINED"],
-                  ["G-4", "ALM lines to GP18-21; encoders to GP8-11 via AM26LV32E receivers; "
+                  ["G-4", "ALM lines to GP18-21; encoders (RU3100 push-pull 24 V) to GP8-11 through "
+                          "the 10k/BAT54S/1 nF stage, 2048 PPR set via IO-Link and recorded; "
                           "USB-CDC is optional and never required for motion.",
                    "continuity + polarity audit (P04-T4)", "DEFINED"],
                   ["G-5", "Leave part_clear / waste_clear / waste_sweep / station-D unassigned "

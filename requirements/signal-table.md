@@ -24,9 +24,9 @@ acceptance can be faked by absent hardware.
 | `home_front` | LOW at blade-front open end | IE5338 inductive, PNP 24 V via coupler | GP27 | ASSIGNED |
 | `home_rear` | LOW at blade-rear open end | IE5338 | GP16 | ASSIGNED |
 | `alm[0..3]` | LOW = driver alarm | Per-driver ALM via dedicated PLC-RSC coils | GP18-21 | ASSIGNED |
-| `enc W0 A/B` | Quadrature of stock wheel (X=-385) | ifm RU3100 + AM26LV32E, TTL 2048 PPR | GP8/9 | ASSIGNED |
-| `enc W1 A/B` | Quadrature of stock wheel (X=-205) | ifm RU3100 + AM26LV32E | GP10/11 | ASSIGNED |
-| `enc D A/B` | Quadrature of downstream piece station (X=106.75 candidate) | ifm RU3100 + AM26LV32E (repackaged module; M02 fit gate) | **PHASE-H GATE** | pin + PIO SM needed |
+| `enc W0 A/B` | Quadrature of stock wheel (X=-385) | ifm RU3100 (push-pull 24 V, 2048 PPR set via IO-Link) -> 10k divider + BAT54S clamp + 1 nF (10 us) | GP8/9 | ASSIGNED |
+| `enc W1 A/B` | Quadrature of stock wheel (X=-205) | ifm RU3100 (push-pull 24 V) -> same divider/clamp stage | GP10/11 | ASSIGNED |
+| `enc D A/B` | Quadrature of downstream piece station (X=106.75 candidate) | ifm RU3100 (push-pull 24 V) -> same divider/clamp stage (repackaged module; M02 fit gate) | **PHASE-H GATE** | pin + PIO SM needed |
 | `part_clear` | **true = takeaway path clear**, false while a body is present. Present->clear pair inside the ejection window is the acceptance evidence for the unobserved ejection remainder. | Through-beam/proximity across the discharge zone [230,270] | **PHASE-H GATE** | fails closed (reads false) |
 | `waste_clear` | **true = waste chute mouth clear**, false while a released stub/slug body transits. Present->clear pair after each sweep is required before the next feed/blade close. | Optical sensor on the blade-region chute fall path (drop 30 mm) | **PHASE-H GATE** | fails closed (reads false) |
 
