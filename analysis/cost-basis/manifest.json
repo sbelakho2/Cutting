@@ -1,9 +1,10 @@
 {
   "current_observations": {
-    "count": 15,
+    "count": 21,
     "extended_sums_by_currency": {
+      "CNY": 1980.0,
       "EUR": 1037.87,
-      "USD": 685.26
+      "USD": 860.86
     },
     "note": "dated 2026-10-13/2026-10-29 merchandise observations extended at the BOM purchase quantity (unit price x quantity); no freight/duty; no conversion (review F10 correction)",
     "rows": [
@@ -141,6 +142,60 @@
         "item": "DR-M01",
         "quantity": 2.0,
         "unit_price": "76.21"
+      },
+      {
+        "basis": "per_set_2-99_tier;12.00_at_100+;MOQ2;ocean_0.84usd_kg_50kg_min;17-24d",
+        "currency": "USD",
+        "date": "2026-10-30",
+        "extended": 60.0,
+        "item": "AX-R01",
+        "quantity": 4.0,
+        "unit_price": "15.00"
+      },
+      {
+        "basis": "per_unit_10-99_tier;45.00_at_100+;sample_100;freight_119.47_per_10",
+        "currency": "USD",
+        "date": "2026-10-30",
+        "extended": 100.0,
+        "item": "AX-S01",
+        "quantity": 2.0,
+        "unit_price": "50.00"
+      },
+      {
+        "basis": "per_set_MOQ10;alternative_MOQ1_4.30-18.64_C7C5_on_1601032419735",
+        "currency": "USD",
+        "date": "2026-10-30",
+        "extended": 15.6,
+        "item": "AX-S01-BKBF",
+        "quantity": 2.0,
+        "unit_price": "7.80"
+      },
+      {
+        "basis": "per_rail_cut_to_length;blocks_separate;freight_from_25;stock_10000",
+        "currency": "CNY",
+        "date": "2026-10-30",
+        "extended": 220.0,
+        "item": "AX-R01",
+        "quantity": 4.0,
+        "unit_price": "55.00"
+      },
+      {
+        "basis": "per_kit_500mm;270_300mm;350_1000mm;free_shipping;stock_8878",
+        "currency": "CNY",
+        "date": "2026-10-30",
+        "extended": 600.0,
+        "item": "AX-S01",
+        "quantity": 2.0,
+        "unit_price": "300.00"
+      },
+      {
+        "basis": "per_kit_2+;584_single;free_shipping;CE+RoHS-on-page",
+        "currency": "CNY",
+        "date": "2026-10-30",
+        "extended": 1160.0,
+        "item": "DR-ALT86",
+        "quantity": 2.0,
+        "unit_price": "580.00"
       }
     ]
   },

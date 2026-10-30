@@ -3,7 +3,7 @@
 Deterministic output of `analysis/cost-basis/compute.py`.
 
 - Historical baseline register: 44 dated observations (2026-10-13), sums by currency: EUR 2894.22, USD 489.19
-- Current dated observations: 15 rows, extended at BOM purchase quantity (unit x quantity), sums by currency: EUR 1037.87, USD 685.26
+- Current dated observations: 21 rows, extended at BOM purchase quantity (unit x quantity), sums by currency: CNY 1980.00, EUR 1037.87, USD 860.86
 - Evidence rows without cost: 2 (blank is not zero - each is an open quote)
 - Open cost elements: freight/duty (D1), machining quotes (D5), labour, metrology, qualification, consumables.
 - ~70 % target test: NOT ESTABLISHED - both sides incomplete and like-for-like scope
